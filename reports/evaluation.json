@@ -1,0 +1,695 @@
+{
+  "generated_seconds": 172.2,
+  "forecast": {
+    "store_sku_day": {
+      "scoop_lightgbm": 0.4948026892781835,
+      "same_weekday_last_week": 0.707198116918629,
+      "moving_average_28d": 0.5249711822211095,
+      "interval_coverage_p10_p90": 0.799863387978142
+    },
+    "dc_protection_period": {
+      "scoop_lightgbm": 0.034358567416069075,
+      "moving_average_28d": 0.10535313823749273,
+      "ratio_p10": 0.910148021065003,
+      "ratio_p90": 1.048855601512138,
+      "samples": 120,
+      "heldout_interval_coverage": 0.8333333333333334,
+      "heldout_issue_dates": [
+        "2026-05-12",
+        "2026-05-16"
+      ],
+      "heldout_end": "2026-06-01"
+    }
+  },
+  "detection": {
+    "threshold_h": 3.81,
+    "k": 0.25,
+    "arl0_days": 90,
+    "weekly_threshold_z": 0.496,
+    "events": [
+      {
+        "bh_gated_alarm": "2026-06-30",
+        "bh_gated_delay_days": 8,
+        "event": "EV01",
+        "group": "family:fruit",
+        "district": "Kowloon",
+        "onset": "2026-06-22",
+        "cusum_alarm": "2026-06-22",
+        "cusum_delay_days": 0,
+        "weekly_alarm": "2026-06-28",
+        "weekly_delay_days": 6
+      },
+      {
+        "bh_gated_alarm": null,
+        "bh_gated_delay_days": null,
+        "event": "EV01",
+        "group": "family:fruit",
+        "district": "HK Island",
+        "onset": "2026-07-06",
+        "cusum_alarm": "2026-07-09",
+        "cusum_delay_days": 3,
+        "weekly_alarm": "2026-07-12",
+        "weekly_delay_days": 6
+      },
+      {
+        "bh_gated_alarm": null,
+        "bh_gated_delay_days": null,
+        "event": "EV01",
+        "group": "family:fruit",
+        "district": "NT East",
+        "onset": "2026-07-20",
+        "cusum_alarm": null,
+        "cusum_delay_days": null,
+        "weekly_alarm": "2026-07-26",
+        "weekly_delay_days": 6
+      },
+      {
+        "bh_gated_alarm": "2026-06-30",
+        "bh_gated_delay_days": 22,
+        "event": "EV02",
+        "group": "feature:choc_coated",
+        "district": "Kowloon",
+        "onset": "2026-06-08",
+        "cusum_alarm": "2026-06-22",
+        "cusum_delay_days": 14,
+        "weekly_alarm": "2026-06-21",
+        "weekly_delay_days": 13
+      },
+      {
+        "bh_gated_alarm": "2026-07-11",
+        "bh_gated_delay_days": 33,
+        "event": "EV02",
+        "group": "feature:choc_coated",
+        "district": "HK Island",
+        "onset": "2026-06-08",
+        "cusum_alarm": "2026-06-27",
+        "cusum_delay_days": 19,
+        "weekly_alarm": "2026-06-28",
+        "weekly_delay_days": 20
+      },
+      {
+        "bh_gated_alarm": "2026-06-30",
+        "bh_gated_delay_days": 22,
+        "event": "EV02",
+        "group": "feature:choc_coated",
+        "district": "NT East",
+        "onset": "2026-06-08",
+        "cusum_alarm": "2026-06-25",
+        "cusum_delay_days": 17,
+        "weekly_alarm": "2026-06-28",
+        "weekly_delay_days": 20
+      },
+      {
+        "bh_gated_alarm": "2026-06-30",
+        "bh_gated_delay_days": 22,
+        "event": "EV02",
+        "group": "feature:choc_coated",
+        "district": "NT West",
+        "onset": "2026-06-08",
+        "cusum_alarm": "2026-06-15",
+        "cusum_delay_days": 7,
+        "weekly_alarm": "2026-06-21",
+        "weekly_delay_days": 13
+      }
+    ],
+    "raw_missed": 1,
+    "gated_missed": 2,
+    "mean_delay_cusum": 10.0,
+    "mean_delay_weekly": 13.0,
+    "null_world": {
+      "charts": 248,
+      "days": 92,
+      "cusum_false_alarm_episodes": 368,
+      "bh_gated_false_alarm_episodes": 0,
+      "cusum_false_alarms_per_chart_per_90_days": 1.452,
+      "weekly_false_alarm_weeks": 344
+    },
+    "weak_signal_low_sugar": {
+      "pooled_alarm": "2026-06-02",
+      "first_district_alarm": "2026-06-14"
+    }
+  },
+  "investigator": {
+    "findings": [
+      {
+        "week": "2026-07-06",
+        "finding": "Chocolate flavour",
+        "districts": [
+          "Kowloon"
+        ],
+        "label": "one_off",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": false
+      },
+      {
+        "week": "2026-07-06",
+        "finding": "Water-based",
+        "districts": [
+          "Kowloon"
+        ],
+        "label": "persistent",
+        "event": "EV01",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-06",
+        "finding": "Cones",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "one_off",
+        "event": "EV04",
+        "expected": "one_off",
+        "correct": true
+      },
+      {
+        "week": "2026-07-06",
+        "finding": "Chocolate-coated",
+        "districts": [
+          "NT East",
+          "NT West"
+        ],
+        "label": "one_off",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": false
+      },
+      {
+        "week": "2026-07-06",
+        "finding": "Higher sugar",
+        "districts": [
+          "Kowloon"
+        ],
+        "label": "one_off",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": false
+      },
+      {
+        "week": "2026-07-06",
+        "finding": "Value price",
+        "districts": [
+          "NT East"
+        ],
+        "label": "persistent",
+        "event": "EV03",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-13",
+        "finding": "Water-based",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV01",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-13",
+        "finding": "Chocolate-coated",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-13",
+        "finding": "Mid price",
+        "districts": [
+          "Kowloon"
+        ],
+        "label": "one_off",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": false
+      },
+      {
+        "week": "2026-07-13",
+        "finding": "Cones",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "one_off",
+        "event": "EV04",
+        "expected": "one_off",
+        "correct": true
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Water-based",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV01",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Chocolate-coated",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Crunchy",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "one_off",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": false
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Mid price",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East"
+        ],
+        "label": "one_off",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": false
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Chocolate flavour",
+        "districts": [
+          "NT East"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Mixed",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "one_off",
+        "event": null,
+        "expected": "noise",
+        "correct": null
+      },
+      {
+        "week": "2026-07-27",
+        "finding": "Water-based",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV01",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-27",
+        "finding": "Chocolate-coated",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-27",
+        "finding": "Crunchy",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-27",
+        "finding": "Low-sugar claim",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV03",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-08-03",
+        "finding": "Water-based",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV01",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-08-03",
+        "finding": "Chocolate-coated",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-08-03",
+        "finding": "Crunchy",
+        "districts": [
+          "Kowloon",
+          "NT East"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-08-03",
+        "finding": "Mixed",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "one_off",
+        "event": null,
+        "expected": "noise",
+        "correct": null
+      },
+      {
+        "week": "2026-08-03",
+        "finding": "Creamy",
+        "districts": [
+          "HK Island",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": null,
+        "expected": "noise",
+        "correct": null
+      },
+      {
+        "week": "2026-08-10",
+        "finding": "Water-based",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV01",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-08-10",
+        "finding": "Chocolate-coated",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-08-10",
+        "finding": "Mixed",
+        "districts": [
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": null,
+        "expected": "noise",
+        "correct": null
+      },
+      {
+        "week": "2026-08-10",
+        "finding": "Creamy",
+        "districts": [
+          "HK Island"
+        ],
+        "label": "persistent",
+        "event": null,
+        "expected": "noise",
+        "correct": null
+      },
+      {
+        "week": "2026-08-10",
+        "finding": "Low-sugar claim",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV03",
+        "expected": "persistent",
+        "correct": true
+      }
+    ],
+    "total_exposed_nonmirror_findings": 30,
+    "matched": 25,
+    "correct": 19,
+    "accuracy": 0.76,
+    "unmatched_findings": 5
+  },
+  "replay": [
+    {
+      "policy": "history",
+      "label": "history x1.00",
+      "buffer": 1.0,
+      "service_level": null,
+      "fill_rate": 0.9204,
+      "lost_units": 53105,
+      "lost_margin_hkd": 358905.0,
+      "avg_pallets": 19.5,
+      "max_pallets": 32.6,
+      "peak_pallets_before_shipping": 38.2,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798
+    },
+    {
+      "policy": "history",
+      "label": "history x1.15",
+      "buffer": 1.15,
+      "service_level": null,
+      "fill_rate": 0.973,
+      "lost_units": 18010,
+      "lost_margin_hkd": 119269.0,
+      "avg_pallets": 26.3,
+      "max_pallets": 43.5,
+      "peak_pallets_before_shipping": 49.3,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798
+    },
+    {
+      "policy": "history",
+      "label": "history x1.25",
+      "buffer": 1.25,
+      "service_level": null,
+      "fill_rate": 0.9872,
+      "lost_units": 8519,
+      "lost_margin_hkd": 55400.0,
+      "avg_pallets": 32.0,
+      "max_pallets": 51.0,
+      "peak_pallets_before_shipping": 57.4,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798
+    },
+    {
+      "policy": "history",
+      "label": "history x1.40",
+      "buffer": 1.4,
+      "service_level": null,
+      "fill_rate": 0.9973,
+      "lost_units": 1788,
+      "lost_margin_hkd": 11529.0,
+      "avg_pallets": 41.2,
+      "max_pallets": 63.1,
+      "peak_pallets_before_shipping": 69.4,
+      "days_over_capacity_before_shipping": 13,
+      "days_over_capacity": 2,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798
+    },
+    {
+      "policy": "scoop_forecast",
+      "label": "scoop_forecast @ CR",
+      "buffer": null,
+      "service_level": null,
+      "fill_rate": 0.928,
+      "lost_units": 48011,
+      "lost_margin_hkd": 310612.0,
+      "avg_pallets": 19.6,
+      "max_pallets": 32.5,
+      "peak_pallets_before_shipping": 36.8,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798
+    },
+    {
+      "policy": "scoop_forecast",
+      "label": "scoop_forecast @ 92%",
+      "buffer": null,
+      "service_level": 0.92,
+      "fill_rate": 0.9477,
+      "lost_units": 34909,
+      "lost_margin_hkd": 219469.0,
+      "avg_pallets": 21.5,
+      "max_pallets": 32.5,
+      "peak_pallets_before_shipping": 37.2,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798
+    },
+    {
+      "policy": "scoop_full",
+      "label": "scoop_full @ CR",
+      "buffer": null,
+      "service_level": null,
+      "fill_rate": 0.9377,
+      "lost_units": 41546,
+      "lost_margin_hkd": 281491.0,
+      "avg_pallets": 19.1,
+      "max_pallets": 32.5,
+      "peak_pallets_before_shipping": 36.8,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798
+    },
+    {
+      "policy": "scoop_full",
+      "label": "scoop_full @ 85%",
+      "buffer": null,
+      "service_level": 0.85,
+      "fill_rate": 0.9504,
+      "lost_units": 33090,
+      "lost_margin_hkd": 222755.0,
+      "avg_pallets": 20.2,
+      "max_pallets": 32.5,
+      "peak_pallets_before_shipping": 36.8,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798
+    },
+    {
+      "policy": "scoop_full",
+      "label": "scoop_full @ 92%",
+      "buffer": null,
+      "service_level": 0.92,
+      "fill_rate": 0.958,
+      "lost_units": 28011,
+      "lost_margin_hkd": 186648.0,
+      "avg_pallets": 20.9,
+      "max_pallets": 32.5,
+      "peak_pallets_before_shipping": 36.8,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798
+    },
+    {
+      "policy": "scoop_full",
+      "label": "scoop_full @ 96%",
+      "buffer": null,
+      "service_level": 0.96,
+      "fill_rate": 0.9654,
+      "lost_units": 23078,
+      "lost_margin_hkd": 151481.0,
+      "avg_pallets": 21.9,
+      "max_pallets": 32.5,
+      "peak_pallets_before_shipping": 36.8,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798
+    }
+  ]
+}
