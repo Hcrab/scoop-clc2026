@@ -1,6 +1,6 @@
 # Demonstration guide
 
-Allow approximately five minutes after the first model build. This is a local, synthetic demonstration. Default clock: **13 July 2026**.
+Allow approximately five minutes after the first model build. This is a local, synthetic demonstration. Seed clock: **13 July 2026**. The delivered walkthrough also contains a completed **20 July 2026** plan and a fresh **27 July 2026** plan; check the date displayed in the app.
 
 ## 1. Orient the planner
 
@@ -10,13 +10,13 @@ Open the app and select the current week. The report should identify its as-of d
 
 Open a reported finding. Compare observed and expected share, the district scope, competing hypotheses and the shift-share explanation. A promotion or a single bulk order should not automatically become a persistent purchasing increase. A weak result can remain uncertain and be watched.
 
-Use the assistant to ask why a finding was raised. Its answer must agree with the visible report. The assistant is explicitly scripted; do not claim a live LLM independently investigated the database.
+Use the assistant to ask why a finding was raised. Its answer must agree with the visible report. The delivered session uses Gemini through bounded evidence tools. The assistant details show whether a response was live or an offline fallback. It cannot run arbitrary SQL or approve purchases. Do not claim it independently verified causation.
 
-Try “What if next week is 35 C?” in the discussion. Scoop recomputes the forecast and feasible case quantities without applying the scenario. On the untouched 13 July plan, the result is 1,282 to 1,898 cases (+616). Use “Watch HK Island fruit stockouts” to add a scoped fill-rate watch.
+Try “What if next week is 35 C?” in the discussion. Scoop recomputes the forecast and feasible case quantities without applying the scenario. On the 20 July walkthrough after the Water-based persistent interpretation, the observed result was 1,025 to 1,246 cases (+221). Treat this as a recorded example; current quantities depend on saved decisions. Use “Watch HK Island fruit stockouts” to add a scoped fill-rate watch.
 
 ## 3. Record a decision
 
-Answer the interpretation questions using the evidence. Advance to Direction and inspect the resulting `more`, `less`, `hold` or `clear` choices. Change a factor or district scope where appropriate, choose the planning objective, and review the approval summary.
+Answer the interpretation questions using the evidence. Advance to Direction and inspect the resulting `more`, `less`, `hold` or `clear` choices. Change the percentage to buy more or less, or its district scope where appropriate, choose the planning objective, and review the approval summary and watch selection. Baseline watches cover service, shortages, excess cover, projected space and late suppliers.
 
 After approval, earlier-stage changes should be blocked. This makes the difference between exploring a plan and approving it visible.
 
@@ -28,7 +28,7 @@ The confirmed line becomes read-only. The API regression test also repeats the i
 
 ## 5. Watch the assumption
 
-Add a fill-rate, days-cover, capacity, delay or tag-share watch with an explicit scope and assumption. Reload the app and verify that the decision, order status, conversation and watch remain present. Browse the relevant store and catalog items for source context.
+Add a fill-rate, days-cover, capacity, delay or tag-share watch with an explicit scope and assumption. Reload the app and verify that the decision, order status, conversation and watch remain present. Browse the relevant store and catalog items for source context. Prepare the following week to see carried assumptions and the previous-week recap. Prior approval snapshots remain unchanged when a later watch is edited.
 
 ## 6. Show the evidence and boundaries
 
@@ -37,3 +37,12 @@ Open evaluation results. State the exact synthetic period and baseline, and repo
 ## Reset and repeat
 
 Existing weekly plans are reused so reopening does not erase decisions. Use another supported week for an independent flow. For a complete reset, stop application processes, deliberately rerun `python -m scoop.synth.load` against the isolated demo database, and clear only the generated model cache if the seed or model implementation changed. Loading replaces all demo tables; do not use it as the normal startup command.
+
+## Saved walkthrough in the local delivery
+
+- The clock is July 27. The newest plan is in Discover with six unanswered interpretations.
+- July 20 remains available in Plan history at Execute & watch. It uses a 96% service preference and a Water-based +10% direction limited to Kowloon.
+- Dragon Fruit Smoothie Cup was recommended at 25 cases and manually confirmed at 26. Its detail panel and saved real-model answer distinguish those quantities.
+- The Fruit/HK Island watch was edited during Execute. Its approved Direction copy retains the original wording; the current version carries to July 27.
+- July 27's prior-week recap shows one confirmed purchase and 26 cases, using observations through July 26. It does not claim the demonstration purchase caused the observed service result.
+- Local launchers accept either live or offline assistant health; provider choice does not make an already-running server appear unavailable.

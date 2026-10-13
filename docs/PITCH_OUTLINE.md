@@ -56,7 +56,7 @@ Speaker note: All operational records are synthetic. The planted events provide 
 
 The report shows observed versus expected share and alternative explanations.
 
-The direction board records scope and adjustment factors.
+The direction board records scope and how much more or less to buy.
 
 Order rationale connects the approved direction to supplier dates, stock position and cases.
 
@@ -68,11 +68,11 @@ PostgreSQL stores the source data and decisions.
 
 Python analytics produce forecasts, share alerts and replenishment recommendations.
 
-FastAPI connects the React planner and scripted assistant to persisted state.
+FastAPI connects the React planner and bounded assistant to persisted state.
 
 Visual: the architecture in `TECHNICAL_DESIGN.md`, simplified to readable components.
 
-Speaker note: The default demo uses no paid model API and can run locally. The assistant clearly identifies itself as scripted.
+Speaker note: The repository default runs offline. The delivered session also exercises Gemini 3.8 Flash through validated tools, with visible live/fallback status and a usage allowance.
 
 ## 8. Each method answers a different question
 
@@ -88,7 +88,7 @@ Speaker note: Explain the information cutoff, uncertainty approximation and heur
 
 ## 9. One complete workflow
 
-Start with the week of 13 July 2026.
+Use the separate 20 July 2026 walkthrough, preserving the earlier saved plans.
 
 Inspect a finding, choose an interpretation and approve a purchasing direction.
 
@@ -106,7 +106,7 @@ Report detection delays, missed events and false alarms in the no-trend counterf
 
 Compare replay fill rate with inventory and peak capacity usage.
 
-Visual: charts generated directly from `reports/evaluation.json`, with the exact period and units. Final run: protection WAPE 3.44% versus 10.54%; coverage 83.33%. Full policy at 96%: 96.54% fill and 21.9 average pallets; historical x1.25: 98.72% and 32.0. Report both sides of this trade-off.
+Visual: charts generated directly from `reports/evaluation.json`, with the exact period and units. Final run: rolling protection WAPE 10.85% versus 10.04%; coverage 64.49% over 780 windows. Full policy at 96%: 98.58% fill and 29.0 average pallets; historical x1.25: 98.72% and 32.0. Report both sides of this trade-off.
 
 Speaker note: Higher service can require more stock. A conservative capacity policy can lower service. A synthetic result is evidence about this implementation, not proof of business savings.
 
@@ -116,7 +116,7 @@ Near term: obtain authorised data, validate the schema and review explanations w
 
 Then: compare recommendations in shadow mode, calibrate uncertainty and choose service/capacity targets.
 
-Before deployment: approve data use, implement access control and operational monitoring, and validate any live LLM integration.
+Before deployment: approve data use, implement access control and operational monitoring, and validate live LLM behaviour on authorised operational data.
 
 Speaker note: Keep the roadmap conditional on data permission and user feedback. The current stock view is historical; a full interactive inventory simulator and supplier integration remain future work.
 

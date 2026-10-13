@@ -1,0 +1,53 @@
+{
+  "monthly_live_calls": [
+    {
+      "date": "2026-06-29",
+      "model_version": "M202606-v1-s42",
+      "trained_through": "2026-05-31",
+      "calibration_end": "2026-05-31",
+      "ratio_outcome_end": "2026-05-31",
+      "suggested_cases": 2246,
+      "findings": 8,
+      "projected_pallets": 40.95533421631928
+    },
+    {
+      "date": "2026-07-13",
+      "model_version": "M202607-v1-s42",
+      "trained_through": "2026-06-30",
+      "calibration_end": "2026-06-30",
+      "ratio_outcome_end": "2026-06-24",
+      "suggested_cases": 1616,
+      "findings": 4,
+      "projected_pallets": 50.13336870486223
+    },
+    {
+      "date": "2026-08-10",
+      "model_version": "M202608-v1-s42",
+      "trained_through": "2026-07-31",
+      "calibration_end": "2026-07-31",
+      "ratio_outcome_end": "2026-07-31",
+      "suggested_cases": 1615,
+      "findings": 4,
+      "projected_pallets": 60.982867010060254
+    }
+  ],
+  "reset_boundaries": [
+    {
+      "date": "2026-07-01",
+      "charts": 124,
+      "starts_from_zero": true
+    },
+    {
+      "date": "2026-08-01",
+      "charts": 124,
+      "starts_from_zero": true
+    }
+  ],
+  "future_observed_weather_and_future_issued_forecasts_cannot_change_old_cutoff": true,
+  "later_month_artifacts_and_detection_cannot_change_historical_findings": true,
+  "approved_demo_purchase_snapshot_unchanged": true,
+  "approved_demo_purchase_sha256": "fa3b04a929165c51d051238510d6280e4cb1433c8abb621fd7f5e75f35d1f18c",
+  "legacy_chart_preserved": true,
+  "legacy_chart_threshold": 3.81,
+  "legacy_chart_facts_through": "2026-07-12"
+}

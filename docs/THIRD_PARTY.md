@@ -6,8 +6,9 @@
 |---|---|---|
 | Anthropic Claude | Product discussion, original architecture, synthetic generator, schema and analytical code recovered from the interrupted session | Team reviews assumptions and code |
 | OpenAI Codex | Recovery and continuation, application implementation, analytical corrections, tests, documentation and local verification | Team reviews the final outputs and accurately declares member contributions |
+| Google Gemini 3.8 Flash | Optional runtime plan discussion, interpretation of user requests and selection of validated planning tools | Team and planner review explanations; Python computes quantities and enforces permitted changes |
 
-The default runtime assistant is scripted and sends no prompts to either service. Tool use during development is separate from the runtime implementation. Do not describe deterministic chat as a live language model. No sponsor dataset is embedded in this repository.
+The portable default runtime assistant is scripted. The verified local configuration also supports real Gemini calls with compact synthetic plan context, bounded recent discussion and validated tool results. It keeps the API key server-side and records an explicit fallback if live assistance fails. Development tool use is separate from runtime behavior. No sponsor dataset is embedded in this repository or used in the live-provider demonstration.
 
 ## Data and model provenance
 

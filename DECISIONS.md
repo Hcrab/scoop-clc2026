@@ -14,6 +14,8 @@ A weekly plan moves through **Discover -> Direction -> Execute & watch**. The pl
 
 Directions are `more`, `less`, `hold` or `clear`. They concern existing stock, have explicit factors and district scopes, and remain visible to the user. Weak signals should lead to a watch rather than a confident claim of a trend.
 
+The interface expresses changes as percentages and business choices. Before strategy approval, the planner reviews the proposed watch list. Approval freezes the selected assumptions and dated capacity projection. Later edits have their own decision records. Unfinished watches carry into the next week; the recap separates historical facts from recorded purchasing choices.
+
 ## 3. Product attributes
 
 Tags include single-choice, multiple-choice, graded and numeric dimensions. Dairy content, richness and sweetness are graded values. Price and nutrition produce numeric dimensions and derived comparison groups. A low/medium/high group is a derived view, not a new independent kind of raw tag.
@@ -26,9 +28,9 @@ The default demonstration date is 13 July 2026. Actual orders and stock shown fo
 
 The policy replay makes an order decision before observing that day's demand. Its capacity measure includes stock immediately after arrivals, before shipping. This avoids giving a planning policy knowledge or space that it would not have at decision time.
 
-## 5. Forecast and detector are separate
+## 5. Forecast and detector share a monthly version
 
-LightGBM provides demand forecasts. A frozen detector baseline helps expose sustained departures instead of immediately fitting them away. The prototype's fixed training windows are deliberate; a production monthly retraining and approval workflow is not implemented. Calibration and monitoring windows must be stated in the evaluation.
+LightGBM provides demand forecasts and the expected shares used by detection. Each calendar month uses an immutable version trained only through the preceding month. CUSUM starts again at a model boundary. Human adjustments tied to evidence already absorbed into the new training history retire rather than being silently applied twice. Saved historical plans retain their findings and decisions. Model metadata records training and calibration cutoffs; a production retraining approval service remains outside the local prototype.
 
 A quantile of individual demand is not automatically a quantile of its sum. Aggregate protection-window uncertainty uses an empirical calibration procedure and remains an approximation. The report must show coverage and errors rather than equating an input service-level parameter with achieved fill rate.
 
@@ -38,7 +40,7 @@ CUSUM tracks weather-adjusted attribute share. Block bootstrap calibration, mult
 
 The investigator compares plausible explanations such as promotion, concentration at one store, weather, a persistent shift or an uncertain signal. Date, district and direction matter. A completed promotion may explain a fading signal. Ground-truth planted events belong in evaluation and must not be used as an answer key by the investigator.
 
-The default assistant is explicitly **scripted**. It answers a bounded set of questions from plan data and records supported actions. It is not a live Claude, OpenAI or other language-model connection. An unsupported request must be acknowledged rather than answered with invented analysis.
+The portable default assistant is **scripted**; the verified local configuration uses **Gemini**. Live conversation selects from validated evidence and planning tools. Both routes use the same mutation logic. Informational questions and scenarios remain read-only, approvals remain human actions, and a remote failure is identified as a fallback. Actual tool results and provider metadata accompany saved messages; progress labels describe observable checks rather than hidden reasoning. An unsupported request must be acknowledged rather than answered with invented analysis.
 
 ## 7. Replenishment is a heuristic
 

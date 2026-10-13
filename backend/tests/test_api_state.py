@@ -77,6 +77,28 @@ def test_discovery_persists_and_locks(api):
     assert c.post('/api/plans/TESTAPI/questions/TESTAPI-Q',json={'answer':'one_off'}).status_code==409
     assert c.put('/api/plans/TESTAPI/directions/TESTAPI-D',json={'bucket':'less','factor':1.2,'districts':['Kowloon']}).status_code==422
 
+def test_saved_discovery_uses_its_original_model_curve(api,monkeypatch):
+    c,scope,_,_=api
+    versions=[]
+    monkeypatch.setattr(service,'cached_series',lambda tag,districts,start,cutoff,version=None:versions.append(version) or [])
+    assert c.get('/api/plans/TESTAPI').status_code==200
+    assert versions and all(version is None for version in versions)
+    versions.clear()
+    with scope() as s:
+        p=s.get(Plan,'TESTAPI');p.summary={**p.summary,'model_run':{'version':'M202607-v1-s42'}}
+        f=s.get(Finding,'TESTAPI-F');f.evidence={**f.evidence,'model_version':'M202606-v1-s42'}
+    assert c.get('/api/plans/TESTAPI').status_code==200
+    assert versions[0]=='M202606-v1-s42'
+
+def test_cached_chart_excludes_future_points(monkeypatch):
+    import scoop.monitoring as monitoring
+    calls=[]
+    curve=pd.DataFrame([{'group':'family:fruit','district':'Kowloon','date':pd.Timestamp(day),'actual_share':.3,'expected_share':.2,'s_up':1.,'s_down':0.} for day in ['2026-07-05','2026-07-06']])
+    monkeypatch.setattr(monitoring,'historical_chart',lambda cutoff,version:calls.append((cutoff,version)) or (None,curve))
+    result=service.cached_series('family:fruit',['Kowloon'],date(2026,7,1),date(2026,7,6),'saved-version')
+    assert calls==[(date(2026,7,6),'saved-version')]
+    assert len(result)==1 and result[0]['date'].startswith('2026-07-05')
+
 def test_recompute_failure_rolls_back(api,monkeypatch):
     c,scope,_,planning=api
     assert c.put('/api/plans/TESTAPI/goal',json={'goal':'fill_rate','service_level':.98}).status_code==200
@@ -116,7 +138,7 @@ def test_cutoff_clock_reuse_and_watch_archive(api,monkeypatch):
     body={'kind':'fill_rate','title':'Fixture watch','assumption':'99%','scope':{}}
     wid=c.post('/api/plans/TESTAPI/watch',json=body).json()['id']
     assert c.post('/api/plans/TESTAPI/watch',json=body).json()['id']==wid
-    assert c.get('/api/plans/TESTAPI').json()['watch'][0]['series']==[{'date':'2026-07-12','value':1.0}]
+    assert next(w for w in c.get('/api/plans/TESTAPI').json()['watch'] if w['id']==wid)['series']==[{'date':'2026-07-12','value':1.0}]
     assert c.delete('/api/plans/TESTAPI/watch/'+wid).status_code==200
     with scope() as s: assert s.get(WatchItem,wid).status=='archived'
 
@@ -141,12 +163,13 @@ def test_historical_plan_metrics_and_sku_watch_thresholds(api):
     with scope() as s:
         s.get(NodeInventory,(date(2026,7,12),'IC001')).on_hand_units=1
         s.add(WatchItem(id='LOW',plan_id='TESTAPI',kind='days_cover',title='Low cover',scope={'mode':'below_lead'},assumption='Lead time',origin='baseline',status='active'))
-    watch=c.get('/api/plans/TESTAPI').json()['watch'][0]
+    watch=next(w for w in c.get('/api/plans/TESTAPI').json()['watch'] if w['id']=='LOW')
     assert (watch['value'],watch['unit'],watch['state'])==(1,'SKUs','warning')
     with scope() as s:
         s.get(NodeInventory,(date(2026,7,12),'IC001')).on_hand_units=1000
         s.get(WatchItem,'LOW').scope={'mode':'excess'}
-    assert c.get('/api/plans/TESTAPI').json()['watch'][0]['value']==1
+        for i in range(6): s.add(StoreOrder(date=date(2026,7,6)+timedelta(days=i),store_id='ST',sku='IC001',ordered_units=10,shipped_units=10))
+    assert next(w for w in c.get('/api/plans/TESTAPI').json()['watch'] if w['id']=='LOW')['value']==1
 
 def test_refresh_watches_tracks_final_direction_and_keeps_user_items(api,monkeypatch):
     from types import SimpleNamespace
@@ -162,5 +185,17 @@ def test_refresh_watches_tracks_final_direction_and_keeps_user_items(api,monkeyp
     with scope() as s:
         active=[w.title for w in service.objects(s,WatchItem,'TESTAPI') if w.status=='active']
         assert 'My custom watch' in active
-        assert any('rise continuing' in t for t in active)
-        assert not any('compare with expected' in t for t in active)
+        assert any(w.kind=='tag_share' and 'higher demand share continues' in w.assumption for w in service.objects(s,WatchItem,'TESTAPI') if w.status=='active')
+        assert sum(w.kind=='tag_share' for w in service.objects(s,WatchItem,'TESTAPI') if w.status=='active')==1
+
+
+def test_large_persistent_shift_matches_supported_direction_range(api):
+    c,scope,_,_=api
+    with scope() as s:
+        f=s.get(Finding,'TESTAPI-F');f.share_before=.1;f.share_now=.4
+    assert c.post('/api/plans/TESTAPI/questions/TESTAPI-Q',json={'answer':'persistent'}).status_code==200
+    detail=c.get('/api/plans/TESTAPI').json()
+    assert detail['directions'][0]['factor']==2
+    assert c.post('/api/plans/TESTAPI/advance').status_code==200
+    assert c.put('/api/plans/TESTAPI/directions/TESTAPI-D',json={'bucket':'more','factor':3,'districts':['Kowloon']}).status_code==422
+    assert c.get('/api/plans/TESTAPI').json()['directions'][0]['factor']==2

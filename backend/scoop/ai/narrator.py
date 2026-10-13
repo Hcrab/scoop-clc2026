@@ -26,10 +26,10 @@ PRETTY = {
 }
 LABELS = {
     "persistent": "Persistent shift",
-    "one_off": "One-off (promotion)",
-    "data_issue": "Data issue (bulk order)",
-    "weather": "Weather (record heat)",
-    "mirror": "Mirror of another change",
+    "one_off": "Temporary event",
+    "data_issue": "Data check needed",
+    "weather": "Weather-related change",
+    "mirror": "Possible shift elsewhere",
     "unsure": "Unclear",
 }
 
@@ -45,33 +45,35 @@ def group_display(group_id: str, name: str) -> str:
 def explain_finding(f: dict) -> str:
     name = f["display"]
     where = ", ".join(f["districts"])
-    move = "rising" if f["direction"] == "up" else "falling"
+    move = "an earlier rise" if f["direction"] == "up" else "an earlier decline"
     share = f"share {f['share_now']:.1%} vs {f['share_expected']:.1%} expected"
     since = f"since {f['alarm_date']:%d %b}" if f.get("alarm_date") is not None else ""
-    lead = f"{name} is {move} in {where} ({share}) {since}.".replace("  ", " ")
+    lead = f"{name} triggered {move} in {where} ({share}) {since}.".replace("  ", " ")
     label = f["classification"]
     checks = {c["name"]: c for c in f["checks"]}
     if label == "persistent":
         body = (
             f"{checks['spread']['detail']}, and it is still there: {checks['persistence']['detail'].lower()}. "
-            "No promotion, bulk order or record heat explains it."
+            "A lasting change is one interpretation; these checks do not establish its cause."
         )
+        if checks.get('record_heat',{}).get('passed'):
+            body += " " + checks['record_heat']['detail'] + ". Heat remains a possible contributor."
     elif label == "one_off" and checks["promotion"]["passed"]:
-        body = f"{checks['promotion']['detail']}. Expect it to fade when the promotion ends."
+        body = f"{checks['promotion']['detail']}. Check whether the change fades after the promotion ends."
     elif label == "one_off":
-        body = f"It has already faded: {checks['persistence']['detail'].lower()}. Treat it as a temporary burst."
+        body = f"{checks['persistence']['detail']}. Recent evidence is less consistent with a lasting change; keep the temporary-event interpretation under review."
     elif label == "data_issue":
-        body = f"{checks['concentration']['detail']}. Treat as a single order, not demand."
+        body = f"{checks['concentration']['detail']}. Review the concentrated store-day records before changing purchases; this does not establish an erroneous individual order."
     elif label == "weather":
-        body = f"{checks['record_heat']['detail']}. The model has never seen this heat, so part of the jump is weather."
+        body = f"{checks['record_heat']['detail']}. These temperatures exceed the training range; weather is a plausible contributor whose effect is uncertain."
     elif label == "mirror":
-        body = f"{checks['own_units']['detail']}: the share moved because another group changed."
+        body = f"{checks['own_units']['detail']}. A change elsewhere may explain part of the share movement; this is a hypothesis to review."
     else:
         body = "The checks do not point to one cause yet; keep watching."
     mix = f["effect_mix"]
     vol = f["effect_volume"]
     split = (
-        f" Shift-share: {mix:+,.0f} units/week from customers switching (mix), {vol:+,.0f} from overall demand (volume)."
+        f" Descriptive breakdown: {mix:+,.0f} units/week associated with the changed demand mix, {vol:+,.0f} with overall demand. This arithmetic does not identify customer switching."
         if abs(mix) + abs(vol) > 0 else ""
     )
     return f"{lead} {body}{split}"
@@ -79,7 +81,7 @@ def explain_finding(f: dict) -> str:
 
 def question_for(f: dict) -> dict:
     name = f["display"]
-    move = "rise" if f["direction"] == "up" else "decline"
+    move = "earlier rise" if f["direction"] == "up" else "earlier decline"
     rec = f["classification"]
     options = [
         {"value": "persistent", "label": "Treat as persistent"},
@@ -92,6 +94,20 @@ def question_for(f: dict) -> dict:
         "options": options,
         "recommended": default,
     }
+
+
+def saved_explanation(finding) -> str:
+    """Present immutable saved facts without repeating old causal overclaims."""
+    evidence=finding.evidence or {}
+    checks=evidence.get('checks',[])
+    required={'spread','persistence','promotion','concentration','record_heat','own_units'}
+    if finding.kind!='significant' or not required.issubset({c['name'] for c in checks}):
+        return 'This is an exploratory change to review against the saved measurements. Its cause is not established.'
+    return explain_finding({'display':evidence.get('display',finding.tag_id),
+        'districts':evidence.get('districts',finding.district.split(', ')),
+        'direction':finding.direction,'share_now':finding.share_now,'share_expected':finding.share_before,
+        'alarm_date':finding.alarm_date,'classification':finding.classification,
+        'checks':checks,'effect_mix':finding.effect_mix,'effect_volume':finding.effect_volume})
 
 
 def chat_reply(message: str, context: dict) -> str:

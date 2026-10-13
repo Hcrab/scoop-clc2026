@@ -2,9 +2,9 @@
 
 Trend-aware ice-cream replenishment planning for the Corporate Link Challenge 2026.
 
-Scoop helps a cold-store planner review preference signals, decide what to buy more or less of, and turn those decisions into case-level orders under supplier and warehouse constraints. The weekly flow is **Discover -> Direction -> Execute & watch**, with a persistent, explicitly scripted assistant.
+Scoop helps a cold-store planner review demand changes, decide what to buy more or less of, and turn those decisions into case quantities under supplier and warehouse constraints. The weekly flow is **Discover -> Direction -> Execute & watch**, with a plan discussion that follows the selected finding and stage.
 
-The local prototype uses synthetic data: one DC, 20 stores, four districts, 60 SKUs and eight suppliers. Its default clock is **13 July 2026**. It requires no LLM API key and sends no real supplier orders.
+The local prototype uses synthetic data: one DC, 20 stores, four districts, 60 SKUs and eight suppliers. Its initial clock is **13 July 2026**; the demo controls can advance it through August. The portable default works offline. Optional Gemini assistance uses real tool calls and an explicit offline fallback. Purchase confirmations are local records; no real supplier orders are sent.
 
 ## Quick start
 
@@ -67,15 +67,21 @@ pnpm --dir frontend build
 
 API tests require a running configured PostgreSQL database and use disposable test schemas. Model artifacts go under `data/cache/`; evaluation outputs go under `reports/`. Keep generated caches out of Git. If you change the seed or forecasting implementation, invalidate its generated cache before comparing results. On a machine with many CPU cores, set `OPENBLAS_NUM_THREADS=1` and `OMP_NUM_THREADS=1` to avoid excessive numerical-library thread allocation; the startup helper sets conservative defaults.
 
+The ordinary test suite forces the assistant offline and does not spend provider allowance. If Windows denies access to its global pytest temporary directory, pass a fresh workspace-local `--basetemp` path. Never use a folder containing user files for this option.
+
+### Live plan discussion
+
+Set `SCOOP_LLM_PROVIDER=gemini` in the ignored `.env` and provide `GEMINI_API_KEY` in the server process environment, then restart the API. The local implementation has been exercised with `gemini-3.8-flash`. Default limits are 120 provider calls and a conservative US$3 estimated allowance for this demo. The UI displays actual tool progress, saves evidence with each response, and identifies an offline fallback when used. See [assistant configuration and behavior](docs/ASSISTANT.md).
+
 Optional report figures: install `matplotlib==3.11.2` in a reporting environment and run `python scripts/plot-evaluation.py`. Figure sources and PNG/SVG outputs are included.
 
 ## What to demonstrate
 
 1. Review a weekly finding, its observed-versus-expected chart and alternative explanations.
 2. Record whether the evidence is persistent, one-off, weather-related, a data issue or uncertain.
-3. Approve purchasing directions, district scopes and the operational objective.
+3. Choose purchasing directions, district scopes and the operational objective; review the proposed watch list before approval.
 4. Inspect supplier dates, protection-window forecasts, capacity cuts and case quantities. Confirm a synthetic order and export CSV.
-5. Add a watch, reload, and inspect persisted decisions and chat context.
+5. Add or edit a watch, reload, and inspect persisted decisions and chat context. A new week carries unresolved watches forward and shows the previous week's dated recap.
 
 See [the demo guide](docs/DEMO.md) for a walkthrough. Historical inventory is a generated snapshot; confirming a demo order does not retroactively simulate physical warehouse movements.
 
@@ -93,7 +99,7 @@ The forecast, detector and capacity allocator are evaluated separately. A reques
 ```text
 backend/scoop/synth/       Synthetic catalog and operational history
 backend/scoop/algorithms/ Forecast, monitoring and replenishment
-backend/scoop/ai/         Evidence investigator and scripted assistant
+backend/scoop/ai/         Evidence investigator, Gemini tools and offline fallback
 backend/scoop/api/        HTTP views, validation and persisted actions
 backend/tests/            Focused regression and API tests
 frontend/                 React + TypeScript planner

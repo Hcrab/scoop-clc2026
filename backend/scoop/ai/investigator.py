@@ -59,6 +59,7 @@ def investigate(
     promotions: pd.DataFrame,
     weather: pd.DataFrame,
     training_tmax: float,
+    product_info: pd.DataFrame | None = None,
 ) -> Verdict:
     sign = 1 if direction == "up" else -1
     stores = list(store_district[store_district.isin(districts)].index)
@@ -66,7 +67,9 @@ def investigate(
     e = _window(expected, start, as_of)
     a = a[a.store_id.isin(stores) & a.sku.isin(skus)]
     e = e[e.store_id.isin(stores) & e.sku.isin(skus)]
-    j = a.merge(e[["date", "store_id", "sku", "mean"]], on=["date", "store_id", "sku"], how="left").fillna({"mean": 0.0})
+    j = a.merge(e[["date", "store_id", "sku", "mean"]], on=["date", "store_id", "sku"], how="left")
+    if j.empty or j["mean"].isna().any():
+        return Verdict("unsure",0.0,[Check("data_coverage",False,"Expected demand is missing for part of this scope",{})],[])
     j["excess"] = j.ordered_units - j["mean"]
     total_excess = float(j.excess.sum())
     checks: list[Check] = []
@@ -82,17 +85,24 @@ def investigate(
     if recent_top2 > top2 and recent_cells.sum() > 0.3 * pos.sum():
         top2, top_cell = recent_top2, recent_cells.idxmax()
     concentrated = top2 >= 0.5 and pos.sum() > 0
+    top_sku = None
+    if top_cell:
+        top_rows = j[(j.store_id==top_cell[0])&(j.date==top_cell[1])]
+        if len(top_rows):
+            top_sku = top_rows.loc[(top_rows.excess*sign).idxmax(),'sku']
     checks.append(Check("concentration", concentrated,
                         f"Top two store-days carry {top2:.0%} of the excess" + (f" ({top_cell[0]} on {top_cell[1].date()})" if top_cell else ""),
-                        {"top2_share": round(top2, 3), "store": top_cell[0] if top_cell else None}))
+                        {"top2_share": round(top2, 3), "store": top_cell[0] if top_cell else None,
+                         "date":top_cell[1].date().isoformat() if top_cell else None,"sku":top_sku}))
 
     # 2. overlap with promotions of the group's products
     pr = promotions[promotions.sku.isin(skus) & (pd.to_datetime(promotions.end_date) >= start) & (pd.to_datetime(promotions.start_date) <= as_of)]
-    promo_days = set()
+    signed_excess = (j.excess*sign).clip(lower=0)
+    promo_mask = pd.Series(False,index=j.index)
     for r in pr.itertuples():
-        promo_days.update(pd.date_range(r.start_date, r.end_date))
-    in_promo = j[j.date.isin(promo_days)].excess.sum() * sign
-    promo_share = float(in_promo / (total_excess * sign)) if total_excess * sign > 0 else 0.0
+        promo_mask |= (j.sku==r.sku) & j.date.between(pd.Timestamp(r.start_date),pd.Timestamp(r.end_date))
+    in_promo = signed_excess[promo_mask].sum()
+    promo_share = float(in_promo / signed_excess.sum()) if signed_excess.sum() > 0 else 0.0
     promo_hit = len(pr) > 0 and promo_share >= 0.5
     checks.append(Check("promotion", promo_hit,
                         f"{len(pr)} promotions overlap; {promo_share:.0%} of the excess falls on promotion days" if len(pr) else "No promotion overlaps the window",
@@ -101,7 +111,7 @@ def investigate(
     # 3. record heat
     w = _window(weather.assign(date=pd.to_datetime(weather.date)), start, as_of)
     hot_days = set(w[w.tmax > training_tmax].date)
-    hot_share = float(j[j.date.isin(hot_days)].excess.sum() * sign / (total_excess * sign)) if hot_days and total_excess * sign > 0 else 0.0
+    hot_share = float(signed_excess[j.date.isin(hot_days)].sum() / signed_excess.sum()) if hot_days and signed_excess.sum() > 0 else 0.0
     heat_hit = bool(hot_days) and hot_share >= 0.4
     checks.append(Check("record_heat", heat_hit,
                         f"{len(hot_days)} days above the training maximum of {training_tmax:.1f}C carry {hot_share:.0%} of the excess" if hot_days else "No day above the training temperature range",
@@ -125,16 +135,44 @@ def investigate(
     days = int((as_of - start).days) + 1
     checks.append(Check("persistence", persists and days >= 7, f"Last 7 days: units {recent_lift - 1:+.0%}; running for {days} days", {"recent_lift": round(recent_lift, 3), "days": days}))
 
+    # Scoped sibling shortfalls can support substitution; requested demand itself is
+    # uncensored, so masking warehouse-stockout days out of detection would bias it.
+    substitution_hit = False
+    sibling_fraction = 0.0
+    launch_hit = False
+    siblings = []
+    if product_info is not None and "family" in product_info:
+        families = set(product_info[product_info.sku.isin(skus)].family)
+        siblings = list(product_info[product_info.family.isin(families) & ~product_info.sku.isin(skus)].sku)
+        sibling = _window(actual,start,as_of)
+        sibling = sibling[sibling.store_id.isin(stores)&sibling.sku.isin(siblings)]
+        if "shipped_units" in sibling and len(sibling):
+            short = sibling[sibling.shipped_units < sibling.ordered_units].groupby(["date","store_id"]).ordered_units.sum()
+            cells = pd.MultiIndex.from_frame(j[["date","store_id"]])
+            overlap = cells.isin(short.index)
+            sibling_fraction = float(signed_excess[overlap].sum()/max(signed_excess.sum(),1.))
+            substitution_hit = direction=="up" and sibling_fraction>=0.5 and float((sibling.ordered_units-sibling.shipped_units).sum()/max(sibling.ordered_units.sum(),1.))>=0.05
+        if "launch_date" in product_info:
+            launches = product_info[product_info.sku.isin(skus) & pd.to_datetime(product_info.launch_date).between(start,as_of)].sku
+            launch_hit = bool(len(launches))
+    checks.append(Check("sibling_shortfall",substitution_hit,
+        f"Same-family peer shortfalls coincide with {sibling_fraction:.0%} of positive scoped excess" if siblings else "No same-family peers outside this group are available to test substitution",
+        {"siblings":siblings,"overlap_share":round(sibling_fraction,3)}))
+    checks.append(Check("recent_launch",launch_hit,
+        "A group product launched within this evidence window" if launch_hit else "No scoped launch is recorded within this evidence window",
+        {"metadata_available":product_info is not None and "launch_date" in product_info}))
     fading = not persists and days >= 7
     scores = {
         "data_issue": 0.9 if concentrated else 0.05,
-        "one_off": 0.85 if promo_hit else (0.6 if fading else 0.05),
+        "one_off": 0.85 if (promo_hit or substitution_hit) else (0.6 if fading else 0.05),
         "weather": 0.7 if heat_hit else 0.05,
         "mirror": 0.6 if mirror else 0.05,
         "persistent": 0.2 + 0.35 * checks[4].passed + 0.35 * checks[5].passed,
     }
-    if concentrated or promo_hit:
+    if concentrated or promo_hit or substitution_hit:
         scores["persistent"] *= 0.3
+    if launch_hit:
+        scores["unsure"] = 0.75
     label = max(scores, key=scores.get)
     conf = scores[label]
     if conf < 0.5:
@@ -152,18 +190,45 @@ def investigate(
 
 
 def review_near_misses(alarms: pd.DataFrame, series: pd.DataFrame, cal: cusum.Calibration, as_of: pd.Timestamp, budget: int = REVIEW_BUDGET) -> list[dict]:
-    """Re-test near-miss charts by pooling districts: a change spread thin across districts can
-    stay under every district's threshold while being clear network-wide."""
+    """At most `budget` documented algorithmic checks; all results stay exploratory.
+
+    Network pooling, a recent-week window and district splitting target dilution,
+    early changes and opposing districts. These additional checks are not FDR
+    discoveries and cannot directly alter procurement. Requested orders already
+    include unfilled demand; deleting stockout days is therefore inappropriate.
+    """
+    if alarms.empty or series.empty or budget<=0:
+        return []
     near = alarms[alarms.near_miss].copy()
     near["pooled_key"] = near.group + "|" + near.direction
-    candidates = near.groupby("pooled_key").statistic.sum().sort_values(ascending=False).head(budget)
+    candidates = near.groupby("pooled_key").statistic.sum().sort_values(ascending=False,kind="stable")
     out = []
     for key in candidates.index:
-        group, direction = key.split("|")
-        part = series[(series.group == group) & (series.date <= as_of) & (series.date >= as_of - pd.Timedelta(days=42))]
-        pooled = part.groupby("date").z.sum() / np.sqrt(part.district.nunique())
-        up, down = cusum._run(pooled.to_numpy())
-        stat = float((up if direction == "up" else down)[-1])
-        out.append({"group": group, "direction": direction, "pooled_statistic": round(stat, 2), "threshold": cal.h,
-                    "confirmed": stat >= cal.h, "reason": "Pooled across districts: change spread thin across the network"})
+        group,direction = key.split("|")
+        part = series[(series.group==group)&(series.date<=as_of)].copy()
+        if part.empty:
+            continue
+        for method in ("network_pool","recent_week","district_split"):
+            if len(out)>=budget:
+                return out
+            chosen = part[part.date>as_of-pd.Timedelta(days=7)] if method=="recent_week" else part
+            districts = sorted(chosen.district.unique())
+            if method=="district_split":
+                district_stats = []
+                for district,df in chosen.groupby("district",sort=True):
+                    up,down = cusum._run(df.sort_values("date").z.to_numpy())
+                    district_stats.append((float((up if direction=="up" else down)[-1]),district))
+                stat,district = max(district_stats)
+                districts = [district]
+                reason = "Checked districts separately for changes hidden by pooling"
+            else:
+                pooled = chosen.groupby("date").z.sum()/np.sqrt(len(districts))
+                up,down = cusum._run(pooled.to_numpy())
+                stat = float((up if direction=="up" else down)[-1])
+                reason = "Rechecked the last seven days for an early change" if method=="recent_week" else "Pooled districts to inspect a change spread across the network"
+            out.append({"group":group,"direction":direction,"method":method,
+                "pooled_statistic":round(stat,2),"threshold":cal.h,"confirmed":stat>=cal.h,
+                "reason":reason,"districts":districts,"observations":int(chosen.date.nunique()),
+                "status":"exploratory","window_start":chosen.date.min().date().isoformat(),
+                "window_end":as_of.date().isoformat()})
     return out
