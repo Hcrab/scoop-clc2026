@@ -245,7 +245,7 @@ def build_weather(rng: np.random.Generator, days: list[date]):
 # --------------------------------------------------------------------------- demand
 
 
-def build_demand(rng, days, stores, products, product_tags, weather):
+def build_demand(rng, days, stores, products, product_tags, weather, *, planted=True):
     n_d, n_s, n_i = len(days), len(stores), len(products)
     day_idx = np.arange(n_d)
     tag_set = product_tags.groupby("sku")["tag_id"].apply(set).reindex(products.sku).tolist()
@@ -279,7 +279,7 @@ def build_demand(rng, days, stores, products, product_tags, weather):
     p_start, p_end = date(2026, 7, 1), date(2026, 7, 7)
     s, e = (p_start - START).days, (p_end - START).days
     for i in cone_idx:
-        promo_mult[s : e + 1, i] *= 1.85
+        promo_mult[s : e + 1, i] *= 1.85 if planted else 1 + 1.2 * 40 / 100
         promos.append((f"PR{len(promos) + 1:04d}", products.sku[i], p_start, p_end, 40.0, "Summer cone festival: buy one get one 50%"))
     lam *= promo_mult[:, None, :]
 
@@ -301,7 +301,8 @@ def build_demand(rng, days, stores, products, product_tags, weather):
     trend *= np.where(choc_coated[None, None, :], choc_mult[:, None, None], 1.0)
     sugar_mult = _ramp(day_idx, date(2026, 6, 1), date(2026, 8, 31), 0.12)
     trend *= np.where(low_sugar[None, None, :], sugar_mult[:, None, None], 1.0)
-    lam *= trend
+    if planted:
+        lam *= trend
 
     gamma = rng.gamma(GAMMA_SHAPE, 1 / GAMMA_SHAPE, size=lam.shape)
     orders = rng.poisson(lam * gamma).astype(np.int64)
@@ -309,8 +310,9 @@ def build_demand(rng, days, stores, products, product_tags, weather):
     # planted bulk order: one store, one tub, two days
     bulk_store = int(np.where(stores.name.to_numpy() == "Tsuen Wan")[0][0])
     bulk_sku = int(np.where(products.name.to_numpy() == "Vanilla Bean Tub")[0][0])
-    for d in (date(2026, 7, 9), date(2026, 7, 10)):
-        orders[(d - START).days, bulk_store, bulk_sku] += 60
+    if planted:
+        for d in (date(2026, 7, 9), date(2026, 7, 10)):
+            orders[(d - START).days, bulk_store, bulk_sku] += 60
 
     promotions = pd.DataFrame(promos, columns=["id", "sku", "start_date", "end_date", "discount_pct", "note"])
     events = pd.DataFrame(
@@ -401,6 +403,24 @@ def simulate_dc(rng, days, stores, products, suppliers, orders):
 
 
 # --------------------------------------------------------------------------- entry point
+
+
+def null_orders(seed: int = 42) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Reproducible no-trend counterfactual for detector evaluation.
+
+    Keeps the same catalog, weather (including heat), known promotions and RNG
+    state entering demand generation. Removes preference drifts, exceptional
+    promotion uplift and bulk orders. Poisson draws after changed intensities
+    need not be paired with the planted world; this is not a causal estimator.
+    """
+    rng = np.random.default_rng(seed)
+    days = _dates()
+    stores, _, products, _, _, _, product_tags = build_catalog(rng)
+    weather, _, _ = build_weather(rng, days)
+    orders, _, _ = build_demand(rng, days, stores, products, product_tags, weather, planted=False)
+    idx = pd.MultiIndex.from_product([days, stores.id, products.sku], names=["date", "store_id", "sku"])
+    frame = pd.DataFrame({"ordered_units": orders.reshape(-1)}, index=idx).reset_index()
+    return frame, weather
 
 
 def generate(seed: int = 42) -> World:
