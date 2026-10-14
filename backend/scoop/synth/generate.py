@@ -432,6 +432,9 @@ def generate(seed: int = 42) -> World:
     if seed == 91:
         from .challenge import inject
         events = pd.concat([events, inject(orders, days, stores, products)], ignore_index=True)
+    if seed == 92:
+        from .combination_challenge import inject
+        events = pd.concat([events, inject(orders, days, stores, products, nutrition, product_tags)], ignore_index=True)
     shipped, inventory, purchase_orders = simulate_dc(rng, days, stores, products, suppliers, orders)
 
     n_d, n_s, n_i = orders.shape

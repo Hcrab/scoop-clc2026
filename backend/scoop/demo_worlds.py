@@ -13,6 +13,7 @@ SCENARIOS=[
     dict(id='july-context',name='Summer trading',description='Follow the original retail network through changing summer demand and weekly purchasing decisions.',seed=42,default_week='2026-07-13',weeks=WEEKS),
     dict(id='august-seed73',name='Another summer',description='Explore another simulated season with different store orders, weather and demand patterns.',seed=73,default_week='2026-07-27',weeks=WEEKS),
     dict(id='crosscurrents',name='Crosscurrents',description='Explore a retail network with changing local demand and a different product mix.',seed=91,default_week='2026-07-27',weeks=WEEKS),
+    dict(id='new-season',name='New season',description='Explore a new simulated season of store orders and weekly purchasing decisions.',seed=92,default_week='2026-07-27',weeks=WEEKS),
 ]
 PLANNING={'plans','findings','hypotheses','questions','decisions','direction_items','purchase_suggestions','watch_items','chat_messages'}
 SOURCE_FIELDS={'stores':'stores','nodes':'nodes','suppliers':'suppliers','products':'products','product_nutrition':'nutrition','tag_dimensions':'tag_dimensions','tags':'tags','product_tags':'product_tags','weather_daily':'weather','weather_forecasts':'forecasts','promotions':'promotions','store_orders':'store_orders','node_inventory':'node_inventory','purchase_orders':'purchase_orders','ground_truth_events':'events'}

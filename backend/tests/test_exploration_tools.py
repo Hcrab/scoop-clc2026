@@ -83,6 +83,16 @@ def test_catalog_and_strict_parameter_contract(exploration):
         with pytest.raises(ValueError,match='districts'):tools.execute('query_group',{'group_ids':['format:cone'],'districts':['Unknown']},session,plan)
 
 
+def test_prior_year_curve_uses_same_products_and_district_without_filling_missing_days(exploration):
+    scope,_=exploration
+    with scope() as session:
+        for store,sku,units in [('ST','IC001',19),('ST','B',41),('ST','C',999),('ST2','IC001',1000)]:
+            session.add(StoreOrder(date=date(2025,7,6),store_id=store,sku=sku,ordered_units=units,shipped_units=units))
+    result=run(scope,'query_group',{'group_ids':['band:price_hkd:1','format:cone'],'districts':['Kowloon'],'window_days':7})
+    assert result['daily'][0]['prior_year_requested_units']==60
+    assert result['daily'][1]['prior_year_requested_units'] is None
+
+
 def test_intersection_cutoff_share_and_decomposition(exploration,monkeypatch):
     scope,_=exploration
     dates=[]

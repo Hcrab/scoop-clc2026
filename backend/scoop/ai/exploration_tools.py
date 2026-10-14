@@ -11,11 +11,11 @@ import math
 import numpy as np
 import pandas as pd
 from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy import select
+from sqlalchemy import select, func
 
 from ..algorithms import cusum, groups, runs
 from ..algorithms.shiftshare import decompose
-from ..models import DirectionItem, Node, Product, Promotion, PurchaseOrder, Store, StoreOrder
+from ..models import DirectionItem, Node, Product, ProductNutrition, Promotion, PurchaseOrder, Store, StoreOrder
 
 
 class Parameters(BaseModel):
@@ -64,6 +64,16 @@ def _groups(session):
             if len(skus)>=groups.MIN_SKUS:
                 identifier=f'band:price_100ml:{band}'
                 catalog[identifier]=groups.Group(identifier,label,'price_100ml',skus)
+    nutrition=list(session.scalars(select(ProductNutrition).order_by(ProductNutrition.sku)))
+    nutrition=[n for n in nutrition if n.serving_ml>0]
+    if nutrition:
+        calories=np.array([n.kcal/n.serving_ml*100 for n in nutrition])
+        bands=np.digitize(calories,np.quantile(calories,[1/3,2/3]),right=True)
+        for band,label in enumerate(('Lower calorie / 100 ml','Mid calorie / 100 ml','Higher calorie / 100 ml')):
+            skus=tuple(n.sku for n,b in zip(nutrition,bands) if b==band)
+            if len(skus)>=groups.MIN_SKUS:
+                identifier=f'band:kcal_100ml:{band}'
+                catalog[identifier]=groups.Group(identifier,label,'kcal_100ml',skus)
     return catalog
 
 
@@ -201,13 +211,23 @@ def _query_group(session,plan,args):
     coverage=_ratio(len(actual_keys&expected_keys),len(actual_keys))
     adequate=bool(len(skus)>=groups.MIN_SKUS and recent['observed_days']>=7 and recent['requested_units']>=100
                   and coverage is not None and coverage>=.95 and recent['expected_share'] is not None)
+    daily=_daily(actual,expected,skus,denominator,start,cutoff,districts)
+    prior_start=(pd.Timestamp(start)-pd.DateOffset(years=1)).date()
+    prior_end=(pd.Timestamp(cutoff)-pd.DateOffset(years=1)).date()
+    selected_stores=[key for key,value in stores.items() if value.district in districts]
+    prior=dict(session.execute(select(StoreOrder.date,func.sum(StoreOrder.ordered_units))
+        .where(StoreOrder.date.between(prior_start,prior_end),StoreOrder.sku.in_(skus),StoreOrder.store_id.in_(selected_stores))
+        .group_by(StoreOrder.date)).all())
+    for row in daily:
+        comparison_date=(pd.Timestamp(row['date'])-pd.DateOffset(years=1)).date()
+        row['prior_year_requested_units']=float(prior[comparison_date]) if comparison_date in prior else None
     return {'scope':{'group_ids':ids,'districts':districts,'skus':sorted(skus),'sku_count':len(skus),
                      'denominator_group_id':args.denominator_group_id},'evidence_through':cutoff.isoformat(),
             'window_start':start.isoformat(),'before_start':before_start.isoformat(),'window_days':args.window_days,
             'exploratory':True,'family_fdr_significant':False,'recent':recent,'before':before,
             'sample':{'adequate':adequate,'sku_count':len(skus),'store_count':int(members.store_id.nunique()),
                       'expected_row_coverage':coverage,'rule':'At least 3 products, 7 observed days, 100 requested units and 95% expected-row coverage; this is an adequacy heuristic.'},
-            'daily':_daily(actual,expected,skus,denominator,start,cutoff,districts),
+            'daily':daily,'prior_year_basis':'Same calendar dates one year earlier, same products and districts; not weather-adjusted.',
             'parents':[{'group_id':g,'name':catalog[g].name,'denominator':'all_catalog',
                         **_stats(a,e,set(catalog[g].skus),set(products))} for g in ids],
             'sku_contributors':_contributors(members,predicted,'sku',products,stores),

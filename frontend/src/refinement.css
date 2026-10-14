@@ -60,3 +60,4 @@ body{overflow-x:hidden}.app,.workspace,main,section,article{min-width:0}.workspa
 @media(max-width:760px){.generated-report{padding:24px 18px}.generated-report-heading{margin-bottom:20px}.generated-report-heading h2{font-size:29px;letter-spacing:-.6px}.discover-metrics{grid-template-columns:1fr}.discover-metrics .metric{border:0}.report-evidence-index>div{flex-direction:column;gap:6px}}
 
 .discussion .weekly-opening>.message-body{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}
+.report-host-evidence{margin-top:16px;padding:20px;background:#f6f8f3;border:1px solid #e0e7dc;border-radius:10px;min-width:0}.report-host-evidence h3{font-size:15px;margin-bottom:10px}.report-host-evidence .modal-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
