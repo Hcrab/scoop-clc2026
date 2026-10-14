@@ -20,7 +20,7 @@ from .ai.investigator import investigate, review_near_misses
 from .algorithms import cusum
 from .algorithms.forecast import protection_forecast, build_features, forecast_weather, daily_mean
 from .algorithms.replenish import SkuInput, plan_orders
-from .algorithms.runs import RUN_B_END, artifacts
+from .algorithms.runs import RUN_B_END, artifacts, month_start, model_metadata
 from .algorithms.shiftshare import decompose
 from .db import engine, read_sql, session_scope
 from .models import (
@@ -139,7 +139,8 @@ def _cluster(alarms: pd.DataFrame, as_of: pd.Timestamp) -> list[dict]:
 def _share_stats(group_id: str, districts: list[str], start: pd.Timestamp, as_of: pd.Timestamp) -> dict:
     m = monitoring()
     s = m.series[(m.series.group == group_id) & m.series.district.isin(districts)]
-    now = s[(s.date > as_of - pd.Timedelta(days=14)) & (s.date <= as_of)]
+    lower = max(pd.Timestamp(month_start(as_of)), pd.Timestamp(start), as_of-pd.Timedelta(days=13))
+    now = s[(s.date >= lower) & (s.date <= as_of)]
     return {"share_now": float(now.actual_share.mean()), "share_expected": float(now.expected_share.mean())}
 
 
@@ -166,16 +167,19 @@ def detect(as_of: date) -> list[dict]:
     m = monitoring()
     art = artifacts()
     ts = pd.Timestamp(as_of) - pd.Timedelta(days=1)  # data through yesterday
-    alarms = cusum.alarms_as_of(m.series, m.calibration, ts)
-    training_tmax = float(art.static.weather[art.static.weather.date <= pd.Timestamp(RUN_B_END)].tmax.max())
+    cal = m.calibration_for(as_of)
+    current_series = m.series_for(as_of, through=ts)
+    alarms = cusum.alarms_as_of(current_series, cal, ts)
+    training_tmax = float(art.static.weather[art.static.weather.date <= pd.Timestamp(art.run_for(as_of).model.trained_through)].tmax.max())
     promotions = read_sql("SELECT sku, start_date, end_date, discount_pct, note FROM promotions")
+    product_info = read_sql("SELECT sku, launch_date FROM products").merge(art.static.products[["sku","family"]],on="sku")
     out = []
     for f in _cluster(alarms, ts):
         g = m.group_by_id[f["group"]]
         v = investigate(
             skus=list(g.skus), districts=f["districts"], direction=f["direction"], start=f["run_start"], as_of=ts,
             actual=m.actual, expected=m.expectations, store_district=m.store_district, promotions=promotions,
-            weather=art.static.weather, training_tmax=training_tmax,
+            weather=art.static.weather, training_tmax=training_tmax, product_info=product_info,
         )
         f.update(_share_stats(f["group"], f["districts"], f["run_start"], ts))
         ss = _shift_share(f["group"], f["districts"], f["run_start"], ts)
@@ -183,30 +187,36 @@ def detect(as_of: date) -> list[dict]:
                   "share_before": ss["share_before"]})
         f.update({"kind": "significant", "source": "scan", "classification": v.label, "confidence": v.confidence,
                   "checks": [c.__dict__ for c in v.checks], "hypotheses": v.hypotheses,
-                  "display": narrator.group_display(g.id, g.name), "threshold": m.calibration.h})
+                  "display": narrator.group_display(g.id, g.name), "threshold": cal.h})
         f["explanation"] = narrator.explain_finding(f)
         out.append(f)
     # explained side effects (mirror shares) go last; the planner reads real changes first
     out.sort(key=lambda f: (f["classification"] == "mirror", -f["statistic"]))
     flagged = {(f["group"], f["direction"]) for f in out} | {(r, f["direction"]) for f in out for r in f["related"]}
-    for w in review_near_misses(alarms, m.series, m.calibration, ts):
+    reviews = review_near_misses(alarms, current_series, cal, ts)
+    m.review_log[as_of.isoformat()] = reviews
+    for w in sorted(reviews,key=lambda row:-row["pooled_statistic"]):
         if not w["confirmed"] or (w["group"], w["direction"]) in flagged:
             continue
         g = m.group_by_id[w["group"]]
-        districts = sorted(m.store_district.unique())
+        flagged.add((w["group"],w["direction"]))
+        districts = w.get("districts") or sorted(m.store_district.unique())
         stats = _share_stats(w["group"], districts, ts - pd.Timedelta(days=42), ts)
         out.append({
             "group": w["group"], "direction": w["direction"], "districts": districts, "related": [],
-            "statistic": w["pooled_statistic"], "p_value": m.calibration.p_value(w["pooled_statistic"]), "q_value": 1.0,
-            "alarm_date": None, "run_start": ts - pd.Timedelta(days=42), "attribution_f1": None,
+            "statistic": w["pooled_statistic"], "p_value": cal.p_value(w["pooled_statistic"]), "q_value": 1.0,
+            "alarm_date": None, "run_start": max(pd.Timestamp(month_start(as_of)), ts - pd.Timedelta(days=42)), "attribution_f1": None,
             "effect_volume": 0.0, "effect_mix": 0.0, "effect_interaction": 0.0, "share_before": stats["share_expected"],
             "kind": "weak", "source": "ai_review", "review_reason": w["reason"], "classification": "unsure", "confidence": 0.4,
-            "checks": [], "hypotheses": [], "display": narrator.group_display(g.id, g.name), "threshold": m.calibration.h,
+            "checks": [{"name":w["method"],"passed":w["confirmed"],"detail":w["reason"],"data":w}], "hypotheses": [], "display": narrator.group_display(g.id, g.name), "threshold": cal.h,
             **stats,
-            "explanation": f"{narrator.group_display(g.id, g.name)} is drifting {'up' if w['direction'] == 'up' else 'down'} in every district, "
-                           f"too slowly for any single district to alarm. Pooled across the network the CUSUM reaches "
-                           f"{w['pooled_statistic']:.1f} against a threshold of {w['threshold']:.1f}. Weak signal: watch, do not plan on it yet.",
+            "explanation": f"{narrator.group_display(g.id,g.name)}: {w['reason'].lower()}. "
+                           f"The exploratory check reaches {w['pooled_statistic']:.1f} against {w['threshold']:.1f}. "
+                           "Watch this possibility; it has not passed the main significance gate.",
         })
+    for finding in out:
+        finding["model_version"] = art.run_for(as_of).model.version
+        finding["evidence_through"] = ts.date().isoformat()
     return out
 
 
@@ -226,7 +236,8 @@ def default_directions(findings: list[dict]) -> list[dict]:
         else:
             bucket, factor = "hold", 1.0
         items.append({"bucket": bucket, "tag_id": f["group"], "districts": f["districts"], "factor": round(factor, 3),
-                      "finding_group": f["group"], "note": f["display"]})
+                      "finding_group": f["group"], "note": f["display"],
+                      "origin_model_version": f.get("model_version"), "evidence_through": f.get("evidence_through")})
     return items
 
 
@@ -267,12 +278,34 @@ def inventory_position(as_of: date) -> pd.DataFrame:
     return out
 
 
+def active_directions(as_of: date, directions: list[dict], model) -> list[dict]:
+    """Retire older approved multipliers only when their observed evidence was trained in.
+
+    Unknown provenance is retained for backwards compatibility; callers carrying an
+    old direction must supply evidence_through plus origin_model_version. Historical
+    plan rows are never mutated by this lifecycle transition.
+    """
+    active = []
+    for direction in directions:
+        origin = direction.get("origin_model_version")
+        through = direction.get("evidence_through")
+        if through and pd.Timestamp(through).date() >= as_of:
+            continue  # a historical decision cannot use later evidence
+        if origin and through and origin != model.version and pd.Timestamp(through).date() <= model.trained_through:
+            continue
+        active.append(dict(direction))
+    return active
+
+
 def suggest_orders(as_of: date, directions: list[dict], service_level: float | None = None,
                    position: pd.DataFrame | None = None, goal: str = "margin", only_due: bool = False,
                    pending_arrivals: dict | None = None, weather_scenario=None) -> pd.DataFrame:
     art = artifacts()
     st = art.static
-    fc, split = protection_forecast(art.model_b, st, as_of - timedelta(days=1), order_calendar=True, weather_scenario=weather_scenario)
+    monthly = art.run_for(as_of)
+    model = monthly.model
+    directions = active_directions(as_of, directions, model)
+    fc, split = protection_forecast(model, st, as_of - timedelta(days=1), order_calendar=True, weather_scenario=weather_scenario)
     if service_level is None:
         service_level = {"fill_rate": 0.97, "sales": 0.98}.get(goal)
     adj = sku_adjustments(directions, split)
@@ -290,10 +323,12 @@ def suggest_orders(as_of: date, directions: list[dict], service_level: float | N
             lead_days=int(p.lead_time_days), adjustment=a,
         ))
     capacity = float(read_sql("SELECT capacity_pallets FROM nodes WHERE id = 'DC1'").capacity_pallets.iloc[0])
-    baseline, arrival_mask = capacity_projection(as_of, pos, st, art.model_b, adj, pending_arrivals, weather_scenario=weather_scenario)
-    plan = plan_orders(items, art.ratio_values, capacity, service_level,
+    baseline, arrival_mask = capacity_projection(as_of, pos, st, model, adj, pending_arrivals, weather_scenario=weather_scenario)
+    plan = plan_orders(items, monthly.ratio_values, capacity, service_level,
                        capacity_baseline=baseline, arrival_mask=arrival_mask)
     wd = prod.order_weekday.reindex(plan.sku).to_numpy()
+    plan["model_version"] = model.version
+    plan["trained_through"] = model.trained_through
     plan["order_date"] = [as_of + timedelta(days=int((w - as_of.weekday()) % 7)) for w in wd]
     return plan
 
@@ -322,7 +357,7 @@ def capacity_projection(as_of, position, static, model, adjustment, pending_arri
             d = max(as_of, r.arrival_date)
             pending_arrivals.setdefault(d, pd.Series(0.,index=skus))[r.sku] += r.units
     if pending_arrivals:
-        horizon = max(horizon, max((d-as_of).days+1 for d in pending_arrivals if d >= as_of))
+        horizon = max(horizon, max(((d-as_of).days+1 for d in pending_arrivals if d >= as_of), default=0))
     pos = position.set_index("sku").reindex(skus).fillna(0)
     dates = pd.date_range(as_of, periods=horizon)
     key = (id(model), as_of, horizon, weather_scenario)
@@ -351,10 +386,12 @@ def confirmation_capacity(as_of: date, cases: dict[str, int]) -> dict:
     with session_scope() as session:
         directions = [{"bucket":r.bucket,"tag_id":r.tag_id,"sku":r.sku,"districts":r.districts,"factor":r.factor}
                       for r in session.scalars(select(DirectionItem).where(DirectionItem.plan_id==plan_id(as_of))).all()]
-    _, split = protection_forecast(art.model_b, art.static, as_of-timedelta(days=1), order_calendar=True)
+    model = art.run_for(as_of).model
+    directions = active_directions(as_of, directions, model)
+    _, split = protection_forecast(model, art.static, as_of-timedelta(days=1), order_calendar=True)
     adjustment = sku_adjustments(directions, split)
     baseline, mask = capacity_projection(as_of, inventory_position(as_of), art.static,
-        art.model_b, adjustment)
+        model, adjustment)
     prod = art.static.products.set_index("sku")
     upc = prod.units_per_case.to_numpy()
     upp = (prod.units_per_case*prod.cases_per_pallet).to_numpy()
@@ -366,6 +403,7 @@ def confirmation_capacity(as_of: date, cases: dict[str, int]) -> dict:
     return {"capacity_pallets":capacity, "projected_peak_pallets":float(projected.max()),
             "inherited_peak_pallets":float(inherited.max()),
             "incremental_overcapacity_pallets":violation, "feasible":violation<=1e-8,
+            "model_run": art.run_for(as_of).metadata,
             "series":[{"date":(as_of+timedelta(days=i)).isoformat(),"value":float(v)} for i,v in enumerate(projected)]}
 
 
@@ -441,7 +479,10 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
         s.execute(delete(Plan).where(Plan.id == pid))
         s.flush()
         s.add(Plan(id=pid, week_start=week_start, stage=stage, goal="margin", created_at=now,
-                   summary={"findings": len(findings), "orders_due": int((orders.final_cases > 0).sum())}))
+                   summary={"findings": len(findings), "orders_due": int((orders.final_cases > 0).sum()),
+                            "model_run":artifacts().run_for(week_start).metadata,
+                            "weak_reviews": monitoring().review_log.get(week_start.isoformat(),[]),
+                            "direction_provenance": [{"tag_id":d.get("tag_id"),"origin_model_version":d.get("origin_model_version"),"evidence_through":d.get("evidence_through")} for d in directions]}))
         s.flush()
         for i, f in enumerate(findings):
             fid = f"{pid}-F{i + 1}"
@@ -453,7 +494,8 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
                 effect_volume=f["effect_volume"], effect_mix=f["effect_mix"], effect_interaction=f["effect_interaction"],
                 source=f["source"], review_reason=f.get("review_reason"), classification=f["classification"], explanation=f["explanation"],
                 evidence={"checks": f["checks"], "related": f["related"], "districts": f["districts"], "display": f["display"],
-                          "attribution_f1": f["attribution_f1"], "confidence": f["confidence"]},
+                          "attribution_f1": f["attribution_f1"], "confidence": f["confidence"],
+                          "model_version":f.get("model_version"), "evidence_through":f.get("evidence_through")},
             ))
             for j, h in enumerate(f["hypotheses"]):
                 s.add(Hypothesis(id=f"{fid}-H{j + 1}", finding_id=fid, cause=h["label"], label=h["label"], text=h["text"],

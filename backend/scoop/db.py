@@ -19,6 +19,14 @@ SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
 
 @contextmanager
 def session_scope() -> Iterator[Session]:
+    from .demo_gate import gate
+    with gate.activity():
+        with _session_scope() as session:
+            yield session
+
+
+@contextmanager
+def _session_scope() -> Iterator[Session]:
     session = SessionLocal()
     try:
         yield session

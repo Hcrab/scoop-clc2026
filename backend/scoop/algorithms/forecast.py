@@ -5,7 +5,7 @@
 * Features are calendar, weather, promotion, store and product attributes. There are no
   recent-sales lags on purpose: the model describes "normal patterns", so a new preference
   shift shows up as a residual for CUSUM instead of being absorbed by the forecast.
-* The prototype uses frozen historical runs; monthly retraining is not implemented.
+* One version retrains at each month boundary and stays frozen for procurement and detection.
 * Protection-period intervals (lead time + review period) are bottom-up sums of the daily
   expectation, widened with empirical actual/forecast ratios measured in a backtest that used
   issued weather forecasts (not observed weather), so the interval includes forecast error.
@@ -30,7 +30,7 @@ NUMERIC = [
 FEATURES = CATEGORICAL + NUMERIC
 
 PARAMS = dict(learning_rate=0.05, num_leaves=63, min_data_in_leaf=200, feature_fraction=0.9, bagging_fraction=0.8,
-              bagging_freq=1, verbose=-1, seed=7, num_threads=4)
+              bagging_freq=1, verbose=-1, seed=7, num_threads=1)
 ROUNDS = 350
 
 HOLIDAYS = None  # loaded lazily from the generator so features match the synthetic calendar
@@ -145,13 +145,11 @@ def forecast_weather(static: Static, issued: date, targets: pd.DatetimeIndex) ->
     return pd.DataFrame(rows, columns=["date", "tmax", "rain_mm"])
 
 
-def training_frame(static: Static, start: date, end: date) -> pd.DataFrame:
+def training_frame(static: Static, start: date, end: date, orders: pd.DataFrame | None = None) -> pd.DataFrame:
     dates = pd.date_range(start, end)
     feats = build_features(static, dates, weather=issued_daily_weather(static, dates))
-    y = read_sql(
-        "SELECT date, store_id, sku, ordered_units FROM store_orders WHERE date BETWEEN :a AND :b",
-        a=start, b=end,
-    )
+    y = (read_sql("SELECT date, store_id, sku, ordered_units FROM store_orders WHERE date BETWEEN :a AND :b", a=start,b=end)
+         if orders is None else orders[pd.to_datetime(orders.date).between(pd.Timestamp(start),pd.Timestamp(end))][["date","store_id","sku","ordered_units"]].copy())
     y["date"] = pd.to_datetime(y.date)
     feats["store_id"] = feats.store_id.astype(str)
     feats["sku"] = feats.sku.astype(str)
@@ -169,15 +167,17 @@ class DemandModel:
     trained_through: date
     models: dict[str, lgb.Booster] = field(default_factory=dict)
     categories: dict[str, list] = field(default_factory=dict)
+    version: str = "legacy"
 
     @classmethod
-    def train(cls, static: Static, start: date, end: date, rounds: int = ROUNDS) -> "DemandModel":
-        frame = training_frame(static, start, end)
+    def train(cls, static: Static, start: date, end: date, rounds: int = ROUNDS,
+              orders: pd.DataFrame | None = None, train_quantiles: bool = True) -> "DemandModel":
+        frame = training_frame(static, start, end, orders=orders)
         cats = {c: list(frame[c].cat.categories) for c in CATEGORICAL}
         X, y = frame[FEATURES], frame.ordered_units.astype(float)
         m = cls(trained_through=end, categories=cats)
         m.models["mean"] = lgb.train({**PARAMS, "objective": "poisson"}, lgb.Dataset(X, y), rounds)
-        for q in (0.1, 0.9):
+        for q in ((0.1, 0.9) if train_quantiles else ()):
             m.models[f"q{int(q * 100)}"] = lgb.train({**PARAMS, "objective": "quantile", "alpha": q}, lgb.Dataset(X, y), rounds // 2)
         return m
 
@@ -192,11 +192,11 @@ class DemandModel:
         out = feats[["date", "store_id", "sku"]].copy()
         out["store_id"] = out.store_id.astype(str)
         out["sku"] = out.sku.astype(str)
-        out["mean"] = self.models["mean"].predict(X, num_threads=4)
+        out["mean"] = self.models["mean"].predict(X, num_threads=1)
         if mean_only:
             return out
-        out["p10"] = np.minimum(self.models["q10"].predict(X, num_threads=4), out["mean"])
-        out["p90"] = np.maximum(self.models["q90"].predict(X, num_threads=4), out["mean"])
+        out["p10"] = np.minimum(self.models["q10"].predict(X, num_threads=1), out["mean"])
+        out["p90"] = np.maximum(self.models["q90"].predict(X, num_threads=1), out["mean"])
         return out
 
 
@@ -272,10 +272,13 @@ def issued_daily_weather(static: Static, dates: pd.DatetimeIndex) -> pd.DataFram
 def calibrate_ratios(model: DemandModel, static: Static, issue_dates: list[date]) -> pd.DataFrame:
     """Backtest: actual / forecast protection-period demand per SKU and issue date."""
     rows = []
-    actual = read_sql("SELECT date, sku, SUM(ordered_units) AS units FROM store_orders GROUP BY date, sku")
+    actual = read_sql("SELECT date, sku, SUM(ordered_units) AS units FROM store_orders WHERE date BETWEEN :a AND :b GROUP BY date, sku",
+                      a=min(issue_dates)+timedelta(days=1), b=max(issue_dates)+timedelta(days=int(protection_days(static.products).max())))
     actual["date"] = pd.to_datetime(actual.date)
     pdays = protection_days(static.products)
     for issued in issue_dates:
+        if model.trained_through > issued:
+            raise ValueError("Forecast calibration issue predates model training cutoff")
         fc, _ = protection_forecast(model, static, issued)
         for r in fc.itertuples():
             end = pd.Timestamp(issued) + pd.Timedelta(days=int(r.pdays))
