@@ -4,11 +4,11 @@
 
 The user's final handoff (`pasted-text-1.txt`, attachment 6b5dc399-bd07-404a-8507-28b5bc224e19) supersedes earlier product conventions where they conflict. Work proceeds P0 through P8 in order. No threshold tuning, new worlds, deployment, or history rewrite.
 
-## P0 — Merge Play (in progress)
+## P0 — Merge Play (complete)
 
 - Merged `origin/claude/play-week-mvp` at `37146ae` into `claude/scoop-prototype`; Git reported no conflicts. Merge and regression tests are committed together after the green full test run.
 - Frontend TypeScript and Vite build passes (39 modules).
-- Conservation and shared-input regression tests pass. Full backend suite: 139 passed (one existing Starlette/AnyIO deprecation warning). Live seed-93 backend simulation passes; browser Play validation remains outstanding.
+- Conservation and shared-input regression tests pass. Full backend suite: 139 passed (one existing Starlette/AnyIO deprecation warning). Live seed-93 backend simulation passes. Edge browser verification at port 8009 ran Play to Day 7 of 7 (2 Aug), displayed Replay and the complete comparison table, and matched backend outcomes.
 
 ## Remaining phases
 
@@ -22,6 +22,6 @@ The previously implemented Trend Explorer and hand-drawn report charts are not t
 
 - Added two deterministic simulation tests, including nonzero historical in-transit receipts, a shortage, different new orders, and daily/full-period per-SKU conservation. Focused run: 2 passed.
 - Restored the stopped local PostgreSQL using the existing start-db script. The first full suite returned 134 passed, 1 failed, 4 errors: four errors were an inaccessible pytest temporary directory; one stale test fake returned product rows for a nutrition query. The fake now distinguishes the queried entity, and a rerun uses a dedicated workspace basetemp.
-- Actual seed 93, plan P20260727, seven days: all SKU stock balances and demand identities pass for both policies. Plan lost 1,815 units versus rule 1,344; average pallets 53.1651 versus 55.2196; both peak at 68.5983 pallets. These are observed MVP results, not tuned. Browser Play verification remains pending.
+- Actual seed 93, plan P20260727, seven days: all SKU stock balances and demand identities pass for both policies. Plan lost 1,815 units versus rule 1,344; average pallets 53.1651 versus 55.2196; both peak at 68.5983 pallets. These are observed MVP results, not tuned. Browser Play verification subsequently passed.
 
-- Browser verification on the merged server at port 8009 is not yet proven: the browser creation call timed out and reset its kernel. The backend and compiled frontend are available; do not equate the successful simulation with browser-flow completion.
+- The in-app browser entry timed out. Recovery used the available Edge browser through the same browser automation tool; the actual Play UI completed successfully.
