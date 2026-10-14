@@ -40,8 +40,31 @@ def _gain(y, v, mask):
                  + np.dot(w[~mask], y[~mask]) ** 2 / w[~mask].sum() - total)
 
 
+def _permutation_orders(skus, districts, rng):
+    """Tag tests exchange SKU vectors; district tests exchange within SKU.
+
+    Match district support when a node has incomplete SKU vectors. This keeps
+    missing districts missing instead of imputing or breaking a product block.
+    Both returned indices move y and v together.
+    """
+    by_sku = defaultdict(list)
+    for index, name in enumerate(skus):
+        by_sku[name].append(index)
+    signatures = defaultdict(list)
+    district_order = np.arange(len(skus))
+    for indices in by_sku.values():
+        ordered = sorted(indices, key=lambda i: districts[i])
+        signatures[tuple(districts[i] for i in ordered)].append(ordered)
+        district_order[ordered] = rng.permutation(ordered)
+    tag_order = np.arange(len(skus))
+    for blocks in signatures.values():
+        for target, source in zip(blocks, rng.permutation(len(blocks))):
+            tag_order[target] = blocks[source]
+    return tag_order, district_order
+
+
 def fit_units(units, groups):
-    """Fit independent SKU/district observations; inputs are never mutated.
+    """Fit SKU/district observations with block-aware split permutations.
 
     Unit fields: sku, district, y, v, expected_recent (or E_r), plus optional trace.
     Groups may be Group objects, id->Group mapping, or id->SKU iterable mapping.
@@ -83,12 +106,14 @@ def fit_units(units, groups):
             observed = gains[winner]
             maximum = []
             for _ in range(PERMUTATIONS):
-                order = rng.permutation(len(indices))
-                py, pv = y[indices][order], v[indices][order]
-                maximum.append(max(_gain(py, pv, mask) for _, mask in choices))
+                tag_order, district_order = _permutation_orders(sku[indices], district[indices], rng)
+                tag_y, tag_v = y[indices][tag_order], v[indices][tag_order]
+                district_y, district_v = y[indices][district_order], v[indices][district_order]
+                maximum.append(max(_gain(district_y, district_v, mask) if key.startswith('district:')
+                                   else _gain(tag_y, tag_v, mask) for key, mask in choices))
             p = float(np.mean(np.array(maximum) >= observed))
             tested.append({'path': path, 'candidate_count': len(choices), 'gain': observed,
-                           'p_value': p, 'permutations': PERMUTATIONS})
+                           'split_tag': choices[winner][0], 'p_value': p, 'permutations': PERMUTATIONS})
             if p < .05:
                 key, mask = choices[winner]
                 grow(indices[mask], path + [{'id': key, 'included': True}], p_path + [p], depth + 1)
@@ -149,6 +174,7 @@ def fit_units(units, groups):
     return {'leaves': leaves, 'sku_factors': factors, 'units': rows,
             'method': {'tree': 'inverse-variance conditional inference; max depth 3; min 3 distinct SKUs per child',
                        'permutations': PERMUTATIONS, 'seed': SEED, 'split_alpha': .05,
+                       'permutation_scheme': 'product tags: whole SKU district vectors within equal-support strata; district tags: districts within each SKU; y and v paired; max across all candidates',
                        'tested_nodes': tested, 'eb': 'two-level DerSimonian-Laird',
                        'sku_covariance': 'district demand weights; conditional variances independent; shared leaf posterior covariance',
                        'projection': 'level, no extrapolation'}}

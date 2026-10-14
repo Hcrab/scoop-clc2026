@@ -21,6 +21,49 @@ def _units(effect=0.7, volume=100., affected=None):
             for i in range(9) for d in ('north', 'south')]
 
 
+def test_permutations_keep_product_vectors_and_district_within_product():
+    skus=np.repeat(['A','B','C','D'],4)
+    districts=np.tile(['east','north','south','west'],4)
+    rng=np.random.default_rng(17)
+    tags, areas=cohort_model._permutation_orders(skus,districts,rng)
+    assert sorted(tags)==list(range(16)) and sorted(areas)==list(range(16))
+    for start in range(0,16,4):
+        source=tags[start:start+4]
+        assert len(set(skus[source]))==1
+        assert list(districts[source])==list(districts[start:start+4])
+        assert set(areas[start:start+4])==set(range(start,start+4))
+    assert not np.array_equal(tags,np.arange(16))
+    assert not np.array_equal(areas,np.arange(16))
+
+
+def test_incomplete_product_blocks_only_exchange_equal_district_support():
+    skus=np.array(['A','A','B','B','C'])
+    districts=np.array(['north','south','north','south','north'])
+    tags,areas=cohort_model._permutation_orders(skus,districts,np.random.default_rng(4))
+    assert tags[4]==areas[4]==4
+    assert list(districts[tags])==list(districts)
+    assert sorted(tags)==sorted(areas)==list(range(5))
+
+
+def test_tree_uses_candidate_specific_permutations_with_paired_variances(monkeypatch):
+    rows=[dict(u,y=float(i),v=.01+i*.001) for i,u in enumerate(_units())]
+    tag_order=np.arange(18).reshape(9,2)[::-1].ravel()
+    district_order=np.arange(18).reshape(9,2)[:,::-1].ravel()
+    monkeypatch.setattr(cohort_model,'PERMUTATIONS',1)
+    monkeypatch.setattr(cohort_model,'_permutation_orders',lambda *args:(tag_order,district_order))
+    observed=[]
+    def gain(y,v,mask):
+        observed.append((y.copy(),v.copy()))
+        return 1.  # A tie prevents further nodes, leaving one auditable root test.
+    monkeypatch.setattr(cohort_model,'_gain',gain)
+    cohort_model.fit_units(rows,{'product-tag':['S0','S1','S2']})
+    assert len(observed)==6  # One product tag and two district candidates, observed + permuted.
+    y=np.array([r['y'] for r in rows]);v=np.array([r['v'] for r in rows])
+    for (actual_y,actual_v),order in zip(observed[3:],[tag_order,district_order,district_order]):
+        np.testing.assert_array_equal(actual_y,y[order])
+        np.testing.assert_array_equal(actual_v,v[order])
+
+
 def test_tree_is_deterministic_and_shrinks():
     units = _units()
     groups = [Group('candidate', 'Candidate', 'kind', ('S0', 'S1', 'S2'))]

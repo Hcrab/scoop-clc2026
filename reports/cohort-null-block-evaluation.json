@@ -1,0 +1,732 @@
+{
+  "method": "seed-local generated null worlds; monthly null-trained mean model active for each plan rescored all preceding 70 days using issued daily weather, build_features, predict(mean_only=True), fit_observations",
+  "command": "$env:PYTHONPATH='backend'; $env:PYTHONUTF8='1'; $env:OMP_NUM_THREADS='1'; $env:OPENBLAS_NUM_THREADS='1'; .venv/Scripts/python.exe scripts/evaluate-cohort-null.py",
+  "seeds": [
+    93,
+    42
+  ],
+  "weeks_per_seed": 17,
+  "denominator": 34,
+  "root_split_count": 4,
+  "maximum_root_splits": 3,
+  "passed": false,
+  "tuning": "none",
+  "weeks": [
+    {
+      "seed": 93,
+      "week": "2026-05-11",
+      "model_version": "null-s93-m202605-generator-v1-mean",
+      "root_split": true,
+      "root_split_tag": "band:dairy:2",
+      "root_candidate_tag": "band:dairy:2",
+      "root_p": 0.02512562814070352,
+      "leaves": 2,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 24.914285714285715,
+      "baseline56_mean_tmax": 22.162499999999998,
+      "window70_retrain_dates": [
+        "2026-04-01",
+        "2026-05-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-05-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 93,
+      "week": "2026-05-18",
+      "model_version": "null-s93-m202605-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:dairy:2",
+      "root_p": 0.5577889447236181,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 26.735714285714284,
+      "baseline56_mean_tmax": 22.57857142857143,
+      "window70_retrain_dates": [
+        "2026-04-01",
+        "2026-05-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 93,
+      "week": "2026-05-25",
+      "model_version": "null-s93-m202605-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "feature:fruit_pieces",
+      "root_p": 0.19095477386934673,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 27.221428571428568,
+      "baseline56_mean_tmax": 23.301785714285717,
+      "window70_retrain_dates": [
+        "2026-04-01",
+        "2026-05-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 93,
+      "week": "2026-06-01",
+      "model_version": "null-s93-m202606-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "district:HK Island",
+      "root_p": 0.18090452261306533,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 27.892857142857142,
+      "baseline56_mean_tmax": 24.217857142857145,
+      "window70_retrain_dates": [
+        "2026-04-01",
+        "2026-05-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 93,
+      "week": "2026-06-08",
+      "model_version": "null-s93-m202606-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "format:stick",
+      "root_p": 0.7035175879396985,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 27.72142857142857,
+      "baseline56_mean_tmax": 24.7875,
+      "window70_retrain_dates": [
+        "2026-04-01",
+        "2026-05-01",
+        "2026-06-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-06-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 93,
+      "week": "2026-06-15",
+      "model_version": "null-s93-m202606-generator-v1-mean",
+      "root_split": true,
+      "root_split_tag": "band:dairy:1",
+      "root_candidate_tag": "band:dairy:1",
+      "root_p": 0.04020100502512563,
+      "leaves": 2,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 27.45,
+      "baseline56_mean_tmax": 25.45357142857143,
+      "window70_retrain_dates": [
+        "2026-05-01",
+        "2026-06-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-06-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 93,
+      "week": "2026-06-22",
+      "model_version": "null-s93-m202606-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:price_100ml:0",
+      "root_p": 0.7839195979899497,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 28.74285714285715,
+      "baseline56_mean_tmax": 25.794642857142858,
+      "window70_retrain_dates": [
+        "2026-05-01",
+        "2026-06-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 93,
+      "week": "2026-06-29",
+      "model_version": "null-s93-m202606-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "format:cone",
+      "root_p": 0.05025125628140704,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 29.592857142857145,
+      "baseline56_mean_tmax": 26.526785714285715,
+      "window70_retrain_dates": [
+        "2026-05-01",
+        "2026-06-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 93,
+      "week": "2026-07-06",
+      "model_version": "null-s93-m202607-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "district:Kowloon",
+      "root_p": 0.9346733668341709,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 28.29285714285714,
+      "baseline56_mean_tmax": 27.15,
+      "window70_retrain_dates": [
+        "2026-05-01",
+        "2026-06-01",
+        "2026-07-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-07-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 93,
+      "week": "2026-07-13",
+      "model_version": "null-s93-m202607-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:kcal_100ml:1",
+      "root_p": 0.4020100502512563,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 27.21428571428571,
+      "baseline56_mean_tmax": 27.917857142857144,
+      "window70_retrain_dates": [
+        "2026-06-01",
+        "2026-07-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-07-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 93,
+      "week": "2026-07-20",
+      "model_version": "null-s93-m202607-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:dairy:2",
+      "root_p": 0.1457286432160804,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 30.814285714285717,
+      "baseline56_mean_tmax": 27.994642857142857,
+      "window70_retrain_dates": [
+        "2026-06-01",
+        "2026-07-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 93,
+      "week": "2026-07-27",
+      "model_version": "null-s93-m202607-generator-v1-mean",
+      "root_split": true,
+      "root_split_tag": "band:dairy:0",
+      "root_candidate_tag": "band:dairy:0",
+      "root_p": 0.03015075376884422,
+      "leaves": 2,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 30.692857142857143,
+      "baseline56_mean_tmax": 28.037499999999998,
+      "window70_retrain_dates": [
+        "2026-06-01",
+        "2026-07-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 93,
+      "week": "2026-08-03",
+      "model_version": "null-s93-m202608-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:price_100ml:0",
+      "root_p": 0.4020100502512563,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 28.142857142857146,
+      "baseline56_mean_tmax": 28.892857142857142,
+      "window70_retrain_dates": [
+        "2026-06-01",
+        "2026-07-01",
+        "2026-08-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-08-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 93,
+      "week": "2026-08-10",
+      "model_version": "null-s93-m202608-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:dairy:2",
+      "root_p": 0.3165829145728643,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 29.864285714285717,
+      "baseline56_mean_tmax": 28.7375,
+      "window70_retrain_dates": [
+        "2026-06-01",
+        "2026-07-01",
+        "2026-08-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-08-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 93,
+      "week": "2026-08-17",
+      "model_version": "null-s93-m202608-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "format:cone",
+      "root_p": 0.7638190954773869,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 30.521428571428576,
+      "baseline56_mean_tmax": 28.998214285714287,
+      "window70_retrain_dates": [
+        "2026-07-01",
+        "2026-08-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 93,
+      "week": "2026-08-24",
+      "model_version": "null-s93-m202608-generator-v1-mean",
+      "root_split": true,
+      "root_split_tag": "format:stick",
+      "root_candidate_tag": "format:stick",
+      "root_p": 0.03015075376884422,
+      "leaves": 2,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 29.23571428571429,
+      "baseline56_mean_tmax": 29.341071428571432,
+      "window70_retrain_dates": [
+        "2026-07-01",
+        "2026-08-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 93,
+      "week": "2026-08-31",
+      "model_version": "null-s93-m202608-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "family:coffee_nut",
+      "root_p": 0.457286432160804,
+      "leaves": 1,
+      "eligible_units": 300,
+      "recent14_mean_tmax": 28.257142857142856,
+      "baseline56_mean_tmax": 29.442857142857147,
+      "window70_retrain_dates": [
+        "2026-07-01",
+        "2026-08-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 42,
+      "week": "2026-05-11",
+      "model_version": "null-s42-m202605-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "format:cone",
+      "root_p": 0.6884422110552764,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 24.9,
+      "baseline56_mean_tmax": 22.535714285714285,
+      "window70_retrain_dates": [
+        "2026-04-01",
+        "2026-05-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-05-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 42,
+      "week": "2026-05-18",
+      "model_version": "null-s42-m202605-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:price_100ml:2",
+      "root_p": 0.8894472361809045,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 26.142857142857142,
+      "baseline56_mean_tmax": 22.94464285714286,
+      "window70_retrain_dates": [
+        "2026-04-01",
+        "2026-05-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 42,
+      "week": "2026-05-25",
+      "model_version": "null-s42-m202605-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "family:coffee_nut",
+      "root_p": 0.8090452261306532,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 27.528571428571432,
+      "baseline56_mean_tmax": 23.573214285714283,
+      "window70_retrain_dates": [
+        "2026-04-01",
+        "2026-05-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 42,
+      "week": "2026-06-01",
+      "model_version": "null-s42-m202606-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "format:stick",
+      "root_p": 0.9597989949748744,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 26.099999999999998,
+      "baseline56_mean_tmax": 24.407142857142855,
+      "window70_retrain_dates": [
+        "2026-04-01",
+        "2026-05-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 42,
+      "week": "2026-06-08",
+      "model_version": "null-s42-m202606-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:price_100ml:0",
+      "root_p": 0.6582914572864321,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 26.135714285714283,
+      "baseline56_mean_tmax": 24.71607142857143,
+      "window70_retrain_dates": [
+        "2026-04-01",
+        "2026-05-01",
+        "2026-06-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-06-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 42,
+      "week": "2026-06-15",
+      "model_version": "null-s42-m202606-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "format:sandwich",
+      "root_p": 0.914572864321608,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 26.992857142857144,
+      "baseline56_mean_tmax": 24.96071428571429,
+      "window70_retrain_dates": [
+        "2026-05-01",
+        "2026-06-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-06-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 42,
+      "week": "2026-06-22",
+      "model_version": "null-s42-m202606-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "format:multipack",
+      "root_p": 0.9798994974874372,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 27.421428571428578,
+      "baseline56_mean_tmax": 25.48392857142857,
+      "window70_retrain_dates": [
+        "2026-05-01",
+        "2026-06-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 42,
+      "week": "2026-06-29",
+      "model_version": "null-s42-m202606-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:price_hkd:0",
+      "root_p": 1.0,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 29.771428571428572,
+      "baseline56_mean_tmax": 25.898214285714285,
+      "window70_retrain_dates": [
+        "2026-05-01",
+        "2026-06-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 42,
+      "week": "2026-07-06",
+      "model_version": "null-s42-m202607-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:kcal_100ml:0",
+      "root_p": 0.22613065326633167,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 30.87142857142857,
+      "baseline56_mean_tmax": 26.496428571428574,
+      "window70_retrain_dates": [
+        "2026-05-01",
+        "2026-06-01",
+        "2026-07-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-07-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 42,
+      "week": "2026-07-13",
+      "model_version": "null-s42-m202607-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:price_hkd:0",
+      "root_p": 0.6582914572864321,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 29.6,
+      "baseline56_mean_tmax": 27.251785714285713,
+      "window70_retrain_dates": [
+        "2026-06-01",
+        "2026-07-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-07-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 42,
+      "week": "2026-07-20",
+      "model_version": "null-s42-m202607-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:price_hkd:2",
+      "root_p": 0.6331658291457286,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 31.07857142857143,
+      "baseline56_mean_tmax": 27.98928571428571,
+      "window70_retrain_dates": [
+        "2026-06-01",
+        "2026-07-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 42,
+      "week": "2026-07-27",
+      "model_version": "null-s42-m202607-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "band:kcal_100ml:0",
+      "root_p": 0.1507537688442211,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 30.12857142857143,
+      "baseline56_mean_tmax": 28.116071428571427,
+      "window70_retrain_dates": [
+        "2026-06-01",
+        "2026-07-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 42,
+      "week": "2026-08-03",
+      "model_version": "null-s42-m202608-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "flavour:milk",
+      "root_p": 0.5326633165829145,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 28.792857142857144,
+      "baseline56_mean_tmax": 28.876785714285713,
+      "window70_retrain_dates": [
+        "2026-06-01",
+        "2026-07-01",
+        "2026-08-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-08-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 42,
+      "week": "2026-08-10",
+      "model_version": "null-s42-m202608-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "district:HK Island",
+      "root_p": 0.7889447236180904,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 29.664285714285715,
+      "baseline56_mean_tmax": 29.123214285714287,
+      "window70_retrain_dates": [
+        "2026-06-01",
+        "2026-07-01",
+        "2026-08-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [
+        "2026-08-01"
+      ],
+      "recent14_crosses_retrain": true
+    },
+    {
+      "seed": 42,
+      "week": "2026-08-17",
+      "model_version": "null-s42-m202608-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "flavour:chocolate",
+      "root_p": 0.12060301507537688,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 29.914285714285715,
+      "baseline56_mean_tmax": 29.541071428571428,
+      "window70_retrain_dates": [
+        "2026-07-01",
+        "2026-08-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 42,
+      "week": "2026-08-24",
+      "model_version": "null-s42-m202608-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "district:NT West",
+      "root_p": 0.5376884422110553,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 30.03571428571429,
+      "baseline56_mean_tmax": 29.791071428571428,
+      "window70_retrain_dates": [
+        "2026-07-01",
+        "2026-08-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    },
+    {
+      "seed": 42,
+      "week": "2026-08-31",
+      "model_version": "null-s42-m202608-generator-v1-mean",
+      "root_split": false,
+      "root_split_tag": null,
+      "root_candidate_tag": "district:NT West",
+      "root_p": 0.7135678391959799,
+      "leaves": 1,
+      "eligible_units": 240,
+      "recent14_mean_tmax": 28.764285714285712,
+      "baseline56_mean_tmax": 30.16428571428571,
+      "window70_retrain_dates": [
+        "2026-07-01",
+        "2026-08-01"
+      ],
+      "window70_crosses_retrain": true,
+      "recent14_retrain_dates": [],
+      "recent14_crosses_retrain": false
+    }
+  ]
+}

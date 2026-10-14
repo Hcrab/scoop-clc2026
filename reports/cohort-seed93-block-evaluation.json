@@ -1,0 +1,347 @@
+{
+  "seed": 93,
+  "week": "2026-07-27",
+  "command": "$env:PYTHONPATH='backend'; $env:PYTHONUTF8='1'; $env:OMP_NUM_THREADS='1'; $env:OPENBLAS_NUM_THREADS='1'; .venv/Scripts/python.exe scripts/evaluate-cohort-planted.py",
+  "method": {
+    "fit": "cohort_model.fit(plan, session), live seed93 database read only; current plan month model rescores 70 days with historical issued weather",
+    "answer_key_use": "offline scoring after fitting only",
+    "raw_y_aggregation": "district raw y weighted by expected recent units; excludes promotional days and uses fit_observations winsorisation",
+    "raw_recent_ratio": "sum untrimmed recent requested / sum recent expected across eligible districts; restored values above per-store winsor caps",
+    "baseline_contamination": "baseline56 is 2026-05-18..2026-07-12 and includes intervention ramp 2026-07-07..12; this can attenuate log change",
+    "ramp": "intervention starts 2026-07-06, ramps linearly to +80% on 2026-07-13 and holds"
+  },
+  "answer_key_id": "HX93A",
+  "planted_skus": [
+    "IC006",
+    "IC061",
+    "IC062",
+    "IC063"
+  ],
+  "isolated_equivalent_tag_path": false,
+  "equivalent_leaves": [],
+  "leaves_with_planted_skus": [
+    {
+      "leaf_id": "C1548dfa641a2",
+      "tag_path": [
+        {
+          "id": "band:dairy:0",
+          "included": true
+        }
+      ],
+      "skus": [
+        "IC001",
+        "IC002",
+        "IC003",
+        "IC004",
+        "IC005",
+        "IC006",
+        "IC007",
+        "IC008",
+        "IC009",
+        "IC011",
+        "IC014",
+        "IC015",
+        "IC051",
+        "IC055",
+        "IC059",
+        "IC060",
+        "IC061",
+        "IC062",
+        "IC063",
+        "IC064",
+        "IC065",
+        "IC066",
+        "IC070",
+        "IC071",
+        "IC072"
+      ],
+      "districts": [
+        "HK Island",
+        "Kowloon",
+        "NT East",
+        "NT West"
+      ]
+    }
+  ],
+  "model_version": "M202607-v1-s93",
+  "root_test": {
+    "path": [],
+    "candidate_count": 44,
+    "gain": 643.4820175192829,
+    "split_tag": "band:dairy:0",
+    "p_value": 0.0,
+    "permutations": 199
+  },
+  "tested_nodes": [
+    {
+      "path": [],
+      "candidate_count": 44,
+      "gain": 643.4820175192829,
+      "split_tag": "band:dairy:0",
+      "p_value": 0.0,
+      "permutations": 199
+    },
+    {
+      "path": [
+        {
+          "id": "band:dairy:0",
+          "included": true
+        }
+      ],
+      "candidate_count": 17,
+      "gain": 116.91181719140036,
+      "split_tag": "flavour:strawberry",
+      "p_value": 0.10050251256281408,
+      "permutations": 199
+    },
+    {
+      "path": [
+        {
+          "id": "band:dairy:0",
+          "included": false
+        }
+      ],
+      "candidate_count": 40,
+      "gain": 180.18858224722982,
+      "split_tag": "feature:choc_coated",
+      "p_value": 0.0,
+      "permutations": 199
+    },
+    {
+      "path": [
+        {
+          "id": "band:dairy:0",
+          "included": false
+        },
+        {
+          "id": "feature:choc_coated",
+          "included": true
+        }
+      ],
+      "candidate_count": 14,
+      "gain": 8.98939213824184,
+      "split_tag": "band:price_100ml:0",
+      "p_value": 0.03015075376884422,
+      "permutations": 199
+    },
+    {
+      "path": [
+        {
+          "id": "band:dairy:0",
+          "included": false
+        },
+        {
+          "id": "feature:choc_coated",
+          "included": false
+        }
+      ],
+      "candidate_count": 38,
+      "gain": 5.724323541939128,
+      "split_tag": "band:dairy:1",
+      "p_value": 0.6432160804020101,
+      "permutations": 199
+    }
+  ],
+  "planted_table": [
+    {
+      "sku": "IC006",
+      "true_multiplier_recent14": 1.8,
+      "true_multiplier_source": "strawberry_challenge.inject; sustained peak from 2026-07-13 through recent window 2026-07-13..26",
+      "raw_recent_requested_expected_ratio": 2.2375592614321236,
+      "raw_y_expected_recent_weighted_log_change": 0.7122370145165338,
+      "f50": 1.8083763236773442,
+      "district_raw_y_rows": [
+        {
+          "district": "HK Island",
+          "y": 0.8622219365408218,
+          "recent_A": 1258.2600000000002,
+          "recent_E": 538.5092968869548,
+          "baseline_A": 1793.0,
+          "baseline_E": 1818.41721148802,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "Kowloon",
+          "y": 0.8239819466821245,
+          "recent_A": 1377.3000000000002,
+          "recent_E": 536.7371618308273,
+          "baseline_A": 2052.0,
+          "baseline_E": 1823.8738732626593,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "NT East",
+          "y": 0.5892833125576384,
+          "recent_A": 1050.3300000000002,
+          "recent_E": 536.5574794106909,
+          "baseline_A": 1970.0,
+          "baseline_E": 1814.962307066454,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "NT West",
+          "y": 0.573099664476253,
+          "recent_A": 1011.3300000000002,
+          "recent_E": 537.4128816852988,
+          "baseline_A": 1930.0,
+          "baseline_E": 1819.9058427434293,
+          "recent_days": 14,
+          "baseline_days": 56
+        }
+      ]
+    },
+    {
+      "sku": "IC061",
+      "true_multiplier_recent14": 1.8,
+      "true_multiplier_source": "strawberry_challenge.inject; sustained peak from 2026-07-13 through recent window 2026-07-13..26",
+      "raw_recent_requested_expected_ratio": 2.316006694841897,
+      "raw_y_expected_recent_weighted_log_change": 0.7532601991501324,
+      "f50": 1.8806506214109004,
+      "district_raw_y_rows": [
+        {
+          "district": "HK Island",
+          "y": 0.8371655433810751,
+          "recent_A": 953.19,
+          "recent_E": 423.2077428194062,
+          "baseline_A": 1374.0,
+          "baseline_E": 1410.0233880527182,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "Kowloon",
+          "y": 0.8497149560216153,
+          "recent_A": 1115.44,
+          "recent_E": 422.17594192870246,
+          "baseline_A": 1594.0,
+          "baseline_E": 1412.0951945638544,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "NT East",
+          "y": 0.7919906038515062,
+          "recent_A": 977.3000000000001,
+          "recent_E": 425.2688850211546,
+          "baseline_A": 1474.0,
+          "baseline_E": 1417.0089614436997,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "NT West",
+          "y": 0.5348864356263409,
+          "recent_A": 803.48,
+          "recent_E": 424.50660604132713,
+          "baseline_A": 1570.17,
+          "baseline_E": 1417.0344146375176,
+          "recent_days": 14,
+          "baseline_days": 56
+        }
+      ]
+    },
+    {
+      "sku": "IC062",
+      "true_multiplier_recent14": 1.8,
+      "true_multiplier_source": "strawberry_challenge.inject; sustained peak from 2026-07-13 through recent window 2026-07-13..26",
+      "raw_recent_requested_expected_ratio": 2.197876002061417,
+      "raw_y_expected_recent_weighted_log_change": 0.7060925815993621,
+      "f50": 1.834631635591087,
+      "district_raw_y_rows": [
+        {
+          "district": "HK Island",
+          "y": 0.7339333478137842,
+          "recent_A": 2685.85,
+          "recent_E": 1180.310415123411,
+          "baseline_A": 4254.1,
+          "baseline_E": 3895.5051151071766,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "Kowloon",
+          "y": 0.8819128433466619,
+          "recent_A": 3034.61,
+          "recent_E": 1177.027338224156,
+          "baseline_A": 4151.0,
+          "baseline_E": 3890.0543511682386,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "NT East",
+          "y": 0.5939419863238244,
+          "recent_A": 2219.54,
+          "recent_E": 1183.3106906003757,
+          "baseline_A": 4034.0,
+          "baseline_E": 3895.840521744971,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "NT West",
+          "y": 0.6151078881521002,
+          "recent_A": 2231.6600000000003,
+          "recent_E": 1177.0881300329263,
+          "baseline_A": 3985.0,
+          "baseline_E": 3888.9560916117575,
+          "recent_days": 14,
+          "baseline_days": 56
+        }
+      ]
+    },
+    {
+      "sku": "IC063",
+      "true_multiplier_recent14": 1.8,
+      "true_multiplier_source": "strawberry_challenge.inject; sustained peak from 2026-07-13 through recent window 2026-07-13..26",
+      "raw_recent_requested_expected_ratio": 2.324203959186559,
+      "raw_y_expected_recent_weighted_log_change": 0.7122094501172351,
+      "f50": 1.7728044009104453,
+      "district_raw_y_rows": [
+        {
+          "district": "HK Island",
+          "y": 0.7927104659556534,
+          "recent_A": 1921.4,
+          "recent_E": 763.2846668652635,
+          "baseline_A": 2904.0,
+          "baseline_E": 2549.741511690362,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "Kowloon",
+          "y": 0.8831170302674364,
+          "recent_A": 2144.26,
+          "recent_E": 763.8669530997879,
+          "baseline_A": 2971.0,
+          "baseline_E": 2560.630975054943,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "NT East",
+          "y": 0.5564247506446843,
+          "recent_A": 1350.2800000000002,
+          "recent_E": 766.7766638059135,
+          "baseline_A": 2572.0,
+          "baseline_E": 2548.530019614769,
+          "recent_days": 14,
+          "baseline_days": 56
+        },
+        {
+          "district": "NT West",
+          "y": 0.6173504084039643,
+          "recent_A": 1526.0800000000002,
+          "recent_E": 764.7533658756769,
+          "baseline_A": 2747.0,
+          "baseline_E": 2552.9964418029263,
+          "recent_days": 14,
+          "baseline_days": 56
+        }
+      ]
+    }
+  ]
+}

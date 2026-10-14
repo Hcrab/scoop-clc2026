@@ -1,5 +1,82 @@
 # Overnight delivery report — 14 October 2026
 
+## Current acceptance ledger — strict sequential gates
+
+The user's latest acceptance checklist supersedes the earlier permission to move on whenever a phase blocks. A phase now advances only after all checks pass, except a failure that can only be corrected by forbidden tuning, recorded as **❌ BLOCKED** with evidence. The authorized SKU-block/district-within-SKU permutation correction is being evaluated first. The authorized world-capacity correction is reserved for P6. The newly attached tuning-phase handoff has not been read; it is for after feature freeze.
+
+Unaccepted P3/P4 code already written before this rule remains in the working tree; further implementation and acceptance of those phases is suspended while P1 is open. Earlier checkpoint statements below are historical evidence, not acceptance of these new gates.
+
+### P1 — Cohort model: BLOCKED under the no-tuning exception, not accepted
+- ❌ BLOCKED — Seed93/default week isolates planted strawberry SKUs after correction: **failed**. `scripts/evaluate-cohort-planted.py`, production `cohort_model.fit`, model `M202607-v1-s93`, week2026-07-27: all four targets remain in the 25-SKU water-based leaf. The water-based child selects `flavour:strawberry` as its best candidate (gain116.911817,17candidates), but corrected max-stat block-permutation p=0.1005025126 does not pass fixed alpha0.05. Full trace: `reports/cohort-seed93-block-evaluation.json`. Increasing alpha to admit this split would be forbidden tuning; no alpha, variance, prior, depth or data changes have been made.
+- ❌ BLOCKED — Two null seeds/34 weeks: **4 root splits / 34**, exceeding maximum3. Seed93:4/17; seed42:0/17. `scripts/evaluate-cohort-null.py` completed all fixed Mondays11May–31Aug through production current-model rescoring. Full command and all34 rows: `reports/cohort-null-block-evaluation.json`. No threshold, prior, buffer or forecast hyperparameter was changed.
+- ✅ Partial alignment and shrinkage tests: `test_partial_alignment_unaffected_sku_stays_near_control`, `test_halved_volume_moves_toward_leaf`; command `.venv/Scripts/python.exe -m pytest backend/tests/test_cohort_model.py -q --basetemp=../scoop-runtime/pytest-p1-paired-routing` → **11 passed in1.88s**. New tests verify intact district vectors, within-SKU district exchanges, incomplete-vector support, and `test_tree_uses_candidate_specific_permutations_with_paired_variances` verifies the actual tree routes each candidate to the proper paired `(y,v)` permutation.
+- ✅ Per-planted-SKU table: `scripts/evaluate-cohort-planted.py` → `reports/cohort-seed93-block-evaluation.json`, production read-only fit after the permutation correction; table below. No fitting changes made to improve the result.
+
+| Planted SKU | True injected recent multiplier | Raw recent requested/expected | Raw y | Fitted f50 |
+|---|---:|---:|---:|---:|
+| IC006 | 1.8000 | 2.237559 | 0.712237 | 1.808376 |
+| IC061 | 1.8000 | 2.316007 | 0.753260 | 1.880651 |
+| IC062 | 1.8000 | 2.197876 | 0.706093 | 1.834632 |
+| IC063 | 1.8000 | 2.324204 | 0.712209 | 1.772804 |
+
+True multiplier is the injected strawberry effect for13–26July, not a claim that all other world effects equal1. Raw ratio restores winsorised recent observations; raw y is the expected-recent-weighted mean of the four district log changes before shrinkage, retaining the specified promotion exclusion and winsorisation. District rows are in the JSON. The baseline includes the intervention ramp7–12July; no baseline modification has been made.
+
+Evaluation-path audit: a read-only Python comparison constructed `build_features(make_world(93).static, pd.date_range('2026-05-18','2026-07-26'))` and the same features from `Static.load()`, sorted both by date/store/SKU, and ran `pd.testing.assert_frame_equal` on date and `FEATURES`. Output: **PASS: 105000 production and seed-local null feature rows match exactly, including all 22 model features and categorical levels.** All40 generated candidate groups also match the database groups. The null evaluator calls production `DemandModel.train`, `build_features`, `predict(mean_only=True)` and `fit_observations`, using each null seed's own catalog, demand, weather and promotions; it does not mix seeds or use planted forecasts.
+
+Null-root diagnostics (all four splits are seed93; temperature in °C):
+
+| Week | Split tag | p | Recent14 mean tmax | Baseline56 mean tmax | Retrain dates in70days | Retrain in recent14? |
+|---|---|---:|---:|---:|---|---|
+| 2026-05-11 | band:dairy:2 | 0.025126 | 24.9143 | 22.1625 | Apr1,May1 | Yes,May1 |
+| 2026-06-15 | band:dairy:1 | 0.040201 | 27.4500 | 25.4536 | May1,Jun1 | Yes,Jun1 |
+| 2026-07-27 | band:dairy:0 | 0.030151 | 30.6929 | 28.0375 | Jun1,Jul1 | No |
+| 2026-08-24 | format:stick | 0.030151 | 29.2357 | 29.3411 | Jul1,Aug1 | No |
+
+P1 exception decision: the authorized permutation correction and data-path audit are complete; the implemented fixed recipe produces these failures. Admitting the strawberry split requires changing the fixed significance rule or model inputs; suppressing the observed null splits by changing alpha or variance calibration would be tuning. No such changes are authorized tonight, and no further implementation discrepancy was found in this audit. Therefore these two measured checks remain **❌ BLOCKED**, not green. Advance to P2 under the user's explicit no-tuning exception. The weather/retrain diagnostics do not establish a cause of the false splits; no causal claim is made.
+
+### P2 — Context and uncertainty: NOT YET ACCEPTED
+- ❌ All five overrides change orders as specified: existing tests need phase acceptance verification after P1.
+- ❌ Browser cards show cases/value/pallets/peak capacity: complete current screenshot evidence pending.
+- ❌ Card override recomputes with before/after chip, exact order Undo: earlier real date-control verification exists, but new gate requires recorded exact-order and screenshot evidence after the P1 correction.
+- ❌ Global stockouts/space control changes service level and orders: actual browser verification pending.
+
+### P3 — Agent: NOT YET ACCEPTED
+- ❌ New tool set exists and old direction/classification tools removed: implementation present but final integrated acceptance inspection pending.
+- ❌ Exact strawberry utterance with Gemini, diff/recompute/Undo in browser: pending.
+- ❌ Value-price−10% and peak≤90% via bulk edit, diff/Undo: focused backend tests exist; integrated browser evidence pending.
+- ❌ Wrong report number rejected, repaired once, then fallback: grounding tests exist; full gate audit pending.
+- ❌ No model SVG path and chart rendered from evidence: renderer test/screenshot exists (`docs/screenshots/report-chart-renderer-fixture.png`), remaining path audit pending.
+- ❌ Empty GEMINI_API_KEY gives card-list report and all three scripted commands: integrated offline check pending.
+
+### P4 — Pages: NOT YET ACCEPTED
+- ❌ Cohort-first/family action list, expand,20rows,page edits,sticky live capacity: implementation in working tree; browser verification pending.
+- ❌ Shared server widgets,+sheet,drag/remove,chat creation,extension during Play: implementation in working tree; integration and browser verification pending.
+- ❌ Automatic Play horizon,affected summaries,two-line/dot charts,decision events,three results,week2line: implementation in working tree; integrated acceptance pending.
+- ❌ Full browser flow report→card→override→orders→widget→Play→result: pending.
+
+### P5 — UI: NOT YET STARTED UNDER NEW GATE
+- ❌ No font-size outside type tokens: scan/fix/output pending.
+- ❌ No banned strings: scan/fix/output pending.
+- ❌ Screenshot per screen with answers to all five litmus questions: pending.
+
+### P6 — Demo: NOT YET STARTED UNDER NEW GATE
+- ❌ Seed93 only in UI/default: pending.
+- ❌ Authorized capacity fix; history-rule peak90–95%: pending measurement and correction, no arbitrary lead-time edits.
+- ❌ Default week selected from13/20/27July with reason: pending.
+- ❌ Quiet week has no cohort cards: pending.
+- ❌ Strawberry arrival within days2–5 reported without forcing: pending.
+- ❌ Re-run Play policy lost-units/pallets beside P0 values1,815vs1,344: pending, report as measured.
+
+### P7 — Docs: NOT YET STARTED UNDER NEW GATE
+- ❌ Clean-clone README commands/output: pending.
+- ❌ Technical architecture/algorithm sections/Simplifications/Limitations/disclosure: update and audit pending.
+- ❌ App starts and works with empty GEMINI_API_KEY: pending.
+
+### P8 — Walkthrough: NOT YET STARTED UNDER NEW GATE
+- ❌ `frontend/e2e/walkthrough.spec.ts` passes end to end: pending.
+- ❌ Every step screenshot in `docs/screenshots/`: only renderer fixture exists so far, not full walkthrough.
+- ❌ Complete acceptance ledger and overnight report: current ledger explicitly records incomplete checks; final evidence pending.
+
 ## Authoritative scope
 
 The user's final handoff (`pasted-text-1.txt`, attachment 6b5dc399-bd07-404a-8507-28b5bc224e19) supersedes earlier product conventions where they conflict. Work proceeds P0 through P8 in order. No threshold tuning, new worlds, deployment, or history rewrite.
