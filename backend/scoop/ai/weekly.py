@@ -35,7 +35,11 @@ class Report(BaseModel):
     questions:list[ReviewQuestion]=Field(default_factory=list,max_length=8)
 
 SYSTEM='''You are Scoop's weekly purchasing analyst. Mechanical monitoring has already run.
-Investigate beyond its single-attribute alarms, using the provided tools autonomously.
+The supplied program_trends include a systematic scan of single attributes and tag combinations.
+Use these measured leads and parent comparisons to choose what deserves closer investigation.
+Their T-prefixed IDs are available evidence, including saved daily series for interactive charts.
+They do not consume your additional query allowance. Apply the scan's stated evidence scope;
+its screening results describe patterns, not causes. Investigate further using the tools autonomously.
 Start by obtaining catalog_groups. Choose promising cross-dimension intersections, compare
 them with parent groups and other districts, and pursue or reject hypotheses based on results.
 Broad category averages can hide concentrated changes. Use the catalog memberships and SKU
@@ -53,7 +57,7 @@ family-wide FDR discovery. Use sample adequacy, null results and contradictory e
 decide what deserves prominence. No query changes a purchase, stage, goal, or approved record.
 Conclude by calling finish_weekly_review: write a concise integrated weekly report in English,
 combining mechanical findings, your additional observations, operational implications and
-proposed next actions. Cite evidence IDs (finding IDs or Q1, Q2...) in claims. Each numerical
+proposed next actions. Cite evidence IDs (finding IDs, supplied T IDs or Q1, Q2...) in claims. Each numerical
 claim must agree with tool results. Clearly distinguish observations from hypotheses.
 Keep internal IDs, model terminology, factors and detailed arithmetic in claims/evidence, not
 in the plain-text report or questions. Explain demand assumptions in everyday language.
@@ -74,9 +78,25 @@ When evidence is weak, propose a proportionate follow-up rather than inventing a
 def view(plan):
     return (plan.summary or {}).get('weekly_review',{'status':'not_started','report':'','queries':[]})
 
+def program_evidence(plan):
+    """Expose saved program findings through the same source/chart bridge as AI queries."""
+    scan=(plan.summary or {}).get('raw_trends',{})
+    return [{'id':item['id'],'name':'program_trend',
+             'args':{'group_ids':item['group_ids'],'districts':item['districts'],
+                     'window_start':scan.get('window_start'),'window_end':scan.get('window_end')},
+             'result':{**{k:v for k,v in item.items() if k!='series'},'daily':item.get('series',[]),
+                       'scope':{'group_ids':item['group_ids'],'districts':item['districts'],
+                                'skus':item['skus'],'sku_count':item['sku_count']},
+                       'method':scan.get('method'),'evidence_through':scan.get('window_end')}}
+            for item in scan.get('items',[])]
+
 def _context(session,plan):
     findings=list(session.scalars(select(Finding).where(Finding.plan_id==plan.id).order_by(Finding.id)))
+    scan=(plan.summary or {}).get('raw_trends',{})
     return {'week_start':str(plan.week_start),'goal':plan.goal,'stage':plan.stage,
+            'program_trends':{**{k:v for k,v in scan.items() if k!='items'},
+                              'items':[{k:v for k,v in item.items() if k not in ('series','checks','skus')}
+                                       for item in scan.get('items',[])]},
             'mechanical_findings':[{'id':f.id,'name':(f.evidence or {}).get('display',f.tag_id),
                 'districts':(f.evidence or {}).get('districts',[]),'actual_share':f.share_now,
                 'expected_share':f.share_before,'classification':f.classification,
@@ -85,7 +105,7 @@ def _context(session,plan):
 def _finish(session,plan,report,queries):
     report=Report.model_validate(report)
     valid_findings=set(session.scalars(select(Finding.id).where(Finding.plan_id==plan.id)))
-    ids=valid_findings|{q['id'] for q in queries if 'error' not in q['result']}
+    ids=valid_findings|{q['id'] for q in queries if 'error' not in q['result']}|{q['id'] for q in program_evidence(plan)}
     if any(set(c.evidence_ids)-ids for c in report.claims):raise ValueError('Use only returned evidence IDs.')
     for q in report.questions:
         if q.finding_id and q.finding_id not in valid_findings:raise ValueError('Unknown finding for question.')
@@ -100,6 +120,7 @@ def investigate(session,plan,wire=None):
     contents=[{'role':'user','parts':[{'text':json.dumps(context,ensure_ascii=False)+'\nInvestigate this week and prepare the report.'}]}]
     declarations=exploration_tools.declarations()+[{'name':'finish_weekly_review','description':'Submit the evidence-based weekly report, AI-authored visual presentation (title, HTML fragment, CSS), linked source claims and useful conversational follow-ups. Layout is yours; native details and inline SVG can expose evidence without JavaScript.','parametersJsonSchema':Report.model_json_schema()}]
     queries=[];seen=set();usage={'input_tokens':0,'output_tokens':0}
+    supplied=program_evidence(plan)
     wire=wire or gemini._wire
     for round_no in range(MAX_ROUNDS):
         payload={'systemInstruction':{'parts':[{'text':SYSTEM}]},'contents':contents,
@@ -107,7 +128,7 @@ def investigate(session,plan,wire=None):
                  'generationConfig':{'temperature':.2,'maxOutputTokens':MAX_OUTPUT_TOKENS,'thinkingConfig':{'thinkingLevel':'LOW'}}}
         try:data=wire(payload)
         except gemini.ProviderUnavailable as exc:
-            return {'status':'failed','report':'','queries':queries,'usage':usage,'model':settings.gemini_model,
+            return {'status':'failed','report':'','queries':queries+supplied,'usage':usage,'model':settings.gemini_model,
                     'error':'The assistant could not finish the review ('+str(exc)+').'}
         u=data.get('usageMetadata',{})
         usage['input_tokens']+=u.get('promptTokenCount',0)
@@ -127,7 +148,7 @@ def investigate(session,plan,wire=None):
             try:
                 if name=='finish_weekly_review':
                     report=_finish(session,plan,args,queries)
-                    return {'status':'complete',**report,'queries':queries,'model':data.get('modelVersion',settings.gemini_model),
+                    return {'status':'complete',**report,'queries':queries+supplied,'model':data.get('modelVersion',settings.gemini_model),
                             'usage':usage,'created_at':datetime.now(timezone.utc).isoformat()}
                 fingerprint=json.dumps([name,args],sort_keys=True)
                 if len(queries)>=MAX_QUERIES:raise ValueError('Query allowance reached. Finish using existing evidence.')
@@ -143,14 +164,19 @@ def investigate(session,plan,wire=None):
             else:response=result
             responses.append({'functionResponse':{'name':name,'response':response}})
         contents.append({'role':'user','parts':responses})
-    return {'status':'failed','report':'','queries':queries,'usage':usage,'model':settings.gemini_model,
+    return {'status':'failed','report':'','queries':queries+supplied,'usage':usage,'model':settings.gemini_model,
             'error':'The exploration did not produce a complete report. You can retry.'}
 
 def authoring_evidence(result):
     """Avoid repeating row-level traces during layout authoring; saved evidence stays full."""
     result=compact_result(result)
+    if 'checks' in result and 'score' in result:
+        # Program cards already have window totals, parent comparisons and an explanation.
+        # The host retains their full daily series for interactive expansion.
+        result.pop('daily',None)
     result.pop('store_contributors',None)
     result.pop('effective_sku_factors',None)
+    result.pop('checks',None)
     if 'daily' in result:
         result['daily']=[{k:v for k,v in row.items() if k in ('date','requested_units','expected_units','prior_year_units','prior_year_requested_units')} for row in result['daily']]
     def rounded(value):
@@ -172,7 +198,9 @@ def upgrade(session,plan,wire=None,*,force=False):
     evidence_ids=set(session.scalars(select(Finding.id).where(Finding.plan_id==plan.id)))
     queries=existing.get('queries',[])
     evidence_ids|={q['id'] for q in queries if 'error' not in q.get('result',{})}
-    source={**_context(session,plan),'saved_report':{k:existing.get(k) for k in ('report','claims','questions')},
+    context=_context(session,plan)
+    context.pop('program_trends',None)  # Already supplied once in saved_evidence, with source IDs.
+    source={**context,'saved_report':{k:existing.get(k) for k in ('report','claims','questions')},
             'saved_evidence':[{**q,'result':authoring_evidence(q.get('result',{}))} for q in queries if q['name']!='catalog_groups'],
             'available_evidence_ids':sorted(evidence_ids)}
     payload={'systemInstruction':{'parts':[{'text':

@@ -107,6 +107,27 @@ PRODUCTS = [
     ("Grapefruit Sorbet Bar", "Coastline", "stick", ["citrus"], "fruit", 0.00, 0.20, 0.50, [], ["low_sugar"], 70, 12.0),
 ]
 
+# Extra single-serving lines carried in one simulated season. The original
+# catalog remains intact for all other seeds. Each line uses the normal catalog
+# path for nutrition, supplier terms and tags.
+SEED93_PRODUCTS = [
+    ("Strawberry Spring Ice Bar", "Sunny Isle", "stick", ["strawberry"], "fruit", 0.00, 0.15, 0.65, [], [], 75, 9.0),
+    ("Strawberry Orchard Ice Bar", "Little Panda", "stick", ["strawberry"], "fruit", 0.05, 0.15, 0.65, [], [], 75, 9.5),
+    ("Strawberry Breeze Ice Bar", "Kowloon Creamery", "stick", ["strawberry"], "fruit", 0.10, 0.20, 0.65, [], [], 75, 10.0),
+    ("Strawberry Puree Sorbet Bar", "Coastline", "stick", ["strawberry"], "fruit", 0.00, 0.25, 0.65, ["fruit_pieces"], [], 75, 19.0),
+    ("Strawberry Garden Sorbet Bar", "Jade Garden", "stick", ["strawberry"], "fruit", 0.05, 0.25, 0.65, [], [], 75, 20.0),
+    ("Strawberry Coastal Sorbet Bar", "Coastline", "stick", ["strawberry"], "fruit", 0.10, 0.30, 0.65, [], [], 75, 21.0),
+    ("Strawberry Milk Ice Bar", "Lantau Dairy", "stick", ["strawberry"], "fruit", 0.85, 0.55, 0.65, [], [], 75, 9.0),
+    ("Strawberry Cream Ice Bar", "Harbour Chill", "stick", ["strawberry"], "fruit", 0.90, 0.60, 0.65, [], [], 75, 9.5),
+    ("Strawberry Dairy Ice Bar", "Kowloon Creamery", "stick", ["strawberry"], "fruit", 0.95, 0.60, 0.65, [], [], 75, 10.0),
+    ("Peach Spring Ice Bar", "Sunny Isle", "stick", ["peach"], "fruit", 0.00, 0.15, 0.65, [], [], 75, 9.0),
+    ("Apple Orchard Ice Bar", "Little Panda", "stick", ["apple"], "fruit", 0.05, 0.15, 0.65, [], [], 75, 9.5),
+    ("Pineapple Breeze Ice Bar", "Kowloon Creamery", "stick", ["pineapple"], "fruit", 0.10, 0.20, 0.65, [], [], 75, 10.0),
+    ("Strawberry Velvet Cream Bar", "Lantau Dairy", "stick", ["strawberry"], "fruit", 0.85, 0.75, 0.65, [], [], 75, 19.0),
+    ("Strawberry Meadow Cream Bar", "Harbour Chill", "stick", ["strawberry"], "fruit", 0.90, 0.80, 0.65, [], [], 75, 20.0),
+    ("Strawberry Reserve Cream Bar", "Coastline", "stick", ["strawberry"], "fruit", 0.95, 0.80, 0.65, [], [], 75, 21.0),
+]
+
 FORMAT_BASE_DAILY = {
     "stick": 6.0,
     "cone": 4.5,

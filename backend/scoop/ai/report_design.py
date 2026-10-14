@@ -42,6 +42,10 @@ Let the evidence determine the number and kinds of observations; neither section
    Finish the section with one overall conclusion that advances the reasoning rather than repeating
    the numbers. Avoid putting a KPI strip, a full comparison chart and a prose section all about
    the same facts. One observation has one home.
+   Give each distinct new observation its own illustrated card or report block, with its own
+   heading, comparison and explanation. A tag combination, local pattern or other special finding
+   that adds a separate insight deserves that space; don't bury it in another observation's
+   description. Related observations can sit together while retaining their separate identity.
 2. Secondary observations: less pronounced changes, meaningful stability and tentative leads.
    Include a useful chart and explain their implication or what to watch next.
    Relevant questions about local events can sit here in one concise conversation prompt.
@@ -58,7 +62,7 @@ Subsequent sections may refer to a group without repeating its statistics. Prefe
 sentences per card to a recital of every query output. Technical IDs, internal coefficients,
 calibration details and query arithmetic belong behind the query button. Keep the plain-text report
 concise for conversation; it isn't a second visible report. Do not show plan-goal or stage badges.
-Aim for an economical report, roughly 350-500 visible words when this amount of evidence warrants it.
+Keep the report economical while giving each distinct relevant observation enough space to be understood.
 Treat source claims as evidence to synthesize, not sentences to copy. A card normally needs one
 headline deviation and an actual/expected graphic; omit extra share statistics and contributor lists
 unless they change its explanation. One primary query button per card is enough; related sources
@@ -75,6 +79,11 @@ Describe an exploratory signal in business terms, such as "Check whether the loc
 next week"; do not refer to internal significance gates in the visible narrative.
 Use observed replenishment requests, not claimed consumer sales. Name the comparison: deviation
 from forecast is different from change since last week. Separate alarm dates from review windows.
+Use a consistent, familiar price basis in the report. Prefer the catalog's per-item price tier
+when describing purchasing groups; introduce price per volume only when that distinction explains
+something useful. Overlapping price definitions should not give the same products confusing labels.
+When a broader card's explanation reveals a pronounced local or intersecting subgroup anomaly,
+give that finding its own card and comparison rather than leaving its discovery in the paragraph.
 
 VISUAL DIRECTION
 Warm off-white background, white cards, dark green text, muted green / coral / violet accents.
@@ -88,7 +97,7 @@ with dotted underlines. Query IDs should not be displayed as prominent badges.
 CARD INTERACTION CONTRACT (host supplies the JavaScript)
 Wrap each observation in an element with data-report-card. Mark its compact metric/chart block with
 data-report-summary. Put a small accessible expand icon button at the top right, data-trend-id="Q2",
-using the relevant query_group evidence ID. The host expands that same card into a daily actual vs
+using the relevant query_group (Q ID) or supplied program_trend (T ID) evidence. The host expands that same card into a daily actual vs
 expected line chart and available time ranges. It only draws prior-year data when supplied. Never
 invent dates, time-series points or a last-year curve. The AI can freely design the compact chart.
 At the bottom right, use a small magnifier button data-evidence-id="Q2" with aria-label="View query".
