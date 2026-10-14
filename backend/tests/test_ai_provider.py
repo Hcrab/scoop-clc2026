@@ -111,6 +111,14 @@ def test_failed_provider_uses_honest_scripted_fallback(api,monkeypatch):
         assert 'fixture-only' not in answer.reply
 
 
+def test_argon_allowance_counts_reasoning_at_selected_model_rate(tmp_path):
+    ledger=tmp_path/'argon.sqlite3'
+    rid=usage.reserve('gemini-4-argon','fixture',1000,8192,path=ledger)
+    assert usage.summary(path=ledger)['estimated_usd']==pytest.approx(.16784)
+    usage.finish(rid,{'promptTokenCount':1000,'candidatesTokenCount':200,'thoughtsTokenCount':300},path=ledger)
+    assert usage.summary(path=ledger)['estimated_usd']==pytest.approx(.014)
+
+
 def test_usage_reservation_is_atomic_and_unknown_outcome_keeps_reservation(tmp_path,monkeypatch):
     ledger=tmp_path/'usage.sqlite3'
     monkeypatch.setattr(usage,'settings',replace(usage.settings,llm_budget_usd=1,llm_max_calls=1))

@@ -19,7 +19,7 @@ from . import tools as planning_tools
 from .usage import reserve, finish, UsageLimit
 
 MAX_ROUNDS=4
-MAX_OUTPUT_TOKENS=2400
+MAX_OUTPUT_TOKENS=4096
 _REQUEST_LOCK=threading.Lock()
 
 
@@ -53,7 +53,8 @@ Absence of a recorded promotion or unusual heat is not proof of a preference cha
 Share decomposition is an arithmetic comparison, not evidence that identifiable customers switched products. Describe mix effect as the contribution of a changed sales mix; never say those units prove customers actively switched. Observed current warehouse occupancy alone cannot establish future capacity safety: dated inbound orders and consumption must also be checked. Describe available room only as observed headroom, not a guarantee of safety. Replace technical phrases such as 订货乘数 with 多订或少订多少.
 Investigator confidence values and scores are heuristic weights, not calibrated probabilities. Never describe them as the probability that a cause is true. Exploratory weak checks are reasons to keep watching, not confirmed findings.
 Use exact IDs from the provided catalog internally; show product/category names to the user. A focused finding or product can resolve 'this one'. Ask a short clarifying question when a reference is ambiguous.
-Manage the structured advisory discussion with update_discussion when conversational understanding changes it, including informational questions. Close a topic only after a useful answer or clear acknowledgement; keep uncertainty as an open follow-up and add relevant genuinely new topics. Do not force a tool call each response. Include open and resolved topics in your understanding and avoid repeatedly demanding their completion. The human controls stage advancement. Agenda edits only track conversation and never authorize changing buying directions/goals or confirming orders.
+Use the saved weekly review and its evidence when continuing the analyst's opening conversation. Ask specific business questions, not task labels such as 'Understand X'. For tag intersections or deeper investigations, call catalog_groups then query_group/query_operations/preview_group_orders. These are read-only exploratory tools; do not call their results confirmed FDR discoveries. A preview is not an applied procurement change.
+Manage the structured advisory discussion with update_discussion when conversational understanding changes it, including informational questions. Use natural, specific follow-ups that help the human respond. Summaries and conversational phrasing are welcome; punctuation and opening words do not determine validity. Close a topic only after a useful answer or clear acknowledgement; keep uncertainty as an open follow-up and add relevant genuinely new questions. Do not force a tool call each response. Include open and resolved questions in your understanding and avoid repeatedly demanding their completion. The human controls stage advancement. Agenda edits only track conversation and never authorize changing buying directions/goals or confirming orders.
 Only call business mutation tools for an explicit user request to apply/record/change/add something; questions, comparisons, hypotheticals and 'why' are read-only. Scenario calculations NEVER apply changes. Do not change a goal merely because the user mentions it. Never approve stages or confirm purchases on the user's behalf; the user does those in the UI. A request about district shortages should use fill_rate; warehouse inventory is shared.
 Stage rules: Discover permits recording finding interpretations and goals. Direction permits goals and category/SKU changes. Execute permits watches but the approved strategy is read-only. If a tool reports a stage/input error, explain the narrow issue and make no claim of success. If a mutation is successful, briefly state exactly what was recorded. No repeated mutation calls for the same change.
 Use at most three tool batches and then answer. For 35°C next-week questions, call temperature_scenario with offset_days=7. For a watch request, call add_watch using the most specific known category/district. For a user selecting persistent/one-off/weather/etc for a finding, use classify_finding, not set_direction. Tool outputs are authoritative; general knowledge may explain a concept but must not fabricate project results.
@@ -68,7 +69,7 @@ def _wire(payload, *, transport=None):
     encoded=json.dumps(payload,ensure_ascii=False,separators=(',',':')).encode('utf-8')
     if len(encoded)>180_000:raise ProviderUnavailable('context_limit')
     try:
-        rid=reserve(model,hashlib.sha256(encoded).hexdigest(),len(encoded),MAX_OUTPUT_TOKENS)
+        rid=reserve(model,hashlib.sha256(encoded).hexdigest(),len(encoded),payload.get('generationConfig',{}).get('maxOutputTokens',MAX_OUTPUT_TOKENS))
     except UsageLimit as exc:raise ProviderUnavailable('usage_limit') from exc
     request=urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent',data=encoded,headers={'x-goog-api-key':key,'Content-Type':'application/json'})
     try:

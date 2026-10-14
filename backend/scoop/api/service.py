@@ -211,7 +211,7 @@ def get_plan(pid:str):
             frozen=[WatchItem(**snapshot) for snapshot in approved.get('items',[])]
             review={'confirmed':True,'confirmed_at':approved.get('confirmed_at'),
                     'items':[data.view(w,p,workflow.state(p).get('approved_projection')) for w in frozen]}
-        return clean({'discussion':discussion_view(s,p),'plan':row(p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'watch':views,'watch_review':review,'recap':recap(s,p,today(),cached_series),'decisions':[row(x) for x in objects(s,Decision,pid)],'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
+        return clean({'review':(p.summary or {}).get('weekly_review',{'status':'not_started','report':'','queries':[]}),'discussion':discussion_view(s,p),'plan':row(p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'watch':views,'watch_review':review,'recap':recap(s,p,today(),cached_series),'decisions':[row(x) for x in objects(s,Decision,pid)],'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
 
 class NewPlan(BaseModel): week_start: date
 @router.post('/plans')
@@ -227,10 +227,20 @@ def create_plan(body:NewPlan):
             pid=build_plan(week)
             from .. import workflow
             with session_scope() as s: workflow.initialize_plan(s,s.get(Plan,pid))
+            from ..ai.weekly import prepare
+            prepare(pid)
             return {'id':pid}
         except Exception as exc: raise HTTPException(503,f'Plan generation failed: {type(exc).__name__}: {exc}') from exc
 
 class Answer(BaseModel): answer:str
+
+@router.post('/plans/{pid}/review')
+def weekly_review(pid:str):
+    from ..ai.weekly import run
+    with session_scope() as s:
+        p=plan_for(s,pid)
+        return clean(run(s,p))
+
 def record_interpretation(s,p,q,answer,source='question'):
     if q.stage!=p.stage: raise HTTPException(409,'Question stage is read-only')
     allowed={'persistent','one_off','data_issue','weather','unsure','watch','mirror'}

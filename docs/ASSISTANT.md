@@ -6,7 +6,7 @@ The live assistant uses Gemini to interpret a question and choose from a small s
 
 Set `SCOOP_LLM_PROVIDER=gemini` in the ignored local `.env`. Supply `GEMINI_API_KEY` in the server process environment. The key is used only in the HTTPS `x-goog-api-key` request header to Google's Gemini endpoint; it is not returned to the browser, included in URLs, or written to the usage ledger. `scripted` remains the portable default in `.env.example`.
 
-The selected model is `gemini-3.8-flash`, verified against the authenticated model listing on 14 October 2026. The implementation uses the supported `generateContent` REST API and function declarations. A model can be changed through `SCOOP_GEMINI_MODEL` without changing frontend code. Provider availability is checked through actual requests; configuration alone does not prove that a remote service is healthy.
+The selected model is `gemini-4-argon`. Its official model documentation and an actual authenticated `generateContent` response were verified on 14 October 2026. The implementation uses REST function declarations and preserves opaque thought signatures within the tool loop. A model can be changed through `SCOOP_GEMINI_MODEL` without changing frontend code. Configuration alone does not prove provider availability.
 
 ## Data and actions
 
@@ -16,9 +16,15 @@ Both provider instructions and server-side intent checks keep informational ques
 
 The browser streams actual progress labels for context loading, provider requests and tool execution. These labels describe observable operations; they are not hidden model reasoning. The final success response is sent only after the transaction commits. Tool results and the provider used are saved with the assistant message under expandable response details.
 
-## Discussion topics
+## Weekly exploration and conversation
 
-The assistant maintains a structured agenda in the plan, exposed as `discussion.items` and `discussion.open_count`. Initial topics come from the plan's findings. During conversation, the assistant can add a relevant follow-up, resolve a topic after addressing it, or reopen a topic that needs further discussion. The top-right assistant badge and the discussion list read this saved state.
+After a new plan's mechanical scan, the live agent chooses additional read-only queries before submitting an integrated weekly report with an AI-authored title, HTML/CSS, charts and interactive evidence. Existing plans offer Explore this week. Completed reports are reused; GET requests and opening the conversation do not spend provider calls. A failed or offline review leaves the mechanical plan available and supports retry.
+
+The agent can list catalog groups, query intersections and parent comparisons, inspect operational records, and preview procurement consequences using the existing algorithms. The agent chooses query arguments and follow-ups from returned evidence. The saved review includes query arguments/results, evidence IDs, claims, questions, model version and usage. Query IDs referenced by claims must exist. This is exploratory investigation, not an extension of the calibrated mechanical FDR family or proof of causation.
+
+The conversation opens with observations and specific numbered business questions, followed by normal text input. The report and query evidence are available to subsequent chat turns. Questions that require local knowledge or a purchasing choice remain explicit; a numerical result alone is not human authorization to change an order.
+
+The assistant maintains question state in the plan, exposed as `discussion.items` and `discussion.open_count`. A completed review replaces untouched mechanical prompts with its actual questions. During conversation, the assistant can add a relevant follow-up, resolve a question after addressing it, or reopen it. The top-right assistant badge reads this saved state.
 
 Agenda updates are advisory metadata. They do not approve stages, classify a finding, change a buying direction or confirm a purchase. Those business actions keep their own validated tools and explicit intent rules. An explicit finding interpretation also resolves its related discussion topic. Merely continuing to another stage leaves open topics open and preserves unanswered question records.
 
@@ -26,7 +32,7 @@ The human controls Continue. Discussion progress is kept independently of the st
 
 ## Failure behavior and allowance
 
-The default allowance is 120 provider calls and a conservative estimated US$3 total across this local demo's lifetime. A chat turn may use up to four calls. A SQLite ledger under ignored `data/cache/` reserves allowance atomically before each request. It stores request digests and aggregate input/output counts, including thinking tokens, but no prompt text or key. Unknown transport outcomes retain their reservation. Estimates use US$1.50 per million input tokens and US$7.50 per million output tokens, deliberately above the verified standard rate; these estimates are not a billing statement.
+The default allowance is 120 provider calls and a conservative estimated US$3 total across this local demo's lifetime. Chat uses up to four calls; weekly exploration uses up to seven rounds and twelve additional queries. A SQLite ledger under ignored `data/cache/` reserves allowance atomically before each request, including that request's actual output cap. It stores digests and aggregate token counts including thinking, but no prompt text or key. Unknown transport outcomes retain reservations. Gemini 4 estimates use conservative US$4/20 per million input/output tokens (the documented post-introductory rates); other models retain the previous US$1.50/7.50 estimate. These estimates are not a billing statement.
 
 If the provider cannot start, the response explicitly identifies the offline demo fallback. If an explanation fails after a tool has already run, the assistant summarizes those recorded tool results and does not rerun the mutation through the fallback. Invalid stages/scopes roll back; a failed database transaction never emits a success event. A single local live request runs at a time to avoid accidental parallel actions and uncontrolled spend.
 
@@ -34,4 +40,6 @@ If the provider cannot start, the response explicitly identifies the offline dem
 
 The assistant is still a probabilistic writer. Its numeric answers must come from context or tools; tool evidence is available for review. Absence of a recorded promotion does not prove a preference shift, a mix decomposition does not identify customers who switched, and observed warehouse space is not a guarantee about future arrivals. Historical service measurements are separate from forecasts and cannot prove the effect of a confirmed demo order. These limits are explicit in the prompt and real-response review; they are not a claim that hallucination is impossible.
 
-Provider documentation: [Function calling](https://ai.google.dev/gemini-api/docs/function-calling), [generateContent REST API](https://ai.google.dev/api/generate-content), [pricing](https://ai.google.dev/gemini-api/docs/pricing).
+Provider documentation: [Gemini 4 Argon](https://ai.google.dev/gemini-api/docs/models/gemini-4-argon), [migration and pricing](https://ai.google.dev/gemini-api/docs/latest-model), [Function calling](https://ai.google.dev/gemini-api/docs/function-calling), [generateContent REST API](https://ai.google.dev/api/generate-content).
+
+The visual report is the primary Discover surface when available, replacing duplicate mechanical cards and prose. Layout guidance remains advisory; no minimum query count, intersection requirement or sentence-style gate blocks a report. Generated HTML runs in an isolated report frame with source links to saved evidence. See AI_REPORTS.md.

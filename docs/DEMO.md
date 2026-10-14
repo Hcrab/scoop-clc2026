@@ -16,7 +16,9 @@ Try “What if next week is 35 C?” in the discussion. Scoop recomputes the for
 
 ## 3. Record a decision
 
-Open Plan discussion from the top-right assistant icon. Its badge counts open discussion topics. Discuss the evidence and record interpretations when useful; the assistant maintains a structured list of open and resolved topics. Select Continue to move to Direction. Topics remain available across stages, and advancing does not pretend to answer them.
+Open Plan discussion from the top-right assistant icon. Its badge counts unresolved questions. The assistant opens with its observations followed by numbered business questions; type a response below. Discuss the evidence and record interpretations when useful. Select Continue to move to Direction.
+
+For a new plan, the weekly report combines mechanical findings with the assistant's additional tool queries. On an existing plan, select Explore this week to prepare that report. Expand Exploration details to inspect selected groups, dates, results and the model used. Crosscurrents in Settings is a separate synthetic experiment with hidden intersection effects; discovery must be judged from the saved queries and report, not inferred from the presence of a report. The offline answer key is unavailable to the assistant.
 
 Inspect the resulting `more`, `less`, `hold` or `clear` choices. Change the percentage to buy more or less, or its district scope where appropriate, choose the planning objective, and review the approval summary and watch selection. Baseline watches cover service, shortages, excess cover, projected space and late suppliers.
 
@@ -44,7 +46,7 @@ Reset in Settings clears planning progress for the current simulation and prepar
 
 ## Saved walkthrough in the local delivery
 
-- The original simulation's clock is July 27. Its newest plan starts in Discover with six discussion topics.
+- The original simulation's clock is July 27. Its newest plan starts in Discover; its questions reflect the saved review and conversation.
 - July 20 remains available in Plan history at Execute & watch. It uses a 96% service preference and a Water-based +10% direction limited to Kowloon.
 - Dragon Fruit Smoothie Cup was recommended at 25 cases and manually confirmed at 26. Its detail panel and saved real-model answer distinguish those quantities.
 - The Fruit/HK Island watch was edited during Execute. Its approved Direction copy retains the original wording; the current version carries to July 27.

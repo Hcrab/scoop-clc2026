@@ -15,6 +15,7 @@ def _save(plan, items):
 def _items(session, plan):
     items=deepcopy((plan.summary or {}).get('discussion',{}).get('items',[]))
     changed=False
+    if (plan.summary or {}).get('weekly_review',{}).get('status')=='complete':return items
     for question in session.scalars(select(Question).where(Question.plan_id==plan.id).order_by(Question.id)):
         topic_id=plan.id+'-T'+sha256(question.id.encode()).hexdigest()[:16]
         item=next((i for i in items if i['id']==topic_id),None)
@@ -22,11 +23,13 @@ def _items(session, plan):
             finding=session.get(Finding,question.finding_id) if question.finding_id else None
             finding_id=finding.id if finding and finding.plan_id==plan.id else None
             label=(finding.evidence or {}).get('display') if finding else None
-            title=('Understand the change in '+str(label))[:160] if label else question.text.strip()[:160] or 'Discuss this finding'
+            title=question.text.strip()[:300] or ('What might explain the change in '+str(label or 'demand')+'?')
             items.append({'id':topic_id,'title':title,'status':'resolved' if question.answer is not None else 'open',
                           'finding_id':finding_id,'note':'','question_id':question.id,'managed':False})
             changed=True
         elif not item.get('managed'):
+            if item['title'].startswith('Understand the change in '):
+                item['title']=question.text.strip()[:300];changed=True
             status='resolved' if question.answer is not None else 'open'
             if item['status']!=status:item['status']=status;changed=True
     if changed:_save(plan,items)
