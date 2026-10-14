@@ -100,6 +100,8 @@ data-report-summary. Put a small accessible expand icon button at the top right,
 using the relevant query_group (Q ID) or supplied program_trend (T ID) evidence. The host expands that same card into a daily actual vs
 expected line chart and available time ranges. It only draws prior-year data when supplied. Never
 invent dates, time-series points or a last-year curve. The AI can freely design the compact chart.
+Choose a source whose product intersection, district and measurement match the card. A broader
+parent query must not stand in for a subgroup's curve when that subgroup has its own T source.
 At the bottom right, use a small magnifier button data-evidence-id="Q2" with aria-label="View query".
 The host opens the query inline. Apply evidence hooks to these dedicated buttons, not the whole card,
 paragraph, SVG or summary. For native extra explanations you may also use details/summary.
