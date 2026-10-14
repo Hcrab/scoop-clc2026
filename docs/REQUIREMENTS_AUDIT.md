@@ -6,9 +6,10 @@ This map follows the accepted project scope and subsequent refinement request. S
 |---|---|---|
 | Replenish familiar products at one warehouse | Synthetic source world, existing-product catalog, supplier calendars and case quantities | 20 stores, 60 products, eight suppliers; source data is synthetic |
 | One weekly plan, with current work easy to find | Default current week; history and demo date are secondary controls | Actual browser review; existing plans preserved |
-| Understand a change before deciding | Discovery report with observed/expected demand, explanations and six interpretation choices | API interpretation changes persist and recompute purchases |
+| Understand a change before deciding | Directly visible finding cards, observed/expected demand, explanations and contextual discussion | Explicit interpretation changes persist and recompute purchases |
 | Keep technical implementation out of the primary flow | Percent changes, product names, dates, quantities and next actions; calculations in disclosures | Apple HIG Writing/Layout/Accessibility informed the review; this is a web app with its own visual identity |
-| Discuss the selected finding in a permanent dock | Plan/stage/finding context, focused next question, collapsed completed questions and decision history | Context ownership validation; Chinese input and safe formatted replies |
+| Discuss the selected finding and track open topics | Assistant icon count, structured conversational agenda, plan/stage/finding context and decision history | Topic persistence is separate from buying decisions and does not block Continue |
+| Explore different demonstrations | Sidebar Settings with simulation data, week selection and scoped reset | Switching preserves other simulation progress; data/model caches stay aligned |
 | Use a real assistant on more than canned questions | Gemini, bounded domain tools and real progress events | Real Chinese responses reviewed; probabilistic prose still needs human judgement |
 | Explain / classify / test 35°C / add a district fruit watch | Evidence lookup, shared interpretation handler, read-only scenario, validated watch tools | Mocked failure regressions plus real-provider demonstration records; scenario never changes orders |
 | Control the service/stock tradeoff | Profit, service and sales objectives; category/product/district adjustments | Invalid scopes and approved-stage changes rejected; requested service is not a guaranteed achieved fill rate |

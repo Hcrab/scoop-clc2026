@@ -78,10 +78,11 @@ Optional report figures: install `matplotlib==3.11.2` in a reporting environment
 ## What to demonstrate
 
 1. Review a weekly finding, its observed-versus-expected chart and alternative explanations.
-2. Record whether the evidence is persistent, one-off, weather-related, a data issue or uncertain.
+2. Open the assistant's topic list, discuss the evidence, and record interpretations. Continue to the next stage when ready.
 3. Choose purchasing directions, district scopes and the operational objective; review the proposed watch list before approval.
 4. Inspect supplier dates, protection-window forecasts, capacity cuts and case quantities. Confirm a synthetic order and export CSV.
 5. Add or edit a watch, reload, and inspect persisted decisions and chat context. A new week carries unresolved watches forward and shows the previous week's dated recap.
+6. Use Settings to switch simulation data and week, revisit saved progress, or reset the current simulation.
 
 See [the demo guide](docs/DEMO.md) for a walkthrough. Historical inventory is a generated snapshot; confirming a demo order does not retroactively simulate physical warehouse movements.
 

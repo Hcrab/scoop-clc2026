@@ -47,12 +47,14 @@ def answer(session,plan,body,progress=None):
     if result.fallback_reason:metadata['fallback_reason']=result.fallback_reason
     session.add(ChatMessage(plan_id=plan.id,stage=body.stage,role='user',content=body.message,meta={'provider':result.provider,'context':focus},created_at=datetime.now()))
     session.add(ChatMessage(plan_id=plan.id,stage=body.stage,role='assistant',content=result.reply,meta=metadata,created_at=datetime.now()))
-    return {'reply':result.reply,**metadata}
+    from ..discussion import view
+    return {'reply':result.reply,**metadata,'discussion':view(session,plan)}
 
 
 @router.post('/plans/{pid}/chat/stream')
 def stream_chat(pid:str,body:ChatRequest):
     from ..api import service
+    from ..demo_gate import gate
     events=Queue()
     def work():
         try:
@@ -66,10 +68,20 @@ def stream_chat(pid:str,body:ChatRequest):
         except Exception as exc:
             logger.error('Assistant request failed (%s)',type(exc).__name__)
             events.put(('error',{'detail':'The response could not be saved. No partial plan change was committed. Please try again.','status':503}))
-        finally:events.put(('done',{}))
+        finally:
+            events.put(('done',{}))
+            worker_lease.__exit__(None,None,None)
 
     def stream():
-        Thread(target=work,daemon=True,name='scoop-assistant').start()
+        # Reserve activity before starting the thread so disconnects cannot let
+        # a simulation switch overtake a not-yet-scheduled assistant worker.
+        nonlocal worker_lease
+        worker_lease=gate.activity()
+        worker_lease.__enter__()
+        try: Thread(target=work,daemon=True,name='scoop-assistant').start()
+        except BaseException:
+            worker_lease.__exit__(None,None,None)
+            raise
         while True:
             try:kind,payload=events.get(timeout=10)
             except Empty:
@@ -77,4 +89,5 @@ def stream_chat(pid:str,body:ChatRequest):
                 continue
             if kind=='done':break
             yield 'event: '+kind+'\ndata: '+json.dumps(payload,ensure_ascii=False)+'\n\n'
+    worker_lease=None
     return StreamingResponse(stream(),media_type='text/event-stream',headers={'Cache-Control':'no-cache','X-Accel-Buffering':'no'})

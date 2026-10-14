@@ -16,6 +16,14 @@ Both provider instructions and server-side intent checks keep informational ques
 
 The browser streams actual progress labels for context loading, provider requests and tool execution. These labels describe observable operations; they are not hidden model reasoning. The final success response is sent only after the transaction commits. Tool results and the provider used are saved with the assistant message under expandable response details.
 
+## Discussion topics
+
+The assistant maintains a structured agenda in the plan, exposed as `discussion.items` and `discussion.open_count`. Initial topics come from the plan's findings. During conversation, the assistant can add a relevant follow-up, resolve a topic after addressing it, or reopen a topic that needs further discussion. The top-right assistant badge and the discussion list read this saved state.
+
+Agenda updates are advisory metadata. They do not approve stages, classify a finding, change a buying direction or confirm a purchase. Those business actions keep their own validated tools and explicit intent rules. An explicit finding interpretation also resolves its related discussion topic. Merely continuing to another stage leaves open topics open and preserves unanswered question records.
+
+The human controls Continue. Discussion progress is kept independently of the stage transition; it is not an approval prerequisite.
+
 ## Failure behavior and allowance
 
 The default allowance is 120 provider calls and a conservative estimated US$3 total across this local demo's lifetime. A chat turn may use up to four calls. A SQLite ledger under ignored `data/cache/` reserves allowance atomically before each request. It stores request digests and aggregate input/output counts, including thinking tokens, but no prompt text or key. Unknown transport outcomes retain their reservation. Estimates use US$1.50 per million input tokens and US$7.50 per million output tokens, deliberately above the verified standard rate; these estimates are not a billing statement.

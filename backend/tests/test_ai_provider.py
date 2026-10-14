@@ -147,6 +147,8 @@ def test_stream_saves_response_and_exposes_real_progress_only(api,monkeypatch):
     assert response.headers['content-type'].startswith('text/event-stream')
     blocks=[block for block in response.text.split('\n\n') if block]
     assert blocks[0].startswith('event: progress') and blocks[1].startswith('event: result')
+    result=json.loads(blocks[1].split('data: ',1)[1])
+    assert result['discussion']==c.get('/api/plans/TESTAPI').json()['discussion']
     messages=c.get('/api/plans/TESTAPI').json()['messages']
     assert len(messages)==2 and messages[-1]['meta']['provider']=='gemini'
     assert messages[-1]['meta']['tool_trace'][0]['name']=='inspect_finding'

@@ -5,10 +5,15 @@ from fastapi.responses import FileResponse
 from .api.service import router
 from .ai.http import router as assistant_router
 from .config import ROOT
+from .api.demo_settings import router as demo_router
+from .demo_gate import DemoGateMiddleware
+from .demo_worlds import manager
 
 app=FastAPI(title='Scoop synthetic warehouse planner')
 app.include_router(router)
 app.include_router(assistant_router)
+app.include_router(demo_router)
+app.add_middleware(DemoGateMiddleware,manager=manager)
 
 @app.get('/health')
 def health():

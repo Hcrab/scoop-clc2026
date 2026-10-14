@@ -22,6 +22,14 @@ class FindingArgs(Parameters):
     finding_id:str
 
 
+class DiscussionArgs(Parameters):
+    operation:Literal['add','reopen','resolve']
+    topic_id:str|None=Field(default=None,max_length=120)
+    title:str|None=Field(default=None,min_length=1,max_length=160)
+    note:str|None=Field(default=None,max_length=2000)
+    finding_id:str|None=Field(default=None,max_length=120)
+
+
 class OrderArgs(Parameters):
     sku:str
 
@@ -64,6 +72,7 @@ class WatchArgs(MetricArgs):
 
 
 TOOL_MODELS={
+    'update_discussion':(DiscussionArgs,'Manage the advisory discussion agenda: add a genuinely new follow-up, resolve a topic after a useful answer or clear acknowledgement, or reopen uncertainty. Available for informational conversations without an explicit business edit request. Does not classify findings, change buying goals/directions, approve stages, or confirm orders. Use current-plan topic and finding IDs.'),
     'inspect_finding':(FindingArgs,'Read evidence and alternative explanations for one finding in the active plan.'),
     'inspect_order':(OrderArgs,'Read a SKU recommendation, case size, demand range, inventory and purchasing rationale.'),
     'inspect_metric':(MetricArgs,'Calculate a historical metric with optional category/SKU and district scope. Stockout concerns use fill_rate because there is no store-level stock ledger.'),
@@ -82,13 +91,14 @@ def declarations():
 
 
 def context(session,plan,focus=None):
+    from ..discussion import view
     from ..api.service import clean,objects,row
     from .narrator import saved_explanation
     findings=objects(session,Finding,plan.id)
     orders=objects(session,PurchaseSuggestion,plan.id)
     return clean({
         'plan':{'id':plan.id,'week_start':plan.week_start,'stage':plan.stage,'goal':plan.goal,'service_level':plan.service_level},
-        'focus':focus or {},'data_kind':'synthetic demonstration, not sponsor/customer data',
+        'discussion':view(session,plan),'focus':focus or {},'data_kind':'synthetic demonstration, not sponsor/customer data',
         'cutoff':plan.week_start-timedelta(days=1),
         'findings':[{'id':f.id,'category':f.evidence.get('display',f.tag_id),'tag_id':f.tag_id,'districts':f.evidence.get('districts',[]),'direction':f.direction,'interpretation':f.classification,'summary':saved_explanation(f)} for f in findings],
         'directions':[row(d) for d in objects(session,DirectionItem,plan.id)],
@@ -120,6 +130,10 @@ def execute(name,arguments,session,plan,stage):
     from ..api.service import clean,objects,row,decision,recompute,validate_direction,DirectionEdit,WatchEdit,add_watch,watch_view,today
     if name not in TOOL_MODELS: raise ValueError('This planning tool is not supported.')
     args=TOOL_MODELS[name][0].model_validate(arguments)
+    if name=='update_discussion':
+        from ..discussion import update
+        result=update(session,plan,args)
+        return {'discussion':result,'applied':True},{'type':'discussion','discussion':result}
     if name in MUTATING:
         session.refresh(plan,with_for_update=True)
         allowed={'classify_finding':['discover'],'set_goal':['discover','direction'],'set_direction':['direction'],'add_watch':['discover','direction','execute']}[name]

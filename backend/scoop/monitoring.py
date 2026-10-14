@@ -88,8 +88,9 @@ def monitoring() -> Monitoring:
 
 
 def reset_cache() -> None:
-    global _M
+    global _M,_LEGACY_CHART
     _M = None
+    _LEGACY_CHART = None
 
 
 _LEGACY_CHART = None

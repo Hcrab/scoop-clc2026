@@ -64,7 +64,6 @@ def api(monkeypatch, request):
 def test_discovery_persists_and_locks(api):
     c,scope,_,_=api
     assert c.get('/api/plans/TESTAPI').json()['questions'][0]['options']['options'][0]['id']=='persistent'
-    assert c.post('/api/plans/TESTAPI/advance').status_code==409
     assert c.post('/api/plans/TESTAPI/questions/TESTAPI-Q',json={'answer':'persistent'}).status_code==200
     data=c.get('/api/plans/TESTAPI').json()
     assert data['findings'][0]['classification']=='persistent'

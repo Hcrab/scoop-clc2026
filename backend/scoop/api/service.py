@@ -174,6 +174,7 @@ def plan_series(p,tag,districts,start,cutoff,model_version=None):
 
 @router.get('/plans/{pid}')
 def get_plan(pid:str):
+    from ..discussion import view as discussion_view
     from .. import workflow
     from .watches import WatchData,recap
     with session_scope() as s:
@@ -210,7 +211,7 @@ def get_plan(pid:str):
             frozen=[WatchItem(**snapshot) for snapshot in approved.get('items',[])]
             review={'confirmed':True,'confirmed_at':approved.get('confirmed_at'),
                     'items':[data.view(w,p,workflow.state(p).get('approved_projection')) for w in frozen]}
-        return clean({'plan':row(p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'watch':views,'watch_review':review,'recap':recap(s,p,today(),cached_series),'decisions':[row(x) for x in objects(s,Decision,pid)],'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
+        return clean({'discussion':discussion_view(s,p),'plan':row(p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'watch':views,'watch_review':review,'recap':recap(s,p,today(),cached_series),'decisions':[row(x) for x in objects(s,Decision,pid)],'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
 
 class NewPlan(BaseModel): week_start: date
 @router.post('/plans')
@@ -234,6 +235,8 @@ def record_interpretation(s,p,q,answer,source='question'):
     if q.stage!=p.stage: raise HTTPException(409,'Question stage is read-only')
     allowed={'persistent','one_off','data_issue','weather','unsure','watch','mirror'}
     if answer not in allowed: raise HTTPException(422,'Unsupported finding interpretation')
+    from ..discussion import resolve_question
+    resolve_question(s,p,q)
     if q.answer==answer:return False
     q.answer=answer;q.answered_at=datetime.now();label='unsure' if answer=='watch' else answer
     f=s.get(Finding,q.finding_id) if q.finding_id else None
@@ -294,7 +297,6 @@ def edit_goal(pid:str,body:GoalEdit):
 def advance(pid:str):
     with session_scope() as s:
         p=plan_for(s,pid,['discover','direction'])
-        if p.stage=='discover' and any(q.answer is None for q in objects(s,Question,pid)): raise HTTPException(409,'Answer the discovery questions before approving this stage')
         next_stage=STAGES[STAGES.index(p.stage)+1]
         decision(s,p,'stage_approved',{'from':p.stage,'to':next_stage})
         if next_stage=='execute':
