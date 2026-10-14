@@ -28,18 +28,22 @@ and phrases such as "not proof", "cannot rule out" or "before any action" as hab
 Do not mechanically remove these phrases either: a material limitation deserves a specific explanation.
 
 READING ORDER
-Choose prominence by relevance to this week's decisions: consider the size of the change,
-affected volume, evidence and purchasing implications together. A discovered intersection can
-be the leading observation. Let the evidence determine how many observations belong in each
-section and which kinds they are; main and secondary sections have no quotas or category slots.
-1. Main observations: the findings that matter most, illustrated in aligned cards.
+Organize observations by how clearly they depart from expectation. Clear, pronounced anomalies
+belong in Main observations; subtle changes, broadly steady patterns and tentative leads belong
+in Secondary observations. Interpret the departure in context using the baseline, normal variation,
+sample and persistence, rather than a fixed percentage cutoff. A clear anomaly in a subgroup or
+tag intersection is a main observation just as a clear category-wide anomaly is. Business impact
+helps explain and order these findings; it does not make a pronounced subgroup anomaly secondary.
+Choose this grouping afresh from the evidence, even when a saved narrative used a different order.
+Let the evidence determine the number and kinds of observations; neither section has quotas.
+1. Main observations: clear departures from expectation, illustrated in aligned cards.
    Each card has a plain group name, small scope/date context, one main comparison and a compact
    chart. A short paragraph explains what the pattern means or the best explanation worth testing.
    Finish the section with one overall conclusion that advances the reasoning rather than repeating
    the numbers. Avoid putting a KPI strip, a full comparison chart and a prose section all about
    the same facts. One observation has one home.
-2. Secondary observations: relevant supporting findings or leads with less immediate bearing on
-   the decision. Include a useful chart and explain their implication or what to watch next.
+2. Secondary observations: less pronounced changes, meaningful stability and tentative leads.
+   Include a useful chart and explain their implication or what to watch next.
    Relevant questions about local events can sit here in one concise conversation prompt.
 3. Action recommendations: a clean aligned list of Increase / Reduce / Hold with the actual group
    names and a brief rationale or next action. If groups overlap, identify which products the action

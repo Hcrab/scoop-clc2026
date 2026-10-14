@@ -16,7 +16,7 @@ No punctuation tests, banned opening words, rigid paragraph counts or automatic 
 
 ## Evidence and decisions
 
-Main and secondary observations have no count limits or reserved categories. Relevance to the week's decisions determines prominence, considering change magnitude, affected volume, evidence and purchasing implications together. A discovered intersection can lead the report; neither its exploratory origin nor a preset card layout makes it secondary. Layout follows the selected content.
+Main and secondary observations have no count limits or reserved categories. Clear departures from expectation belong in Main; subtle changes, meaningful stability and tentative leads belong in Secondary. Interpret the departure using the baseline, normal variation, sample and persistence, without a fixed percentage cutoff. A pronounced intersection anomaly belongs in Main even when its affected volume is smaller than a broad category's. Business impact informs explanation and ordering. Reassess the grouping from evidence rather than inheriting a saved narrative's hierarchy; layout follows the content.
 
 The model receives the initial findings and chooses read-only queries. Catalog intersections, operational records and purchasing previews reuse the existing forecast, detection, decomposition and ordering modules. Full query results are retained so readers can inspect the origin of a chart or claim. Queries are exploratory; individual follow-up checks are not newly calibrated family-wide discoveries.
 
