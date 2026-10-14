@@ -80,7 +80,9 @@ def test_hidden_intersections_are_queryable_without_answer_key(sample,monkeypatc
     from scoop.ai import exploration_tools
     _,products,_,_=sample
     monkeypatch.setattr(exploration_tools.groups,'load_groups',lambda:[])
-    session=SimpleNamespace(scalars=lambda statement:list(products.itertuples()))
+    # This price/format fixture has products but no nutrition rows.
+    session=SimpleNamespace(scalars=lambda statement: list(products.itertuples())
+                            if statement.column_descriptions[0]['entity'] is exploration_tools.Product else [])
     catalog=exploration_tools._groups(session)
     hidden=cells(products)
     for fmt in ('stick','cup'):
