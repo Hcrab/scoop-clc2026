@@ -108,7 +108,7 @@ def test_read_only_preparation_promotion_winsorisation_and_missing(monkeypatch):
                               discount_pct=10., note='X'))
         session.commit()
         from scoop.ai import exploration_tools
-        monkeypatch.setattr(exploration_tools, '_expectations', lambda _: pd.DataFrame(expected))
+        monkeypatch.setattr(cohort_model, 'current_expectations', lambda _: pd.DataFrame(expected))
         monkeypatch.setattr(exploration_tools, '_groups', lambda _: {})
         result = cohort_model.fit(plan, session)
         s0 = next(u for u in result['units'] if u['sku'] == 'S0')
@@ -133,3 +133,20 @@ def test_short_promotion_filtered_baseline_is_used():
     assert len(result['units']) == 1
     assert result['units'][0]['baseline_days'] == 7
     assert result['sku_factors']['S0']['f50'] == pytest.approx(1.)
+
+
+def test_retrained_expectations_absorb_change_without_stored_factors():
+    week = date(2026, 7, 27)
+    first = week - timedelta(days=70)
+    rows = [(first+timedelta(days=i), 'A', f'S{j}',
+             200 if i >= 56 and j < 3 else 100) for i in range(70) for j in range(9)]
+    original = pd.DataFrame([{'date': d, 'store_id': store, 'sku': sku, 'mean': 100.}
+                             for d, store, sku, _ in rows])
+    absorbed = original.copy()
+    absorbed['mean'] = [float(a) for _, _, _, a in rows]
+    args = ({'A': 'north'}, [f'S{j}' for j in range(9)], [],
+            [Group('cohort', 'Cohort', 'kind', ('S0', 'S1', 'S2'))])
+    before = cohort_model.fit_observations(week, rows, original, *args)
+    after = cohort_model.fit_observations(week, rows, absorbed, *args)
+    assert before['sku_factors']['S0']['f50'] > 1.5
+    assert after['sku_factors']['S0']['f50'] == pytest.approx(1.)

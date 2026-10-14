@@ -154,13 +154,31 @@ def fit_units(units, groups):
                        'projection': 'level, no extrapolation'}}
 
 
+def current_expectations(plan):
+    """Re-score historical windows with the model active for this plan.
+
+    Weather features retain each day's issued forecast. A newly trained model
+    can absorb an earlier change instead of carrying an old factor indefinitely.
+    """
+    from .runs import artifacts
+    from .forecast import build_features, issued_daily_weather
+    art = artifacts()
+    model = art.run_for(plan.week_start).model
+    dates = pd.date_range(plan.week_start - timedelta(days=70),
+                          plan.week_start - timedelta(days=1))
+    features = build_features(art.static, dates, weather=issued_daily_weather(art.static, dates))
+    result = model.predict(features, mean_only=True)
+    result.attrs['model_version'] = model.version
+    return result
+
+
 def fit(plan, session=None):
-    """Prepare observations from recorded orders and issued monthly expectations."""
+    """Refit recorded observations against the current plan's forecast model."""
     if session is None:
         from ..db import SessionLocal
         with SessionLocal() as own:
             return fit(plan, own)
-    from ..ai.exploration_tools import _expectations, _groups
+    from ..ai.exploration_tools import _groups
 
     end = plan.week_start - timedelta(days=1)
     recent_start = end - timedelta(days=13)
@@ -171,8 +189,12 @@ def fit(plan, session=None):
                              .where(StoreOrder.date.between(start, end))).all()
     promotions = list(session.scalars(select(Promotion).where(Promotion.start_date <= end,
                                                             Promotion.end_date >= start)))
-    return fit_observations(plan.week_start, orders, _expectations(session), stores, skus,
-                            promotions, _groups(session))
+    expected = current_expectations(plan)
+    result = fit_observations(plan.week_start, orders, expected, stores, skus,
+                              promotions, _groups(session))
+    result['method']['expectation_basis'] = 'current_model_rescored_with_historical_issued_weather'
+    result['method']['model_version'] = expected.attrs.get('model_version')
+    return result
 
 
 def fit_observations(week_start, orders, expected, stores, skus, promotions, groups):

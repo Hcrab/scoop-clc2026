@@ -299,10 +299,22 @@ def active_directions(as_of: date, directions: list[dict], model) -> list[dict]:
     return active
 
 
+def contextual_effects(as_of, static, cohort_result, overrides=None):
+    from .cohort_context import load_overrides
+    overrides = load_overrides(as_of=as_of) if overrides is None else overrides
+    if not overrides:
+        return cohort_result
+    from .algorithms.cohort_overrides import apply_overrides
+    from .ai.exploration_tools import _groups
+    with session_scope() as session:
+        catalog = _groups(session)
+    return apply_overrides(cohort_result, overrides, static.products, as_of, catalog)
+
+
 def suggest_orders(as_of: date, directions: list[dict], service_level: float | None = None,
                    position: pd.DataFrame | None = None, goal: str = "margin", only_due: bool = False,
                    pending_arrivals: dict | None = None, weather_scenario=None,
-                   cohort_result: dict | None = None) -> pd.DataFrame:
+                   cohort_result: dict | None = None, overrides: list[dict] | None = None) -> pd.DataFrame:
     art = artifacts()
     st = art.static
     monthly = art.run_for(as_of)
@@ -312,6 +324,7 @@ def suggest_orders(as_of: date, directions: list[dict], service_level: float | N
         service_level = {"fill_rate": 0.97, "sales": 0.98}.get(goal)
     if cohort_result is None:
         cohort_result = cohort_model.fit(SimpleNamespace(week_start=as_of))
+    cohort_result = contextual_effects(as_of, st, cohort_result, overrides)
     adj = pd.Series({sku: float(cohort_result["sku_factors"].get(sku, {}).get("f50", 1.0))
                      for sku in st.products.sku})
     pos = position if position is not None else inventory_position(as_of)
@@ -326,12 +339,23 @@ def suggest_orders(as_of: date, directions: list[dict], service_level: float | N
             units_per_case=int(p.units_per_case), cases_per_pallet=int(p.cases_per_pallet), moq_cases=int(p.moq_cases),
             on_hand=int(pr.on_hand_units.iloc[0]) if len(pr) else 0, on_order=int(pr.on_order.iloc[0]) if len(pr) else 0,
             lead_days=int(p.lead_time_days), adjustment=a,
+            factor_log_variance=float(cohort_result['sku_factors'].get(r.sku, {}).get('s2', 0.)),
         ))
     capacity = float(read_sql("SELECT capacity_pallets FROM nodes WHERE id = 'DC1'").capacity_pallets.iloc[0])
     baseline, arrival_mask = capacity_projection(as_of, pos, st, model, adj, pending_arrivals, weather_scenario=weather_scenario)
     plan = plan_orders(items, monthly.ratio_values, capacity, service_level,
                        capacity_baseline=baseline, arrival_mask=arrival_mask)
     wd = prod.order_weekday.reindex(plan.sku).to_numpy()
+    case_edits = cohort_result.get('cases_overrides', {})
+    if case_edits:
+        plan['final_cases'] = [int(case_edits.get(r.sku, r.final_cases)) for r in plan.itertuples()]
+        # A direct quantity edit changes occupancy even though its demand factor is unchanged.
+        quantities = plan.set_index('sku').final_cases.reindex(st.products.sku).to_numpy()
+        units = st.products.units_per_case.to_numpy()
+        units_per_pallet = units * st.products.cases_per_pallet.to_numpy()
+        occupancy = (np.maximum(baseline + arrival_mask * (quantities * units)[None, :], 0)
+                     / units_per_pallet[None, :]).sum(axis=1)
+        plan['projected_pallets'] = float(occupancy.max())
     plan.attrs["cohort_model"] = cohort_result
     plan["model_version"] = model.version
     plan["trained_through"] = model.trained_through
@@ -385,12 +409,25 @@ def capacity_projection(as_of, position, static, model, adjustment, pending_arri
     return baseline, mask
 
 
+def plan_cohort_cards(as_of, orders, goal='margin', service_level=None):
+    from .cohort_cards import build_cards
+    from .ai.exploration_tools import _groups
+    result = orders.attrs['cohort_model']
+    baseline = suggest_orders(as_of, [], goal=goal, service_level=service_level,
+                              cohort_result={'sku_factors': {}}, overrides=[])
+    with session_scope() as session:
+        catalog = _groups(session)
+    names = dict(read_sql('SELECT sku, name FROM products').values)
+    return build_cards(result, orders, baseline, artifacts().static.products, catalog, names)
+
+
 def confirmation_capacity(as_of: date, cases: dict[str, int]) -> dict:
     """Check a proposed case map on the same dated occupancy path as suggestions."""
     art = artifacts()
     skus = list(art.static.products.sku)
     model = art.run_for(as_of).model
     cohort_result = cohort_model.fit(SimpleNamespace(week_start=as_of))
+    cohort_result = contextual_effects(as_of, art.static, cohort_result)
     adjustment = pd.Series({sku: float(cohort_result["sku_factors"].get(sku, {}).get("f50", 1.0))
                             for sku in skus})
     baseline, mask = capacity_projection(as_of, inventory_position(as_of), art.static,
@@ -471,6 +508,7 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
     cohort_result = cohort_model.fit(SimpleNamespace(week_start=week_start))
     directions = []
     orders = suggest_orders(week_start, directions, cohort_result=cohort_result)
+    cohort_result = orders.attrs["cohort_model"]
     names = dict(read_sql("SELECT sku, name FROM products").values)
     now = datetime(week_start.year, week_start.month, week_start.day, 9, 0)
     with session_scope() as s:
@@ -510,7 +548,7 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
                 demand_p50=float(r.demand_p50), demand_p90=float(r.demand_p90), adjustment=float(r.adjustment), critical_ratio=float(r.critical_ratio),
                 target_units=float(r.target_units), on_hand_units=int(r.on_hand_units), on_order_units=int(r.on_order_units),
                 inventory_position=int(r.inventory_position), suggested_cases=int(r.suggested_cases), capacity_cut_cases=int(r.capacity_cut_cases),
-                final_cases=int(r.final_cases) if accept_defaults else None, status="confirmed" if accept_defaults else "suggested",
+                final_cases=int(r.final_cases) if accept_defaults or r.sku in cohort_result.get("cases_overrides", {}) else None, status="confirmed" if accept_defaults else "suggested",
                 reason=reason_text(r, names, directions),
             ))
         for w in watch_items(findings, directions):
@@ -526,6 +564,7 @@ def recompute_orders(pid: str) -> None:
         week, sl, goal = plan.week_start, plan.service_level, plan.goal
     cohort_result = cohort_model.fit(SimpleNamespace(week_start=week))
     orders = suggest_orders(week, [], service_level=sl, goal=goal, cohort_result=cohort_result)
+    cohort_result = orders.attrs.get("cohort_model", cohort_result)
     names = dict(read_sql("SELECT sku, name FROM products").values)
     with session_scope() as s:
         plan = s.get(Plan, pid)
@@ -537,5 +576,5 @@ def recompute_orders(pid: str) -> None:
                 demand_p50=float(r.demand_p50), demand_p90=float(r.demand_p90), adjustment=float(r.adjustment), critical_ratio=float(r.critical_ratio),
                 target_units=float(r.target_units), on_hand_units=int(r.on_hand_units), on_order_units=int(r.on_order_units),
                 inventory_position=int(r.inventory_position), suggested_cases=int(r.suggested_cases), capacity_cut_cases=int(r.capacity_cut_cases),
-                final_cases=None, status="suggested", reason=reason_text(r, names, []),
+                final_cases=int(r.final_cases) if r.sku in cohort_result.get("cases_overrides", {}) else None, status="suggested", reason=reason_text(r, names, []),
             ))

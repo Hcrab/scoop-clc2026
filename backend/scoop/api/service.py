@@ -58,13 +58,14 @@ def objects(s, cls, pid):
 def recompute(s, p):
     from ..planning import suggest_orders, reason_text
     directions = [row(d) for d in objects(s, DirectionItem, p.id)]
-    try: orders = suggest_orders(p.week_start, directions, service_level=p.service_level, goal=p.goal)
+    from ..cohort_context import load_overrides
+    try: orders = suggest_orders(p.week_start, directions, service_level=p.service_level, goal=p.goal, overrides=load_overrides(s, p.week_start))
     except Exception as exc: raise HTTPException(503, f'Forecast recomputation failed: {type(exc).__name__}: {exc}') from exc
     names = dict(s.execute(select(Product.sku, Product.name)).all())
     s.execute(delete(PurchaseSuggestion).where(PurchaseSuggestion.plan_id == p.id))
     for r in orders.itertuples():
         fields = {k: clean(getattr(r, k)) for k in ['sku', 'order_date', 'demand_p10', 'demand_p50', 'demand_p90', 'adjustment', 'critical_ratio', 'target_units', 'on_hand_units', 'on_order_units', 'inventory_position', 'suggested_cases', 'capacity_cut_cases']}
-        s.add(PurchaseSuggestion(plan_id=p.id, protection_days=int(r.pdays), final_cases=None, status='suggested', reason=reason_text(r, names, directions), **fields))
+        s.add(PurchaseSuggestion(plan_id=p.id, protection_days=int(r.pdays), final_cases=int(r.final_cases) if r.sku in orders.attrs.get('cohort_model', {}).get('cases_overrides', {}) else None, status='suggested', reason=reason_text(r, names, directions), **fields))
     p.summary={**(p.summary or {}),'orders_due':int((orders.suggested_cases-orders.capacity_cut_cases>0).sum()),'goal':p.goal,
                'cohort_model':orders.attrs.get('cohort_model', {})}
     from .. import workflow

@@ -1,0 +1,1368 @@
+{
+  "week": "2026-07-27",
+  "seed": 93,
+  "target_card": {
+    "id": "C5fb68a5dac71",
+    "name": "Not Higher price / 100 ml \u00b7 Strawberry \u00b7 Water-based",
+    "tag_path": [
+      {
+        "id": "band:dairy:0",
+        "included": true
+      },
+      {
+        "id": "flavour:strawberry",
+        "included": true
+      },
+      {
+        "id": "band:price_100ml:2",
+        "included": false
+      }
+    ],
+    "districts": [
+      "HK Island",
+      "Kowloon",
+      "NT East",
+      "NT West"
+    ],
+    "skus": [
+      "IC006",
+      "IC061",
+      "IC062",
+      "IC063"
+    ],
+    "effect_pct": 97.71491995158416,
+    "interval_pct": [
+      92.4763318987339,
+      103.09608555938237
+    ],
+    "sku_factors": [
+      {
+        "sku": "IC006",
+        "name": "Strawberry Burst Bar",
+        "before_cases": 3,
+        "cases": 43,
+        "case_change": 40,
+        "expected_lost_margin_avoided": 6715.593695379532,
+        "f10": 1.9015430722160989,
+        "f50": 1.9983374111273273,
+        "f90": 2.1000588769504605,
+        "m": 0.6923155404067808,
+        "s2": 0.001500827293808965
+      },
+      {
+        "sku": "IC061",
+        "name": "Strawberry Spring Ice Bar",
+        "before_cases": 0,
+        "cases": 32,
+        "case_change": 32,
+        "expected_lost_margin_avoided": 4518.904890307249,
+        "f10": 1.9569184725398192,
+        "f50": 2.057755886446843,
+        "f90": 2.1637893185764647,
+        "m": 0.7216160134894589,
+        "s2": 0.0015370232975343155
+      },
+      {
+        "sku": "IC062",
+        "name": "Strawberry Orchard Ice Bar",
+        "before_cases": 0,
+        "cases": 103,
+        "case_change": 103,
+        "expected_lost_margin_avoided": 16013.057404853162,
+        "f10": 1.8792075727628057,
+        "f50": 1.9689858610602717,
+        "f90": 2.063053266305991,
+        "m": 0.6775186188593791,
+        "s2": 0.0013259937346087503
+      },
+      {
+        "sku": "IC063",
+        "name": "Strawberry Breeze Ice Bar",
+        "before_cases": 0,
+        "cases": 56,
+        "case_change": 56,
+        "expected_lost_margin_avoided": 8702.665907066772,
+        "f10": 1.880903108704268,
+        "f50": 1.9797809411908318,
+        "f90": 2.083856715938215,
+        "m": 0.6829862028236503,
+        "s2": 0.0015981381421777653
+      }
+    ],
+    "case_change": 231,
+    "expected_lost_margin_avoided": 35950.221897606716,
+    "pallet_change": 3.8499999999999996,
+    "peak_capacity": 69.75478038252321,
+    "representative_sku": "IC062",
+    "override_ids": [],
+    "method": {
+      "leaf": {
+        "tag_path": [
+          {
+            "id": "band:dairy:0",
+            "included": true
+          },
+          {
+            "id": "flavour:strawberry",
+            "included": true
+          },
+          {
+            "id": "band:price_100ml:2",
+            "included": false
+          }
+        ],
+        "split_p_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "skus": [
+          "IC006",
+          "IC061",
+          "IC062",
+          "IC063"
+        ],
+        "id": "C5fb68a5dac71",
+        "raw_estimate": 0.690286594452205,
+        "variance": 0.00044457475432541364,
+        "posterior_mean": 0.6816560089766729,
+        "posterior_variance": 0.00043901627984784675,
+        "interval_80": [
+          0.6548030090052238,
+          0.708509008948122
+        ],
+        "shrinkage": {
+          "between_leaf_variance": 0.03511315119749272,
+          "data_weight": 0.9874970982416642,
+          "toward_zero_weight": 0.012502901758335794,
+          "within_leaf_variance": 0.008005723294633213,
+          "within_fallback": false
+        }
+      },
+      "units": [
+        {
+          "sku": "IC006",
+          "district": "HK Island",
+          "y": 0.8622219365408218,
+          "v": 0.0051629389599561985,
+          "recent_A": 1258.2600000000002,
+          "recent_E": 538.5092968869548,
+          "baseline_A": 1793.0,
+          "baseline_E": 1818.41721148802,
+          "expected_recent": 538.5092968869548,
+          "phi": 3.8187372716046513,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-17",
+              "store_id": "S06",
+              "raw": 47.0,
+              "cap": 45.620000000000005
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S07",
+              "raw": 58.0,
+              "cap": 44.200000000000045
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S08",
+              "raw": 41.0,
+              "cap": 38.93000000000001
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S10",
+              "raw": 36.0,
+              "cap": 21.510000000000048
+            }
+          ],
+          "winsor_caps": {
+            "S06": 45.620000000000005,
+            "S07": 44.200000000000045,
+            "S08": 38.93000000000001,
+            "S09": 27.0,
+            "S10": 21.510000000000048
+          },
+          "m": 0.7914288032491942,
+          "s2": 0.0035777603604081726,
+          "conditional_variance": 0.003138744080560326,
+          "leaf_weight": 0.3920625239026737,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC006",
+          "district": "Kowloon",
+          "y": 0.8239819466821245,
+          "v": 0.0234785800020081,
+          "recent_A": 1377.3000000000002,
+          "recent_E": 536.7371618308273,
+          "baseline_A": 2052.0,
+          "baseline_E": 1823.8738732626593,
+          "expected_recent": 536.7371618308273,
+          "phi": 19.35570836331772,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-14",
+              "store_id": "S04",
+              "raw": 47.0,
+              "cap": 42.170000000000016
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S05",
+              "raw": 32.0,
+              "cap": 23.720000000000027
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S01",
+              "raw": 45.0,
+              "cap": 41.55000000000001
+            },
+            {
+              "date": "2026-07-20",
+              "store_id": "S02",
+              "raw": 32.0,
+              "cap": 27.860000000000014
+            }
+          ],
+          "winsor_caps": {
+            "S01": 41.55000000000001,
+            "S02": 27.860000000000014,
+            "S03": 27.0,
+            "S04": 42.170000000000016,
+            "S05": 23.720000000000027
+          },
+          "m": 0.7178461721885933,
+          "s2": 0.006409071042566299,
+          "conditional_variance": 0.0059700547627184524,
+          "leaf_weight": 0.7457233460367774,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC006",
+          "district": "NT East",
+          "y": 0.5892833125576384,
+          "v": 0.011789021379337513,
+          "recent_A": 1050.3300000000002,
+          "recent_E": 536.5574794106909,
+          "baseline_A": 1970.0,
+          "baseline_E": 1814.962307066454,
+          "expected_recent": 536.5574794106909,
+          "phi": 8.079574584929494,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-16",
+              "store_id": "S12",
+              "raw": 36.0,
+              "cap": 33.24000000000001
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S11",
+              "raw": 59.0,
+              "cap": 55.55000000000001
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S13",
+              "raw": 32.0,
+              "cap": 26.480000000000018
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S15",
+              "raw": 41.0,
+              "cap": 26.510000000000048
+            },
+            {
+              "date": "2026-07-25",
+              "store_id": "S14",
+              "raw": 34.0,
+              "cap": 30.55000000000001
+            }
+          ],
+          "winsor_caps": {
+            "S11": 55.55000000000001,
+            "S12": 33.24000000000001,
+            "S13": 26.480000000000018,
+            "S14": 30.55000000000001,
+            "S15": 26.510000000000048
+          },
+          "m": 0.6442970907541828,
+          "s2": 0.005206930422311965,
+          "conditional_variance": 0.0047679141424641185,
+          "leaf_weight": 0.5955631948534094,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC006",
+          "district": "NT West",
+          "y": 0.573099664476253,
+          "v": 0.0051197845608345945,
+          "recent_A": 1011.3300000000002,
+          "recent_E": 537.4128816852988,
+          "baseline_A": 1930.0,
+          "baseline_E": 1819.9058427434293,
+          "expected_recent": 537.4128816852988,
+          "phi": 3.398894341332,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-15",
+              "store_id": "S16",
+              "raw": 59.0,
+              "cap": 40.37000000000006
+            },
+            {
+              "date": "2026-07-16",
+              "store_id": "S17",
+              "raw": 36.0,
+              "cap": 31.170000000000016
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S18",
+              "raw": 31.0,
+              "cap": 29.620000000000005
+            },
+            {
+              "date": "2026-07-19",
+              "store_id": "S19",
+              "raw": 45.0,
+              "cap": 40.170000000000016
+            }
+          ],
+          "winsor_caps": {
+            "S16": 40.37000000000006,
+            "S17": 31.170000000000016,
+            "S18": 29.620000000000005,
+            "S19": 40.170000000000016,
+            "S20": 22.0
+          },
+          "m": 0.6154435571982678,
+          "s2": 0.003561758574737597,
+          "conditional_variance": 0.00312274229488975,
+          "leaf_weight": 0.39006373065418576,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC061",
+          "district": "HK Island",
+          "y": 0.8371655433810751,
+          "v": 0.00925420417875694,
+          "recent_A": 953.19,
+          "recent_E": 423.2077428194062,
+          "baseline_A": 1374.0,
+          "baseline_E": 1410.0233880527182,
+          "expected_recent": 423.2077428194062,
+          "phi": 5.210418782814806,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-15",
+              "store_id": "S09",
+              "raw": 27.0,
+              "cap": 23.55000000000001
+            },
+            {
+              "date": "2026-07-16",
+              "store_id": "S07",
+              "raw": 31.0,
+              "cap": 25.480000000000018
+            },
+            {
+              "date": "2026-07-16",
+              "store_id": "S08",
+              "raw": 36.0,
+              "cap": 33.24000000000001
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S06",
+              "raw": 49.0,
+              "cap": 41.410000000000025
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S10",
+              "raw": 32.0,
+              "cap": 17.510000000000048
+            }
+          ],
+          "winsor_caps": {
+            "S06": 41.410000000000025,
+            "S07": 25.480000000000018,
+            "S08": 33.24000000000001,
+            "S09": 23.55000000000001,
+            "S10": 17.510000000000048
+          },
+          "m": 0.7537864570355229,
+          "s2": 0.004731421220794829,
+          "conditional_variance": 0.004292404940946982,
+          "leaf_weight": 0.5361670373774318,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC061",
+          "district": "Kowloon",
+          "y": 0.8497149560216153,
+          "v": 0.01268094468953523,
+          "recent_A": 1115.44,
+          "recent_E": 422.17594192870246,
+          "baseline_A": 1594.0,
+          "baseline_E": 1412.0951945638544,
+          "expected_recent": 422.17594192870246,
+          "phi": 8.324864602481993,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-15",
+              "store_id": "S02",
+              "raw": 27.0,
+              "cap": 23.55000000000001
+            },
+            {
+              "date": "2026-07-16",
+              "store_id": "S03",
+              "raw": 32.0,
+              "cap": 28.55000000000001
+            },
+            {
+              "date": "2026-07-16",
+              "store_id": "S05",
+              "raw": 16.0,
+              "cap": 14.620000000000005
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S04",
+              "raw": 34.0,
+              "cap": 30.55000000000001
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S01",
+              "raw": 47.0,
+              "cap": 42.170000000000016
+            }
+          ],
+          "winsor_caps": {
+            "S01": 42.170000000000016,
+            "S02": 23.55000000000001,
+            "S03": 28.55000000000001,
+            "S04": 30.55000000000001,
+            "S05": 14.620000000000005
+          },
+          "m": 0.7466946816260763,
+          "s2": 0.00534653132174155,
+          "conditional_variance": 0.004907515041893703,
+          "leaf_weight": 0.6130008321900843,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC061",
+          "district": "NT East",
+          "y": 0.7919906038515062,
+          "v": 0.004638046992833699,
+          "recent_A": 977.3000000000001,
+          "recent_E": 425.2688850211546,
+          "baseline_A": 1474.0,
+          "baseline_E": 1417.0089614436997,
+          "expected_recent": 425.2688850211546,
+          "phi": 2.726819281684366,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-14",
+              "store_id": "S13",
+              "raw": 31.0,
+              "cap": 29.620000000000005
+            },
+            {
+              "date": "2026-07-15",
+              "store_id": "S12",
+              "raw": 31.0,
+              "cap": 29.620000000000005
+            },
+            {
+              "date": "2026-07-15",
+              "store_id": "S14",
+              "raw": 41.0,
+              "cap": 29.960000000000036
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S11",
+              "raw": 36.0,
+              "cap": 29.100000000000023
+            }
+          ],
+          "winsor_caps": {
+            "S11": 29.100000000000023,
+            "S12": 29.620000000000005,
+            "S13": 29.620000000000005,
+            "S14": 29.960000000000036,
+            "S15": 16.0
+          },
+          "m": 0.7515171513662137,
+          "s2": 0.0033757131675584803,
+          "conditional_variance": 0.0029366968877106337,
+          "leaf_weight": 0.3668246802483548,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC061",
+          "district": "NT West",
+          "y": 0.5348864356263409,
+          "v": 0.016990046973738952,
+          "recent_A": 803.48,
+          "recent_E": 424.50660604132713,
+          "baseline_A": 1570.17,
+          "baseline_E": 1417.0344146375176,
+          "expected_recent": 424.50660604132713,
+          "phi": 9.034937770776077,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-05-23",
+              "store_id": "S19",
+              "raw": 20.0,
+              "cap": 17.24000000000001
+            },
+            {
+              "date": "2026-07-11",
+              "store_id": "S16",
+              "raw": 39.0,
+              "cap": 36.93000000000001
+            },
+            {
+              "date": "2026-07-14",
+              "store_id": "S17",
+              "raw": 27.0,
+              "cap": 23.55000000000001
+            },
+            {
+              "date": "2026-07-15",
+              "store_id": "S18",
+              "raw": 23.0,
+              "cap": 22.310000000000002
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S20",
+              "raw": 18.0,
+              "cap": 16.620000000000005
+            }
+          ],
+          "winsor_caps": {
+            "S16": 36.93000000000001,
+            "S17": 23.55000000000001,
+            "S18": 22.310000000000002,
+            "S19": 17.24000000000001,
+            "S20": 16.620000000000005
+          },
+          "m": 0.6346481920661101,
+          "s2": 0.005880641537809242,
+          "conditional_variance": 0.005441625257961396,
+          "leaf_weight": 0.679716879748928,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC062",
+          "district": "HK Island",
+          "y": 0.7339333478137842,
+          "v": 0.009726304536477859,
+          "recent_A": 2685.85,
+          "recent_E": 1180.310415123411,
+          "baseline_A": 4254.1,
+          "baseline_E": 3895.5051151071766,
+          "expected_recent": 1180.310415123411,
+          "phi": 16.015860552495294,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-12",
+              "store_id": "S09",
+              "raw": 69.0,
+              "cap": 62.10000000000002
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S07",
+              "raw": 68.0,
+              "cap": 64.55000000000001
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S06",
+              "raw": 108.0,
+              "cap": 101.79000000000002
+            },
+            {
+              "date": "2026-07-20",
+              "store_id": "S10",
+              "raw": 49.0,
+              "cap": 44.860000000000014
+            },
+            {
+              "date": "2026-07-24",
+              "store_id": "S08",
+              "raw": 76.0,
+              "cap": 65.65000000000003
+            }
+          ],
+          "winsor_caps": {
+            "S06": 101.79000000000002,
+            "S07": 64.55000000000001,
+            "S08": 65.65000000000003,
+            "S09": 62.10000000000002,
+            "S10": 44.860000000000014
+          },
+          "m": 0.7052583805325872,
+          "s2": 0.00483028520520789,
+          "conditional_variance": 0.004391268925360043,
+          "leaf_weight": 0.5485162006915494,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC062",
+          "district": "Kowloon",
+          "y": 0.8819128433466619,
+          "v": 0.015310561445166624,
+          "recent_A": 3034.61,
+          "recent_E": 1177.027338224156,
+          "baseline_A": 4151.0,
+          "baseline_E": 3890.0543511682386,
+          "expected_recent": 1177.027338224156,
+          "phi": 26.84395593621421,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-14",
+              "store_id": "S02",
+              "raw": 101.0,
+              "cap": 80.99000000000007
+            },
+            {
+              "date": "2026-07-16",
+              "store_id": "S03",
+              "raw": 113.0,
+              "cap": 87.47000000000008
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S04",
+              "raw": 112.0,
+              "cap": 94.06000000000006
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S05",
+              "raw": 59.0,
+              "cap": 52.79000000000002
+            },
+            {
+              "date": "2026-07-25",
+              "store_id": "S01",
+              "raw": 113.0,
+              "cap": 92.30000000000007
+            }
+          ],
+          "winsor_caps": {
+            "S01": 92.30000000000007,
+            "S02": 80.99000000000007,
+            "S03": 87.47000000000008,
+            "S04": 94.06000000000006,
+            "S05": 52.79000000000002
+          },
+          "m": 0.7504148537804821,
+          "s2": 0.005695948067366231,
+          "conditional_variance": 0.005256931787518384,
+          "leaf_weight": 0.6566467006225992,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC062",
+          "district": "NT East",
+          "y": 0.5939419863238244,
+          "v": 0.004640706667316964,
+          "recent_A": 2219.54,
+          "recent_E": 1183.3106906003757,
+          "baseline_A": 4034.0,
+          "baseline_E": 3895.840521744971,
+          "expected_recent": 1183.3106906003757,
+          "phi": 6.645677515319499,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-14",
+              "store_id": "S14",
+              "raw": 50.0,
+              "cap": 49.31
+            },
+            {
+              "date": "2026-07-15",
+              "store_id": "S13",
+              "raw": 56.0,
+              "cap": 51.170000000000016
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S12",
+              "raw": 65.0,
+              "cap": 57.410000000000025
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S15",
+              "raw": 47.0,
+              "cap": 44.24000000000001
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S11",
+              "raw": 103.0,
+              "cap": 95.41000000000003
+            }
+          ],
+          "winsor_caps": {
+            "S11": 95.41000000000003,
+            "S12": 57.410000000000025,
+            "S13": 51.170000000000016,
+            "S14": 49.31,
+            "S15": 44.24000000000001
+          },
+          "m": 0.626129334924733,
+          "s2": 0.0033767792360244473,
+          "conditional_variance": 0.0029377629561766006,
+          "leaf_weight": 0.3669578435400066,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC062",
+          "district": "NT West",
+          "y": 0.6151078881521002,
+          "v": 0.002011569822685842,
+          "recent_A": 2231.6600000000003,
+          "recent_E": 1177.0881300329263,
+          "baseline_A": 3985.0,
+          "baseline_E": 3888.9560916117575,
+          "expected_recent": 1177.0881300329263,
+          "phi": 2.878168904224793,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-13",
+              "store_id": "S17",
+              "raw": 90.0,
+              "cap": 78.96000000000004
+            },
+            {
+              "date": "2026-07-15",
+              "store_id": "S18",
+              "raw": 50.0,
+              "cap": 47.93000000000001
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S16",
+              "raw": 115.0,
+              "cap": 103.96000000000004
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S20",
+              "raw": 50.0,
+              "cap": 36.89000000000004
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S19",
+              "raw": 72.0,
+              "cap": 49.92000000000007
+            }
+          ],
+          "winsor_caps": {
+            "S16": 103.96000000000004,
+            "S17": 78.96000000000004,
+            "S18": 47.93000000000001,
+            "S19": 49.92000000000007,
+            "S20": 36.89000000000004
+          },
+          "m": 0.6284713976390811,
+          "s2": 0.0020466433303546016,
+          "conditional_variance": 0.001607627050506755,
+          "leaf_weight": 0.20080971966448777,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC063",
+          "district": "HK Island",
+          "y": 0.7927104659556534,
+          "v": 0.009237595924015836,
+          "recent_A": 1921.4,
+          "recent_E": 763.2846668652635,
+          "baseline_A": 2904.0,
+          "baseline_E": 2549.741511690362,
+          "expected_recent": 763.2846668652635,
+          "phi": 10.684096856599153,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-17",
+              "store_id": "S06",
+              "raw": 72.0,
+              "cap": 70.62
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S07",
+              "raw": 47.0,
+              "cap": 45.620000000000005
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S09",
+              "raw": 61.0,
+              "cap": 49.960000000000036
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S10",
+              "raw": 43.0,
+              "cap": 35.410000000000025
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S08",
+              "raw": 70.0,
+              "cap": 63.79000000000002
+            }
+          ],
+          "winsor_caps": {
+            "S06": 70.62,
+            "S07": 45.620000000000005,
+            "S08": 63.79000000000002,
+            "S09": 49.960000000000036,
+            "S10": 35.410000000000025
+          },
+          "m": 0.7332163403685498,
+          "s2": 0.004727844662455287,
+          "conditional_variance": 0.00428882838260744,
+          "leaf_weight": 0.5357202871953539,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC063",
+          "district": "Kowloon",
+          "y": 0.8831170302674364,
+          "v": 0.024555010447000692,
+          "recent_A": 2144.26,
+          "recent_E": 763.8669530997879,
+          "baseline_A": 2971.0,
+          "baseline_E": 2560.630975054943,
+          "expected_recent": 763.8669530997879,
+          "phi": 30.587357053599266,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-17",
+              "store_id": "S01",
+              "raw": 90.0,
+              "cap": 86.55000000000001
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S02",
+              "raw": 68.0,
+              "cap": 52.13000000000005
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S03",
+              "raw": 54.0,
+              "cap": 46.410000000000025
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S04",
+              "raw": 52.0,
+              "cap": 50.620000000000005
+            },
+            {
+              "date": "2026-07-18",
+              "store_id": "S05",
+              "raw": 50.0,
+              "cap": 46.55000000000001
+            }
+          ],
+          "winsor_caps": {
+            "S01": 86.55000000000001,
+            "S02": 52.13000000000005,
+            "S03": 46.410000000000025,
+            "S04": 50.620000000000005,
+            "S05": 46.55000000000001
+          },
+          "m": 0.73118932735659,
+          "s2": 0.006476368530425566,
+          "conditional_variance": 0.006037352250577719,
+          "leaf_weight": 0.7541295181442221,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC063",
+          "district": "NT East",
+          "y": 0.5564247506446843,
+          "v": 0.006816327241482735,
+          "recent_A": 1350.2800000000002,
+          "recent_E": 766.7766638059135,
+          "baseline_A": 2572.0,
+          "baseline_E": 2548.530019614769,
+          "expected_recent": 766.7766638059135,
+          "phi": 6.037277423531013,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-15",
+              "store_id": "S11",
+              "raw": 61.0,
+              "cap": 49.960000000000036
+            },
+            {
+              "date": "2026-07-15",
+              "store_id": "S14",
+              "raw": 45.0,
+              "cap": 38.79000000000002
+            },
+            {
+              "date": "2026-07-15",
+              "store_id": "S15",
+              "raw": 36.0,
+              "cap": 27.720000000000027
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S12",
+              "raw": 56.0,
+              "cap": 40.82000000000005
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S13",
+              "raw": 67.0,
+              "cap": 46.990000000000066
+            }
+          ],
+          "winsor_caps": {
+            "S11": 49.960000000000036,
+            "S12": 40.82000000000005,
+            "S13": 46.990000000000066,
+            "S14": 38.79000000000002,
+            "S15": 27.720000000000027
+          },
+          "m": 0.6140157860802701,
+          "s2": 0.004120668130110733,
+          "conditional_variance": 0.0036816518502628863,
+          "leaf_weight": 0.4598774794940703,
+          "leaf_id": "C5fb68a5dac71"
+        },
+        {
+          "sku": "IC063",
+          "district": "NT West",
+          "y": 0.6173504084039643,
+          "v": 0.010514163572247277,
+          "recent_A": 1526.0800000000002,
+          "recent_E": 764.7533658756769,
+          "baseline_A": 2747.0,
+          "baseline_E": 2552.9964418029263,
+          "expected_recent": 764.7533658756769,
+          "phi": 10.317853372484402,
+          "recent_days": 14,
+          "baseline_days": 56,
+          "promotion_exclusions": [],
+          "winsorised": [
+            {
+              "date": "2026-07-13",
+              "store_id": "S16",
+              "raw": 65.0,
+              "cap": 58.79000000000002
+            },
+            {
+              "date": "2026-07-14",
+              "store_id": "S17",
+              "raw": 43.0,
+              "cap": 38.170000000000016
+            },
+            {
+              "date": "2026-07-14",
+              "store_id": "S19",
+              "raw": 40.0,
+              "cap": 38.620000000000005
+            },
+            {
+              "date": "2026-07-15",
+              "store_id": "S20",
+              "raw": 29.0,
+              "cap": 27.620000000000005
+            },
+            {
+              "date": "2026-07-17",
+              "store_id": "S18",
+              "raw": 79.0,
+              "cap": 45.88000000000011
+            }
+          ],
+          "winsor_caps": {
+            "S16": 58.79000000000002,
+            "S17": 38.170000000000016,
+            "S18": 45.88000000000011,
+            "S19": 38.620000000000005,
+            "S20": 27.620000000000005
+          },
+          "m": 0.6538581693796631,
+          "s2": 0.004984048592353666,
+          "conditional_variance": 0.004545032312505819,
+          "leaf_weight": 0.5677228833967652,
+          "leaf_id": "C5fb68a5dac71"
+        }
+      ],
+      "trace": {
+        "tree": "inverse-variance conditional inference; max depth 3; min 3 distinct SKUs per child",
+        "permutations": 199,
+        "seed": 20261014,
+        "split_alpha": 0.05,
+        "tested_nodes": [
+          {
+            "path": [],
+            "candidate_count": 44,
+            "gain": 643.4820175192829,
+            "p_value": 0.0,
+            "permutations": 199
+          },
+          {
+            "path": [
+              {
+                "id": "band:dairy:0",
+                "included": true
+              }
+            ],
+            "candidate_count": 17,
+            "gain": 116.91181719140036,
+            "p_value": 0.0,
+            "permutations": 199
+          },
+          {
+            "path": [
+              {
+                "id": "band:dairy:0",
+                "included": true
+              },
+              {
+                "id": "flavour:strawberry",
+                "included": true
+              }
+            ],
+            "candidate_count": 7,
+            "gain": 352.3803130308006,
+            "p_value": 0.0,
+            "permutations": 199
+          },
+          {
+            "path": [
+              {
+                "id": "band:dairy:0",
+                "included": true
+              },
+              {
+                "id": "flavour:strawberry",
+                "included": false
+              }
+            ],
+            "candidate_count": 16,
+            "gain": 63.05841577641377,
+            "p_value": 0.0,
+            "permutations": 199
+          },
+          {
+            "path": [
+              {
+                "id": "band:dairy:0",
+                "included": false
+              }
+            ],
+            "candidate_count": 40,
+            "gain": 180.18858224722982,
+            "p_value": 0.0,
+            "permutations": 199
+          },
+          {
+            "path": [
+              {
+                "id": "band:dairy:0",
+                "included": false
+              },
+              {
+                "id": "feature:choc_coated",
+                "included": true
+              }
+            ],
+            "candidate_count": 14,
+            "gain": 8.98939213824184,
+            "p_value": 0.09045226130653267,
+            "permutations": 199
+          },
+          {
+            "path": [
+              {
+                "id": "band:dairy:0",
+                "included": false
+              },
+              {
+                "id": "feature:choc_coated",
+                "included": false
+              }
+            ],
+            "candidate_count": 38,
+            "gain": 5.724323541939128,
+            "p_value": 0.7839195979899497,
+            "permutations": 199
+          }
+        ],
+        "eb": "two-level DerSimonian-Laird",
+        "sku_covariance": "district demand weights; conditional variances independent; shared leaf posterior covariance",
+        "projection": "level, no extrapolation",
+        "window_recent": [
+          "2026-07-13",
+          "2026-07-26"
+        ],
+        "window_baseline": [
+          "2026-05-18",
+          "2026-07-12"
+        ],
+        "unit_definition": "SKU \u00d7 district; complete observed and issued rows; at least one eligible day in each window",
+        "winsorisation": "per store/SKU 99th percentile across eligible 70-day history before aggregation",
+        "overdispersion": "sample variance of seven-day (A-E)/sqrt(E) baseline residuals, floored at 1",
+        "skipped_units": [],
+        "expectation_basis": "current_model_rescored_with_historical_issued_weather",
+        "model_version": "M202607-v1-s93"
+      },
+      "order_impact_scope": "SKU-level total after district aggregation",
+      "value_method": "Normal expected shortage difference under the adjusted demand distribution"
+    }
+  },
+  "overrides": {
+    "one_off": [
+      {
+        "sku": "IC006",
+        "adjustment": 1.0,
+        "final_cases": 3,
+        "demand_p10": 1504.6363747414928,
+        "demand_p90": 1666.7197820800927
+      },
+      {
+        "sku": "IC061",
+        "adjustment": 1.0,
+        "final_cases": 0,
+        "demand_p10": 1950.5972741635671,
+        "demand_p90": 2160.720768350749
+      },
+      {
+        "sku": "IC062",
+        "adjustment": 1.0,
+        "final_cases": 0,
+        "demand_p10": 4557.612079369946,
+        "demand_p90": 5048.570099229567
+      },
+      {
+        "sku": "IC063",
+        "adjustment": 1.0,
+        "final_cases": 0,
+        "demand_p10": 3086.834229474596,
+        "demand_p90": 3419.35617178682
+      }
+    ],
+    "ends_on": [
+      {
+        "sku": "IC006",
+        "adjustment": 1.0,
+        "final_cases": 3,
+        "demand_p10": 1504.6363747414928,
+        "demand_p90": 1666.7197820800927
+      },
+      {
+        "sku": "IC061",
+        "adjustment": 1.0,
+        "final_cases": 0,
+        "demand_p10": 1950.5972741635671,
+        "demand_p90": 2160.720768350749
+      },
+      {
+        "sku": "IC062",
+        "adjustment": 1.0,
+        "final_cases": 0,
+        "demand_p10": 4557.612079369946,
+        "demand_p90": 5048.570099229567
+      },
+      {
+        "sku": "IC063",
+        "adjustment": 1.0,
+        "final_cases": 0,
+        "demand_p10": 3086.834229474596,
+        "demand_p90": 3419.35617178682
+      }
+    ],
+    "cap": [
+      {
+        "sku": "IC006",
+        "adjustment": 1.2863329155972731,
+        "final_cases": 13,
+        "demand_p10": 1928.9118847606965,
+        "demand_p90": 2149.8804319280744
+      },
+      {
+        "sku": "IC061",
+        "adjustment": 1.2866601170630962,
+        "final_cases": 0,
+        "demand_p10": 2501.9378075024447,
+        "demand_p90": 2787.5480219809006
+      },
+      {
+        "sku": "IC062",
+        "adjustment": 1.2883879477771985,
+        "final_cases": 17,
+        "demand_p10": 5854.767029624366,
+        "demand_p90": 6521.231944959715
+      },
+      {
+        "sku": "IC063",
+        "adjustment": 1.2851975633993535,
+        "final_cases": 0,
+        "demand_p10": 3952.8112196494094,
+        "demand_p90": 4405.720414718783
+      }
+    ],
+    "expect": [
+      {
+        "sku": "IC006",
+        "adjustment": 1.962996404096657,
+        "final_cases": 41,
+        "demand_p10": 2876.9907885321795,
+        "demand_p90": 3329.742191649344
+      },
+      {
+        "sku": "IC061",
+        "adjustment": 2.020135754439017,
+        "final_cases": 30,
+        "demand_p10": 3835.5074136598564,
+        "demand_p90": 4446.739415603956
+      },
+      {
+        "sku": "IC062",
+        "adjustment": 1.9398618983359364,
+        "final_cases": 100,
+        "demand_p10": 8631.662609915282,
+        "demand_p90": 9944.030267121156
+      },
+      {
+        "sku": "IC063",
+        "adjustment": 1.9415950871134526,
+        "final_cases": 53,
+        "demand_p10": 5830.408669088082,
+        "demand_p90": 6771.7939984916975
+      }
+    ],
+    "cases": [
+      {
+        "sku": "IC006",
+        "adjustment": 1.9983374111273273,
+        "final_cases": 5,
+        "demand_p10": 2927.1180796569734,
+        "demand_p90": 3392.515096060742
+      },
+      {
+        "sku": "IC061",
+        "adjustment": 2.057755886446843,
+        "final_cases": 32,
+        "demand_p10": 3906.3726596203837,
+        "demand_p90": 4533.67257158841
+      },
+      {
+        "sku": "IC062",
+        "adjustment": 1.9689858610602717,
+        "final_cases": 103,
+        "demand_p10": 8756.109631249365,
+        "demand_p90": 10095.783843772733
+      },
+      {
+        "sku": "IC063",
+        "adjustment": 1.9797809411908318,
+        "final_cases": 56,
+        "demand_p10": 5940.720337831002,
+        "demand_p90": 6905.801294135121
+      }
+    ]
+  },
+  "baseline": [
+    {
+      "sku": "IC006",
+      "adjustment": 1.9983374111273273,
+      "final_cases": 43
+    },
+    {
+      "sku": "IC061",
+      "adjustment": 2.057755886446843,
+      "final_cases": 32
+    },
+    {
+      "sku": "IC062",
+      "adjustment": 1.9689858610602717,
+      "final_cases": 103
+    },
+    {
+      "sku": "IC063",
+      "adjustment": 1.9797809411908318,
+      "final_cases": 56
+    }
+  ]
+}

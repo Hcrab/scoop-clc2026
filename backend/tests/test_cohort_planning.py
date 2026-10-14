@@ -120,3 +120,17 @@ def test_recompute_refits_and_persists_new_cohort_evidence(monkeypatch):
     assert supplied == [fresh]
     assert plan.summary == {"existing": "kept", "cohort_model": fresh}
     assert len(added) == 1 and added[0].adjustment == pytest.approx(1.3)
+
+
+def test_direct_case_override_updates_projected_capacity(monkeypatch):
+    _fixtures(monkeypatch)
+    monkeypatch.setattr(planning, 'protection_forecast', lambda *args, **kwargs: (
+        pd.DataFrame([{'sku':'A','mean':100.,'pdays':9}]), pd.DataFrame()))
+    monkeypatch.setattr(planning, 'capacity_projection', lambda *args, **kwargs:
+                        (np.zeros((3,1)), np.ones((3,1),dtype=bool)))
+    monkeypatch.setattr(planning, 'plan_orders', lambda *args, **kwargs:
+                        pd.DataFrame([{'sku':'A','final_cases':2,'projected_pallets':.2}]))
+    result = planning.suggest_orders(DAY, [], overrides=[], cohort_result={
+        'sku_factors':{'A':{'f50':1.}}, 'cases_overrides':{'A':5}})
+    assert result.iloc[0].final_cases == 5
+    assert result.iloc[0].projected_pallets == pytest.approx(.5)

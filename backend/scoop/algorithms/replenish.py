@@ -47,6 +47,7 @@ class SkuInput:
     on_order: int
     lead_days: int
     adjustment: float = 1.0
+    factor_log_variance: float = 0.0
 
 
 def critical_ratio(price: float, cost: float, service_level: float | None = None) -> float:
@@ -61,14 +62,38 @@ def _ratio_quantile(ratios: np.ndarray, q: float) -> float:
     return float(np.quantile(ratios, q))
 
 
+def _uncertain_ratio_quantiles(ratios: np.ndarray, variance: float, probabilities):
+    """Deterministic quadrature for empirical ratio × lognormal factor error.
+
+    Hermite nodes integrate the N(0, variance) log effect. The weighted mixture
+    is recentered to the empirical median, because ``mean`` already includes
+    f50. Node count controls numerical accuracy, not demand risk or safety stock.
+    """
+    if variance <= 0:
+        return [_ratio_quantile(ratios, q) for q in probabilities]
+    nodes, weights = np.polynomial.hermite.hermgauss(41)
+    factors = np.exp(np.sqrt(2 * variance) * nodes)
+    values = (np.asarray(ratios, dtype=float)[:, None] * factors[None, :]).ravel()
+    masses = np.broadcast_to(weights / (np.sqrt(np.pi) * len(ratios)),
+                             (len(ratios), len(nodes))).ravel()
+    order = np.argsort(values)
+    values, masses = values[order], masses[order]
+    cumulative = np.cumsum(masses)
+    quantiles = np.interp(probabilities + [0.5], cumulative, values)
+    center = _ratio_quantile(ratios, .5) / quantiles[-1] if quantiles[-1] > 0 else 1.
+    return [float(q * center) for q in quantiles[:-1]]
+
+
 def plan_orders(items: list[SkuInput], ratios: np.ndarray, capacity_pallets: float, service_level: float | None = None, capacity_baseline: np.ndarray | None = None,
                 arrival_mask: np.ndarray | None = None) -> pd.DataFrame:
-    r_med = _ratio_quantile(ratios, 0.5)
-    r_sigma = (_ratio_quantile(ratios, 0.9) - _ratio_quantile(ratios, 0.1)) / 2.563
     rows = []
     for it in items:
         cr = critical_ratio(it.price, it.cost, service_level)
-        target = it.mean * _ratio_quantile(ratios, cr)
+        if it.factor_log_variance < 0 or not np.isfinite(it.factor_log_variance):
+            raise ValueError("factor_log_variance must be finite and nonnegative")
+        q10, q50, q90, qcr = _uncertain_ratio_quantiles(
+            ratios, it.factor_log_variance, [.1, .5, .9, cr])
+        target = it.mean * qcr
         position = it.on_hand + it.on_order
         need = max(0.0, target - position)
         cases = math.ceil(need / it.units_per_case) if need > 0 else 0
@@ -77,9 +102,9 @@ def plan_orders(items: list[SkuInput], ratios: np.ndarray, capacity_pallets: flo
         rows.append({
             "sku": it.sku,
             "pdays": it.pdays,
-            "demand_p10": it.mean * _ratio_quantile(ratios, 0.1),
-            "demand_p50": it.mean * r_med,
-            "demand_p90": it.mean * _ratio_quantile(ratios, 0.9),
+            "demand_p10": it.mean * q10,
+            "demand_p50": it.mean * q50,
+            "demand_p90": it.mean * q90,
             "adjustment": it.adjustment,
             "critical_ratio": cr,
             "target_units": target,
@@ -88,8 +113,8 @@ def plan_orders(items: list[SkuInput], ratios: np.ndarray, capacity_pallets: flo
             "inventory_position": position,
             "suggested_cases": cases,
             "capacity_cut_cases": 0,
-            "_mu": it.mean * r_med,
-            "_sigma": max(it.mean * r_sigma, 1.0),
+            "_mu": it.mean * q50,
+            "_sigma": max(it.mean * (q90 - q10) / 2.563, 1.0),
             "_cu": it.price - it.cost,
             "_co": HOLDING_RATE * it.cost,
             "_upc": it.units_per_case,
