@@ -7,19 +7,17 @@ catalog and are frozen for a taxonomy version so that a new product does not mov
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 from ..db import read_sql
 
-BANDED = {
-    "dairy": ("Water-based", "Mixed", "Creamy"),
-    "sweetness": ("Less sweet", "Medium sweet", "Very sweet"),
-    "sugar_100ml": ("Lower sugar", "Mid sugar", "Higher sugar"),
-    "price_hkd": ("Value price", "Mid price", "Premium price"),
-}
-TAG_DIMENSIONS = ("family", "format", "feature", "health", "flavour")
+_CATEGORY = json.loads((Path(__file__).resolve().parents[1] / "category_config.json").read_text(encoding="utf-8"))
+BANDED = {dimension: tuple(labels) for dimension, labels in _CATEGORY["band_labels"].items()}
+TAG_DIMENSIONS = tuple(_CATEGORY["tag_dimensions"])
 MIN_SKUS = 3
 
 

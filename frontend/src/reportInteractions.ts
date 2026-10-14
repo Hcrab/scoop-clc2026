@@ -1,6 +1,12 @@
 import type { Detail } from './types';
 
 export const interactionStyles = `
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.chart svg{display:block;width:100%;height:auto}.chart svg text{font:var(--report-label-size,13px) system-ui,sans-serif;fill:#617566}
+.chart .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:var(--report-label-size,13px)}.chart .legend i{display:inline-block;width:16px;height:2px;margin-right:8px;vertical-align:middle}
+.chart .chart-summary{font-size:var(--report-label-size,13px);color:#617566}.chart-empty{font-size:var(--report-body-size,15px);color:#617566}
+figure[data-chart]{margin:16px 0}figure[data-chart] figcaption{font-weight:600;margin-bottom:8px}
+
 [data-trend-id],[data-evidence-id]{cursor:pointer;text-decoration:none}
 .report-card-expanded{grid-column:1/-1!important;flex-basis:100%!important;width:100%!important;max-width:none!important}
 .report-card-expanded [data-report-summary]{display:none!important}
@@ -13,8 +19,8 @@ export const interactionStyles = `
 `;
 
 // This is host-owned code, never generated JavaScript. Escape every script terminator in data.
-export function reportInteractionScript(detail: Detail, channel: string) {
-  const payload = JSON.stringify({channel, queries: detail.review?.queries || [], findings: detail.findings})
+export function reportInteractionScript(detail: Detail, channel: string, charts:ReturnType<typeof import('./reportCharts').reportCharts>) {
+  const payload = JSON.stringify({channel, charts, queries: detail.review?.queries || [], findings: detail.findings})
     .replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
   return String.raw`(()=>{
 const data=${payload},send=value=>parent.postMessage({channel:data.channel,...value},'*');
@@ -49,32 +55,24 @@ function trend(trigger,id){
  const toggle=open=>{panel.hidden=!open;card.classList.toggle('report-card-expanded',open);setOpen(trigger,open,panel);trigger.setAttribute('aria-label',(open?'Collapse':'Expand')+' '+titleFor(item)+' trend');schedule()};
  if(panel){toggle(panel.hidden);return}
  panel=element('div',undefined,'report-inline');panel.dataset.reportTrend=id;panel.id='report-trend-'+(++serial);panel.setAttribute('role','region');panel.setAttribute('aria-label',titleFor(item)+' daily trend');
- const raw=item.kind==='query'?item.result?.daily:item.series;
- const rows=Array.isArray(raw)?raw.filter(r=>r&&typeof r.date==='string'&&Number.isFinite(Date.parse(r.date))).map(r=>({date:r.date,actual:item.kind==='finding'?r.actual_share:r.requested_units,expected:item.kind==='finding'?r.expected_share:r.expected_units,prior:r.prior_year_requested_units??r.prior_year_units??r.last_year_requested_units})).sort((a,b)=>a.date.localeCompare(b.date)):[];
- const unique=Array.from(new Map(rows.map(r=>[r.date,r])).values());
- const available=days=>{const tail=unique.slice(-days);return tail.length===days&&tail.every((r,i)=>!i||Date.parse(r.date)-Date.parse(tail[i-1].date)===86400000)};
- let days=available(14)?14:available(7)?7:unique.length;
- const head=element('div',undefined,'report-inline-head'),legend=element('div',undefined,'report-legend'),ranges=element('div',undefined,'report-range');ranges.setAttribute('role','group');ranges.setAttribute('aria-label','Trend time range');legend.append(element('span','Actual'),element('span','Expected'));head.append(legend,ranges);panel.append(head);
- const plot=document.createElementNS('http://www.w3.org/2000/svg','svg');plot.setAttribute('viewBox','0 0 900 280');plot.setAttribute('role','img');plot.setAttribute('aria-label','Daily actual and expected '+(item.kind==='finding'?'share of demand':'requested units'));plot.classList.add('report-plot');panel.append(plot);
- const note=element('p');note.setAttribute('role','status');panel.append(note);
- const svg=(tag,attrs,text)=>{const n=document.createElementNS('http://www.w3.org/2000/svg',tag);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,String(v)));if(text!==undefined)n.textContent=text;return n};
- const format=v=>item.kind==='finding'?(v*100).toFixed(1)+'%':Math.round(v).toLocaleString();
- function draw(){
-  plot.replaceChildren();const shown=unique.slice(-days),prior=shown.some(r=>Number.isFinite(r.prior));legend.querySelectorAll('span:nth-child(3)').forEach(n=>n.remove());if(prior)legend.append(element('span','Prior year'));
-  const values=shown.flatMap(r=>[r.actual,r.expected,r.prior]).filter(Number.isFinite);if(!values.length){note.textContent='No saved daily series for this query.';plot.hidden=true;return}plot.hidden=false;
-  const low=Math.min(0,...values),max=Math.max(...values),high=max===low?low+1:max*1.08,x=i=>60+i*815/Math.max(1,shown.length-1),y=v=>22+(high-v)*215/(high-low);
-  for(let i=0;i<5;i++){const value=low+(high-low)*i/4;plot.append(svg('line',{x1:60,x2:875,y1:y(value),y2:y(value),stroke:'#e2e8df'}),svg('text',{x:50,y:y(value)+4,'text-anchor':'end',fill:'#718273','font-size':11},format(value)))}
-  [0,Math.floor((shown.length-1)/2),shown.length-1].filter((v,i,a)=>a.indexOf(v)===i).forEach(i=>plot.append(svg('text',{x:x(i),y:267,'text-anchor':'middle',fill:'#718273','font-size':11},shown[i].date.slice(5))));
-  [['expected','#9985b6','7 5'],['prior','#91a7b3','2 5'],['actual','#377663','']].forEach(([key,color,dash])=>{let segment=[];const flush=()=>{if(segment.length)plot.append(svg('polyline',{points:segment.join(' '),fill:'none',stroke:color,'stroke-width':2.5,'stroke-dasharray':dash,'stroke-linejoin':'round'}));segment=[]};shown.forEach((r,i)=>{if(Number.isFinite(r[key]))segment.push(x(i)+','+y(r[key]));else flush()});flush()});
-  shown.forEach((r,i)=>{if(!Number.isFinite(r.actual))return;const point=svg('circle',{cx:x(i),cy:y(r.actual),r:5,fill:'#377663',tabindex:0});const text=r.date+' · Actual '+format(r.actual)+' · Expected '+(Number.isFinite(r.expected)?format(r.expected):'missing')+(Number.isFinite(r.prior)?' · Prior year '+format(r.prior):'');point.setAttribute('aria-label',text);point.append(svg('title',{},text));plot.append(point)});
-  note.textContent=shown[0].date+' – '+shown[shown.length-1].date+' · '+(item.kind==='finding'?'Share of demand':'Daily requested units')+(prior?'':' · Prior-year series not saved.');
-  ranges.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.days)===days)));schedule();
- }
- [7,14,28].forEach(n=>{const b=button(n+' days',()=>{days=n;draw()});b.dataset.days=String(n);b.disabled=!available(n);if(b.disabled)b.title='This range is not in the saved daily data';ranges.append(b)});
- const close=button('Collapse trend',()=>{toggle(false);trigger.focus()});panel.append(close);const summary=card.querySelector('[data-report-summary]');if(summary)summary.after(panel);else card.append(panel);toggle(true);draw();
+ const chart=data.charts[id+'|actual,expected,prior'];
+ if(chart) mountChart(panel,chart);else panel.append(element('p','No daily series in this evidence.'));
+ const close=button('Collapse trend',()=>{toggle(false);trigger.focus()});panel.append(close);const summary=card.querySelector('[data-report-summary]');if(summary)summary.after(panel);else card.append(panel);toggle(true);
 }
-document.querySelectorAll('[data-evidence-id],[data-trend-id]').forEach(el=>{if(!el.hasAttribute('tabindex'))el.tabIndex=0;if(el.tagName!=='BUTTON'&&!el.hasAttribute('role'))el.setAttribute('role','button');el.setAttribute('aria-expanded','false');if(!el.hasAttribute('aria-label'))el.setAttribute('aria-label',(el.hasAttribute('data-trend-id')?'Expand trend ':'View evidence ')+(el.dataset.trendId||el.dataset.evidenceId))});
-const activate=event=>{if(event.target instanceof Element&&event.target.closest('.report-inline'))return;const el=event.target instanceof Element?event.target.closest('[data-trend-id],[data-evidence-id]'):null;if(!el)return;event.preventDefault();if(el.hasAttribute('data-trend-id'))trend(el,el.dataset.trendId);else evidence(el,el.dataset.evidenceId)};
+function mountChart(panel,chart){
+ let range=chart.defaultRange;const controls=element('div',undefined,'report-range'),plot=element('div');
+ const draw=()=>{plot.innerHTML=chart.html[range];controls.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.range===range)));schedule()};
+ [...chart.ranges.map(String),'all'].forEach(value=>{const b=button(value==='all'?'All available':value+' days',()=>{range=value;draw()});b.dataset.range=value;controls.append(b)});
+ panel.append(controls,plot);draw();
+}
+const seriesKey=value=>['actual','expected','prior'].filter(key=>value.split(',').map(s=>s.trim()).includes(key)).join(',');
+document.querySelectorAll('figure[data-chart="line"]').forEach(figure=>{
+ const id=figure.dataset.evidenceId,chart=data.charts[id+'|'+seriesKey(figure.dataset.series||'actual,expected')],caption=figure.querySelector('figcaption');
+ figure.replaceChildren();if(caption)figure.append(caption);
+ if(chart)mountChart(figure,chart);else figure.append(element('p','No daily series in this evidence.'));
+});
+document.querySelectorAll('[data-evidence-id],[data-trend-id]').forEach(el=>{if(el.tagName==='FIGURE')return;if(!el.hasAttribute('tabindex'))el.tabIndex=0;if(el.tagName!=='BUTTON'&&!el.hasAttribute('role'))el.setAttribute('role','button');el.setAttribute('aria-expanded','false');if(!el.hasAttribute('aria-label'))el.setAttribute('aria-label',(el.hasAttribute('data-trend-id')?'Expand trend ':'View evidence ')+(el.dataset.trendId||el.dataset.evidenceId))});
+const activate=event=>{if(event.target instanceof Element&&event.target.closest('.report-inline,figure[data-chart]'))return;const el=event.target instanceof Element?event.target.closest('[data-trend-id],[data-evidence-id]'):null;if(!el||el.tagName==='FIGURE')return;event.preventDefault();if(el.hasAttribute('data-trend-id'))trend(el,el.dataset.trendId);else evidence(el,el.dataset.evidenceId)};
 document.addEventListener('click',activate);document.addEventListener('keydown',event=>{if((event.key==='Enter'||event.key===' ')&&event.target?.tagName!=='BUTTON')activate(event)});
 new ResizeObserver(schedule).observe(document.body);document.addEventListener('toggle',schedule,true);window.addEventListener('load',schedule);schedule();
 })()`;

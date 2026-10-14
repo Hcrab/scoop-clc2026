@@ -61,3 +61,10 @@ body{overflow-x:hidden}.app,.workspace,main,section,article{min-width:0}.workspa
 
 .discussion .weekly-opening>.message-body{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}
 .report-host-evidence{margin-top:16px;padding:20px;background:#f6f8f3;border:1px solid #e0e7dc;border-radius:10px;min-width:0}.report-host-evidence h3{font-size:15px;margin-bottom:10px}.report-host-evidence .modal-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+
+/* Report and cohort decisions share one type ramp. */
+.plan-heading-lean h1{font-size:var(--page-size,32px)!important;font-weight:650}
+.discover-with-cohorts{--page-size:32px;--section-size:20px;--key-size:28px;--body-size:15px;--label-size:13px}
+.discover-with-cohorts .generated-report-heading h2{font-size:var(--section-size);font-weight:600;letter-spacing:0}
+.discover-with-cohorts .generated-report{font-size:var(--body-size)}
+.discover-with-cohorts .generated-report-heading>p,.discover-with-cohorts .report-evidence-index{font-size:var(--label-size);font-weight:500}

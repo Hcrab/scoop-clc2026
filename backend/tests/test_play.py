@@ -116,3 +116,28 @@ def test_each_policy_conserves_stock_per_sku_each_day(played_week):
             assert OPENING[sku] + sum(row[i] for row in run["arrived"]) == pytest.approx(
                 sum(row[i] for row in run["shipped"]) + opening
             ), f"{policy} {sku} full period"
+
+
+def test_autopilot_refits_each_week_even_without_monday_orders(played_week, monkeypatch):
+    from scoop import planning
+    from scoop.algorithms import cohort_model
+    original_read = play.read_sql
+
+    def read(query, **params):
+        if 'FROM store_orders' in query:
+            return pd.DataFrame({'date': [START+timedelta(days=i) for i in range(-28, 21) for _ in SKUS],
+                                 'sku': list(SKUS)*49, 'u': [v for _ in range(49) for v in (3., 2.)]})
+        frame = original_read(query, **params)
+        if 'FROM products p JOIN suppliers' in query:
+            frame['order_weekday'] = 1
+        return frame
+
+    fitted = []
+    monkeypatch.setattr(play, 'read_sql', read)
+    monkeypatch.setattr(cohort_model, 'fit', lambda plan: fitted.append(plan.week_start) or {'sku_factors': {}})
+    monkeypatch.setattr(planning, 'detect', lambda day: [])
+    monkeypatch.setattr(planning, 'suggest_orders', lambda *args, **kwargs:
+                        pd.DataFrame({'sku': list(SKUS), 'final_cases': [1, 1]}))
+    result = play.simulate('test-plan', START, days=21)
+    assert fitted == [START+timedelta(days=7), START+timedelta(days=14)]
+    assert result['days'] == 21

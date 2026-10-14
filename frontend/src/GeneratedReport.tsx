@@ -3,11 +3,12 @@ import type { Detail, ReviewPresentation } from './types';
 import { Chart, DataView, Icon } from './ui';
 import { interactionStyles, reportInteractionScript } from './reportInteractions';
 import { fullDate } from './api';
+import { reportCharts } from './reportCharts';
 
 // Presentation content lives in an opaque-origin frame. Only this host bridge runs JS.
 function isolatedDocument(presentation: ReviewPresentation, detail: Detail, channel: string) {
   const parsed = new DOMParser().parseFromString(presentation.html, 'text/html');
-  parsed.querySelectorAll('script,iframe,frame,frameset,object,embed,applet,base,meta,link,form,input,textarea,select').forEach(node => node.remove());
+  parsed.querySelectorAll('script,iframe,frame,frameset,object,embed,applet,base,meta,link,form,input,textarea,select,svg').forEach(node => node.remove());
   parsed.querySelectorAll('*').forEach(node => {
     for (const attr of [...node.attributes]) {
       const name = attr.name.toLowerCase();
@@ -16,7 +17,8 @@ function isolatedDocument(presentation: ReviewPresentation, detail: Detail, chan
   });
   const css = presentation.css.replace(/<\/style/gi, '<\\/style');
   const policy = `default-src 'none'; script-src 'nonce-${channel}'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; media-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'`;
-  const bridge = reportInteractionScript(detail, channel);
+  const specs=[...parsed.querySelectorAll<HTMLElement>('figure[data-chart="line"]')].map(node=>({id:node.dataset.evidenceId||'',series:node.dataset.series||'actual,expected'}));
+  const bridge = reportInteractionScript(detail, channel, reportCharts(detail,specs));
   return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${policy}"><meta name="viewport" content="width=device-width, initial-scale=1"><style>html{margin:0;background:#fff;color:#284f3d}body{margin:0;padding:4px 0 12px;font:14px/1.8 system-ui,sans-serif;display:flow-root;overflow-wrap:anywhere}*{box-sizing:border-box}svg,img{max-width:100%;height:auto}button,summary,[data-evidence-id]{cursor:pointer}button{font:inherit}details{margin:12px 0}summary{min-height:36px}:focus-visible{outline:2px solid #39744f;outline-offset:3px}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}</style><style>${css}</style><style>${interactionStyles}</style></head><body>${parsed.body.innerHTML}<script nonce="${channel}">${bridge}</script></body></html>`;
 }
 

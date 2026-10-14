@@ -5,7 +5,7 @@ and serve the same store orders day by day. Only the new purchasing differs:
 
 * ``scoop``    week 1 uses this plan's order lines (confirmed cases, otherwise the
                suggestion after capacity cuts). Later weeks, if played, run on autopilot:
-               each Monday the weekly scan's draft directions are accepted and each supplier
+               each Monday a fresh cohort fit informs orders and each supplier
                day orders with the same order-up-to logic as the planner.
 * ``baseline`` the moving-average rule that produced the synthetic history: order up to
                28-day average demand x (lead time + review days) x 1.25.
@@ -96,7 +96,8 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
     for policy in ("scoop", "baseline"):
         on_hand, arrivals, pipeline = initial()
         own_arrivals: dict[date, pd.Series] = {}
-        directions: list[dict] = []
+        cohort_result = None
+        cohort_week = None
         daily, per_sku = [], {"on_hand": [], "shipped": [], "lost": [], "arrived": []}
         d = start
         while d <= end:
@@ -118,18 +119,23 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
                     if week_cases[s] > 0 and week_dates[s] == d:
                         placed[s] = int(week_cases[s])
             elif policy == "scoop" and due:
-                from .planning import default_directions, detect, suggest_orders
+                from types import SimpleNamespace
+                from .algorithms import cohort_model
+                from .planning import detect, suggest_orders
 
-                if d.weekday() == 0 or not directions:
+                current_week = d - timedelta(days=d.weekday())
+                if cohort_week != current_week:
+                    cohort_result = cohort_model.fit(SimpleNamespace(week_start=current_week))
+                    cohort_week = current_week
                     try:
                         found = detect(d)
-                        directions = default_directions(found)
-                        autopilot_notes.append({"date": d.isoformat(), "findings": [f.get("display", f["group"]) for f in found if f.get("kind") == "significant"][:4],
-                                                "directions": [{"bucket": x["bucket"], "note": x.get("note")} for x in directions if x["bucket"] != "hold"]})
-                    except Exception:  # autopilot keeps ordering on the plain forecast if a scan fails
-                        directions = []
+                        autopilot_notes.append({"date": d.isoformat(), "findings": [f.get("display", f.get("group", "signal"))
+                                                for f in found if f.get("kind") == "significant"][:4]})
+                    except Exception:  # CUSUM notes do not control automatic orders
+                        pass
                 pos = pd.DataFrame({"sku": skus, "on_hand_units": on_hand.round().astype(int).to_numpy(), "on_order": pipeline.round().astype(int).to_numpy()})
-                plan = suggest_orders(d, directions, position=pos, only_due=True, pending_arrivals=arrivals).set_index("sku")
+                plan = suggest_orders(d, [], position=pos, only_due=True, pending_arrivals=arrivals,
+                                      cohort_result=cohort_result).set_index("sku")
                 for s in due:
                     placed[s] = int(plan.loc[s, "final_cases"]) if s in plan.index else 0
             elif policy == "baseline":
@@ -202,7 +208,7 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
     for note in autopilot_notes:
         if note["findings"]:
             events.append({"date": note["date"], "kind": "scan", "tone": "neutral",
-                           "text": "Weekly scan: " + "; ".join(note["findings"]) + ". Autopilot accepted the draft directions."})
+                           "text": "Weekly early warnings: " + "; ".join(note["findings"]) + "."})
     events.sort(key=lambda e: (e["date"], ["weather", "scan", "arrival", "kept", "stockout", "capacity"].index(e["kind"])))
 
     def summary(policy: str) -> dict:
@@ -230,7 +236,7 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
         "notes": {
             "baseline": "Moving-average rule: order up to 28-day average demand x (lead time + review days) x 1.25.",
             "lead_time": "New orders arrive after the supplier's mean lead time; orders placed late in the week may land after the played period.",
-            "autopilot": "After the first week, Scoop accepts each weekly scan's draft directions without a planner." if days > 7 else None,
+            "autopilot": "After the first week, Scoop refits cohort effects and places future orders automatically." if days > 7 else None,
         },
     }
     _CACHE[key] = result

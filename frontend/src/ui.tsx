@@ -33,14 +33,16 @@ export function Chart({ data, lines, percent = false, small = false }: { data: R
   const width = 680, height = small ? 150 : 260, left = 48, right = 18, top = 20, bottom = 36;
   const values = data.flatMap(d => lines.map(l => Number(d[l.key]))).filter(Number.isFinite);
   const lo = Math.min(0, ...values), hi = Math.max(...values, 0.001) * 1.12;
-  const x = (i: number) => left + i / Math.max(1, data.length - 1) * (width - left - right);
+  const times=data.map(row=>Date.parse(String(row.date)));
+  const first=times[0],duration=times.at(-1)!-first;
+  const x = (i: number) => left + (Number.isFinite(duration)&&duration>0?(times[i]-first)/duration:i/Math.max(1,data.length-1)) * (width - left - right);
   const y = (v: number) => top + (hi - v) / (hi - lo) * (height - top - bottom);
   const summary = `${date(String(data[0].date))} to ${date(String(data.at(-1)!.date))}. ${lines.map(l=>{const value = data.map(d=>Number(d[l.key])).filter(Number.isFinite).at(-1);return `${l.label}: ${value==null?'unavailable':percent?pct(value):n(value,1)} at the latest observation`}).join('. ')}.`;
   return <div className={`chart ${small ? 'small' : ''}`}><svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={summary}>
-    {[0, 1, 2, 3].map(i => { const val = lo + (hi - lo) * i / 3; return <g key={i}><line x1={left} x2={width - right} y1={y(val)} y2={y(val)} stroke="#e4e9e3"/><text x={left - 10} y={y(val) + 4} textAnchor="end">{percent ? pct(val) : n(val, 1)}</text></g>; })}
+    {[0, 1, 2, 3].map(i => { const val = lo + (hi - lo) * i / 3; return <g key={i}><line x1={left} x2={width - right} y1={y(val)} y2={y(val)} stroke="#e4e9e3"/><text x={left - 10} y={y(val) + 4} textAnchor="end">{percent ? pct(val) : n(val)}</text></g>; })}
     {lines.map(l => <polyline key={l.key} fill="none" stroke={l.color} strokeWidth="2.8" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinejoin="round" strokeLinecap="round" points={data.map((d,i)=>({i,v:Number(d[l.key])})).filter(d=>Number.isFinite(d.v)).map(d=>`${x(d.i)},${y(d.v)}`).join(' ')}/>)}
     {[0, Math.floor((data.length - 1) / 2), data.length - 1].filter((v, i, a) => a.indexOf(v) === i).map(i => <text key={i} x={x(i)} y={height - 10} textAnchor={i === 0 ? 'start' : i === data.length - 1 ? 'end' : 'middle'}>{date(String(data[i].date))}</text>)}
-  </svg><div className="legend">{lines.map(l => <span key={l.key}><i style={{ background:l.dashed?'none':l.color,borderTop:l.dashed?`2px dashed ${l.color}`:undefined }}/>{l.label} · {l.dashed?'dashed':'solid'}</span>)}</div><p className="chart-summary">{summary}</p></div>;
+  </svg><div className="legend">{lines.map(l => <span key={l.key}><i style={{ background:l.dashed?'none':l.color,borderTop:l.dashed?`2px dashed ${l.color}`:undefined }}/>{l.label}</span>)}</div><p className="chart-summary sr-only">{summary}</p></div>;
 }
 
 export function Metric({ label, value, unit }: { label: string; value: string; unit: string }) { return <div className="metric"><span>{label}</span><strong>{value}</strong><small>{unit}</small></div>; }

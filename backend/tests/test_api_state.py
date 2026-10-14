@@ -55,7 +55,10 @@ def api(monkeypatch, request):
             s.add(NodeInventory(date=day,sku='IC001',on_hand_units=10))
     import scoop.planning as planning
     def fake_orders(as_of,directions,service_level=None,goal='margin',**kwargs):
-        return pd.DataFrame([{'sku':'IC001','order_date':as_of,'pdays':10,'demand_p10':20.,'demand_p50':30.,'demand_p90':40.,'adjustment':directions[0]['factor'],'critical_ratio':service_level or (.97 if goal=='fill_rate' else .8),'target_units':50. if goal=='fill_rate' else 40.,'on_hand_units':10,'on_order_units':0,'inventory_position':10,'suggested_cases':4 if goal=='fill_rate' else 3,'capacity_cut_cases':0}])
+        case_edits={x['value']['sku']:x['value']['cases'] for x in kwargs.get('overrides',[]) if x['type']=='cases'}
+        frame=pd.DataFrame([{'sku':'IC001','order_date':as_of,'pdays':10,'demand_p10':20.,'demand_p50':30.,'demand_p90':40.,'adjustment':directions[0]['factor'],'critical_ratio':service_level or (.97 if goal=='fill_rate' else .8),'target_units':50. if goal=='fill_rate' else 40.,'on_hand_units':10,'on_order_units':0,'inventory_position':10,'suggested_cases':4 if goal=='fill_rate' else 3,'capacity_cut_cases':0,'final_cases':case_edits.get('IC001',4 if goal=='fill_rate' else 3)}])
+        frame.attrs['cohort_model']={'cases_overrides':case_edits,'leaves':[],'sku_factors':{}}
+        return frame
     monkeypatch.setattr(planning,'suggest_orders',fake_orders)
     monkeypatch.setattr(planning,'confirmation_capacity',lambda day,cases:{'capacity_pallets':10,'projected_peak_pallets':.1+sum(cases.values())/10,'inherited_peak_pallets':.1,'incremental_overcapacity_pallets':max(0,.1+sum(cases.values())/10-10),'feasible':.1+sum(cases.values())/10<=10})
     with TestClient(app) as client:
@@ -113,14 +116,18 @@ def test_recompute_failure_rolls_back(api,monkeypatch):
 def test_execute_confirmation_idempotent_and_capacity(api):
     c,scope,_,_=api
     with scope() as s: s.get(Plan,'TESTAPI').stage='execute'
-    assert c.put('/api/plans/TESTAPI/goal',json={'goal':'sales'}).status_code==409
+    changed=c.put('/api/plans/TESTAPI/goal',json={'goal':'sales'})
+    assert changed.status_code==200 and changed.json()['edit_id']
+    assert c.get('/api/plans/TESTAPI').json()['plan']['stage']=='direction'
+    assert c.post(f"/api/plans/TESTAPI/edits/{changed.json()['edit_id']}/undo").status_code==200
+    assert c.get('/api/plans/TESTAPI').json()['plan']['stage']=='execute'
     assert c.post('/api/plans/TESTAPI/orders/IC001/confirm',json={'cases':2}).status_code==422
     assert c.post('/api/plans/TESTAPI/orders/IC001/confirm',json={'cases':10000}).status_code==409
     assert c.post('/api/plans/TESTAPI/orders/IC001/confirm',json={'cases':3.1}).status_code==422
     for _ in range(2): assert c.post('/api/plans/TESTAPI/orders/IC001/confirm',json={'cases':3}).status_code==200
     with scope() as s:
         assert s.scalar(select(func.count()).select_from(PurchaseOrder))==1
-        assert s.scalar(select(func.count()).select_from(Decision))==1
+        assert s.scalar(select(func.count()).select_from(Decision))==2
     assert c.post('/api/plans/TESTAPI/orders/IC001/confirm',json={'cases':4}).status_code==409
     assert 'confirmed' in c.get('/api/plans/TESTAPI/orders.csv').text
 
@@ -147,12 +154,18 @@ def test_chat_persists_actions_and_rejects_completed_stage(api):
     assert response.status_code==200
     assert response.json()['actions'][0]['goal']=='fill_rate'
     with scope() as s: s.get(Plan,'TESTAPI').stage='direction'
-    response=c.post('/api/plans/TESTAPI/chat',json={'message':'more fruit 20%','stage':'direction'})
-    assert response.json()['actions'][0]['factor']==1.2
-    assert c.post('/api/plans/TESTAPI/chat',json={'message':'set goal to sales','stage':'discover'}).status_code==409
+    response=c.post('/api/plans/TESTAPI/chat',json={'message':'Order 50% more Fixture Fruit','stage':'direction'})
+    assert response.status_code==200,response.text
+    edit=response.json()['actions'][0]
+    assert edit['type']=='edit' and edit['affected_orders'][0]['before']==4 and edit['affected_orders'][0]['after']==6
+    assert c.get('/api/plans/TESTAPI').json()['orders'][0]['effective_cases']==6
+    assert c.post(f"/api/plans/TESTAPI/edits/{edit['edit_id']}/undo").status_code==200
+    assert c.get('/api/plans/TESTAPI').json()['orders'][0]['effective_cases']==4
+    changed=c.post('/api/plans/TESTAPI/chat',json={'message':'set goal to sales','stage':'discover'})
+    assert changed.status_code==200 and changed.json()['actions'][0]['type']=='edit'
     assert c.post('/api/plans/TESTAPI/chat',json={'message':'watch fruit','stage':'direction'}).json()['actions'][0]['type']=='watch'
     data=c.get('/api/plans/TESTAPI').json()
-    assert len(data['messages'])==6
+    assert len(data['messages'])==8
     assert all(m['meta']['provider']=='scripted' for m in data['messages'])
 
 def test_historical_plan_metrics_and_sku_watch_thresholds(api):
