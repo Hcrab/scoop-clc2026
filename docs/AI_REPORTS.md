@@ -16,6 +16,8 @@ No punctuation tests, banned opening words, rigid paragraph counts or automatic 
 
 ## Evidence and decisions
 
+Main and secondary observations have no count limits or reserved categories. Relevance to the week's decisions determines prominence, considering change magnitude, affected volume, evidence and purchasing implications together. A discovered intersection can lead the report; neither its exploratory origin nor a preset card layout makes it secondary. Layout follows the selected content.
+
 The model receives the initial findings and chooses read-only queries. Catalog intersections, operational records and purchasing previews reuse the existing forecast, detection, decomposition and ordering modules. Full query results are retained so readers can inspect the origin of a chart or claim. Queries are exploratory; individual follow-up checks are not newly calibrated family-wide discoveries.
 
 The generated page expresses observations, hypotheses and proposed actions. It does not approve strategy or place orders. Discussion remains advisory and the planner controls Continue. Existing saved reports and conversations remain available; explicitly requesting a visual edition of a legacy report can reuse its investigation instead of repeating it. Reading a report never triggers a paid generation.

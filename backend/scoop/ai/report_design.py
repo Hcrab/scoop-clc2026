@@ -28,14 +28,18 @@ and phrases such as "not proof", "cannot rule out" or "before any action" as hab
 Do not mechanically remove these phrases either: a material limitation deserves a specific explanation.
 
 READING ORDER
-1. Main observations: usually two or three meaningful changes, illustrated in aligned cards.
+Choose prominence by relevance to this week's decisions: consider the size of the change,
+affected volume, evidence and purchasing implications together. A discovered intersection can
+be the leading observation. Let the evidence determine how many observations belong in each
+section and which kinds they are; main and secondary sections have no quotas or category slots.
+1. Main observations: the findings that matter most, illustrated in aligned cards.
    Each card has a plain group name, small scope/date context, one main comparison and a compact
    chart. A short paragraph explains what the pattern means or the best explanation worth testing.
    Finish the section with one overall conclusion that advances the reasoning rather than repeating
    the numbers. Avoid putting a KPI strip, a full comparison chart and a prose section all about
    the same facts. One observation has one home.
-2. Secondary observations: small evidence-led cards explaining why a smaller signal merits attention
-   or no immediate adjustment. Include a useful chart and the specific thing to watch next.
+2. Secondary observations: relevant supporting findings or leads with less immediate bearing on
+   the decision. Include a useful chart and explain their implication or what to watch next.
    Relevant questions about local events can sit here in one concise conversation prompt.
 3. Action recommendations: a clean aligned list of Increase / Reduce / Hold with the actual group
    names and a brief rationale or next action. If groups overlap, identify which products the action
@@ -71,7 +75,7 @@ from forecast is different from change since last week. Separate alarm dates fro
 VISUAL DIRECTION
 Warm off-white background, white cards, dark green text, muted green / coral / violet accents.
 Use restrained typography, generous but purposeful spacing, equal-width cards and aligned metrics.
-CSS grid is useful: two columns for main findings, three for secondary, stacking on a narrow screen.
+Let card widths and column counts follow the content and available space, stacking on a narrow screen.
 Use a real grid/table for action rows, never variable-width text columns that drift out of alignment.
 Compact horizontal actual/expected bars or small lines are sufficient; label their values and units.
 When bars invite comparison, share a scale or make independent scales clear. Don't decorate all text
@@ -98,7 +102,7 @@ SKELETON EXAMPLE (layout reference only; substitute real evidence and write your
   <p><!-- Meaning or explanation, not the same numbers again --></p>
   <footer><button data-evidence-id="Q2" aria-label="View query">⌕</button></footer>
  </article></div><p class="conclusion"><!-- Integrated conclusion --></p></section>
-Suggested CSS: .observations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+Suggested CSS: .observations{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px}
 .observation{background:white;border:1px solid #e0e5dc;border-radius:14px;padding:24px}
 .card-top{display:flex;justify-content:space-between;align-items:start;gap:16px}
 .observation footer{display:flex;justify-content:flex-end}
