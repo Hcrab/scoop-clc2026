@@ -60,6 +60,7 @@ def test_tool_edit_persists_recomputes_and_undoes_exactly(api, monkeypatch):
         assert 'summary' not in action['before']
         assert action['affected_orders'][0]['before'] == 3
         assert action['affected_orders'][0]['after'] == 2
+        assert action['order_change']=={'product_count':1,'before_cases':3,'after_cases':2,'delta_cases':-1}
         assert plan.stage == 'direction'
         assert load_overrides(session)[0]['value'] == '2026-08-10'
         edit_id = result['edit_id']
@@ -91,3 +92,16 @@ def test_scripted_end_date_uses_catalog_match_and_exact_undo(api, monkeypatch):
     with scope() as session:
         assert load_overrides(session) == []
         assert order_snapshot(session, session.get(Plan, 'TESTAPI'))[0]['suggested_cases'] == 3
+
+
+def test_chat_context_indexes_report_queries_without_copying_result_tables(api, monkeypatch):
+    _, scope, _, _ = api
+    cohort_fixture(api, monkeypatch)
+    with scope() as session:
+        plan = session.get(Plan, 'TESTAPI')
+        plan.summary = {**plan.summary, 'weekly_review': {'queries': [
+            {'id': 'Q1', 'name': 'query_group', 'args': {'group_id': 'family:fruit'},
+             'result': {'rows': ['large historic result'] * 10000}}]}}
+        context = tools.context(session, plan)
+        assert context['review_evidence'] == [
+            {'id': 'Q1', 'name': 'query_group', 'args': {'group_id': 'family:fruit'}}]

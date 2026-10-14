@@ -39,3 +39,5 @@
 .edit-receipt{padding:16px 0;margin:16px 0;border-block:1px solid #dce6dc;font-size:15px}.edit-receipt-heading{display:flex;align-items:baseline;justify-content:space-between;gap:16px}.edit-receipt details{margin-top:8px}.edit-receipt summary{font-size:13px;color:#607563;cursor:pointer}.edit-receipt-table{overflow:auto;max-height:280px;margin-top:8px}.edit-receipt table{border-collapse:collapse;width:100%}.edit-receipt th,.edit-receipt td{padding:8px;text-align:left;border-bottom:1px solid #e5ece5;font-variant-numeric:tabular-nums}.edit-receipt td{white-space:nowrap}
 
 .cohort-card-controls{display:flex;align-items:center;gap:8px}.cohort-chart{margin:16px 0}.cohort-chart>label{display:flex;align-items:center;gap:8px}.cohort-chart select{font:inherit;padding:8px;border:1px solid #cbd9cd;background:#fff;border-radius:6px}
+
+.edit-receipt-heading .text-button{white-space:nowrap;flex-shrink:0}

@@ -11,7 +11,7 @@ from ..models import Plan, Finding
 from ..config import settings
 from . import gemini
 from .report_design import Presentation, GUIDANCE, validate as validate_presentation, compact_result
-from .grounding import mismatches
+from .grounding import mismatches, visible_report_claims
 
 _LOCK=threading.Lock()
 MAX_ROUNDS=7
@@ -71,6 +71,15 @@ When evidence is weak, propose a proportionate follow-up rather than inventing a
 def view(plan):
     return (plan.summary or {}).get('weekly_review',{'status':'not_started','report':'','queries':[]})
 
+
+def display_view(plan):
+    from .chat import provider_info
+    if not provider_info()['live']:
+        result=offline_report(plan)
+        result.pop('error',None)
+        return result
+    return view(plan)
+
 def program_evidence(plan):
     """Expose complete saved cohort cards as stable report evidence."""
     return [{'id':'Q-cohort-'+str(card['id']),'name':'cohort_card',
@@ -102,6 +111,8 @@ def _finish(session,plan,report,queries):
         if q.finding_id and q.finding_id not in valid_findings:raise ValueError('Unknown finding for question.')
     evidence={**finding_evidence(session,plan),**{q['id']:q['result'] for q in queries+supplied if 'error' not in q['result']}}
     errors=mismatches(report.claims,evidence)
+    cited=sorted({identifier for claim in report.claims for identifier in claim.evidence_ids})
+    errors+=mismatches(visible_report_claims(report,cited),evidence)
     if errors:raise GroundingError(errors)
     result=report.model_dump()
     result['presentation']=validate_presentation(result['presentation'],ids,evidence)

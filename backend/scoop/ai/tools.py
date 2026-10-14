@@ -92,6 +92,35 @@ class WatchArgs(MetricArgs):
     assumption:str=Field(min_length=1,max_length=2000)
 
 
+class WidgetScope(Parameters):
+    kind:Literal['warehouse','cohort','tag','brand','sku']
+    key:str=''
+
+
+class WidgetThreshold(Parameters):
+    operator:Literal['lt','gt']
+    value:float=Field(allow_inf_nan=False)
+
+
+class WidgetSpec(Parameters):
+    title:str=Field(min_length=1,max_length=160)
+    scope:WidgetScope
+    metric:Literal['on_hand','lost_units','demand','fill_rate','days_cover','pallets','requested_vs_expected']
+    threshold:WidgetThreshold|None=None
+
+
+class AddWidgetArgs(Parameters):
+    spec:WidgetSpec
+
+
+class UpdateWidgetArgs(AddWidgetArgs):
+    id:str
+
+
+class RemoveWidgetArgs(Parameters):
+    id:str
+
+
 TOOL_MODELS={
     'update_discussion':(DiscussionArgs,'Manage the advisory discussion agenda: add a genuinely new follow-up, resolve a topic after a useful answer or clear acknowledgement, or reopen uncertainty. Available for informational conversations without an explicit business edit request. Does not classify findings, change buying goals/directions, approve stages, or confirm orders. Use current-plan topic and finding IDs.'),
     'inspect_finding':(FindingArgs,'Read evidence and alternative explanations for one finding in the active plan.'),
@@ -99,12 +128,14 @@ TOOL_MODELS={
     'inspect_metric':(MetricArgs,'Calculate a historical metric with optional category/SKU and district scope. Stockout concerns use fill_rate because there is no store-level stock ledger.'),
     'temperature_scenario':(ScenarioArgs,'Recompute purchasing with a temperature change in this or next week. Read-only: does not change the plan or orders.'),
     'set_goal':(GoalArgs,'Apply an explicitly requested buying objective or service target and return an undoable edit.'),
-    'set_override':(OverrideArgs,'Apply an explicitly requested cohort context change at any plan stage. Use an exact cohort card ID, or its exact tag_path and districts. For a stated end date use ends_on with ISO date even when the user also says one-off. Returns an undoable edit.'),
+    'set_override':(OverrideArgs,'Apply an explicitly requested cohort context change at any plan stage. Use an exact cohort card ID, or a tag_path and districts resolved from supplied catalog groups. A named catalog group need not have its own tree leaf. For a stated end date use ends_on with ISO date even when the user also says one-off. Returns an undoable edit.'),
     'bulk_edit_orders':(BulkArgs,'Change final order cases for an exact catalog filter. Percent is signed points, e.g. 10 means 10% more and -10 means 10% less; set_cases is a whole nonnegative case count. fit_capacity uses a fraction 0-1 of warehouse capacity on the whole plan. Never invent a missing amount.'),
     'undo_edit':(UndoArgs,'Undo a specific prior context edit only when the user explicitly requests it. Use the edit_id from the saved edit.'),
-    'add_watch':(WatchArgs,'Add an explicitly requested watch for an assumption, category/SKU or district. Does not place orders.'),
+    'add_widget':(AddWidgetArgs,'Add a dashboard widget using an exact scope option from context and a canonical metric. Returns an undoable edit.'),
+    'update_widget':(UpdateWidgetArgs,'Update a dashboard widget by its current plan ID and canonical spec. Returns an undoable edit.'),
+    'remove_widget':(RemoveWidgetArgs,'Remove a dashboard widget by its current plan ID. Returns an undoable edit.'),
 }
-MUTATING={'set_override','bulk_edit_orders','undo_edit','set_goal','add_watch'}
+MUTATING={'set_override','bulk_edit_orders','undo_edit','set_goal','add_widget','update_widget','remove_widget'}
 
 
 def declarations():
@@ -119,6 +150,7 @@ def context(session,plan,focus=None):
     from ..cohort_context import load_overrides
     from ..discussion import view
     from ..api.service import clean,objects
+    from ..dashboard import ordered as dashboard_widgets, options as dashboard_options
     from .narrator import saved_explanation
     findings=objects(session,Finding,plan.id)
     orders=objects(session,PurchaseSuggestion,plan.id)
@@ -126,13 +158,14 @@ def context(session,plan,focus=None):
         'plan':{'id':plan.id,'week_start':plan.week_start,'stage':plan.stage,'goal':plan.goal,'service_level':plan.service_level},
         'discussion':view(session,plan),'focus':focus or {},'data_kind':'synthetic demonstration, not sponsor/customer data',
         'weekly_review':{k:v for k,v in (plan.summary or {}).get('weekly_review',{}).items() if k in {'status','report','claims','model'}},
-        'review_evidence':[{'id':q['id'],'name':q['name'],'args':q['args'],'result_excerpt':json.dumps(q['result'],ensure_ascii=False)[:2500]} for q in (plan.summary or {}).get('weekly_review',{}).get('queries',[])],
+        'review_evidence':[{'id':q['id'],'name':q['name'],'args':q['args']} for q in (plan.summary or {}).get('weekly_review',{}).get('queries',[])],
         'cutoff':plan.week_start-timedelta(days=1),
         'findings':[{'id':f.id,'category':f.evidence.get('display',f.tag_id),'tag_id':f.tag_id,'districts':f.evidence.get('districts',[]),'summary':saved_explanation(f)} for f in findings],
         'cohorts':[{'id':c['id'],'name':c.get('name'),'tag_path':c['tag_path'],'districts':c['districts'],'skus':c.get('skus',[])} for c in (plan.summary or {}).get('cohort_cards',[])],
         'cohort_leaves':[{'id':c['id'],'tag_path':c['tag_path'],'districts':c['districts'],'skus':c.get('skus',[])} for c in (plan.summary or {}).get('cohort_model',{}).get('leaves',[])],
         'active_overrides':load_overrides(session,plan.week_start),
-        'watches':[{'id':w.id,'title':w.title,'scope':w.scope,'assumption':w.assumption} for w in objects(session,WatchItem,plan.id) if w.status=='active'],
+        'dashboard':{'widgets':[{'id':w.id,**w.scope} for w in dashboard_widgets(session,plan)],
+                     'options':dashboard_options(session,plan)},
         'purchase_summary':{'positive_skus':sum((o.final_cases if o.final_cases is not None else max(0,o.suggested_cases-o.capacity_cut_cases))>0 for o in orders),'cases':sum(o.final_cases if o.final_cases is not None else max(0,o.suggested_cases-o.capacity_cut_cases) for o in orders)},
         'catalog':[{'sku':p.sku,'name':p.name} for p in session.scalars(select(Product).order_by(Product.sku))],
         'order_groups':[{'id':g.id,'name':g.name,'skus':list(g.skus)} for g in _groups(session).values()],
@@ -159,7 +192,7 @@ def _scope(session,args):
 
 
 def execute(name,arguments,session,plan,stage):
-    from ..api.service import clean,objects,row,decision,recompute,WatchEdit,add_watch,watch_view,today
+    from ..api.service import clean,objects,row,decision,recompute,watch_view,today
     if name in {'catalog_groups','query_group','query_operations','preview_group_orders'}:
         from .exploration_tools import execute as explore
         return clean(explore(name,arguments,session,plan)),None
@@ -171,7 +204,7 @@ def execute(name,arguments,session,plan,stage):
         return {'discussion':result,'applied':True},{'type':'discussion','discussion':result}
     if name in MUTATING:
         session.refresh(plan,with_for_update=True)
-        allowed={'set_override':['discover','direction','execute'],'bulk_edit_orders':['discover','direction','execute'],'undo_edit':['discover','direction','execute'],'set_goal':['discover','direction','execute'],'add_watch':['discover','direction','execute']}[name]
+        allowed={'set_override':['discover','direction','execute'],'bulk_edit_orders':['discover','direction','execute'],'undo_edit':['discover','direction','execute'],'set_goal':['discover','direction','execute'],'add_widget':['discover','direction','execute','closed'],'update_widget':['discover','direction','execute','closed'],'remove_widget':['discover','direction','execute','closed']}[name]
         if plan.stage not in allowed:
             raise HTTPException(409,'This step is already approved. View the current step to make a new decision.')
         if plan.week_start>today(): raise HTTPException(409,'This plan is later than the demo date.')
@@ -208,6 +241,11 @@ def execute(name,arguments,session,plan,stage):
             request=OverrideRequest(tag_path=cohort['tag_path'],districts=cohort['districts'],type=args.type,value=args.value,note=args.note)
         else:
             request=OverrideRequest(tag_path=args.tag_path,districts=args.districts,type=args.type,value=args.value,note=args.note)
+            from .exploration_tools import _groups
+            groups=_groups(session)
+            label=' · '.join(('' if term.get('included',True) else 'Not ')+
+                             (groups[term['id']].name if term['id'] in groups else term['id'])
+                             for term in args.tag_path)
         result=change_context(session,plan,request,source='chat')
         result=_visible_edit(result)
         action={'type':'edit','label':label,**result}
@@ -224,12 +262,13 @@ def execute(name,arguments,session,plan,stage):
         from ..api.cohorts import change_goal
         result=_visible_edit(change_goal(session,plan,args.goal,args.service_level,source='chat'))
         return clean({**result,'applied':True}),clean({'type':'edit','label':'Buying objective updated',**result})
-    if name=='add_watch':
-        scope=_scope(session,args)
-        if args.kind in {'capacity','days_cover'} and args.districts:raise ValueError('Use fill rate for district-specific shortages; warehouse stock is shared.')
-        wid=add_watch(session,plan,WatchEdit(kind=args.kind,title=args.title,assumption=args.assumption,scope=scope),origin='chat')
-        result={'id':wid,'title':args.title,'scope':scope,'applied':True}
-        return result,{'type':'watch',**result}
+    if name in {'add_widget','update_widget','remove_widget'}:
+        from ..api import dashboard as api_dashboard
+        if name=='add_widget':result=api_dashboard.add(session,plan,args.spec.model_dump(),source='chat')
+        elif name=='update_widget':result=api_dashboard.update(session,plan,args.id,args.spec.model_dump(),source='chat')
+        else:result=api_dashboard.remove(session,plan,args.id,source='chat')
+        visible=_visible_edit(result)
+        return clean({**visible,'applied':True}),clean({'type':'edit','label':'Dashboard updated',**visible})
     raise ValueError('Unsupported planning tool.')
 
 
@@ -237,6 +276,11 @@ def _visible_edit(result):
     """Keep full snapshots in Decision; send only the visible diff to the agent."""
     affected={row['sku'] for row in result.get('affected_orders',[])}
     visible={k:v for k,v in result.items() if k not in {'before','after'}}
+    changes=result.get('affected_orders',[])
+    visible['order_change']={'product_count':len(affected),
+        'before_cases':sum(row['before'] for row in changes),
+        'after_cases':sum(row['after'] for row in changes),
+        'delta_cases':sum(row['after']-row['before'] for row in changes)}
     for key in ('before','after'):
         snapshot=result.get(key,{})
         visible[key]={k:snapshot[k] for k in ('stage','goal','service_level','overrides') if k in snapshot}

@@ -227,6 +227,11 @@ def get_cohorts(pid: str):
     from ..planning import suggest_orders, plan_cohort_cards
     with service.session_scope() as session:
         plan = service.plan_for(session, pid)
+        saved=plan.summary or {}
+        if 'cohort_cards' in saved and 'cohort_model' in saved:
+            return service.clean({'cards':saved['cohort_cards'],
+                                  'method':saved['cohort_model'].get('method',{}),
+                                  'overrides':load_overrides(session,plan.week_start)})
         orders = suggest_orders(plan.week_start, [], goal=plan.goal, service_level=plan.service_level,
                                 overrides=load_overrides(session, plan.week_start))
         cards = plan_cohort_cards(plan.week_start, orders, plan.goal, plan.service_level)
@@ -238,13 +243,28 @@ def get_cohorts(pid: str):
 
 def undo_context(session, plan, edit_id):
     edit = session.get(Decision, edit_id)
-    if edit is None or edit.plan_id != plan.id or edit.key not in {'set_override','bulk_edit_orders','goal_edit'}:
+    if edit is None or edit.plan_id != plan.id or edit.key not in {'set_override','bulk_edit_orders','goal_edit','dashboard_add','dashboard_update','dashboard_remove','dashboard_layout'}:
         raise HTTPException(404, 'Edit not found')
     value = edit.value
     if value.get('undone_at'):
         return {'edit_id':edit.id,'undone':True,'affected_orders':[]}
     before, after = value['before'], value['after']
     current = edit_snapshot(session,plan)
+    if edit.key.startswith('dashboard_'):
+        if current['watches'] != after['watches'] or (current['summary'] or {}).get('dashboard_order') != (after['summary'] or {}).get('dashboard_order'):
+            raise HTTPException(409, 'Later dashboard edits exist. Undo those changes first.')
+        session.execute(delete(WatchItem).where(WatchItem.plan_id == plan.id))
+        for data in before['watches']:
+            session.add(WatchItem(**data))
+        summary = deepcopy(plan.summary or {})
+        if 'dashboard_order' in (before['summary'] or {}):
+            summary['dashboard_order'] = before['summary']['dashboard_order']
+        else:
+            summary.pop('dashboard_order', None)
+        plan.summary = summary
+        edit.value = {**value, 'undone_at': datetime.now().isoformat()}
+        session.flush()
+        return {'edit_id': edit.id, 'undone': True, 'before': after, 'after': before, 'affected_orders': []}
     # Read-time model/card refreshes and conversation do not edit the plan.
     derived = {'discussion', 'cohort_model', 'cohort_cards', 'weekly_review'}
     current_summary={k:v for k,v in (current['summary'] or {}).items() if k not in derived}

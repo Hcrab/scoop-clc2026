@@ -163,7 +163,13 @@ def test_chat_persists_actions_and_rejects_completed_stage(api):
     assert c.get('/api/plans/TESTAPI').json()['orders'][0]['effective_cases']==4
     changed=c.post('/api/plans/TESTAPI/chat',json={'message':'set goal to sales','stage':'discover'})
     assert changed.status_code==200 and changed.json()['actions'][0]['type']=='edit'
-    assert c.post('/api/plans/TESTAPI/chat',json={'message':'watch fruit','stage':'direction'}).json()['actions'][0]['type']=='watch'
+    before_watch=c.get('/api/plans/TESTAPI').json()['orders']
+    watch=c.post('/api/plans/TESTAPI/chat',json={'message':'watch fruit','stage':'direction'}).json()['actions'][0]
+    assert watch['type']=='edit' and watch['edit_id'] and watch['affected_orders']==[]
+    widgets=c.get('/api/plans/TESTAPI/dashboard').json()['widgets']
+    assert any(w['scope']=={'kind':'tag','key':'family:fruit'} and w['metric']=='demand' for w in widgets)
+    assert c.get('/api/plans/TESTAPI').json()['orders']==before_watch
+    assert c.post(f"/api/plans/TESTAPI/edits/{watch['edit_id']}/undo").status_code==200
     data=c.get('/api/plans/TESTAPI').json()
     assert len(data['messages'])==8
     assert all(m['meta']['provider']=='scripted' for m in data['messages'])
