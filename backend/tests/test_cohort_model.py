@@ -37,6 +37,8 @@ def test_tree_is_deterministic_and_shrinks():
 def test_partial_alignment_unaffected_sku_stays_near_control():
     units = _units(affected=('S0', 'S1', 'S3'))
     result = cohort_model.fit_units(units, [Group('cohort', 'Cohort', 'kind', ('S0', 'S1', 'S2'))])
+    assert result['sku_factors']['S2']['f50'] == pytest.approx(1.)
+    assert result['sku_factors']['S3']['f50'] == pytest.approx(result['sku_factors']['S0']['f50'])
     assert result['sku_factors']['S2']['f50'] < result['sku_factors']['S0']['f50']
     assert result['sku_factors']['S2']['f50'] < result['sku_factors']['S1']['f50']
 
@@ -118,3 +120,16 @@ def test_read_only_preparation_promotion_winsorisation_and_missing(monkeypatch):
         assert not session.dirty and not session.new and not session.deleted
         json.dumps(result, allow_nan=False)
     engine.dispose()
+
+
+def test_short_promotion_filtered_baseline_is_used():
+    week = date(2026, 7, 27)
+    first = week - timedelta(days=70)
+    rows = [(first + timedelta(days=i), 'A', 'S0', 100) for i in range(70)]
+    expected = pd.DataFrame([{'date': d, 'store_id': store, 'sku': sku, 'mean': 100.}
+                             for d, store, sku, _ in rows])
+    promotion = SimpleNamespace(sku='S0', start_date=first, end_date=first+timedelta(days=48))
+    result = cohort_model.fit_observations(week, rows, expected, {'A': 'north'}, ['S0'], [promotion], [])
+    assert len(result['units']) == 1
+    assert result['units'][0]['baseline_days'] == 7
+    assert result['sku_factors']['S0']['f50'] == pytest.approx(1.)

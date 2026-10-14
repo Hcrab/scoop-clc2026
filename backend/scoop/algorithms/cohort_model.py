@@ -118,7 +118,7 @@ def fit_units(units, groups):
                     raw_estimate=raw, variance=V, posterior_mean=mu,
                     posterior_variance=var_mu,
                     interval_80=[mu - Z80 * sqrt(var_mu), mu + Z80 * sqrt(var_mu)],
-                    shrinkage={'between_leaf_variance': tau_b, 'toward_zero_weight': b,
+                    shrinkage={'between_leaf_variance': tau_b, 'data_weight': b, 'toward_zero_weight': 1 - b,
                                'within_leaf_variance': tau_l, 'within_fallback': tau_l_raw is None})
         for j in ix:
             if tau_l == 0:
@@ -165,7 +165,24 @@ def fit(plan, session=None):
     end = plan.week_start - timedelta(days=1)
     recent_start = end - timedelta(days=13)
     start = recent_start - timedelta(days=56)
-    expected = _expectations(session)
+    stores = {s.id: s.district for s in session.scalars(select(Store))}
+    skus = sorted(session.scalars(select(Product.sku)))
+    orders = session.execute(select(StoreOrder.date, StoreOrder.store_id, StoreOrder.sku, StoreOrder.ordered_units)
+                             .where(StoreOrder.date.between(start, end))).all()
+    promotions = list(session.scalars(select(Promotion).where(Promotion.start_date <= end,
+                                                            Promotion.end_date >= start)))
+    return fit_observations(plan.week_start, orders, _expectations(session), stores, skus,
+                            promotions, _groups(session))
+
+
+def fit_observations(week_start, orders, expected, stores, skus, promotions, groups):
+    """Fit recorded or counterfactual observations through the same preparation path.
+
+    Orders are (date, store_id, sku, ordered_units) rows. No database is changed.
+    """
+    end = week_start - timedelta(days=1)
+    recent_start = end - timedelta(days=13)
+    start = recent_start - timedelta(days=56)
     if expected.empty:
         result = fit_units([], [])
         result['method']['status'] = 'issued_expectations_unavailable'
@@ -173,13 +190,8 @@ def fit(plan, session=None):
     expected = expected.copy()
     expected['date'] = pd.to_datetime(expected.date).dt.date
     expected = expected[expected.date.between(start, end)]
-    stores = {s.id: s.district for s in session.scalars(select(Store))}
-    skus = sorted(session.scalars(select(Product.sku)))
-    orders = session.execute(select(StoreOrder.date, StoreOrder.store_id, StoreOrder.sku, StoreOrder.ordered_units)
-                             .where(StoreOrder.date.between(start, end))).all()
-    actual = {(d, store, sku): float(a) for d, store, sku, a in orders}
-    promotions = list(session.scalars(select(Promotion).where(Promotion.start_date <= end,
-                                                            Promotion.end_date >= start)))
+    actual = {(pd.Timestamp(d).date(), store, sku): float(a) for d, store, sku, a in orders
+              if start <= pd.Timestamp(d).date() <= end}
     excluded = defaultdict(set)
     for promo in promotions:
         day = max(start, promo.start_date)
@@ -200,7 +212,7 @@ def fit(plan, session=None):
             baseline = [d for d in dates if d < recent_start]
             keys = [(d, s, name) for d in dates for s in store_ids]
             missing = [k for k in keys if k not in actual or k not in forecast]
-            if missing or len(recent) == 0 or len(baseline) < 28:
+            if missing or len(recent) == 0 or len(baseline) == 0:
                 skipped.append({'sku': name, 'district': area, 'reason': 'missing_rows_or_short_window',
                                 'missing_rows': len(missing), 'recent_days': len(recent),
                                 'baseline_days': len(baseline)})
@@ -237,10 +249,10 @@ def fit(plan, session=None):
                           'baseline_days': len(baseline),
                           'promotion_exclusions': sorted(d.isoformat() for d in excluded[name] if start <= d <= end),
                           'winsorised': clipped, 'winsor_caps': caps})
-    result = fit_units(units, _groups(session))
+    result = fit_units(units, groups)
     result['method'].update(window_recent=[recent_start.isoformat(), end.isoformat()],
                             window_baseline=[start.isoformat(), (recent_start - timedelta(days=1)).isoformat()],
-                            unit_definition='SKU × district; complete observed and issued rows; at least 28 baseline days and one recent day',
+                            unit_definition='SKU × district; complete observed and issued rows; at least one eligible day in each window',
                             winsorisation='per store/SKU 99th percentile across eligible 70-day history before aggregation',
                             overdispersion='sample variance of seven-day (A-E)/sqrt(E) baseline residuals, floored at 1',
                             skipped_units=skipped)

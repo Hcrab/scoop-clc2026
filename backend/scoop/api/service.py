@@ -65,7 +65,8 @@ def recompute(s, p):
     for r in orders.itertuples():
         fields = {k: clean(getattr(r, k)) for k in ['sku', 'order_date', 'demand_p10', 'demand_p50', 'demand_p90', 'adjustment', 'critical_ratio', 'target_units', 'on_hand_units', 'on_order_units', 'inventory_position', 'suggested_cases', 'capacity_cut_cases']}
         s.add(PurchaseSuggestion(plan_id=p.id, protection_days=int(r.pdays), final_cases=None, status='suggested', reason=reason_text(r, names, directions), **fields))
-    p.summary={**(p.summary or {}),'orders_due':int((orders.suggested_cases-orders.capacity_cut_cases>0).sum()),'goal':p.goal}
+    p.summary={**(p.summary or {}),'orders_due':int((orders.suggested_cases-orders.capacity_cut_cases>0).sum()),'goal':p.goal,
+               'cohort_model':orders.attrs.get('cohort_model', {})}
     from .. import workflow
     refresh_watches(s,p)
     workflow.invalidate_review(p)

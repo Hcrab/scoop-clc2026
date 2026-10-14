@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
+from types import SimpleNamespace
 
 import numpy as np
 import pandas as pd
@@ -18,6 +19,7 @@ from sqlalchemy import delete, select
 from .ai import narrator
 from .ai.investigator import investigate, review_near_misses
 from .algorithms import cusum
+from .algorithms import cohort_model
 from .algorithms.forecast import protection_forecast, build_features, forecast_weather, daily_mean
 from .algorithms.replenish import SkuInput, plan_orders
 from .algorithms.runs import RUN_B_END, artifacts, month_start, model_metadata
@@ -299,16 +301,19 @@ def active_directions(as_of: date, directions: list[dict], model) -> list[dict]:
 
 def suggest_orders(as_of: date, directions: list[dict], service_level: float | None = None,
                    position: pd.DataFrame | None = None, goal: str = "margin", only_due: bool = False,
-                   pending_arrivals: dict | None = None, weather_scenario=None) -> pd.DataFrame:
+                   pending_arrivals: dict | None = None, weather_scenario=None,
+                   cohort_result: dict | None = None) -> pd.DataFrame:
     art = artifacts()
     st = art.static
     monthly = art.run_for(as_of)
     model = monthly.model
-    directions = active_directions(as_of, directions, model)
-    fc, split = protection_forecast(model, st, as_of - timedelta(days=1), order_calendar=True, weather_scenario=weather_scenario)
+    fc, _ = protection_forecast(model, st, as_of - timedelta(days=1), order_calendar=True, weather_scenario=weather_scenario)
     if service_level is None:
         service_level = {"fill_rate": 0.97, "sales": 0.98}.get(goal)
-    adj = sku_adjustments(directions, split)
+    if cohort_result is None:
+        cohort_result = cohort_model.fit(SimpleNamespace(week_start=as_of))
+    adj = pd.Series({sku: float(cohort_result["sku_factors"].get(sku, {}).get("f50", 1.0))
+                     for sku in st.products.sku})
     pos = position if position is not None else inventory_position(as_of)
     prod = st.products.set_index("sku")
     items = []
@@ -327,6 +332,7 @@ def suggest_orders(as_of: date, directions: list[dict], service_level: float | N
     plan = plan_orders(items, monthly.ratio_values, capacity, service_level,
                        capacity_baseline=baseline, arrival_mask=arrival_mask)
     wd = prod.order_weekday.reindex(plan.sku).to_numpy()
+    plan.attrs["cohort_model"] = cohort_result
     plan["model_version"] = model.version
     plan["trained_through"] = model.trained_through
     plan["order_date"] = [as_of + timedelta(days=int((w - as_of.weekday()) % 7)) for w in wd]
@@ -383,13 +389,10 @@ def confirmation_capacity(as_of: date, cases: dict[str, int]) -> dict:
     """Check a proposed case map on the same dated occupancy path as suggestions."""
     art = artifacts()
     skus = list(art.static.products.sku)
-    with session_scope() as session:
-        directions = [{"bucket":r.bucket,"tag_id":r.tag_id,"sku":r.sku,"districts":r.districts,"factor":r.factor}
-                      for r in session.scalars(select(DirectionItem).where(DirectionItem.plan_id==plan_id(as_of))).all()]
     model = art.run_for(as_of).model
-    directions = active_directions(as_of, directions, model)
-    _, split = protection_forecast(model, art.static, as_of-timedelta(days=1), order_calendar=True)
-    adjustment = sku_adjustments(directions, split)
+    cohort_result = cohort_model.fit(SimpleNamespace(week_start=as_of))
+    adjustment = pd.Series({sku: float(cohort_result["sku_factors"].get(sku, {}).get("f50", 1.0))
+                            for sku in skus})
     baseline, mask = capacity_projection(as_of, inventory_position(as_of), art.static,
         model, adjustment)
     prod = art.static.products.set_index("sku")
@@ -410,7 +413,7 @@ def confirmation_capacity(as_of: date, cases: dict[str, int]) -> dict:
 def reason_text(r, names: dict[str, str], directions: list[dict]) -> str:
     parts = [f"{r.pdays}-day protection period: p50 demand {r.demand_p50:,.0f} units"]
     if abs(r.adjustment - 1) > 0.005:
-        parts.append(f"adjusted {r.adjustment - 1:+.0%} for this week's direction")
+        parts.append(f"adjusted {r.adjustment - 1:+.0%} for this week's cohort signal")
     parts.append(f"target {r.target_units:,.0f} at the {r.critical_ratio:.0%} service point")
     parts.append(f"position {r.inventory_position:,.0f} (on hand {r.on_hand_units:,} + on order {r.on_order_units:,})")
     if r.capacity_cut_cases:
@@ -465,8 +468,9 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
         if existing_session.get(Plan, pid) is not None:
             raise ValueError(f"Plan {pid} already exists; update it to preserve user decisions")
     findings = detect(week_start)
-    directions = default_directions(findings)
-    orders = suggest_orders(week_start, directions)
+    cohort_result = cohort_model.fit(SimpleNamespace(week_start=week_start))
+    directions = []
+    orders = suggest_orders(week_start, directions, cohort_result=cohort_result)
     names = dict(read_sql("SELECT sku, name FROM products").values)
     now = datetime(week_start.year, week_start.month, week_start.day, 9, 0)
     with session_scope() as s:
@@ -482,7 +486,7 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
                    summary={"findings": len(findings), "orders_due": int((orders.final_cases > 0).sum()),
                             "model_run":artifacts().run_for(week_start).metadata,
                             "weak_reviews": monitoring().review_log.get(week_start.isoformat(),[]),
-                            "direction_provenance": [{"tag_id":d.get("tag_id"),"origin_model_version":d.get("origin_model_version"),"evidence_through":d.get("evidence_through")} for d in directions]}))
+                            "cohort_model": cohort_result}))
         s.flush()
         for i, f in enumerate(findings):
             fid = f"{pid}-F{i + 1}"
@@ -500,15 +504,6 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
             for j, h in enumerate(f["hypotheses"]):
                 s.add(Hypothesis(id=f"{fid}-H{j + 1}", finding_id=fid, cause=h["label"], label=h["label"], text=h["text"],
                                  score=h["score"], evidence={}, selected=(j == 0)))
-            if f["kind"] == "significant":
-                q = narrator.question_for(f)
-                s.add(Question(id=f"{fid}-Q", plan_id=pid, stage="discover", finding_id=fid, text=q["text"],
-                               options={"options": q["options"], "recommended": q["recommended"]},
-                               answer=q["recommended"] if accept_defaults else None, answered_at=now if accept_defaults else None))
-        for k, d in enumerate(directions):
-            fid = next((f"{pid}-F{i + 1}" for i, f in enumerate(findings) if f["group"] == d["finding_group"]), None)
-            s.add(DirectionItem(id=f"{pid}-D{k + 1}", plan_id=pid, bucket=d["bucket"], tag_id=d["tag_id"], districts=d["districts"],
-                                factor=d["factor"], finding_id=fid, note=d["note"]))
         for r in orders.itertuples():
             s.add(PurchaseSuggestion(
                 plan_id=pid, sku=r.sku, order_date=r.order_date, protection_days=int(r.pdays), demand_p10=float(r.demand_p10),
@@ -521,24 +516,20 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
         for w in watch_items(findings, directions):
             s.add(WatchItem(id=f"{pid}-W{hashlib.sha256(w['title'].encode()).hexdigest()[:12]}", plan_id=pid, kind=w["kind"], title=w["title"],
                             assumption=w["assumption"], scope=w["scope"], origin=w["origin"], status="active"))
-        if accept_defaults:
-            s.add(Decision(plan_id=pid, stage="direction", key="accepted_ai_draft", value={"directions": len(directions)}, source="system", created_at=now))
-        from .algorithms.trend_scan import scan
-        plan=s.get(Plan,pid)
-        plan.summary={**plan.summary,'raw_trends':scan(s,plan)}
     return pid
 
 
 def recompute_orders(pid: str) -> None:
-    """Re-run the replenishment step after the planner changed the direction board or goal."""
+    """Refit cohort effects and replenish after a plan change."""
     with session_scope() as s:
         plan = s.get(Plan, pid)
-        dirs = [{"bucket": d.bucket, "tag_id": d.tag_id, "sku": d.sku, "districts": d.districts, "factor": d.factor}
-                for d in s.scalars(select(DirectionItem).where(DirectionItem.plan_id == pid)).all()]
         week, sl, goal = plan.week_start, plan.service_level, plan.goal
-    orders = suggest_orders(week, dirs, service_level=sl, goal=goal)
+    cohort_result = cohort_model.fit(SimpleNamespace(week_start=week))
+    orders = suggest_orders(week, [], service_level=sl, goal=goal, cohort_result=cohort_result)
     names = dict(read_sql("SELECT sku, name FROM products").values)
     with session_scope() as s:
+        plan = s.get(Plan, pid)
+        plan.summary = {**plan.summary, "cohort_model": cohort_result}
         s.execute(delete(PurchaseSuggestion).where(PurchaseSuggestion.plan_id == pid))
         for r in orders.itertuples():
             s.add(PurchaseSuggestion(
@@ -546,5 +537,5 @@ def recompute_orders(pid: str) -> None:
                 demand_p50=float(r.demand_p50), demand_p90=float(r.demand_p90), adjustment=float(r.adjustment), critical_ratio=float(r.critical_ratio),
                 target_units=float(r.target_units), on_hand_units=int(r.on_hand_units), on_order_units=int(r.on_order_units),
                 inventory_position=int(r.inventory_position), suggested_cases=int(r.suggested_cases), capacity_cut_cases=int(r.capacity_cut_cases),
-                final_cases=None, status="suggested", reason=reason_text(r, names, dirs),
+                final_cases=None, status="suggested", reason=reason_text(r, names, []),
             ))
