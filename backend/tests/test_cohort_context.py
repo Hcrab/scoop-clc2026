@@ -9,6 +9,40 @@ from scoop.models import Setting, Plan, Decision
 from scoop.algorithms.groups import Group
 
 
+def test_card_endpoint_and_offline_report_use_the_same_saved_plan_result(api,monkeypatch):
+    client,scope,_,planning=api
+    monkeypatch.setenv('GEMINI_API_KEY','')
+    card={'id':'leaf-1','name':'Fixture group','effect_pct':20.,'interval_pct':[10.,30.],
+          'case_change':7,'pallet_change':.7}
+    with scope() as session:
+        plan=session.get(Plan,'TESTAPI')
+        plan.summary={'cohort_model':{'method':{'model_version':'saved-model'}},'cohort_cards':[card]}
+    monkeypatch.setattr(planning,'suggest_orders',lambda *a,**k:pytest.fail('Reading cards must not refit the plan'))
+    shown=client.get('/api/plans/TESTAPI/cohorts').json()
+    report=client.get('/api/plans/TESTAPI').json()['review']
+    assert shown['cards']==[card]
+    assert shown['method']=={'model_version':'saved-model'}
+    assert report['queries'][0]['result']==shown['cards'][0]
+    assert '+7 cases' in report['presentation']['html']
+
+
+def test_history_serves_visible_diff_and_keeps_complete_undo_snapshot(api):
+    client,scope,_,_=api
+    response=client.put('/api/plans/TESTAPI/goal',json={'goal':'fill_rate','service_level':.8})
+    assert response.status_code==200
+    edit_id=response.json()['edit_id']
+    shown=next(d for d in client.get('/api/plans/TESTAPI').json()['decisions'] if d['id']==edit_id)
+    assert 'summary' not in shown['value']['before']
+    assert shown['value']['order_change']['delta_cases']==1
+    assert shown['value']['before']['orders'][0]['cases']==3
+    with scope() as session:
+        saved=session.get(Decision,edit_id).value
+        assert 'summary' in saved['before'] and 'watches' in saved['before']
+        assert saved['before']['orders'][0]['suggested_cases']==3
+    assert client.post(f'/api/plans/TESTAPI/edits/{edit_id}/undo').status_code==200
+    assert client.get('/api/plans/TESTAPI').json()['orders'][0]['effective_cases']==3
+
+
 def test_definitions_persist_and_same_rule_updates_in_place():
     engine = create_engine('sqlite://')
     Setting.__table__.create(engine)

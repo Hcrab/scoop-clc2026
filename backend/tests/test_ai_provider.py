@@ -102,7 +102,9 @@ def test_stage_and_scope_enforced_even_when_model_requests_invalid_change(api):
         with pytest.raises(ValueError,match='current plan'):
             tools.execute('inspect_finding',{'finding_id':'ANOTHERPLAN-F'},s,plan,'execute')
         with pytest.raises(ValueError,match='districts'):
-            tools.execute('add_watch',{'kind':'fill_rate','title':'Bad district','assumption':'Test','districts':['Unknown']},s,plan,'execute')
+            tools.execute('inspect_metric',{'kind':'fill_rate','districts':['Unknown']},s,plan,'execute')
+        with pytest.raises(HTTPException,match='Unknown catalog group'):
+            tools.execute('add_widget',{'spec':{'title':'Bad group','scope':{'kind':'tag','key':'family:unknown'},'metric':'fill_rate'}},s,plan,'execute')
         assert s.scalar(select(func.count()).select_from(WatchItem))==watch_count
 
 
@@ -191,16 +193,28 @@ def test_chat_rejects_foreign_focus_and_blank_message(api):
     assert response.status_code==422
 
 
-def test_scripted_fallback_respects_no_change_and_chinese_watch_scope(api):
+def test_scripted_fallback_respects_no_change_and_chinese_widget_scope(api):
     c,scope,_,_=api
     before=c.get('/api/plans/TESTAPI').json()
     c.post('/api/plans/TESTAPI/chat',json={'message':'Can I watch fruit? Do not change the plan.','stage':'discover'})
     after=c.get('/api/plans/TESTAPI').json()
     assert len(after['watch'])==len(before['watch']) and len(after['decisions'])==len(before['decisions'])
     answer=c.post('/api/plans/TESTAPI/chat',json={'message':'帮我盯住九龙水果类的缺货','stage':'discover'}).json()
-    assert answer['actions'][0]['type']=='watch'
-    created=next(w for w in c.get('/api/plans/TESTAPI').json()['watch'] if w['id']==answer['actions'][0]['id'])
-    assert created['scope']=={'tag_id':'family:fruit','districts':['Kowloon']}
+    assert answer['actions']==[]
+    assert '地区级' in answer['reply']
+    unchanged=c.get('/api/plans/TESTAPI').json()
+    assert unchanged['watch']==after['watch'] and unchanged['decisions']==after['decisions']
+    answer=c.post('/api/plans/TESTAPI/chat',json={'message':'帮我盯住水果类的缺货','stage':'discover'}).json()
+    assert answer['actions'][0]['type']=='edit'
+    edit=answer['actions'][0]
+    assert edit['edit_id'] and edit['before'] and edit['after']
+    widgets=c.get('/api/plans/TESTAPI/dashboard').json()['widgets']
+    created=next(w for w in widgets if w['scope']=={'kind':'tag','key':'family:fruit'})
+    assert created['metric']=='lost_units'
+    undone=c.post(f"/api/plans/TESTAPI/edits/{edit['edit_id']}/undo")
+    assert undone.status_code==200
+    with scope() as s:
+        assert s.get(WatchItem,created['id']) is None
 
 
 @pytest.mark.parametrize('message',[

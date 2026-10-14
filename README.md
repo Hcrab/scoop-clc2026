@@ -71,7 +71,7 @@ The ordinary test suite forces the assistant offline and does not spend provider
 
 ### Live plan discussion
 
-Set `SCOOP_LLM_PROVIDER=gemini` in the ignored `.env` and provide `GEMINI_API_KEY` in the server process environment, then restart the API. The default model is `gemini-4-argon`. After a new plan's mechanical scan, the assistant chooses additional catalog-intersection and operational queries, then saves an evidence-based weekly report and specific questions. Existing plans expose an explicit Explore this week action. Default limits are 120 provider calls and a conservative US$3 estimated allowance for this demo. Opening the conversation reads its saved report without repeating the exploration. See [assistant configuration and behavior](docs/ASSISTANT.md).
+Set `SCOOP_LLM_PROVIDER=gemini` in the ignored `.env` and provide `GEMINI_API_KEY` in the server process environment, then restart the API. The default model is `gemini-3.8-flash`. After a new plan's mechanical scan, the assistant chooses additional catalog-intersection and operational queries, then saves an evidence-based weekly report and specific questions. Existing plans expose an explicit Explore this week action. Default limits are 120 provider calls and a conservative US$3 estimated allowance for this demo. Opening the conversation reads its saved report without repeating the exploration. See [assistant configuration and behavior](docs/ASSISTANT.md).
 
 Optional report figures: install `matplotlib==3.11.2` in a reporting environment and run `python scripts/plot-evaluation.py`. Figure sources and PNG/SVG outputs are included.
 

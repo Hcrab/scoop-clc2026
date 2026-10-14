@@ -1,6 +1,7 @@
 """Check quantitative claims against the evidence they cite, without judging prose."""
 from datetime import date
 from decimal import Decimal, InvalidOperation
+from html.parser import HTMLParser
 import re
 
 
@@ -10,6 +11,20 @@ NATURAL_DATE = re.compile(r'\b(\d{1,2})(?:\s*[–—-]\s*(\d{1,2}))?\s+(Jan\w*|F
 MONTHS = {name:i+1 for i,name in enumerate(('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'))}
 
 ID = re.compile(r'\b(?:Q(?:-cohort)?-[\w-]+|Q\d+|T\d+|[A-Za-z][A-Za-z0-9_-]*\d+[A-Za-z0-9_-]*)\b')
+
+
+def visible_report_claims(report, evidence_ids):
+    """Cover displayed copy too; CSS sizing and HTML attributes are not claims."""
+    class Text(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.parts=[]
+        def handle_data(self, data):
+            self.parts.append(data)
+    parser=Text()
+    parser.feed(report.presentation.html)
+    return [{'text':text,'evidence_ids':evidence_ids} for text in
+            (report.report, report.presentation.title, ' '.join(parser.parts))]
 
 
 def _numbers(text):

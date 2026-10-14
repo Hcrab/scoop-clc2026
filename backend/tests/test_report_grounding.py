@@ -90,9 +90,46 @@ def test_corrected_repair_succeeds_without_extra_round(api):
     assert count==2 and result['status']=='complete'
 
 
+@pytest.mark.parametrize('field',['report','title','html'])
+def test_visible_wrong_number_with_valid_structured_claims_repairs_once_then_falls_back(api,field):
+    _,scope,_,_=api
+    calls=[]
+    def wire(payload):
+        calls.append(payload)
+        output=report()
+        output['claims'][0]['evidence_ids']=['Q-cohort-leaf-0']
+        output['claims'][0]['text']='The cohort effect is 80%.'
+        output['presentation']=presentation('Q-cohort-leaf-0')
+        wrong='The cohort effect is 98765%.'
+        if field=='report':output['report']=wrong
+        else:output['presentation'][field]=f'<p>{wrong}</p>' if field=='html' else wrong
+        return {'candidates':[{'content':{'role':'model','parts':[
+            {'functionCall':{'name':'finish_weekly_review','args':output}}]}}]}
+    with scope() as session:
+        result=weekly.investigate(session,session.get(Plan,'TESTAPI'),wire)
+    assert len(calls)==2 and result['status']=='offline'
+    assert result['grounding_failure']['repair_attempted']
+    assert any(m['number']=='98765%' for m in result['grounding_failure']['mismatches'])
+
+
 def test_counts_cannot_substantiate_percentages():
     assert mismatches([{'text':'Demand rose 100%.','evidence_ids':['Q1']}],{'Q1':{'sku_count':1,'units':100}})
     assert not mismatches([{'text':'Demand rose 100%.','evidence_ids':['Q1']}],{'Q1':{'effect_pct':100}})
+
+
+def test_empty_key_displays_card_list_even_with_saved_ai_report(api,monkeypatch):
+    _,scope,_,_=api
+    monkeypatch.setenv('GEMINI_API_KEY','')
+    with scope() as session:
+        plan=session.get(Plan,'TESTAPI')
+        plan.summary={**plan.summary,'weekly_review':{'status':'complete','report':'Saved AI prose',
+                       'presentation':{'title':'Saved AI report','html':'<p>Old report</p>','css':''}}}
+        result=weekly.display_view(plan)
+        assert result['status']=='offline'
+        assert 'data-report-card' in result['presentation']['html']
+        assert 'Old report' not in result['presentation']['html']
+        assert 'error' not in result
+        assert plan.summary['weekly_review']['status']=='complete'
 
 
 def test_natural_date_ranges_use_cited_window_dates():

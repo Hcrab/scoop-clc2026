@@ -37,6 +37,21 @@ def clean(value):
 def row(obj):
     return clean({c.name: getattr(obj, c.name) for c in obj.__table__.columns})
 
+def decision_history(session,pid):
+    from ..ai.tools import _visible_edit
+    edits=query(session,'''WITH snapshots AS MATERIALIZED (
+        SELECT id,plan_id,stage,key,source,created_at,value::jsonb AS v
+        FROM decisions WHERE plan_id=:pid)
+        SELECT id,plan_id,stage,key,source,created_at,
+        CASE WHEN key IN ('set_override','bulk_edit_orders','goal_edit') THEN
+          (v - 'before' - 'after') || jsonb_build_object(
+            'before',jsonb_build_object('stage',v->'before'->'stage','goal',v->'before'->'goal',
+              'service_level',v->'before'->'service_level','overrides',v->'before'->'overrides','orders',v->'before'->'orders'),
+            'after',jsonb_build_object('stage',v->'after'->'stage','goal',v->'after'->'goal',
+              'service_level',v->'after'->'service_level','overrides',v->'after'->'overrides','orders',v->'after'->'orders'))
+        ELSE v END AS value FROM snapshots ORDER BY id''',pid=pid)
+    return [{**edit,'value':_visible_edit(edit['value']) if edit['key'] in {'set_override','bulk_edit_orders','goal_edit'} else edit['value']} for edit in edits]
+
 def today(): return date.fromisoformat(get_setting('today', '2026-07-13'))
 
 def query(s, sql, **params): return [dict(r) for r in s.execute(text(sql), params).mappings()]
@@ -68,6 +83,9 @@ def recompute(s, p):
         s.add(PurchaseSuggestion(plan_id=p.id, protection_days=int(r.pdays), final_cases=int(r.final_cases) if r.sku in orders.attrs.get('cohort_model', {}).get('cases_overrides', {}) else None, status='suggested', reason=reason_text(r, names, directions), **fields))
     p.summary={**(p.summary or {}),'orders_due':int((orders.suggested_cases-orders.capacity_cut_cases>0).sum()),'goal':p.goal,
                'cohort_model':orders.attrs.get('cohort_model', {})}
+    from ..planning import plan_cohort_cards
+    p.summary={**p.summary,'cohort_cards':plan_cohort_cards(p.week_start,orders,p.goal,p.service_level)
+               if orders.attrs.get('cohort_model',{}).get('leaves') else []}
     from .. import workflow
     refresh_watches(s,p)
     workflow.invalidate_review(p)
@@ -213,7 +231,8 @@ def get_plan(pid:str):
             frozen=[WatchItem(**snapshot) for snapshot in approved.get('items',[])]
             review={'confirmed':True,'confirmed_at':approved.get('confirmed_at'),
                     'items':[data.view(w,p,workflow.state(p).get('approved_projection')) for w in frozen]}
-        return clean({'raw_trends':(p.summary or {}).get('raw_trends'),'review':(p.summary or {}).get('weekly_review',{'status':'not_started','report':'','queries':[]}),'discussion':discussion_view(s,p),'plan':row(p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'watch':views,'watch_review':review,'recap':recap(s,p,today(),cached_series),'decisions':[row(x) for x in objects(s,Decision,pid)],'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
+        from ..ai.weekly import display_view
+        return clean({'raw_trends':(p.summary or {}).get('raw_trends'),'review':display_view(p),'discussion':discussion_view(s,p),'plan':row(p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'watch':views,'watch_review':review,'recap':recap(s,p,today(),cached_series),'decisions':decision_history(s,pid),'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
 
 class NewPlan(BaseModel): week_start: date
 @router.post('/plans')
