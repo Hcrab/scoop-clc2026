@@ -1,0 +1,704 @@
+{
+  "plan": "P20260727",
+  "mocked_responses": false,
+  "orders_compared": 75,
+  "context": {
+    "type": "ends_on",
+    "value": "2026-08-10",
+    "affected_orders": [
+      {
+        "sku": "IC001",
+        "before": 19,
+        "after": 11,
+        "factor_before": 1.2117840862916494,
+        "factor_after": 1.091760212925542
+      },
+      {
+        "sku": "IC002",
+        "before": 10,
+        "after": 3,
+        "factor_before": 1.243535335985831,
+        "factor_after": 1.105863186089855
+      },
+      {
+        "sku": "IC003",
+        "before": 51,
+        "after": 25,
+        "factor_before": 1.288165214771044,
+        "factor_after": 1.12390762539024
+      },
+      {
+        "sku": "IC004",
+        "before": 23,
+        "after": 16,
+        "factor_before": 1.2090647464312623,
+        "factor_after": 1.149655717282012
+      },
+      {
+        "sku": "IC005",
+        "before": 29,
+        "after": 21,
+        "factor_before": 1.3380013651779283,
+        "factor_after": 1.2418181158757815
+      },
+      {
+        "sku": "IC007",
+        "before": 78,
+        "after": 71,
+        "factor_before": 1.2500244147690003,
+        "factor_after": 1.2146456045570093
+      },
+      {
+        "sku": "IC008",
+        "before": 45,
+        "after": 41,
+        "factor_before": 1.2999823704638407,
+        "factor_after": 1.2577740408962372
+      },
+      {
+        "sku": "IC009",
+        "before": 26,
+        "after": 4,
+        "factor_before": 1.2757477979206242,
+        "factor_after": 1.121170236829024
+      },
+      {
+        "sku": "IC011",
+        "before": 9,
+        "after": 9,
+        "factor_before": 1.1499938921016413,
+        "factor_after": 1.1291765289182136
+      },
+      {
+        "sku": "IC014",
+        "before": 12,
+        "after": 0,
+        "factor_before": 1.3575900870087596,
+        "factor_after": 1.2564415957541963
+      },
+      {
+        "sku": "IC015",
+        "before": 25,
+        "after": 9,
+        "factor_before": 1.2226151008708321,
+        "factor_after": 1.0960309425473875
+      },
+      {
+        "sku": "IC051",
+        "before": 52,
+        "after": 42,
+        "factor_before": 1.191036246780458,
+        "factor_after": 1.1365892972091176
+      },
+      {
+        "sku": "IC055",
+        "before": 30,
+        "after": 28,
+        "factor_before": 1.2408894140868225,
+        "factor_after": 1.2071933370740682
+      },
+      {
+        "sku": "IC059",
+        "before": 20,
+        "after": 16,
+        "factor_before": 1.2561905802322568,
+        "factor_after": 1.183691567713281
+      },
+      {
+        "sku": "IC060",
+        "before": 13,
+        "after": 9,
+        "factor_before": 1.238448425618958,
+        "factor_after": 1.1719219759178847
+      },
+      {
+        "sku": "IC061",
+        "before": 23,
+        "after": 0,
+        "factor_before": 1.8806506214109004,
+        "factor_after": 1.3796621005789107
+      },
+      {
+        "sku": "IC062",
+        "before": 88,
+        "after": 73,
+        "factor_before": 1.834631635591087,
+        "factor_after": 1.7155240453431018
+      },
+      {
+        "sku": "IC063",
+        "before": 41,
+        "after": 21,
+        "factor_before": 1.7728044009104453,
+        "factor_after": 1.5524987338478102
+      },
+      {
+        "sku": "IC064",
+        "before": 28,
+        "after": 17,
+        "factor_before": 1.2824975113686674,
+        "factor_after": 1.2027037958560924
+      },
+      {
+        "sku": "IC065",
+        "before": 27,
+        "after": 24,
+        "factor_before": 1.2405063667494227,
+        "factor_after": 1.2068433117237745
+      },
+      {
+        "sku": "IC066",
+        "before": 13,
+        "after": 9,
+        "factor_before": 1.1942285494918143,
+        "factor_after": 1.1398133789230973
+      },
+      {
+        "sku": "IC070",
+        "before": 9,
+        "after": 0,
+        "factor_before": 1.239438797652127,
+        "factor_after": 1.1033793594037649
+      },
+      {
+        "sku": "IC071",
+        "before": 33,
+        "after": 30,
+        "factor_before": 1.2223240518076184,
+        "factor_after": 1.1909082813065068
+      },
+      {
+        "sku": "IC072",
+        "before": 35,
+        "after": 29,
+        "factor_before": 1.2555696152326956,
+        "factor_after": 1.182999001260006
+      }
+    ],
+    "exact_undo": true
+  },
+  "service": {
+    "before": 0.8,
+    "after": 0.5,
+    "affected_orders": [
+      {
+        "sku": "IC001",
+        "before": 19,
+        "after": 15,
+        "factor_before": 1.2117840862916494,
+        "factor_after": 1.2117840862916494
+      },
+      {
+        "sku": "IC002",
+        "before": 10,
+        "after": 8,
+        "factor_before": 1.243535335985831,
+        "factor_after": 1.243535335985831
+      },
+      {
+        "sku": "IC003",
+        "before": 51,
+        "after": 42,
+        "factor_before": 1.288165214771044,
+        "factor_after": 1.288165214771044
+      },
+      {
+        "sku": "IC004",
+        "before": 23,
+        "after": 17,
+        "factor_before": 1.2090647464312623,
+        "factor_after": 1.2090647464312623
+      },
+      {
+        "sku": "IC005",
+        "before": 29,
+        "after": 25,
+        "factor_before": 1.3380013651779283,
+        "factor_after": 1.3380013651779283
+      },
+      {
+        "sku": "IC006",
+        "before": 36,
+        "after": 32,
+        "factor_before": 1.8083763236773442,
+        "factor_after": 1.8083763236773442
+      },
+      {
+        "sku": "IC007",
+        "before": 78,
+        "after": 67,
+        "factor_before": 1.2500244147690003,
+        "factor_after": 1.2500244147690003
+      },
+      {
+        "sku": "IC008",
+        "before": 45,
+        "after": 39,
+        "factor_before": 1.2999823704638407,
+        "factor_after": 1.2999823704638407
+      },
+      {
+        "sku": "IC009",
+        "before": 26,
+        "after": 19,
+        "factor_before": 1.2757477979206242,
+        "factor_after": 1.2757477979206242
+      },
+      {
+        "sku": "IC010",
+        "before": 43,
+        "after": 37,
+        "factor_before": 1.1030709634808342,
+        "factor_after": 1.1030709634808342
+      },
+      {
+        "sku": "IC011",
+        "before": 9,
+        "after": 8,
+        "factor_before": 1.1499938921016413,
+        "factor_after": 1.1499938921016413
+      },
+      {
+        "sku": "IC012",
+        "before": 12,
+        "after": 11,
+        "factor_before": 1.0763940183279148,
+        "factor_after": 1.0763940183279148
+      },
+      {
+        "sku": "IC013",
+        "before": 30,
+        "after": 27,
+        "factor_before": 1.0734851292885477,
+        "factor_after": 1.0734851292885477
+      },
+      {
+        "sku": "IC014",
+        "before": 12,
+        "after": 4,
+        "factor_before": 1.3575900870087596,
+        "factor_after": 1.3575900870087596
+      },
+      {
+        "sku": "IC015",
+        "before": 25,
+        "after": 19,
+        "factor_before": 1.2226151008708321,
+        "factor_after": 1.2226151008708321
+      },
+      {
+        "sku": "IC016",
+        "before": 13,
+        "after": 12,
+        "factor_before": 1.0848754270740502,
+        "factor_after": 1.0848754270740502
+      },
+      {
+        "sku": "IC017",
+        "before": 11,
+        "after": 9,
+        "factor_before": 0.9192617077619747,
+        "factor_after": 0.9192617077619747
+      },
+      {
+        "sku": "IC018",
+        "before": 3,
+        "after": 0,
+        "factor_before": 0.853064330526298,
+        "factor_after": 0.853064330526298
+      },
+      {
+        "sku": "IC019",
+        "before": 21,
+        "after": 18,
+        "factor_before": 0.918589158078511,
+        "factor_after": 0.918589158078511
+      },
+      {
+        "sku": "IC020",
+        "before": 13,
+        "after": 11,
+        "factor_before": 1.0767343948525765,
+        "factor_after": 1.0767343948525765
+      },
+      {
+        "sku": "IC021",
+        "before": 49,
+        "after": 44,
+        "factor_before": 1.0745824438383593,
+        "factor_after": 1.0745824438383593
+      },
+      {
+        "sku": "IC022",
+        "before": 30,
+        "after": 26,
+        "factor_before": 0.8530643305262982,
+        "factor_after": 0.8530643305262982
+      },
+      {
+        "sku": "IC023",
+        "before": 9,
+        "after": 8,
+        "factor_before": 1.0579825373684304,
+        "factor_after": 1.0579825373684304
+      },
+      {
+        "sku": "IC025",
+        "before": 21,
+        "after": 17,
+        "factor_before": 0.92089083325811,
+        "factor_after": 0.92089083325811
+      },
+      {
+        "sku": "IC026",
+        "before": 20,
+        "after": 18,
+        "factor_before": 1.0874630092930666,
+        "factor_after": 1.0874630092930666
+      },
+      {
+        "sku": "IC027",
+        "before": 16,
+        "after": 13,
+        "factor_before": 1.0750590542931437,
+        "factor_after": 1.0750590542931437
+      },
+      {
+        "sku": "IC028",
+        "before": 6,
+        "after": 4,
+        "factor_before": 1.0811107261330593,
+        "factor_after": 1.0811107261330593
+      },
+      {
+        "sku": "IC029",
+        "before": 14,
+        "after": 12,
+        "factor_before": 1.073225843461961,
+        "factor_after": 1.073225843461961
+      },
+      {
+        "sku": "IC030",
+        "before": 22,
+        "after": 19,
+        "factor_before": 0.9188076680064652,
+        "factor_after": 0.9188076680064652
+      },
+      {
+        "sku": "IC031",
+        "before": 8,
+        "after": 6,
+        "factor_before": 1.080017782778157,
+        "factor_after": 1.080017782778157
+      },
+      {
+        "sku": "IC032",
+        "before": 48,
+        "after": 43,
+        "factor_before": 1.0537320690178433,
+        "factor_after": 1.0537320690178433
+      },
+      {
+        "sku": "IC034",
+        "before": 14,
+        "after": 12,
+        "factor_before": 1.0667930623192339,
+        "factor_after": 1.0667930623192339
+      },
+      {
+        "sku": "IC035",
+        "before": 11,
+        "after": 10,
+        "factor_before": 1.0741871865097374,
+        "factor_after": 1.0741871865097374
+      },
+      {
+        "sku": "IC036",
+        "before": 17,
+        "after": 15,
+        "factor_before": 1.0873240016687773,
+        "factor_after": 1.0873240016687773
+      },
+      {
+        "sku": "IC037",
+        "before": 16,
+        "after": 13,
+        "factor_before": 1.0777966351787862,
+        "factor_after": 1.0777966351787862
+      },
+      {
+        "sku": "IC038",
+        "before": 4,
+        "after": 3,
+        "factor_before": 1.0727778207253191,
+        "factor_after": 1.0727778207253191
+      },
+      {
+        "sku": "IC039",
+        "before": 21,
+        "after": 18,
+        "factor_before": 1.0813861667577118,
+        "factor_after": 1.0813861667577118
+      },
+      {
+        "sku": "IC040",
+        "before": 18,
+        "after": 15,
+        "factor_before": 1.0666596173926124,
+        "factor_after": 1.0666596173926124
+      },
+      {
+        "sku": "IC041",
+        "before": 38,
+        "after": 33,
+        "factor_before": 1.0845758200210933,
+        "factor_after": 1.0845758200210933
+      },
+      {
+        "sku": "IC042",
+        "before": 14,
+        "after": 12,
+        "factor_before": 1.078268475548355,
+        "factor_after": 1.078268475548355
+      },
+      {
+        "sku": "IC043",
+        "before": 33,
+        "after": 29,
+        "factor_before": 1.075532972021913,
+        "factor_after": 1.075532972021913
+      },
+      {
+        "sku": "IC044",
+        "before": 5,
+        "after": 3,
+        "factor_before": 1.0761085565715776,
+        "factor_after": 1.0761085565715776
+      },
+      {
+        "sku": "IC045",
+        "before": 28,
+        "after": 25,
+        "factor_before": 1.0789598626328298,
+        "factor_after": 1.0789598626328298
+      },
+      {
+        "sku": "IC046",
+        "before": 32,
+        "after": 28,
+        "factor_before": 0.9169135720878128,
+        "factor_after": 0.9169135720878128
+      },
+      {
+        "sku": "IC047",
+        "before": 13,
+        "after": 11,
+        "factor_before": 1.0907481074307706,
+        "factor_after": 1.0907481074307706
+      },
+      {
+        "sku": "IC048",
+        "before": 27,
+        "after": 23,
+        "factor_before": 1.0682120293458897,
+        "factor_after": 1.0682120293458897
+      },
+      {
+        "sku": "IC049",
+        "before": 6,
+        "after": 4,
+        "factor_before": 1.0685420178137097,
+        "factor_after": 1.0685420178137097
+      },
+      {
+        "sku": "IC050",
+        "before": 23,
+        "after": 21,
+        "factor_before": 1.065667954340167,
+        "factor_after": 1.065667954340167
+      },
+      {
+        "sku": "IC051",
+        "before": 52,
+        "after": 43,
+        "factor_before": 1.191036246780458,
+        "factor_after": 1.191036246780458
+      },
+      {
+        "sku": "IC052",
+        "before": 10,
+        "after": 9,
+        "factor_before": 0.9255899910494199,
+        "factor_after": 0.9255899910494199
+      },
+      {
+        "sku": "IC053",
+        "before": 11,
+        "after": 9,
+        "factor_before": 1.071292887791621,
+        "factor_after": 1.071292887791621
+      },
+      {
+        "sku": "IC054",
+        "before": 21,
+        "after": 18,
+        "factor_before": 1.0713377485317497,
+        "factor_after": 1.0713377485317497
+      },
+      {
+        "sku": "IC055",
+        "before": 30,
+        "after": 27,
+        "factor_before": 1.2408894140868225,
+        "factor_after": 1.2408894140868225
+      },
+      {
+        "sku": "IC056",
+        "before": 28,
+        "after": 24,
+        "factor_before": 1.0682937419336522,
+        "factor_after": 1.0682937419336522
+      },
+      {
+        "sku": "IC057",
+        "before": 35,
+        "after": 31,
+        "factor_before": 1.072217227912064,
+        "factor_after": 1.072217227912064
+      },
+      {
+        "sku": "IC058",
+        "before": 48,
+        "after": 44,
+        "factor_before": 1.0716059287305781,
+        "factor_after": 1.0716059287305781
+      },
+      {
+        "sku": "IC059",
+        "before": 20,
+        "after": 17,
+        "factor_before": 1.2561905802322568,
+        "factor_after": 1.2561905802322568
+      },
+      {
+        "sku": "IC060",
+        "before": 13,
+        "after": 10,
+        "factor_before": 1.238448425618958,
+        "factor_after": 1.238448425618958
+      },
+      {
+        "sku": "IC061",
+        "before": 23,
+        "after": 18,
+        "factor_before": 1.8806506214109004,
+        "factor_after": 1.8806506214109004
+      },
+      {
+        "sku": "IC062",
+        "before": 88,
+        "after": 78,
+        "factor_before": 1.834631635591087,
+        "factor_after": 1.834631635591087
+      },
+      {
+        "sku": "IC063",
+        "before": 41,
+        "after": 33,
+        "factor_before": 1.7728044009104453,
+        "factor_after": 1.7728044009104453
+      },
+      {
+        "sku": "IC064",
+        "before": 28,
+        "after": 21,
+        "factor_before": 1.2824975113686674,
+        "factor_after": 1.2824975113686674
+      },
+      {
+        "sku": "IC065",
+        "before": 27,
+        "after": 23,
+        "factor_before": 1.2405063667494227,
+        "factor_after": 1.2405063667494227
+      },
+      {
+        "sku": "IC066",
+        "before": 13,
+        "after": 10,
+        "factor_before": 1.1942285494918143,
+        "factor_after": 1.1942285494918143
+      },
+      {
+        "sku": "IC067",
+        "before": 24,
+        "after": 22,
+        "factor_before": 1.066878029480163,
+        "factor_after": 1.066878029480163
+      },
+      {
+        "sku": "IC068",
+        "before": 16,
+        "after": 14,
+        "factor_before": 1.0662042918970023,
+        "factor_after": 1.0662042918970023
+      },
+      {
+        "sku": "IC069",
+        "before": 12,
+        "after": 10,
+        "factor_before": 1.0863510499628644,
+        "factor_after": 1.0863510499628644
+      },
+      {
+        "sku": "IC070",
+        "before": 9,
+        "after": 5,
+        "factor_before": 1.239438797652127,
+        "factor_after": 1.239438797652127
+      },
+      {
+        "sku": "IC071",
+        "before": 33,
+        "after": 29,
+        "factor_before": 1.2223240518076184,
+        "factor_after": 1.2223240518076184
+      },
+      {
+        "sku": "IC072",
+        "before": 35,
+        "after": 31,
+        "factor_before": 1.2555696152326956,
+        "factor_after": 1.2555696152326956
+      },
+      {
+        "sku": "IC073",
+        "before": 17,
+        "after": 15,
+        "factor_before": 1.0697771017873845,
+        "factor_after": 1.0697771017873845
+      },
+      {
+        "sku": "IC074",
+        "before": 17,
+        "after": 15,
+        "factor_before": 1.0706748206180312,
+        "factor_after": 1.0706748206180312
+      },
+      {
+        "sku": "IC075",
+        "before": 16,
+        "after": 13,
+        "factor_before": 1.0591959432498061,
+        "factor_after": 1.0591959432498061
+      }
+    ],
+    "exact_undo": true
+  },
+  "screenshots": [
+    "p2-cohort-cards.png",
+    "p2-context-diff.png",
+    "p2-context-undo.png",
+    "p2-service-level.png"
+  ]
+}

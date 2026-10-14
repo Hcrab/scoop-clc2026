@@ -134,3 +134,38 @@ def test_direct_case_override_updates_projected_capacity(monkeypatch):
         'sku_factors':{'A':{'f50':1.}}, 'cases_overrides':{'A':5}})
     assert result.iloc[0].final_cases == 5
     assert result.iloc[0].projected_pallets == pytest.approx(.5)
+
+
+@pytest.mark.parametrize('kind,value', [
+    ('one_off', True), ('ends_on', '2026-07-17'), ('cap', .1),
+    ('expect', {'pct': -.2, 'strength': 'high'}), ('cases', {'sku': 'A', 'cases': 3}),
+])
+def test_each_context_rule_reaches_actual_replenishment_orders(monkeypatch, kind, value):
+    from test_cohort_overrides import fitted
+    from scoop.ai import exploration_tools
+    static, model = _fixtures(monkeypatch)
+    static.products['review_days'] = 7
+    monthly = SimpleNamespace(model=model, ratio_values=np.linspace(.8, 1.2, 101), metadata={})
+    monkeypatch.setattr(planning, 'artifacts', lambda: SimpleNamespace(static=static, run_for=lambda _:monthly))
+    monkeypatch.setattr(planning, 'protection_forecast', lambda *a, **k:
+                        (pd.DataFrame([{'sku':'A','mean':100.,'pdays':9}]), pd.DataFrame()))
+    monkeypatch.setattr(planning, 'capacity_projection', lambda *a, **k:
+                        (np.zeros((3,1)), np.ones((3,1),dtype=bool)))
+    @contextmanager
+    def scope():
+        yield None
+    monkeypatch.setattr(planning, 'session_scope', scope)
+    monkeypatch.setattr(exploration_tools, '_groups', lambda _: {})
+    original = fitted()
+    original['units'] = [u for u in original['units'] if u['sku']=='A']
+    original['sku_factors'].pop('B')
+    baseline = planning.suggest_orders(DAY, [], overrides=[], cohort_result=original)
+    result = planning.suggest_orders(DAY, [], overrides=[{'type':kind,'value':value}], cohort_result=original)
+    assert result.iloc[0].final_cases < baseline.iloc[0].final_cases
+    if kind=='cases':
+        assert result.iloc[0].final_cases == 3
+        assert result.iloc[0].adjustment == pytest.approx(baseline.iloc[0].adjustment)
+    elif kind=='one_off':
+        assert result.iloc[0].adjustment == 1
+    else:
+        assert result.iloc[0].adjustment < baseline.iloc[0].adjustment
