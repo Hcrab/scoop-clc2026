@@ -19,7 +19,7 @@ composition; use the following editorial and visual direction as guidance, not a
 
 TITLE AND VOICE
 Use a specific finding as the title, with a group, direction and useful comparison or implication.
-Example style: "Water-based requests exceed forecast by 28%; chocolate-coated orders soften".
+Example style: "One group exceeds forecast while another softens"; use measured values and names.
 Avoid slogans such as "A cooler mix. A different buying plan." The host displays your title and
 week above the HTML: don't repeat that heading. Sound like a competent analyst advising a colleague.
 State supported observations directly. Explain a working interpretation naturally. Mention uncertainty
@@ -67,12 +67,10 @@ Treat source claims as evidence to synthesize, not sentences to copy. A card nor
 headline deviation and an actual/expected graphic; omit extra share statistics and contributor lists
 unless they change its explanation. One primary query button per card is enough; related sources
 remain available in the evidence index. There is no need for alarm dates in each card subtitle.
-For example, instead of "all 20 stores...84.7% vs 84.3%...5,152 unfilled...92.3% fill", write
-"The increase spans districts and flavours. The stable format mix suggests the shift extends across
-the category, while unmet store requests make it a replenishment priority." The numbers stay in evidence.
-For an action row, prefer "Plan for water-based demand 15% above forecast; prioritize items with unmet
-requests" over a buying-factor coefficient, forecast arithmetic, SKU codes and a promised fill rate.
-For an overlapping category, say "Hold non-coated dairy items" rather than listing every SKU.
+For example, summarize a broad pattern and explain whether unmet store requests make it a
+replenishment priority. The supporting numbers stay in evidence. For an action row, describe
+the measured adjustment to the forecast and the products it affects, rather than a buying-factor
+coefficient, forecast arithmetic, SKU codes or a promised fill rate. Clarify overlapping groups.
 Action rows should add the proposed response, not replay the observations. Capacity needs one useful
 comparison and an operational response, not a recap of every baseline, preview and allocation number.
 Describe an exploratory signal in business terms, such as "Check whether the local uplift continues
@@ -90,30 +88,34 @@ Warm off-white background, white cards, dark green text, muted green / coral / v
 Use restrained typography, generous but purposeful spacing, equal-width cards and aligned metrics.
 Let card widths and column counts follow the content and available space, stacking on a narrow screen.
 Use a real grid/table for action rows, never variable-width text columns that drift out of alignment.
-Compact horizontal actual/expected bars or small lines are sufficient; label their values and units.
-When bars invite comparison, share a scale or make independent scales clear. Don't decorate all text
+Use a host-rendered line chart figure for quantities. The host labels values and units.
+Don't decorate all text
 with dotted underlines. Query IDs should not be displayed as prominent badges.
 
 CARD INTERACTION CONTRACT (host supplies the JavaScript)
 Wrap each observation in an element with data-report-card. Mark its compact metric/chart block with
 data-report-summary. Put a small accessible expand icon button at the top right, data-trend-id="Q2",
-using the relevant query_group (Q ID) or supplied program_trend (T ID) evidence. The host expands that same card into a daily actual vs
+using relevant Q evidence. The host expands that same card into a daily actual vs
 expected line chart and available time ranges. It only draws prior-year data when supplied. Never
-invent dates, time-series points or a last-year curve. The AI can freely design the compact chart.
+invent dates, time-series points or a last-year curve. Specify a chart as
+<figure data-chart="line" data-evidence-id="Q2" data-series="actual,expected"><figcaption>Optional caption</figcaption></figure>.
+Only actual, expected and prior series are supported. The host renders the chart from saved
+result.daily requested_units/expected_units/prior_year_units, or finding actual_share/expected_share.
+Never draw SVG or simulate chart values with inline CSS.
 Choose a source whose product intersection, district and measurement match the card. A broader
-parent query must not stand in for a subgroup's curve when that subgroup has its own T source.
+parent query must not stand in for a subgroup's curve when that subgroup has its own Q source.
 At the bottom right, use a small magnifier button data-evidence-id="Q2" with aria-label="View query".
 The host opens the query inline. Apply evidence hooks to these dedicated buttons, not the whole card,
-paragraph, SVG or summary. For native extra explanations you may also use details/summary.
+paragraph or summary. For native extra explanations you may also use details/summary.
 Use only evidence IDs returned by tools. No scripts, event handlers, forms, external resources or
-network requests in the generated HTML/CSS; inline SVG and responsive CSS are supported.
+network requests in the generated HTML/CSS.
 
 SKELETON EXAMPLE (layout reference only; substitute real evidence and write your own report):
 <section><h2>Main observations</h2><div class="observations">
  <article data-report-card class="observation">
   <header class="card-top"><div><small>All districts</small><h3>Group name</h3></div>
    <button data-trend-id="Q2" aria-label="Expand trend">↗</button></header>
-  <div data-report-summary><!-- One metric and compact labelled chart from Q2 --></div>
+  <div data-report-summary><figure data-chart="line" data-evidence-id="Q2" data-series="actual,expected"></figure></div>
   <p><!-- Meaning or explanation, not the same numbers again --></p>
   <footer><button data-evidence-id="Q2" aria-label="View query">⌕</button></footer>
  </article></div><p class="conclusion"><!-- Integrated conclusion --></p></section>
@@ -122,8 +124,7 @@ Suggested CSS: .observations{display:grid;grid-template-columns:repeat(auto-fit,
 .card-top{display:flex;justify-content:space-between;align-items:start;gap:16px}
 .observation footer{display:flex;justify-content:flex-end}
 @media(max-width:720px){.observations{grid-template-columns:1fr}}
-Keep the HTML/CSS economical. The application implements the interactive charts; don't spend output
-space manually drawing large historical SVG series. This is an example, not mandatory wording or CSS.
+Keep the HTML/CSS economical. This is an example, not mandatory wording or CSS.
 '''
 
 
@@ -135,30 +136,48 @@ def _css(css):
         raise ValueError('Report CSS must not import resources or execute code.')
     for match in re.finditer(r'url\s*\((.*?)\)',source,flags=re.I|re.S):
         target=match.group(1).strip().strip('"\'')
-        if not target.startswith('#'):raise ValueError('Report CSS may reference only inline SVG fragments.')
+        raise ValueError('Report CSS must not reference resources.')
 
 
 class _Fragment(HTMLParser):
     allowed=set(('article aside section div span p h1 h2 h3 h4 h5 h6 header footer main nav '
                  'strong em b i u s small mark abbr time br hr ul ol li dl dt dd sup sub '
-                 'figure figcaption blockquote pre code details summary table caption thead tbody tfoot tr th td a button '
-                 'svg g rect circle ellipse line polyline polygon path text tspan '
-                 'defs marker clippath mask pattern lineargradient radialgradient stop '
-                 'symbol use title desc').split())
+                 'figure figcaption blockquote pre code details summary table caption thead tbody tfoot tr th td a button').split())
 
-    def __init__(self,ids):
+    def __init__(self,ids,evidence=None):
         super().__init__(convert_charrefs=True)
         self.ids=ids
+        self.evidence=evidence or {}
 
     def handle_starttag(self,tag,attrs):
         if tag not in self.allowed:raise ValueError('Unsupported report HTML element: '+tag)
+        attributes=dict(attrs)
+        if tag!='figure' and any(key in attributes for key in ('data-chart','data-series')):
+            raise ValueError('Chart specifications belong on figure elements.')
+        if tag=='figure' and 'data-chart' in attributes:
+            if attributes.get('data-chart')!='line':raise ValueError('Only line chart figures are supported.')
+            source=attributes.get('data-evidence-id')
+            if source not in self.ids:raise ValueError('Chart must cite returned evidence.')
+            series=attributes.get('data-series','').split(',')
+            if not series or any(item not in {'actual','expected','prior'} for item in series) or len(set(series))!=len(series):
+                raise ValueError('Unsupported chart series.')
+            if self.evidence:
+                result=self.evidence.get(source,{})
+                daily=result.get('daily',[])
+                keys={'actual':'requested_units','expected':'expected_units','prior':'prior_year_units'}
+                available=set()
+                if daily:available={item for item,key in keys.items() if any(key in row for row in daily)}
+                elif 'actual_share' in result and 'expected_share' in result:available={'actual','expected'}
+                if not set(series)<=available:raise ValueError('Chart series are absent from cited evidence.')
+        elif tag=='figure' and any(key in attributes for key in ('data-series','data-evidence-id')):
+            raise ValueError('Chart figures require data-chart="line".')
         for key,value in attrs:
             value=value or ''
             if key.startswith('on') or key in {'srcdoc','srcset','action','formaction'}:
                 raise ValueError('Report HTML must not execute code or request external resources.')
             if key in {'href','src','xlink:href','poster','background'} and value and not value.startswith('#'):
                 raise ValueError('Report resources must be inline; use evidence hooks for sources.')
-            if key=='style':_css(value)
+            if key=='style':raise ValueError('Inline CSS is unsupported in report HTML.')
             if key in {'filter','mask','clip-path','fill','stroke','marker','marker-start','marker-mid','marker-end','cursor'}:_css(value)
             if key in {'data-evidence-id','data-trend-id'} and value not in self.ids:
                 raise ValueError('Use only returned evidence IDs in the presentation.')
@@ -170,10 +189,10 @@ class _Fragment(HTMLParser):
     def unknown_decl(self,data):raise ValueError('Unsupported report HTML declaration.')
 
 
-def validate(value,ids):
+def validate(value,ids,evidence=None):
     presentation=Presentation.model_validate(value)
     _css(presentation.css)
-    parser=_Fragment(set(ids));parser.feed(presentation.html);parser.close()
+    parser=_Fragment(set(ids),evidence);parser.feed(presentation.html);parser.close()
     return presentation.model_dump()
 
 

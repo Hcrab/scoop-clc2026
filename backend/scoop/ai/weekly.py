@@ -1,6 +1,7 @@
 """Evidence-led, read-only agent exploration after the mechanical weekly scan."""
 from datetime import datetime, timezone
 from hashlib import sha256
+from html import escape
 import json
 import threading
 from pydantic import BaseModel, ConfigDict, Field
@@ -10,6 +11,7 @@ from ..models import Plan, Finding
 from ..config import settings
 from . import gemini
 from .report_design import Presentation, GUIDANCE, validate as validate_presentation, compact_result
+from .grounding import mismatches
 
 _LOCK=threading.Lock()
 MAX_ROUNDS=7
@@ -31,23 +33,14 @@ class Report(BaseModel):
     model_config=ConfigDict(extra='forbid')
     report:str=Field(min_length=1,max_length=6000)
     presentation:Presentation
-    claims:list[Claim]=Field(min_length=1,max_length=8)
+    claims:list[Claim]=Field(min_length=1)
     questions:list[ReviewQuestion]=Field(default_factory=list,max_length=8)
 
 SYSTEM='''You are Scoop's weekly purchasing analyst. Mechanical monitoring has already run.
-The supplied program_trends include a systematic scan of single attributes and tag combinations.
-Use these measured leads and parent comparisons to choose what deserves closer investigation.
-Their T-prefixed IDs are available evidence, including saved daily series for interactive charts.
-They do not consume your additional query allowance. Apply the scan's stated evidence scope;
-its screening results describe patterns, not causes. Investigate further using the tools autonomously.
-Start by obtaining catalog_groups. Choose promising cross-dimension intersections, compare
-them with parent groups and other districts, and pursue or reject hypotheses based on results.
-Broad category averages can hide concentrated changes. Use the catalog memberships and SKU
-contributors to look for shared attributes among unusually strong or weak products. Follow a
-promising cluster with an AND-intersection query, then compare its parent groups and district
-pattern. A broad price-tier uplift alone does not explain which products drive it. Keep room
-for this investigation instead of spending the whole allowance restating single-tag alarms
-or trying several similar purchasing previews. Select leads from evidence, not a preset theme.
+The supplied cohort_cards are the backbone of this report. Each Q-cohort ID cites a complete
+measured card with effect, interval and purchasing implications. CUSUM findings are early
+warnings. Use these leads to choose what deserves closer investigation. Supplied cards do not
+consume your query allowance. Compare related groups and districts where useful.
 Inspect operational records (promotions, fulfillment, arrivals) to distinguish explanations.
 For an actionable pattern, preview purchasing implications with the existing algorithms.
 You may use at most 12 additional queries. Prefer 2-3 well-investigated questions over a sweep.
@@ -57,8 +50,8 @@ family-wide FDR discovery. Use sample adequacy, null results and contradictory e
 decide what deserves prominence. No query changes a purchase, stage, goal, or approved record.
 Conclude by calling finish_weekly_review: write a concise integrated weekly report in English,
 combining mechanical findings, your additional observations, operational implications and
-proposed next actions. Cite evidence IDs (finding IDs, supplied T IDs or Q1, Q2...) in claims. Each numerical
-claim must agree with tool results. Clearly distinguish observations from hypotheses.
+proposed next actions. Cite evidence IDs (finding IDs, Q-cohort IDs or tool Q IDs) in claims.
+Each numerical claim must match its cited evidence. Distinguish observations from hypotheses.
 Keep internal IDs, model terminology, factors and detailed arithmetic in claims/evidence, not
 in the plain-text report or questions. Explain demand assumptions in everyday language.
 Demand means store replenishment requests, not observed consumer purchases. The baseline
@@ -79,24 +72,21 @@ def view(plan):
     return (plan.summary or {}).get('weekly_review',{'status':'not_started','report':'','queries':[]})
 
 def program_evidence(plan):
-    """Expose saved program findings through the same source/chart bridge as AI queries."""
-    scan=(plan.summary or {}).get('raw_trends',{})
-    return [{'id':item['id'],'name':'program_trend',
-             'args':{'group_ids':item['group_ids'],'districts':item['districts'],
-                     'window_start':scan.get('window_start'),'window_end':scan.get('window_end')},
-             'result':{**{k:v for k,v in item.items() if k!='series'},'daily':item.get('series',[]),
-                       'scope':{'group_ids':item['group_ids'],'districts':item['districts'],
-                                'skus':item['skus'],'sku_count':item['sku_count']},
-                       'method':scan.get('method'),'evidence_through':scan.get('window_end')}}
-            for item in scan.get('items',[])]
+    """Expose complete saved cohort cards as stable report evidence."""
+    return [{'id':'Q-cohort-'+str(card['id']),'name':'cohort_card',
+             'args':{'cohort_id':card['id']},'result':card}
+            for card in (plan.summary or {}).get('cohort_cards',[])]
+
+
+def finding_evidence(session,plan):
+    return {f.id:{'actual_share':f.share_now,'expected_share':f.share_before,
+                  **(f.evidence or {})}
+            for f in session.scalars(select(Finding).where(Finding.plan_id==plan.id))}
 
 def _context(session,plan):
     findings=list(session.scalars(select(Finding).where(Finding.plan_id==plan.id).order_by(Finding.id)))
-    scan=(plan.summary or {}).get('raw_trends',{})
     return {'week_start':str(plan.week_start),'goal':plan.goal,'stage':plan.stage,
-            'program_trends':{**{k:v for k,v in scan.items() if k!='items'},
-                              'items':[{k:v for k,v in item.items() if k not in ('series','checks','skus')}
-                                       for item in scan.get('items',[])]},
+            'cohort_cards':[{**q,'result':{k:v for k,v in q['result'].items() if k!='method'}} for q in program_evidence(plan)],
             'mechanical_findings':[{'id':f.id,'name':(f.evidence or {}).get('display',f.tag_id),
                 'districts':(f.evidence or {}).get('districts',[]),'actual_share':f.share_now,
                 'expected_share':f.share_before,'classification':f.classification,
@@ -105,12 +95,43 @@ def _context(session,plan):
 def _finish(session,plan,report,queries):
     report=Report.model_validate(report)
     valid_findings=set(session.scalars(select(Finding.id).where(Finding.plan_id==plan.id)))
-    ids=valid_findings|{q['id'] for q in queries if 'error' not in q['result']}|{q['id'] for q in program_evidence(plan)}
+    supplied=program_evidence(plan)
+    ids=valid_findings|{q['id'] for q in queries if 'error' not in q['result']}|{q['id'] for q in supplied}
     if any(set(c.evidence_ids)-ids for c in report.claims):raise ValueError('Use only returned evidence IDs.')
     for q in report.questions:
         if q.finding_id and q.finding_id not in valid_findings:raise ValueError('Unknown finding for question.')
+    evidence={**finding_evidence(session,plan),**{q['id']:q['result'] for q in queries+supplied if 'error' not in q['result']}}
+    errors=mismatches(report.claims,evidence)
+    if errors:raise GroundingError(errors)
     result=report.model_dump()
-    result['presentation']=validate_presentation(result['presentation'],ids)
+    result['presentation']=validate_presentation(result['presentation'],ids,evidence)
+    return result
+
+
+class GroundingError(ValueError):
+    def __init__(self,errors):
+        self.errors=errors
+        super().__init__('Numeric claims lack cited evidence: '+json.dumps(errors,ensure_ascii=False))
+
+
+def offline_report(plan,queries=None,*,grounding_errors=None,usage=None):
+    supplied=program_evidence(plan)
+    cards=[q for q in supplied]
+    if cards:
+        rows=[]
+        for q in cards:
+            c=q['result'];low,high=c['interval_pct']
+            rows.append(f'<article data-report-card><h3>{escape(str(c["name"]))}</h3>'
+                        f'<p>Effect {c["effect_pct"]:.1f}% (80% interval {low:.1f}% to {high:.1f}%). '
+                        f'{c["case_change"]:+,} cases; {c["pallet_change"]:+.2f} pallets.</p>'
+                        f'<button data-evidence-id="{escape(q["id"])}">View evidence</button></article>')
+        title='Cohort changes this week';html='<section>'+''.join(rows)+'</section>'
+    else:
+        title='No cohort changes this week';html='<p>No measured cohort changes to report.</p>'
+    result={'status':'offline','report':title,'presentation':{'title':title,'html':html,'css':''},
+            'queries':(queries or [])+supplied,'error':'The evidence-grounded report could not be completed.'}
+    if grounding_errors is not None:result['grounding_failure']={'mismatches':grounding_errors,'repair_attempted':True}
+    if usage is not None:result['usage']=usage
     return result
 
 def investigate(session,plan,wire=None):
@@ -118,16 +139,19 @@ def investigate(session,plan,wire=None):
     from ..api.service import clean
     context=_context(session,plan)
     contents=[{'role':'user','parts':[{'text':json.dumps(context,ensure_ascii=False)+'\nInvestigate this week and prepare the report.'}]}]
-    declarations=exploration_tools.declarations()+[{'name':'finish_weekly_review','description':'Submit the evidence-based weekly report, AI-authored visual presentation (title, HTML fragment, CSS), linked source claims and useful conversational follow-ups. Layout is yours; native details and inline SVG can expose evidence without JavaScript.','parametersJsonSchema':Report.model_json_schema()}]
+    declarations=exploration_tools.declarations()+[{'name':'finish_weekly_review','description':'Submit the evidence-based weekly report, AI-authored visual presentation (title, HTML fragment, CSS), linked source claims and follow-ups. Use host-rendered chart figure specs.','parametersJsonSchema':Report.model_json_schema()}]
     queries=[];seen=set();usage={'input_tokens':0,'output_tokens':0}
     supplied=program_evidence(plan)
+    repair_errors=None
     wire=wire or gemini._wire
-    for round_no in range(MAX_ROUNDS):
+    for round_no in range(MAX_ROUNDS+1):
+        if round_no==MAX_ROUNDS and repair_errors is None:break
         payload={'systemInstruction':{'parts':[{'text':SYSTEM}]},'contents':contents,
                  'tools':[{'functionDeclarations':declarations}],
                  'generationConfig':{'temperature':.2,'maxOutputTokens':MAX_OUTPUT_TOKENS,'thinkingConfig':{'thinkingLevel':'LOW'}}}
         try:data=wire(payload)
         except gemini.ProviderUnavailable as exc:
+            if repair_errors is not None:return offline_report(plan,queries,grounding_errors=repair_errors,usage=usage)
             return {'status':'failed','report':'','queries':queries+supplied,'usage':usage,'model':settings.gemini_model,
                     'error':'The assistant could not finish the review ('+str(exc)+').'}
         u=data.get('usageMetadata',{})
@@ -136,12 +160,15 @@ def investigate(session,plan,wire=None):
         content=(data.get('candidates') or [{}])[0].get('content',{})
         calls=[p['functionCall'] for p in content.get('parts',[]) if 'functionCall' in p]
         if not calls:
+            if repair_errors is not None:return offline_report(plan,queries,grounding_errors=repair_errors,usage=usage)
             contents.append({'role':'user','parts':[{'text':'Use the exploration tools, then finish_weekly_review. Prose alone is not a saved report.'}]})
             continue
         contents.append(content) # Preserve provider thought signatures in this request only.
         responses=[]
         for call_index,call in enumerate(calls):
             name=call.get('name');args=call.get('args',{})
+            if repair_errors is not None and name!='finish_weekly_review':
+                return offline_report(plan,queries,grounding_errors=repair_errors,usage=usage)
             if call_index>=4 or (name!='finish_weekly_review' and len(queries)>=MAX_QUERIES):
                 responses.append({'functionResponse':{'name':name,'response':{'error':'Query allowance reached for this batch. Use existing evidence or finish the review.'}}})
                 continue
@@ -155,7 +182,14 @@ def investigate(session,plan,wire=None):
                 if fingerprint in seen:raise ValueError('Already queried. Use existing evidence or choose a different follow-up.')
                 seen.add(fingerprint)
                 result=clean(exploration_tools.execute(name,args,session,plan))
+            except GroundingError as exc:
+                if repair_errors is not None:
+                    return offline_report(plan,queries,grounding_errors=exc.errors,usage=usage)
+                repair_errors=exc.errors
+                result={'error':'Numeric claims need repair. Use only numbers in each claim’s cited evidence.',
+                        'mismatches':exc.errors,'instruction':'Submit one corrected finish_weekly_review. No additional queries.'}
             except Exception as exc:
+                if repair_errors is not None:return offline_report(plan,queries,grounding_errors=repair_errors,usage=usage)
                 if isinstance(exc,(ValueError,KeyError)):result={'error':str(exc)[:400]}
                 else:result={'error':'This evidence query is unavailable ('+type(exc).__name__+'). Try a different query.'}
             if name!='finish_weekly_review':
@@ -164,6 +198,7 @@ def investigate(session,plan,wire=None):
             else:response=result
             responses.append({'functionResponse':{'name':name,'response':response}})
         contents.append({'role':'user','parts':responses})
+    if repair_errors is not None:return offline_report(plan,queries,grounding_errors=repair_errors,usage=usage)
     return {'status':'failed','report':'','queries':queries+supplied,'usage':usage,'model':settings.gemini_model,
             'error':'The exploration did not produce a complete report. You can retry.'}
 
@@ -199,7 +234,7 @@ def upgrade(session,plan,wire=None,*,force=False):
     queries=existing.get('queries',[])
     evidence_ids|={q['id'] for q in queries if 'error' not in q.get('result',{})}
     context=_context(session,plan)
-    context.pop('program_trends',None)  # Already supplied once in saved_evidence, with source IDs.
+    context.pop('cohort_cards',None)  # Already supplied once in saved_evidence, with source IDs.
     source={**context,'saved_report':{k:existing.get(k) for k in ('report','claims','questions')},
             'saved_evidence':[{**q,'result':authoring_evidence(q.get('result',{}))} for q in queries if q['name']!='catalog_groups'],
             'available_evidence_ids':sorted(evidence_ids)}
@@ -210,7 +245,7 @@ def upgrade(session,plan,wire=None,*,force=False):
              "Do not infer stable categories from the absence of an alarm. Return finish_report_presentation in this one authoring pass.\n"+GUIDANCE}]},
              'contents':[{'role':'user','parts':[{'text':json.dumps(source,ensure_ascii=False)}]}],
              'tools':[{'functionDeclarations':[{'name':'finish_report_presentation',
-                      'description':'Author the visual presentation from the existing saved evidence only. Native details and inline SVG are supported; source hooks use available evidence IDs.',
+                      'description':'Author the visual presentation from existing saved evidence only. Charts use figure specs; source hooks use available evidence IDs.',
                       'parametersJsonSchema':Presentation.model_json_schema()}]}],
              'toolConfig':{'functionCallingConfig':{'mode':'ANY','allowedFunctionNames':['finish_report_presentation']}},
              'generationConfig':{'temperature':.2,'maxOutputTokens':MAX_OUTPUT_TOKENS,'thinkingConfig':{'thinkingLevel':'LOW'}}}
@@ -223,7 +258,8 @@ def upgrade(session,plan,wire=None,*,force=False):
         calls=[p['functionCall'] for p in parts if 'functionCall' in p]
         if len(calls)!=1 or calls[0].get('name')!='finish_report_presentation':
             raise ValueError('The authoring pass did not return a visual presentation.')
-        presentation=validate_presentation(calls[0].get('args',{}),evidence_ids)
+        evidence={**finding_evidence(session,plan),**{q['id']:q.get('result',{}) for q in queries}}
+        presentation=validate_presentation(calls[0].get('args',{}),evidence_ids,evidence)
     except (gemini.ProviderUnavailable,ValueError,KeyError,TypeError) as exc:
         return {**existing,'presentation_error':'The visual report could not be prepared ('+str(exc)[:400]+').',
                 'presentation_upgrade':metadata}
@@ -241,9 +277,15 @@ def run(session,plan):
     existing=view(plan)
     legacy=existing.get('status')=='complete' and not existing.get('presentation')
     if existing.get('status')=='complete' and existing.get('presentation'):return existing
+    if 'cohort_cards' not in (plan.summary or {}):
+        from ..planning import suggest_orders, plan_cohort_cards
+        from ..cohort_context import load_overrides
+        orders=suggest_orders(plan.week_start,[],goal=plan.goal,service_level=plan.service_level,
+                              overrides=load_overrides(session,plan.week_start))
+        plan.summary={**(plan.summary or {}),'cohort_cards':plan_cohort_cards(plan.week_start,orders,plan.goal,plan.service_level)}
     if not provider_info()['live']:
         result={**existing,'presentation_error':'A live assistant is needed to prepare the visual report.'} if legacy else {
-            'status':'offline','report':'','queries':[],'error':'A live assistant is needed for additional exploration.'}
+            **offline_report(plan),'error':'A live assistant is needed for additional exploration.'}
     else:
         if not _LOCK.acquire(blocking=False):return {'status':'running','report':'','queries':[]}
         try:

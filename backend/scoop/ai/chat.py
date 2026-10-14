@@ -1,11 +1,10 @@
 """Plan-scoped assistant with a live provider and an explicit demo fallback."""
 import re
 import os
-from uuid import uuid4
 from typing import Protocol
 from fastapi import HTTPException
 from sqlalchemy import select
-from ..models import DirectionItem, Finding, Product, Tag, Store, PurchaseSuggestion
+from ..models import Finding, Product, Tag, Store, PurchaseSuggestion
 from ..config import settings
 
 class ChatProvider(Protocol):
@@ -40,7 +39,7 @@ def respond(s,p,message,stage,context=None,progress=None):
     return ChatReply(reply,actions,'scripted')
 
 def scripted_response(s, p, message, stage, context=None):
-    from ..api.service import objects, plan_for, decision, recompute, add_watch, WatchEdit
+    from ..api.service import objects, plan_for
     from .gemini import _may_mutate
     text=message.lower().strip(); actions=[]
     chinese=bool(re.search('[\u4e00-\u9fff]',message))
@@ -64,12 +63,71 @@ def scripted_response(s, p, message, stage, context=None):
     focused=next((f for f in findings if f.id==(context or {}).get('finding_id')),None)
     matches=[f for f in findings if (f.evidence.get('display','').lower() in text or f.tag_id.split(':')[-1].replace('_',' ') in text)]
     selected=focused or (matches[0] if len(matches)==1 else None)
-    interpretation=next((value for words,value in [(['persistent','持续趋势','持续变化'],'persistent'),(['one-off','one off','一次性'],'one_off'),(['data issue','数据问题'],'data_issue'),(['weather','天气'],'weather'),(['unsure','不确定'],'unsure')] if any(w in text for w in words)),None)
-    if mutable and interpretation and selected:
-        from .tools import execute
-        result,action=execute('classify_finding',{'finding_id':selected.id,'interpretation':interpretation},s,p,stage)
-        labels={'persistent':'持续变化','one_off':'一次性变化','data_issue':'数据问题','weather':'天气影响','unsure':'继续观察'}
-        return (f"已将这条发现记为“{labels[interpretation]}”，相关建议已更新。" if chinese else f"Recorded as {interpretation.replace('_',' ')} and updated the related recommendations.",[action])
+    if mutable:
+        undo=re.search(r'(?:undo|revert|撤销|恢复).{0,30}?(\d+)',text)
+        if undo:
+            from .tools import execute
+            result,action=execute('undo_edit',{'edit_id':int(undo.group(1))},s,p,stage)
+            return ('已撤销这次调整，采购建议恢复到修改前。' if chinese else 'The context edit was undone and the prior orders were restored.',[action])
+        month_names={'jan':1,'feb':2,'mar':3,'apr':4,'may':5,'jun':6,'jul':7,'aug':8,'sep':9,'oct':10,'nov':11,'dec':12}
+        iso=re.search(r'\b(20\d\d)-(\d{1,2})-(\d{1,2})\b',text)
+        natural=re.search(r'\b(\d{1,2})\s+(jan\w*|feb\w*|mar\w*|apr\w*|may\w*|jun\w*|jul\w*|aug\w*|sep\w*|oct\w*|nov\w*|dec\w*)(?:\s+(20\d\d))?\b',text)
+        chinese_date=re.search(r'(?:(20\d\d)年)?(\d{1,2})月(\d{1,2})日?',text)
+        end_date=None
+        if iso:end_date=f'{int(iso.group(1)):04d}-{int(iso.group(2)):02d}-{int(iso.group(3)):02d}'
+        elif natural:end_date=f'{int(natural.group(3) or p.week_start.year):04d}-{month_names[natural.group(2)[:3]]:02d}-{int(natural.group(1)):02d}'
+        elif chinese_date:end_date=f'{int(chinese_date.group(1) or p.week_start.year):04d}-{int(chinese_date.group(2)):02d}-{int(chinese_date.group(3)):02d}'
+        if end_date and re.search(r'ends?\b|until\b|through\b|结束|截止|到期',text):
+            cards=(p.summary or {}).get('cohort_cards',[])
+            leaves=(p.summary or {}).get('cohort_model',{}).get('leaves',[])
+            candidates=[]
+            for card in cards+leaves:
+                aliases=[card.get('name','')]+[t.get('id','').split(':')[-1].replace('_',' ') for t in card.get('tag_path',[]) if t.get('included')]
+                aliases += [product.name for product in s.scalars(select(Product)) if product.sku in card.get('skus',[])]
+                if any(a and a.lower() in text for a in aliases):candidates.append(card)
+            if selected and not candidates:
+                candidates=[c for c in cards+leaves if selected.tag_id in [t.get('id') for t in c.get('tag_path',[])]]
+            unique={c['id']:c for c in candidates}
+            if len(unique)==1:
+                from .tools import execute
+                cohort=next(iter(unique.values()))
+                _,action=execute('set_override',{'cohort':cohort['id'],'type':'ends_on','value':end_date,'note':message},s,p,stage)
+                return (f"已把{cohort.get('name') or '这组商品'}的结束日期记为 {end_date}，采购建议已重算。" if chinese else f"Recorded {cohort.get('name') or 'the cohort'} as ending on {end_date}; purchase recommendations were recalculated.",[action])
+            return ('请指定一张变化卡片对应的商品组；目前没有修改计划。' if chinese else 'Please name one cohort from the current plan. No change was made.',actions)
+        capacity=re.search(r'(?:fit|keep|limit|控制|限制).{0,30}(?:capacity|space|容量|库容).{0,20}?(\d+(?:\.\d+)?)\s*%',text)
+        if capacity:
+            from .tools import execute
+            pct=float(capacity.group(1))
+            _,action=execute('bulk_edit_orders',{'filter':{},'change':{'type':'fit_capacity','value':pct/100}},s,p,stage)
+            return (f'已按仓库容量的 {pct:g}% 重算并保存整箱订单。' if chinese else f'Orders were recalculated against {pct:g}% of warehouse capacity.',[action])
+        direction=next((sign for term,sign in [('more',1),('increase',1),('extra',1),('多订',1),('增加',1),('多备',1),('less',-1),('reduce',-1),('fewer',-1),('少订',-1),('减少',-1),('少备',-1)] if term in text),None)
+        if direction and (re.search(r'\border\b|\bordering\b|订|采购|备货',text)):
+            amount=re.search(r'(\d+(?:\.\d+)?)\s*%',text)
+            if not amount:return ('请说出增减百分比；目前没有修改订单。' if chinese else 'Please give the percentage to change; no orders were edited.',actions)
+            from .exploration_tools import _groups
+            groups=_groups(s)
+            scopes=[]
+            for group in groups.values():
+                aliases=[group.name.lower(),group.id.split(':')[-1].replace('_',' ').lower()]
+                if getattr(group,'dimension',None)=='price_100ml' and group.id.endswith(':0'):
+                    aliases += ['value-price','value price']
+                if any(alias and alias in text for alias in aliases):scopes.append((len(group.name),'group',group.id))
+            for product in s.scalars(select(Product)):
+                if product.name.lower() in text or product.sku.lower() in text:
+                    scopes.append((len(product.name),'sku',product.sku))
+            brands={product.brand for product in s.scalars(select(Product))}
+            for brand in brands:
+                if brand.lower() in text:scopes.append((len(brand),'brand',brand))
+            if not scopes:return ('请指定商品或目录分组；目前没有修改订单。' if chinese else 'Please name a catalog group or product; no orders were edited.',actions)
+            scopes.sort(reverse=True)
+            best=[scope for scope in scopes if scope[0]==scopes[0][0]]
+            if len({(x[1],x[2]) for x in best})!=1:
+                return ('商品范围不明确；目前没有修改订单。' if chinese else 'The product scope is ambiguous; no orders were edited.',actions)
+            _,kind,key=best[0]
+            order_filter={'skus':[key]} if kind=='sku' else {kind:key}
+            from .tools import execute
+            _,action=execute('bulk_edit_orders',{'filter':order_filter,'change':{'type':'percent','value':direction*float(amount.group(1))}},s,p,stage)
+            return (f'已把所选商品的整箱采购量调整 {direction*float(amount.group(1)):+g}%，并重新计算仓库容量。' if chinese else f'Adjusted the selected order quantities by {direction*float(amount.group(1)):+g}% and recalculated capacity.',[action])
     if any(word in text for word in ['why','explain','reason','cause','为什么','解释','原因']):
         matches=[f for f in findings if (f.evidence.get('display','').lower() in text or f.tag_id.split(':')[-1].replace('_',' ') in text)]
         f=selected or ((matches or findings)[0] if findings else None)
@@ -89,10 +147,8 @@ def scripted_response(s, p, message, stage, context=None):
             name={'margin':'利润','sales':'销量','fill_rate':'门店满足率'}[goal]
             return (f'已将本周目标设为{name}'+(f'，满足率目标 {service:.1%}。' if service else '。')+'采购建议已重新计算。',[action])
         return (f'The buying objective is now {goal.replace("_"," ")}' +(f', with a {service:.1%} service target.' if service else ', using the default service target.')+' Purchase recommendations were recalculated.',[action])
-    bucket=next((b for b in ['more','less','hold','clear'] if re.search(r'\b'+b+r'\b',text)),None)
-    bucket=bucket or next((b for token,b in [('多备','more'),('少备','less'),('增加','more'),('减少','less'),('清货','clear'),('保持','hold')] if token in text),None)
     watching=any(word in text for word in ['watch','monitor','keep an eye','盯','监控','观察'])
-    if mutable and (bucket or watching):
+    if mutable and watching:
         candidates=[]
         for f in findings:
             name=f.evidence.get('display','')
@@ -125,7 +181,7 @@ def scripted_response(s, p, message, stage, context=None):
             if chinese:return ('已加入关注清单。可以在清单里查看这个范围的历史表现，以及接下来需要核实的变化。',[{'type':'watch','id':wid}])
             return ('Scripted action: saved '+title+'. Values come from historical orders and inventory through the plan’s as-of date.',[{'type':'watch','id':wid}])
         if len(candidates)!=1:
-            return ('Scripted response: name one exact category or SKU, for example “more fruit”, “hold cones”, or “watch IC001”. For goals use “set goal to fill rate 97%”. I have made no changes.',actions)
+            return ('Please name one exact category or product to watch. I have made no changes.',actions)
         kind,key,name=candidates[0]; scope={'tag_id':key} if kind=='tag' else {'sku':key}
         if requested_districts: scope['districts']=requested_districts
         if watching:
@@ -135,14 +191,6 @@ def scripted_response(s, p, message, stage, context=None):
             saved,_=execute('add_watch',{'kind':'tag_share','title':f'Chat watch: {name}','assumption':message,**scope},s,p,stage)
             wid=saved['id']
             return (f'Scripted action: saved a demand-share watch for {name}, calculated from actual store orders.',[{'type':'watch','id':wid}])
-        from .tools import execute
-        percent=re.search(r'(\d+(?:\.\d+)?)\s*%',text)
-        factor={'more':1.1,'less':.9,'hold':1.,'clear':0.}[bucket]
-        if percent and bucket in {'more','less'}:factor=1+(1 if bucket=='more' else -1)*float(percent.group(1))/100
-        districts=requested_districts or district_names
-        result,action=execute('set_direction',{'bucket':bucket,'factor':factor,'districts':districts,'tag_id' if kind=='tag' else 'sku':key},s,p,stage)
-        change=f'{(factor-1)*100:+.0f}%'
-        return (f'已记录{name}的采购方向：相对原预期调整 {change}，适用于{", ".join(districts)}。采购建议已重新计算。' if chinese else f'{name}: planned demand adjusted by {change} in {", ".join(districts)}. Purchase recommendations were recalculated.',[action])
     positive=[o for o in orders if (o.final_cases if o.final_cases is not None else o.suggested_cases-o.capacity_cut_cases)>0]
-    if chinese:return (f"当前有 {len(findings)} 条发现，{len(positive)} 款商品有采购建议。演示助手能解释发现、计算温度情景、记录购买方向或添加关注项；这条消息没有修改计划。",actions)
-    return (f"Scripted summary: {len(findings)} findings, {len(positive)} SKUs with positive purchase suggestions, and {sum(o.demand_p50 for o in orders):,.0f} forecast units across protection periods. Ask why a finding changed, set a margin/fill-rate/sales goal, edit more/less/hold/clear for one category during Direction, or request a watch.",actions)
+    if chinese:return (f"当前有 {len(findings)} 条发现，{len(positive)} 款商品有采购建议。演示助手能解释发现、计算温度情景、记录商品组结束日期或添加关注项；这条消息没有修改计划。",actions)
+    return (f"Scripted summary: {len(findings)} findings and {len(positive)} products with positive purchase suggestions. Ask about a finding, a temperature scenario, or an explicit cohort end date.",actions)

@@ -117,6 +117,9 @@ def test_read_only_preparation_promotion_winsorisation_and_missing(monkeypatch):
         assert s0['recent_days'] == 13 and s0['baseline_days'] == 56
         assert not any(u['sku'] == 'S2' for u in result['units'])
         assert result['method']['skipped_units'][0]['reason'] == 'missing_rows_or_short_window'
+        series = result['leaves'][0]['daily']
+        assert next(r for r in series if r['date']==spike.isoformat())['requested_units']==10100
+        assert next(r for r in series if r['date']==promo.isoformat())['requested_units']==100
         assert not session.dirty and not session.new and not session.deleted
         json.dumps(result, allow_nan=False)
     engine.dispose()

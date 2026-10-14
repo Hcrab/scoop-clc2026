@@ -299,11 +299,10 @@ class GoalEdit(BaseModel):
 @router.put('/plans/{pid}/goal')
 def edit_goal(pid:str,body:GoalEdit):
     with session_scope() as s:
-        p=plan_for(s,pid,['discover','direction'])
+        from .cohorts import change_goal
+        p=plan_for(s,pid,['discover','direction','execute'])
         if p.goal==body.goal and p.service_level==body.service_level: return {'ok':True}
-        p.goal=body.goal;p.service_level=body.service_level
-        decision(s,p,'goal',body.model_dump()); recompute(s,p)
-    return {'ok':True}
+        return clean(change_goal(s,p,body.goal,body.service_level))
 
 @router.post('/plans/{pid}/advance')
 def advance(pid:str):

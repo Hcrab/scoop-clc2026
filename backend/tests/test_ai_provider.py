@@ -7,7 +7,7 @@ from fastapi import HTTPException
 from sqlalchemy import func,select
 from test_api_state import api
 from scoop.ai import gemini,tools,usage,chat
-from scoop.models import Plan,Question,Decision,WatchItem
+from scoop.models import Plan,Decision,WatchItem
 
 
 def response(*parts):
@@ -51,17 +51,23 @@ def test_model_mutation_attempt_on_readonly_request_is_rejected(api,monkeypatch)
 
 def test_successful_mutation_survives_explanation_outage_without_repeat(api,monkeypatch):
     _,scope,_,_=api
+    from scoop.ai import exploration_tools
+    from scoop.algorithms.groups import Group
+    monkeypatch.setattr(exploration_tools,'_groups',lambda _: {'family:fruit':Group('family:fruit','Fruit','family',('IC001',))})
     count=0
     def wire(payload):
         nonlocal count
         count+=1
-        if count==1:return response({'functionCall':{'name':'classify_finding','args':{'finding_id':'TESTAPI-F','interpretation':'persistent'}}})
+        if count==1:return response({'functionCall':{'name':'set_override','args':{'cohort':'COHORT-FRUIT','type':'ends_on','value':'2026-08-10','note':'Summer one-off'}}})
         raise gemini.ProviderUnavailable('connection_unavailable')
     monkeypatch.setattr(gemini,'_wire',wire)
     with scope() as s:
-        answer=gemini.respond(s,s.get(Plan,'TESTAPI'),'Record this as persistent','discover')
-        assert s.get(Question,'TESTAPI-Q').answer=='persistent'
+        plan=s.get(Plan,'TESTAPI')
+        plan.summary={'cohort_model':{'leaves':[{'id':'COHORT-FRUIT','tag_path':[{'id':'family:fruit','included':True}],'districts':['Kowloon'],'skus':['IC001']}]}}
+        answer=gemini.respond(s,plan,'The fruit group ends on 10 Aug; record that','discover')
         assert len(answer.actions)==1
+        assert answer.actions[0]['type']=='edit'
+        assert answer.actions[0]['edit_id']
         assert answer.fallback_reason=='connection_unavailable'
         assert answer.tool_trace[0]['status']=='ok'
         assert s.scalar(select(func.count()).select_from(Decision))==1
@@ -90,12 +96,14 @@ def test_stage_and_scope_enforced_even_when_model_requests_invalid_change(api):
     _,scope,_,_=api
     with scope() as s:
         plan=s.get(Plan,'TESTAPI');plan.stage='execute';s.flush()
-        with pytest.raises(HTTPException):tools.execute('set_goal',{'goal':'sales'},s,plan,'execute')
+        result,action=tools.execute('set_goal',{'goal':'sales'},s,plan,'execute')
+        assert action['type']=='edit' and plan.stage=='direction'
+        watch_count=s.scalar(select(func.count()).select_from(WatchItem))
         with pytest.raises(ValueError,match='current plan'):
             tools.execute('inspect_finding',{'finding_id':'ANOTHERPLAN-F'},s,plan,'execute')
         with pytest.raises(ValueError,match='districts'):
             tools.execute('add_watch',{'kind':'fill_rate','title':'Bad district','assumption':'Test','districts':['Unknown']},s,plan,'execute')
-        assert s.scalar(select(func.count()).select_from(WatchItem))==0
+        assert s.scalar(select(func.count()).select_from(WatchItem))==watch_count
 
 
 def test_failed_provider_uses_honest_scripted_fallback(api,monkeypatch):

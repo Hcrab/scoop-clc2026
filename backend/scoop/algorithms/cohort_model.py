@@ -225,6 +225,7 @@ def fit_observations(week_start, orders, expected, stores, skus, promotions, gro
         if r.store_id in stores and r.sku in skus and np.isfinite(r.mean) and r.mean >= 0:
             forecast[(r.date, r.store_id, r.sku)] = float(r.mean)
     units = []
+    chart_rows = {}
     skipped = []
     for name in skus:
         for area in sorted(set(stores.values())):
@@ -252,6 +253,7 @@ def fit_observations(week_start, orders, expected, stores, skus, promotions, gro
                     a += min(value, caps[s])
                     e += forecast[(d, s, name)]
                 daily[d] = (a, e)
+            chart_rows[(name, area)] = {d: (sum(actual[(d,store,name)] for store in store_ids), daily[d][1]) for d in dates}
             ar, er = (sum(daily[d][i] for d in recent) for i in (0, 1))
             ab, eb = (sum(daily[d][i] for d in baseline) for i in (0, 1))
             weekly = []
@@ -272,6 +274,18 @@ def fit_observations(week_start, orders, expected, stores, skus, promotions, gro
                           'promotion_exclusions': sorted(d.isoformat() for d in excluded[name] if start <= d <= end),
                           'winsorised': clipped, 'winsor_caps': caps})
     result = fit_units(units, groups)
+    for leaf in result['leaves']:
+        totals = {}
+        for unit in result['units']:
+            if unit['leaf_id'] != leaf['id']:
+                continue
+            for day, (observed, predicted) in chart_rows[(unit['sku'], unit['district'])].items():
+                row = totals.setdefault(day, {'date':day.isoformat(), 'requested_units':0., 'expected_units':0., 'unit_count':0})
+                row['requested_units'] += observed
+                row['expected_units'] += predicted
+                row['unit_count'] += 1
+        leaf['daily'] = [totals[day] for day in sorted(totals)]
+        leaf['series_scope'] = 'Observed requests and current-model expectations for eligible SKU/district units; SKU promotion days excluded. Observed chart values are not winsorised.'
     result['method'].update(window_recent=[recent_start.isoformat(), end.isoformat()],
                             window_baseline=[start.isoformat(), (recent_start - timedelta(days=1)).isoformat()],
                             unit_definition='SKU × district; complete observed and issued rows; at least one eligible day in each window',

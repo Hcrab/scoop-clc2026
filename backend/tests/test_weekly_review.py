@@ -8,57 +8,57 @@ from scoop.models import Plan,ChatMessage
 
 def presentation(evidence_id='Q1'):
     return {'title':'A localized demand shift merits a closer look',
-            'html':f'<article><h1>A localized demand shift merits a closer look</h1><p>Demand differs from its comparison.</p><details data-evidence-id="{evidence_id}"><summary>Inspect the demand evidence</summary><svg viewBox="0 0 100 40" role="img" aria-label="Demand comparison"><rect x="10" y="10" width="20" height="20" fill="#25836b"/></svg></details></article>',
+            'html':f'<article><h1>A localized demand shift merits a closer look</h1><p>Demand differs from its comparison.</p><details data-evidence-id="{evidence_id}"><summary>Inspect the demand evidence</summary></details></article>',
             'css':'article { background: #fffdf9; padding: 1.5rem; } h1 { color: #25836b; } details:focus-within { outline: 2px solid #9486b1; } @media (max-width: 600px) { article { padding: 1rem; } }'}
 
-def saved_program_scan(count=1):
-    return {'status':'ready','method':'fixture residual screen','window_start':'2026-06-22',
-            'window_end':'2026-07-05','tested_count':count,'items':[
-                {'id':f'T{i}','name':'A × B × C','group_ids':['a','b','c'],
-                 'kind':'combination','level':'clear','direction':'up','sku_count':3,
-                 'skus':['x','y','z'],'districts':['Kowloon'],'requested_units':180,
-                 'expected_units':100,'excess_units':80,'deviation_pct':80,'q_value':.001,
-                 'score':10,'explanation':'A concentrated rise.','parents':[],
-                 'series':[{'date':'2026-07-05','requested_units':18,'expected_units':10}],
-                 'checks':{'sample_days':14}} for i in range(count)]}
+def saved_cards(count=1):
+    return [{'id':f'leaf-{i}','name':'A × B × C','effect_pct':80.,'interval_pct':[65.,95.],
+             'case_change':4,'pallet_change':.4,'skus':['x','y','z'],'districts':['Kowloon'],
+             'method':{'leaf':{'id':f'leaf-{i}'},'units':[]}} for i in range(count)]
 
-def test_program_trends_supplied_citable_and_not_charged_to_query_allowance(api,monkeypatch):
+@pytest.fixture(autouse=True)
+def cohort_cards(api):
+    _,scope,_,_=api
+    with scope() as session:
+        plan=session.get(Plan,'TESTAPI');plan.summary={**plan.summary,'cohort_cards':saved_cards()}
+
+def test_cohort_cards_supplied_citable_and_not_charged_to_query_allowance(api,monkeypatch):
     from scoop.ai import exploration_tools
     _,scope,_,_=api
-    scan=saved_program_scan(weekly.MAX_QUERIES+1)
+    cards=saved_cards(weekly.MAX_QUERIES+1)
     calls=[]
     monkeypatch.setattr(exploration_tools,'execute',lambda *args:{'recent':{'requested_units':180}})
     def wire(payload):
         source=json.loads(payload['contents'][0]['parts'][0]['text'].split('\nInvestigate')[0])
-        assert len(source['program_trends']['items'])==len(scan['items'])
-        assert source['program_trends']['items'][0]['group_ids']==['a','b','c']
+        assert len(source['cohort_cards'])==len(cards)
+        assert source['cohort_cards'][0]['result']=={k:v for k,v in cards[0].items() if k!='method'}
         calls.append(payload)
         if len(calls)==1:
             parts=[{'functionCall':{'name':'query_group','args':{'group_ids':['a','b','c']}}}]
         else:
-            result=report();result['presentation']=presentation('T0')
-            result['claims'][0]['evidence_ids']=['T0','Q1']
+            result=report();result['presentation']=presentation('Q-cohort-leaf-0')
+            result['claims'][0]['evidence_ids']=['Q-cohort-leaf-0','Q1']
             parts=[{'functionCall':{'name':'finish_weekly_review','args':result}}]
         return {'candidates':[{'content':{'role':'model','parts':parts}}]}
     with scope() as session:
-        plan=session.get(Plan,'TESTAPI');plan.summary={**plan.summary,'raw_trends':scan}
+        plan=session.get(Plan,'TESTAPI');plan.summary={**plan.summary,'cohort_cards':cards}
         result=weekly.investigate(session,plan,wire=wire)
         assert result['status']=='complete'
         assert result['queries'][0]['id']=='Q1'
-        evidence=next(q for q in result['queries'] if q['id']=='T0')
-        assert evidence['result']['daily']==scan['items'][0]['series']
-        assert result['claims'][0]['evidence_ids']==['T0','Q1']
+        evidence=next(q for q in result['queries'] if q['id']=='Q-cohort-leaf-0')
+        assert evidence['result']==cards[0]
+        assert result['claims'][0]['evidence_ids']==['Q-cohort-leaf-0','Q1']
 
-def test_program_trends_available_with_offline_ai(api,monkeypatch):
+def test_cohort_cards_available_with_offline_ai(api,monkeypatch):
     client,scope,_,_=api
-    scan=saved_program_scan()
+    cards=saved_cards()
     with scope() as session:
-        plan=session.get(Plan,'TESTAPI');plan.summary={**plan.summary,'raw_trends':scan}
+        plan=session.get(Plan,'TESTAPI');plan.summary={**plan.summary,'cohort_cards':cards}
     monkeypatch.setattr(chat,'provider_info',lambda:{'live':False})
     client.post('/api/plans/TESTAPI/review')
     detail=client.get('/api/plans/TESTAPI').json()
     assert detail['review']['status']=='offline'
-    assert detail['raw_trends']==scan
+    assert detail['review']['queries'][0]['result']==cards[0]
 
 def report():
     return {'report':'A localized change in the combination merits further context. Check the local purchasing context before changing quantities.',
@@ -84,7 +84,7 @@ def test_live_loop_saves_evidence_questions_and_preserves_business(api,monkeypat
     monkeypatch.setattr(gemini,'_wire',wire)
     monkeypatch.setattr(chat,'provider_info',lambda:{'live':True})
     result=c.post('/api/plans/TESTAPI/review').json()
-    assert result['status']=='complete' and len(result['queries'])==2
+    assert result['status']=='complete' and len(result['queries'])==3
     after=c.get('/api/plans/TESTAPI').json()
     assert after['review']['model']=='fixture-model'
     assert after['review']['presentation']==presentation()
@@ -134,7 +134,7 @@ def test_provider_failure_keeps_query_trace(api,monkeypatch):
         raise gemini.ProviderUnavailable('fixture_timeout')
     with scope() as session:
         result=weekly.investigate(session,session.get(Plan,'TESTAPI'),wire)
-        assert result['status']=='failed' and len(result['queries'])==1
+        assert result['status']=='failed' and len(result['queries'])==2
 
 
 def _legacy(scope):

@@ -54,10 +54,12 @@ Share decomposition is an arithmetic comparison, not evidence that identifiable 
 Investigator confidence values and scores are heuristic weights, not calibrated probabilities. Never describe them as the probability that a cause is true. Exploratory weak checks are reasons to keep watching, not confirmed findings.
 Use exact IDs from the provided catalog internally; show product/category names to the user. A focused finding or product can resolve 'this one'. Ask a short clarifying question when a reference is ambiguous.
 Use the saved weekly review and its evidence when continuing the analyst's opening conversation. Ask specific business questions, not task labels such as 'Understand X'. For tag intersections or deeper investigations, call catalog_groups then query_group/query_operations/preview_group_orders. These are read-only exploratory tools; do not call their results confirmed FDR discoveries. A preview is not an applied procurement change.
-Manage the structured advisory discussion with update_discussion when conversational understanding changes it, including informational questions. Use natural, specific follow-ups that help the human respond. Summaries and conversational phrasing are welcome; punctuation and opening words do not determine validity. Close a topic only after a useful answer or clear acknowledgement; keep uncertainty as an open follow-up and add relevant genuinely new questions. Do not force a tool call each response. Include open and resolved questions in your understanding and avoid repeatedly demanding their completion. The human controls stage advancement. Agenda edits only track conversation and never authorize changing buying directions/goals or confirming orders.
+Manage the structured advisory discussion with update_discussion when conversational understanding changes it, including informational questions. Use natural, specific follow-ups that help the human respond. Summaries and conversational phrasing are welcome; punctuation and opening words do not determine validity. Close a topic only after a useful answer or clear acknowledgement; keep uncertainty as an open follow-up and add relevant genuinely new questions. Do not force a tool call each response. Include open and resolved questions in your understanding and avoid repeatedly demanding their completion. The human controls stage advancement. Agenda edits only track conversation and never authorize context or goal changes or confirming orders.
 Only call business mutation tools for an explicit user request to apply/record/change/add something; questions, comparisons, hypotheticals and 'why' are read-only. Scenario calculations NEVER apply changes. Do not change a goal merely because the user mentions it. Never approve stages or confirm purchases on the user's behalf; the user does those in the UI. A request about district shortages should use fill_rate; warehouse inventory is shared.
-Stage rules: Discover permits recording finding interpretations and goals. Direction permits goals and category/SKU changes. Execute permits watches but the approved strategy is read-only. If a tool reports a stage/input error, explain the narrow issue and make no claim of success. If a mutation is successful, briefly state exactly what was recorded. No repeated mutation calls for the same change.
-Use at most three tool batches and then answer. For 35°C next-week questions, call temperature_scenario with offset_days=7. For a watch request, call add_watch using the most specific known category/district. For a user selecting persistent/one-off/weather/etc for a finding, use classify_finding, not set_direction. Tool outputs are authoritative; general knowledge may explain a concept but must not fabricate project results.
+The plan has cohort cards, exact cohort definitions and active context overrides. When the user explicitly changes a cohort assumption, call set_override with the card ID or exact tag_path and districts. A stated end date takes precedence over a general one-off description: for example a summer one-off ending 10 Aug uses ends_on and the plan year's ISO date. Do not invent a category, cohort ID or formula. If the reference is ambiguous, ask which cohort they mean. A context change can be made from Discover, Direction or Execute; when Execute changes, the plan returns to Direction for review. Use undo_edit only when the user explicitly asks to undo a specific saved edit. Tell the user the actual changed orders and edit ID when useful for undo.
+For an explicit quantity change, use bulk_edit_orders. Its percent value is signed percentage points applied to current final case counts, then rounded to whole cases; set_cases is an exact nonnegative integer. Resolve filters from supplied catalog groups, cohort definitions, brands and SKU names. Intersect multiple filters. A district filter means exposed products, not store allocation. If the user omits a magnitude, ask for it. To fit peak warehouse occupancy, use fit_capacity with a fraction such as 0.90 for 90%; the existing greedy algorithm computes cuts and inherited occupancy may prevent the requested target. Use the returned capacity summary, never promise a target was met without evidence. Any order, context or goal edit after Execute returns the plan to Direction for review. Undo uses the shared edit_id.
+Stage rules: Goal changes and watches are available at any plan stage. The human controls stage advancement. If a tool reports a stage/input error, explain the narrow issue and make no claim of success. If a mutation succeeds, briefly state exactly what was recorded. No repeated mutation calls for the same change.
+Use at most three tool batches and then answer. For 35°C next-week questions, call temperature_scenario with offset_days=7. For a watch request, call add_watch using the most specific known category/district. Tool outputs are authoritative; general knowledge may explain a concept but must not fabricate project results.
 '''
 
 
@@ -92,7 +94,25 @@ def _may_mutate(message):
     if re.search(r"(?:do not|don['’]t|never|without|no)\s+(?:(?:actually|directly|automatically|please)\s+)*(?:chang\w*|appl\w*|modif\w*|sav\w*|record\w*|add\w*|creat\w*|watch\w*|monitor\w*|set\w*|increas\w*|reduc\w*|classif\w*|confirm\w*|keep\w*|treat\w*)\b|(?:不要|别|不必|无需|不用|暂不|先不).{0,10}(?:改|应用|保存|记录|加|设|盯|监控|观察|增加|减少|处理|确认)|只.{0,5}(?:建议|解释|看看|分析)|先.{0,5}(?:建议|解释|分析)",text):return False
     if re.search(r'what if|suppose|假[设如]|如果|会怎样|会怎么样',text):return False
     if re.search(r'\b(why|explain|compare|difference|what does|how does|how (?:do|can|should) i|should i|can i)\b|为什么|解释|比较|区别|应不应该|是否应该|怎样|怎么|如何|能否|可以.{0,8}[吗么]',text):return False
-    return bool(re.search(r'\b(set|change|apply|record|classify|treat|watch|monitor|add|keep|increase|reduce|hold|clear|more|less|yes|confirm)\b|设置|设为|改成|改为|调整|按.{0,12}处理|视为|记为|持续趋势|一次性|盯|监控|观察|增加|减少|多备|少备|清货|保留|就这样|照这个|按这个|确认|可以',text))
+    return bool(re.search(r'\b(set|change|apply|record|treat|watch|monitor|add|keep|fit|limit|order|increase|reduce|hold|clear|more|less|yes|confirm|ends?|until|undo|revert)\b|设置|设为|改成|改为|调整|按.{0,12}处理|视为|记为|一次性|盯|监控|观察|增加|减少|多备|少备|清货|保留|就这样|照这个|按这个|确认|可以|结束|截止|撤销|恢复|订货|采购|限制|控制',text))
+
+
+def _quantity_authorized(message,arguments):
+    """Keep a provider from supplying a missing order magnitude."""
+    change=arguments.get('change',{}) if isinstance(arguments,dict) else {}
+    kind,value=change.get('type'),change.get('value')
+    if kind in {'percent','fit_capacity'}:
+        stated=[float(x) for x in re.findall(r'(\d+(?:\.\d+)?)\s*%',message)]
+        if not isinstance(value,(int,float)) or not any(abs(x-(abs(value) if kind=='percent' else value*100))<.001 for x in stated):return False
+        if kind=='percent':
+            lower=message.lower()
+            if re.search(r'\b(less|reduce|fewer|decrease)\b|少订|减少|少备',lower) and value>0:return False
+            if re.search(r'\b(more|increase|extra)\b|多订|增加|多备',lower) and value<0:return False
+        return True
+    if kind=='set_cases':
+        stated=[int(x) for x in re.findall(r'\b(\d+)\s*(?:cases?\b|箱)',message,re.I)]
+        return type(value) is int and value in stated
+    return False
 
 
 def respond(session,plan,message,stage,focus=None,progress=None):
@@ -156,6 +176,8 @@ def _respond(session,plan,message,stage,focus=None,progress=None):
                 result={'error':'At most four tools may run in one batch. Request remaining tools in the next batch.'};action=None
             elif name in planning_tools.MUTATING and not allowed_mutation:
                 result={'error':'This request asks for information; no change was authorized.'};action=None
+            elif name=='bulk_edit_orders' and not _quantity_authorized(message,arguments):
+                result={'error':'Please state the exact percent or case quantity before changing orders.'};action=None
             elif fingerprint in seen:
                 result={'error':'This exact tool request was already completed. Use its previous result.'};action=None
             else:
@@ -173,8 +195,8 @@ def _respond(session,plan,message,stage,focus=None,progress=None):
     return ChatReply(_tool_summary(trace,message),actions,'gemini',trace,usage,'tool_limit')
 
 
-TOOL_TITLES={'update_discussion':'Updated discussion topics','inspect_finding':'Reviewed the finding evidence','inspect_order':'Checked the purchase recommendation','inspect_metric':'Checked the requested measure','temperature_scenario':'Calculated the temperature scenario','classify_finding':'Recorded your interpretation','set_goal':'Updated the buying objective','set_direction':'Updated the buying direction','add_watch':'Added a watch'}
-PROGRESS_TITLES={'update_discussion':'Updating discussion topics','inspect_finding':'Checking the evidence behind this change','inspect_order':'Checking stock and the purchase recommendation','inspect_metric':'Checking the relevant warehouse records','temperature_scenario':'Recalculating the temperature scenario','classify_finding':'Applying your interpretation to the plan','set_goal':'Recalculating for your buying objective','set_direction':'Recalculating the buying direction','add_watch':'Preparing the requested watch'}
+TOOL_TITLES={'update_discussion':'Updated discussion topics','inspect_finding':'Reviewed the finding evidence','inspect_order':'Checked the purchase recommendation','inspect_metric':'Checked the requested measure','temperature_scenario':'Calculated the temperature scenario','set_override':'Updated the cohort context','bulk_edit_orders':'Updated order quantities','undo_edit':'Undid the saved edit','set_goal':'Updated the buying objective','add_watch':'Added a watch'}
+PROGRESS_TITLES={'update_discussion':'Updating discussion topics','inspect_finding':'Checking the evidence behind this change','inspect_order':'Checking stock and the purchase recommendation','inspect_metric':'Checking the relevant warehouse records','temperature_scenario':'Recalculating the temperature scenario','set_override':'Recalculating the cohort context','bulk_edit_orders':'Recalculating order quantities and capacity','undo_edit':'Restoring the previous plan','set_goal':'Recalculating for your buying objective','add_watch':'Preparing the requested watch'}
 
 
 def _tool_summary(trace,message):
@@ -185,5 +207,10 @@ def _tool_summary(trace,message):
         if 'error' in result:lines.append(str(result['error']))
         elif item['name']=='temperature_scenario':
             lines.append((f"情景计算：{result['baseline_cases']:,} → {result['scenario_cases']:,} 箱，变化 {result['delta_cases']:+,} 箱。没有更改计划。" if chinese else f"Scenario: {result['baseline_cases']:,} to {result['scenario_cases']:,} cases ({result['delta_cases']:+,}). No plan was changed."))
+        elif item['name'] in {'set_override','bulk_edit_orders','set_goal','undo_edit'} and result.get('applied'):
+            changes=result.get('affected_orders',[])
+            detail='；'.join(f"{x['sku']} {x['before']} → {x['after']} 箱" for x in changes[:3]) if chinese else '; '.join(f"{x['sku']} {x['before']} to {x['after']} cases" for x in changes[:3])
+            label={'undo_edit':'已撤销修改','bulk_edit_orders':'已更新订单','set_goal':'已更新采购目标','set_override':'已保存商品组上下文'}[item['name']] if chinese else TOOL_TITLES[item['name']]
+            lines.append(f"{label} #{result['edit_id']}"+(f": {detail}" if detail else '.'))
         elif result.get('applied'):lines.append(TOOL_TITLES.get(item['name'],'Change saved'))
     return '\n'.join(lines)

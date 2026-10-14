@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import { api, fullDate, n } from './api';
-import { DataView } from './ui';
+import { api, n } from './api';
+import { Chart, DataView, Icon } from './ui';
 import type { Detail } from './types';
 import './cohortCards.css';
+import { EditReceipt, type PlanEdit } from './EditReceipt';
 
 type SkuFactor = { sku:string; name:string; before_cases:number; cases:number; case_change:number; f10:number; f50:number; f90:number; expected_lost_margin_avoided:number };
-type CohortCard = { id:string; name:string; tag_path:{id:string;included:boolean}[]; districts:string[]; skus:string[]; effect_pct:number; interval_pct:[number,number]; sku_factors:SkuFactor[]; case_change:number; expected_lost_margin_avoided:number; pallet_change:number; peak_capacity:number; override_ids:(number|string)[]; method:unknown };
+type CohortCard = { id:string; name:string; daily?:Record<string,string|number>[]; series_scope?:string; tag_path:{id:string;included:boolean}[]; districts:string[]; skus:string[]; effect_pct:number; interval_pct:[number,number]; sku_factors:SkuFactor[]; case_change:number; expected_lost_margin_avoided:number; pallet_change:number; peak_capacity:number; override_ids:(number|string)[]; method:unknown };
 type Override = { id:number|string; type:string; value:unknown; note?:string; tag_path?:{id:string;included:boolean}[]; districts?:string[]; sku?:string };
 type Cohorts = { cards:CohortCard[]; method:unknown; overrides:Override[] };
-type ChangedOrder = { sku:string; before:number; after:number; factor_before:number; factor_after:number };
-type Edit = { edit_id?:number; affected_orders:ChangedOrder[] };
+type Edit = PlanEdit;
 const signed = (v:number, digits=1) => `${v>0?'+':''}${n(v,digits)}`;
 
 export function CohortCards({detail,revision,onChanged}:{detail:Detail;revision:number;onChanged:()=>void}) {
@@ -24,12 +24,11 @@ export function CohortCards({detail,revision,onChanged}:{detail:Detail;revision:
     try{const result=await api<Edit>(`${path}/overrides`,'POST',{cohort:card.id,type,value,note});setEdit(result);onChanged()}
     catch(e){setError((e as Error).message)}finally{setBusy(false)}
   }
-  async function undo(){if(edit?.edit_id==null)return;setBusy(true);setError('');try{await api(`${path}/edits/${edit.edit_id}/undo`,'POST',{});setEdit(null);onChanged()}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
   async function saveService(){setBusy(true);setError('');try{await api(`${path}/goal`,'PUT',{goal:detail.plan.goal,service_level:service===''?null:Number(service)/100});onChanged()}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
   return <aside className="cohort-panel" aria-label="Demand changes and context">
     <div className="cohort-service"><h2>Stock and space</h2><label htmlFor="cohort-service">Fewer stockouts ⟷ Less space</label><div className="cohort-service-control"><input id="cohort-service" type="range" min="50" max="98" step="0.5" value={service?String(148-Number(service)):'74'} onChange={e=>setService(String(148-Number(e.target.value)))} disabled={busy}/><strong>{service?`${n(Number(service),1)}%`:'Auto'}</strong><button type="button" className="button ghost" onClick={saveService} disabled={busy||service!==''&&(Number(service)<50||Number(service)>98)}>Apply</button></div></div>
     {error&&<p className="cohort-error" role="alert">{error}</p>}
-    {edit&&<div className="cohort-diff" role="status"><strong>Plan updated</strong>{edit.affected_orders.length?<ul>{edit.affected_orders.map(row=><li key={row.sku}>{row.sku}: {n(row.before)} → {n(row.after)} cases · factor {n(row.factor_before,2)} → {n(row.factor_after,2)}</li>)}</ul>:<p>No order quantity changed.</p>}{edit.edit_id!=null&&<button type="button" className="text-button" disabled={busy} onClick={undo}>Undo</button>}</div>}
+    {edit&&<EditReceipt key={edit.edit_id} edit={edit} detail={detail} path={path} onChanged={onChanged} disabled={busy}/>}
     <h2>Demand changes</h2>
     {!data&&!error&&<p className="cohort-muted">Loading changes…</p>}
     {data?.cards.length===0&&<p className="cohort-muted">No cohort changes passed the evidence checks this week.</p>}
@@ -39,11 +38,13 @@ export function CohortCards({detail,revision,onChanged}:{detail:Detail;revision:
 }
 
 function CohortCardView({card,overrides,busy,apply}:{card:CohortCard;overrides:Override[];busy:boolean;apply:(card:CohortCard,type:string,value:unknown,note:string)=>Promise<void>}){
+  const [expanded,setExpanded]=useState(false),[days,setDays]=useState(14);
   const [type,setType]=useState('one_off'),[pct,setPct]=useState('30'),[strength,setStrength]=useState('medium'),[endsOn,setEndsOn]=useState(''),[sku,setSku]=useState(card.skus[0]||''),[cases,setCases]=useState(''),[note,setNote]=useState('');
   const value=type==='one_off'?true:type==='ends_on'?endsOn:type==='cap'?Number(pct)/100:type==='expect'?{pct:Number(pct)/100,strength}:{sku,cases:Number(cases)};
   const valid=type==='one_off'||type==='ends_on'&&!!endsOn||type==='cap'&&Number(pct)>-100||type==='expect'&&Number(pct)>-100||type==='cases'&&!!sku&&cases!==''&&Number.isInteger(Number(cases))&&Number(cases)>=0;
-  return <article className="cohort-card"><header><h3>{card.name} {signed(card.effect_pct)}% vs expected</h3><strong className="cohort-key">{signed(card.case_change,0)}<span> cases</span></strong></header>
+  return <article className="cohort-card"><header><h3>{card.name} {signed(card.effect_pct)}% vs expected</h3><div className="cohort-card-controls"><strong className="cohort-key">{signed(card.case_change,0)}<span> cases</span></strong><button className="icon-button" aria-label={`${expanded?'Collapse':'Expand'} ${card.name} trend`} aria-expanded={expanded} onClick={()=>setExpanded(v=>!v)}><Icon name={expanded?'close':'arrow'} size={18}/></button></div></header>
     <p className="cohort-impact">HK${n(card.expected_lost_margin_avoided)} expected lost margin avoided · {signed(card.pallet_change,1)} pallets</p>
+    {expanded&&<div className="cohort-chart"><label>Time range<select value={days} onChange={e=>setDays(Number(e.target.value))}>{[7,14,28,70].map(value=><option key={value} value={value}>{value} days</option>)}</select></label><Chart data={(card.daily||[]).slice(-days)} lines={[{key:'requested_units',label:'Requested',color:'#205a4e'},{key:'expected_units',label:'Expected',color:'#91a398',dashed:true}]}/><p className="cohort-muted">{card.series_scope}</p></div>}
     <details><summary>Evidence and products</summary><div className="cohort-details"><p>80% effect interval: {signed(card.interval_pct[0])}% to {signed(card.interval_pct[1])}% · Peak capacity: {n(card.peak_capacity,1)} pallets</p><p>Definition: {card.tag_path.map(term=>`${term.included?'':'not '}${term.id}`).join(' · ')||'All products'}{card.districts.length?` · ${card.districts.join(', ')}`:''}</p><div className="cohort-table-wrap"><table><thead><tr><th>Product</th><th>Factor (10 / 50 / 90)</th><th>Cases</th><th>Change</th></tr></thead><tbody>{card.sku_factors.map(row=><tr key={row.sku}><th scope="row">{row.name}</th><td>{n(row.f10,2)} / {n(row.f50,2)} / {n(row.f90,2)}</td><td>{n(row.cases)}</td><td>{signed(row.case_change,0)}</td></tr>)}</tbody></table></div><details><summary>How it was calculated</summary><DataView value={card.method}/></details></div></details>
     {overrides.length>0&&<p className="cohort-overrides">Active context: {overrides.map(item=>`${item.type.replaceAll('_',' ')}${item.note?` · ${item.note}`:''}`).join('; ')}</p>}
     <details className="cohort-context"><summary>Add context</summary><div><label>Context<select value={type} onChange={e=>setType(e.target.value)} disabled={busy}><option value="one_off">One-off</option><option value="ends_on">Ends on</option><option value="cap">Cap change</option><option value="expect">Expect change</option><option value="cases">Set cases</option></select></label>

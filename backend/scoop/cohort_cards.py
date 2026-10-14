@@ -58,6 +58,7 @@ def build_cards(result, orders, baseline, products, groups, names):
                       'tag_path':leaf['tag_path'],'districts':leaf['districts'],'skus':skus,
                       'effect_pct':float(np.expm1(leaf['posterior_mean'])*100),
                       'interval_pct':[float(np.expm1(low)*100),float(np.expm1(high)*100)],
+                      'interval_coverage_pct':80.,'daily':leaf.get('daily',[]),'series_scope':leaf.get('series_scope',''),
                       'sku_factors':per_sku,'case_change':round(delta_cases),
                       'expected_lost_margin_avoided':float(saved_margin),'pallet_change':delta_pallets,
                       'peak_capacity':float(orders.projected_pallets.max()),

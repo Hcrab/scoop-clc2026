@@ -314,7 +314,9 @@ def contextual_effects(as_of, static, cohort_result, overrides=None):
 def suggest_orders(as_of: date, directions: list[dict], service_level: float | None = None,
                    position: pd.DataFrame | None = None, goal: str = "margin", only_due: bool = False,
                    pending_arrivals: dict | None = None, weather_scenario=None,
-                   cohort_result: dict | None = None, overrides: list[dict] | None = None) -> pd.DataFrame:
+                   cohort_result: dict | None = None, overrides: list[dict] | None = None,
+                   capacity_limit: float | None = None,
+                   apply_case_overrides: bool = True) -> pd.DataFrame:
     art = artifacts()
     st = art.static
     monthly = art.run_for(as_of)
@@ -343,10 +345,10 @@ def suggest_orders(as_of: date, directions: list[dict], service_level: float | N
         ))
     capacity = float(read_sql("SELECT capacity_pallets FROM nodes WHERE id = 'DC1'").capacity_pallets.iloc[0])
     baseline, arrival_mask = capacity_projection(as_of, pos, st, model, adj, pending_arrivals, weather_scenario=weather_scenario)
-    plan = plan_orders(items, monthly.ratio_values, capacity, service_level,
+    plan = plan_orders(items, monthly.ratio_values, capacity if capacity_limit is None else capacity_limit, service_level,
                        capacity_baseline=baseline, arrival_mask=arrival_mask)
     wd = prod.order_weekday.reindex(plan.sku).to_numpy()
-    case_edits = cohort_result.get('cases_overrides', {})
+    case_edits = cohort_result.get('cases_overrides', {}) if apply_case_overrides else {}
     if case_edits:
         plan['final_cases'] = [int(case_edits.get(r.sku, r.final_cases)) for r in plan.itertuples()]
         # A direct quantity edit changes occupancy even though its demand factor is unchanged.
