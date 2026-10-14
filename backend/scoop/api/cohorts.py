@@ -1,13 +1,14 @@
 """Planner context API shared by UI and agent tools."""
 from copy import deepcopy
+from datetime import date, datetime
 from typing import Any, Literal
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
-from sqlalchemy import select
+from sqlalchemy import select, delete
 
 from . import service
 from ..cohort_context import load_overrides, put_override, save_overrides
-from ..models import PurchaseSuggestion, Store, Product
+from ..models import PurchaseSuggestion, Store, Product, WatchItem, Decision
 
 router = APIRouter(prefix='/api')
 
@@ -50,7 +51,9 @@ def change_context(session, plan, request, source='ui'):
     if request.type == 'cases' and (not isinstance(request.value, dict) or not session.get(Product, request.value.get('sku'))):
         raise HTTPException(422, 'Unknown SKU')
     before = {'overrides': load_overrides(session), 'orders': order_snapshot(session, plan),
-              'summary': deepcopy(plan.summary), 'stage': plan.stage}
+              'summary': deepcopy(plan.summary), 'stage': plan.stage,
+              'locked_at': plan.locked_at.isoformat() if plan.locked_at else None,
+              'watches':[service.row(x) for x in service.objects(session, WatchItem, plan.id)]}
     try:
         _, _, stored = put_override(session, payload)
     except (ValueError, TypeError, KeyError) as exc:
@@ -59,6 +62,7 @@ def change_context(session, plan, request, source='ui'):
     service.recompute(session, plan)
     if plan.stage == 'execute':
         plan.stage = 'direction'
+        plan.locked_at = None
     session.flush()
     after_orders = order_snapshot(session, plan)
     old = {x['sku']: x for x in before['orders']}
@@ -66,10 +70,14 @@ def change_context(session, plan, request, source='ui'):
                 'after': effective(x), 'factor_before': old.get(x['sku'], {}).get('adjustment', 1.),
                 'factor_after': x['adjustment']} for x in after_orders
                if x['sku'] not in old or effective(x) != effective(old[x['sku']]) or x['adjustment'] != old[x['sku']]['adjustment']]
-    after = {'overrides': load_overrides(session), 'orders': after_orders, 'stage': plan.stage}
+    after = {'overrides': load_overrides(session), 'orders': after_orders, 'stage': plan.stage,
+             'watches':[service.row(x) for x in service.objects(session, WatchItem, plan.id)]}
     result = {'override': stored, 'before': before, 'after': after, 'affected_orders': changed}
-    service.decision(session, plan, 'set_override', result, source)
-    return result
+    edit = Decision(plan_id=plan.id,stage=plan.stage,key='set_override',value=service.clean(result),
+                    source=source,created_at=datetime.now())
+    session.add(edit)
+    session.flush()
+    return {**result, 'edit_id':edit.id}
 
 
 @router.post('/plans/{pid}/overrides')
@@ -98,3 +106,42 @@ def get_cohorts(pid: str):
                         'cohort_cards': cards}
         return service.clean({'cards':cards,'method':orders.attrs['cohort_model']['method'],
                               'overrides':load_overrides(session, plan.week_start)})
+
+
+def undo_context(session, plan, edit_id):
+    edit = session.get(Decision, edit_id)
+    if edit is None or edit.plan_id != plan.id or edit.key != 'set_override':
+        raise HTTPException(404, 'Edit not found')
+    value = edit.value
+    if value.get('undone_at'):
+        return {'edit_id':edit.id,'undone':True,'affected_orders':[]}
+    before, after = value['before'], value['after']
+    if order_snapshot(session,plan) != after['orders'] or load_overrides(session) != after['overrides']:
+        raise HTTPException(409, 'Later order or context edits exist. Undo those changes first.')
+    current_watches = [service.row(x) for x in service.objects(session, WatchItem, plan.id)]
+    if current_watches != after['watches']:
+        raise HTTPException(409, 'Watch changes were made after this edit. Restore those changes before undoing it.')
+    save_overrides(session, before['overrides'])
+    session.execute(delete(PurchaseSuggestion).where(PurchaseSuggestion.plan_id == plan.id))
+    session.execute(delete(WatchItem).where(WatchItem.plan_id == plan.id))
+    for data in before['orders']:
+        row = dict(data)
+        row['order_date'] = date.fromisoformat(row['order_date'])
+        session.add(PurchaseSuggestion(**row))
+    for data in before['watches']:
+        session.add(WatchItem(**data))
+    plan.summary = deepcopy(before['summary'])
+    plan.stage = before['stage']
+    plan.locked_at = datetime.fromisoformat(before['locked_at']) if before['locked_at'] else None
+    edit.value = {**value,'undone_at':datetime.now().isoformat()}
+    return {'edit_id':edit.id,'undone':True,'before':after,'after':before,
+            'affected_orders':[{'sku':x['sku'],'before':x['after'],'after':x['before'],
+                                'factor_before':x['factor_after'],'factor_after':x['factor_before']}
+                               for x in value['affected_orders']]}
+
+
+@router.post('/plans/{pid}/edits/{edit_id}/undo')
+def undo_edit(pid: str, edit_id: int):
+    with service.session_scope() as session:
+        plan = service.plan_for(session,pid,['discover','direction','execute'])
+        return undo_context(session,plan,edit_id)

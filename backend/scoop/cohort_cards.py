@@ -27,7 +27,13 @@ def build_cards(result, orders, baseline, products, groups, names):
         if any(t['id'].startswith('district:') for t in leaf['tag_path']):
             title += ' · '+', '.join(leaf['districts'])
         skus = [s for s in leaf['skus'] if s in actual.index and s in plain.index]
-        delta_cases = 0
+        units = [u for u in result['units'] if u['leaf_id']==leaf['id']]
+        shares = {}
+        for sku in skus:
+            total = sum(u.get('expected_recent',0) for u in result['units'] if u['sku']==sku)
+            local = sum(u.get('expected_recent',0) for u in units if u['sku']==sku)
+            shares[sku] = local/total if total else 0.
+        delta_cases = 0.
         delta_pallets = 0.
         saved_margin = 0.
         per_sku = []
@@ -37,12 +43,13 @@ def build_cards(result, orders, baseline, products, groups, names):
             sigma = max(0., float(a.demand_p90-a.demand_p10)/2.5632)
             saved = _shortage(float(a.demand_p50),sigma,float(a.inventory_position+b.final_cases*p.units_per_case)) - _shortage(float(a.demand_p50),sigma,float(a.inventory_position+a.final_cases*p.units_per_case))
             margin = saved * float(p.price_hkd-p.cost_hkd)
-            delta_cases += difference
-            delta_pallets += difference/float(p.cases_per_pallet)
-            saved_margin += margin
+            delta_cases += difference * shares[sku]
+            delta_pallets += difference * shares[sku]/float(p.cases_per_pallet)
+            saved_margin += margin * shares[sku]
             per_sku.append({'sku':sku,'name':names.get(sku,sku), 'before_cases':int(b.final_cases),
                             'cases':int(a.final_cases), 'case_change':difference,
-                            'expected_lost_margin_avoided':float(margin),**result['sku_factors'][sku]})
+                            'district_forecast_share':shares[sku],
+                            'expected_lost_margin_avoided':float(margin * shares[sku]),**result['sku_factors'][sku]})
         units = [u for u in result['units'] if u['leaf_id']==leaf['id']]
         excess = {s:sum(u.get('recent_A',0)-u.get('recent_E',0) for u in units if u['sku']==s) for s in skus}
         representative = min(skus, key=lambda s:(-excess[s], names.get(s,s))) if skus else None
@@ -51,11 +58,11 @@ def build_cards(result, orders, baseline, products, groups, names):
                       'tag_path':leaf['tag_path'],'districts':leaf['districts'],'skus':skus,
                       'effect_pct':float(np.expm1(leaf['posterior_mean'])*100),
                       'interval_pct':[float(np.expm1(low)*100),float(np.expm1(high)*100)],
-                      'sku_factors':per_sku,'case_change':delta_cases,
+                      'sku_factors':per_sku,'case_change':round(delta_cases),
                       'expected_lost_margin_avoided':float(saved_margin),'pallet_change':delta_pallets,
                       'peak_capacity':float(orders.projected_pallets.max()),
                       'representative_sku':representative,'override_ids':override_ids,
                       'method':{'leaf':leaf,'units':units,'trace':result['method'],
-                                'order_impact_scope':'SKU-level total after district aggregation',
+                                'order_impact_scope':'SKU order differences allocated by each leaf district forecast share; case total rounded. Disjoint district leaves do not duplicate total value.',
                                 'value_method':'Normal expected shortage difference under the adjusted demand distribution'}})
     return sorted(cards,key=lambda c:(-c['expected_lost_margin_avoided'], -abs(c['case_change']), c['name']))

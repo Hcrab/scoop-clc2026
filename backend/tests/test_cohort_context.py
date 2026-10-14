@@ -61,3 +61,16 @@ def test_context_api_passes_saved_definition_into_recompute_and_returns_diff(api
     assert client.get('/api/plans/NEXT/overrides').json()[0]['value'] == '2026-08-10'
     with scope() as session:
         assert session.get(Plan,'TESTAPI').summary['cohort_model']['sku_factors']['IC001']['f50'] == 1.
+
+    restored = client.post(f"/api/plans/TESTAPI/edits/{data['edit_id']}/undo")
+    assert restored.status_code == 200, restored.text
+    from scoop.api.cohorts import order_snapshot
+    from scoop.models import WatchItem
+    from scoop.api import service
+    with scope() as session:
+        plan = session.get(Plan,'TESTAPI')
+        assert order_snapshot(session,plan) == data['before']['orders']
+        assert plan.summary == data['before']['summary']
+        assert [service.row(x) for x in service.objects(session,WatchItem,plan.id)] == data['before']['watches']
+        assert load_overrides(session) == data['before']['overrides']
+    assert client.post(f"/api/plans/TESTAPI/edits/{data['edit_id']}/undo").status_code == 200
