@@ -14,7 +14,7 @@ const signed = (v:number, digits=1) => `${v>0?'+':''}${n(v,digits)}`;
 
 export function CohortCards({detail,revision,onChanged}:{detail:Detail;revision:number;onChanged:()=>void}) {
   const [data,setData]=useState<Cohorts|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[edit,setEdit]=useState<Edit|null>(null);
-  useEffect(()=>{const latest=[...detail.decisions].reverse().find(d=>d.key==='set_override'&&!(d.value as {undone_at?:string})?.undone_at);if(latest){const value=latest.value as Edit;setEdit({edit_id:Number(latest.id),affected_orders:value.affected_orders})}else setEdit(null)},[detail.decisions]);
+  useEffect(()=>{const latest=[...detail.decisions].reverse().find(d=>['set_override','bulk_edit_orders','goal_edit'].includes(d.key)&&!(d.value as {undone_at?:string})?.undone_at);if(latest){const value=latest.value as Edit;setEdit({edit_id:Number(latest.id),affected_orders:value.affected_orders})}else setEdit(null)},[detail.decisions]);
   const [service,setService]=useState(detail.plan.service_level==null?'':String(detail.plan.service_level*100));
   const path=`/plans/${encodeURIComponent(detail.plan.id)}`;
   useEffect(()=>{setService(detail.plan.service_level==null?'':String(detail.plan.service_level*100))},[detail.plan.service_level]);

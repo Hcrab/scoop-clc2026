@@ -316,7 +316,8 @@ def suggest_orders(as_of: date, directions: list[dict], service_level: float | N
                    pending_arrivals: dict | None = None, weather_scenario=None,
                    cohort_result: dict | None = None, overrides: list[dict] | None = None,
                    capacity_limit: float | None = None,
-                   apply_case_overrides: bool = True) -> pd.DataFrame:
+                   apply_case_overrides: bool = True,
+                   initial_cases: dict[str, int] | None = None) -> pd.DataFrame:
     art = artifacts()
     st = art.static
     monthly = art.run_for(as_of)
@@ -346,7 +347,7 @@ def suggest_orders(as_of: date, directions: list[dict], service_level: float | N
     capacity = float(read_sql("SELECT capacity_pallets FROM nodes WHERE id = 'DC1'").capacity_pallets.iloc[0])
     baseline, arrival_mask = capacity_projection(as_of, pos, st, model, adj, pending_arrivals, weather_scenario=weather_scenario)
     plan = plan_orders(items, monthly.ratio_values, capacity if capacity_limit is None else capacity_limit, service_level,
-                       capacity_baseline=baseline, arrival_mask=arrival_mask)
+                       capacity_baseline=baseline, arrival_mask=arrival_mask, initial_cases=initial_cases)
     wd = prod.order_weekday.reindex(plan.sku).to_numpy()
     case_edits = cohort_result.get('cases_overrides', {}) if apply_case_overrides else {}
     if case_edits:

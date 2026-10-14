@@ -12,7 +12,7 @@ The user's final handoff (`pasted-text-1.txt`, attachment 6b5dc399-bd07-404a-850
 
 ## Remaining phases
 
-P1 null-world acceptance failed (12/17 weeks unsplit, 70.6% versus required 95%). P2 contextual overrides and uncertainty propagation, P3 agent tools and grounding, P4 unified pages/dashboard/Play, P5 typography and copy cleanup, P6 demo week selection, P7 documentation and clean-clone setup, P8 browser walkthrough and screenshot delivery are not yet implemented or verified.
+P1 null-world acceptance failed (12/17 weeks unsplit, 70.6% versus required 95%). P2 context controls and P3 report/tool work are implemented in part, with evidence below. P3 unified widget tools, P4 unified pages/dashboard/Play, P5 typography and copy cleanup, P6 demo week selection, P7 documentation and clean-clone setup, and P8 full browser walkthrough remain incomplete.
 
 ## Existing state and exclusions
 
@@ -35,7 +35,7 @@ The previously implemented Trend Explorer and hand-drawn report charts are not t
 - Read-only seed 93 / 27 July fit: 300 units, 6 leaves. The path water-based AND strawberry AND not-high-price-per-100ml isolates exactly IC006, IC061, IC062 and IC063. Their factors are 1.9979, 2.0560, 1.9732 and 1.9783, below raw recent observed/expected ratios 2.1855, 2.2708, 2.1560 and 2.2696. Evidence: `reports/cohort-seed93-evaluation.json`.
 - Read-only integrated order calculation: the four final case quantities are 42, 31, 101 and 54. Projected warehouse peak is 69.6741 pallets, including inherited stock/pipeline; this is not a claim that occupancy is below the 56-pallet physical limit.
 - Synthetic null-unit test: 19/20 weeks remain unsplit. This is not a substitute for the requested actual null world. `scripts/evaluate-cohort-null.py` trains monthly forecasts against `null_orders(93)` and evaluates the same preparation/fitting path without altering the demo database; its result is 12/17 weeks unsplit (70.5882%), below the required 95%. Five root splits occur on 11 May, 29 June, 27 July, 10 August and 24 August. Full evidence: `reports/cohort-null-evaluation.json`. No parameters have been tuned.
-- P2 uncertainty propagation, overrides and enriched cards remain unimplemented.
+- P2 work followed this checkpoint; see the subsequent section.
 
 ### P1 unresolved acceptance and next phase
 
@@ -54,4 +54,15 @@ P1 is not complete. The specified max-gain paired-permutation procedure fails th
 
 ### Checkpoint delivery status
 
-P1 integration and its failed null acceptance were committed locally as `7f69ea1`. This continuation has not pushed the newer checkpoints because the phase-level acceptance is still incomplete. The earlier user-requested push at `ea5e8f8` succeeded. P3–P8 remain outstanding; no overall completion is claimed.
+User-requested checkpoints were pushed at `14862b3` and `c998d62`; these are work-in-progress snapshots, not phase acceptance claims. P1's null acceptance remains unresolved. P3–P8 remain outstanding; no overall completion is claimed.
+
+### P2/P3 subsequent implementation and verification
+
+- Cohort cards and context controls now render alongside the report. In the actual seed-93 browser flow, an end date of 10 August changed the leading card from +231 to +158 cases; Undo restored +231 and the previous Execute stage. This verifies the direct control path, not the required live-agent utterance.
+- Report charts now use application-rendered `Chart` data from evidence. The renderer test passed in Edge and saved `docs/screenshots/report-chart-renderer-fixture.png`. Its report is explicitly a fixture; it is not a regenerated Gemini report or the full P8 walkthrough.
+- Report claim grounding checks cited numbers, percentage units and dates, with one repair round before offline fallback. Full method traces are retained in program evidence but omitted from the initial model context to keep the request manageable.
+- Context, goal and batch quantity edits record snapshots and expose shared Undo receipts. Capacity fitting now starts the existing greedy cut from current case quantities, preserving manual quantities whenever the requested space limit already fits. Derived card/report refreshes no longer invalidate Undo; later business-state edits still do.
+- Focused verification after these corrections: 9 bulk-order/context tests passed; TypeScript and Vite build passed. Full backend suite: 185 passed, one existing Starlette/AnyIO warning. The first run had four temporary-directory permission errors and one obsolete classification-flow assertion; using a dedicated runtime temp directory and replacing that assertion with the current no-classification behavior resolved them. Edge renderer test: 1 passed (17.6 seconds); screenshot inspected with chart, time controls and query visible.
+- Remaining P3 work includes shared dashboard/widget tools and verifying the specified utterance in the actual chat. Remaining P4 work includes grouped editable orders, server-side dashboard layout, the complete consequence window and result presentation.
+
+Earlier P2 checkpoint paragraphs describe the state at that checkpoint; the frontend and Undo limitations there have since been addressed as recorded above. The active seed-93 warehouse capacity is 68 pallets; the older reference to 56 pallets above is stale and must not be used to interpret current capacity results.

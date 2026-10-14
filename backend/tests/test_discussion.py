@@ -63,16 +63,21 @@ def test_duplicate_adds_and_foreign_ids_cannot_cross_plans(api):
             assert any(item['title']==title for item in result['discussion']['items'])
 
 
-def test_answered_seeds_and_offline_classification_resolve(api):
+def test_answered_topics_resolve_but_removed_classification_does_not_edit(api):
     client, scope, _, _=api
     with scope() as session:session.get(Question,'TESTAPI-Q').answer='weather'
     assert client.get('/api/plans/TESTAPI').json()['discussion']['open_count']==0
     with scope() as session:
         session.get(Question,'TESTAPI-Q').answer=None
         session.get(Plan,'TESTAPI').summary={}
+    before=client.get('/api/plans/TESTAPI').json()
     result=client.post('/api/plans/TESTAPI/chat',json={'message':'Record this as persistent','stage':'discover','context':{'finding_id':'TESTAPI-F'}}).json()
-    assert result['discussion']['open_count']==0
-    assert result['actions'][0]['type']=='classification'
+    assert result['discussion']['open_count']==1
+    assert result['actions']==[]
+    after=client.get('/api/plans/TESTAPI').json()
+    assert after['orders']==before['orders']
+    assert after['decisions']==before['decisions']
+    assert 'classify_finding' not in {d['name'] for d in tools.declarations()}
 
 
 def test_informational_model_agenda_edit_preserves_business_and_stream_contract(api,monkeypatch):

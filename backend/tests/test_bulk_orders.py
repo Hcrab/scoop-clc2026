@@ -70,11 +70,16 @@ def test_filter_percent_persistence_and_exact_undo(api,monkeypatch):
         assert load_overrides(session)[0]['value']=={'sku':'IC001','cases':5}
         assert session.get(PurchaseSuggestion,('TESTAPI','IC001')).final_cases==5
         assert session.get(PurchaseSuggestion,('TESTAPI','IC002')).final_cases is None
+        # Opening the cards refreshes derived evidence after the edit receipt.
+        plan=session.get(Plan,'TESTAPI')
+        plan.summary={**plan.summary,'cohort_cards':[{'id':'refreshed'}],
+                      'cohort_model':{'leaves':[]},'discussion':{'messages':['kept']}}
     undo=client.post(f"/api/plans/TESTAPI/edits/{result['edit_id']}/undo")
     assert undo.status_code==200,undo.text
     with scope() as session:
         assert load_overrides(session)==[]
         assert order_snapshot(session,session.get(Plan,'TESTAPI'))[0]['suggested_cases']==3
+        assert session.get(Plan,'TESTAPI').summary['discussion']=={'messages':['kept']}
 
 
 def test_set_cases_and_invalid_filter_are_atomic(api,monkeypatch):
@@ -114,7 +119,9 @@ def test_fit_capacity_persists_whole_plan_and_reports_unavoidable_excess(api,mon
     original=planning.suggest_orders
     calls=[]
     def track(*args,**kwargs):
-        if kwargs.get('capacity_limit') is not None:calls.append(kwargs['capacity_limit'])
+        if kwargs.get('capacity_limit') is not None:
+            calls.append(kwargs['capacity_limit'])
+            assert kwargs['initial_cases']=={'IC001':3,'IC002':4}
         return original(*args,**kwargs)
     monkeypatch.setattr(planning,'suggest_orders',track)
     monkeypatch.setattr(planning,'confirmation_capacity',lambda day,cases:{
@@ -146,3 +153,16 @@ def test_fit_capacity_uses_existing_greedy_and_reports_inherited_excess():
     assert tight.final_cases.sum()<loose.final_cases.sum()
     assert tight.inherited_overcapacity_pallets.iloc[0]>0
     assert tight.projected_pallets.iloc[0]>=tight.inherited_overcapacity_pallets.iloc[0]+.9
+
+
+def test_capacity_fit_starts_from_current_cases_instead_of_new_recommendation():
+    item=SkuInput(sku='A',mean=10,pdays=7,price=20,cost=10,units_per_case=10,
+        cases_per_pallet=10,moq_cases=1,on_hand=20,on_order=0,lead_days=2)
+    ratios=np.array([.8,1,1.2])
+    assert plan_orders([item],ratios,2).final_cases.iloc[0]==0
+    retained=plan_orders([item],ratios,2,initial_cases={'A':9})
+    assert retained.final_cases.iloc[0]==9
+    reduced=plan_orders([item],ratios,.7,initial_cases={'A':9})
+    assert reduced.final_cases.iloc[0]==5
+    assert reduced.capacity_cut_cases.iloc[0]==4
+    assert reduced.projected_pallets.iloc[0]<=.7+1e-10

@@ -140,8 +140,9 @@ def bulk_edit_orders(session, plan, request, source='ui'):
         target=capacity.capacity_pallets*value
         directions=[service.row(d) for d in service.objects(session,DirectionItem,plan.id)]
         result=suggest_orders(plan.week_start,directions,service_level=plan.service_level,goal=plan.goal,
-                              overrides=load_overrides(session,plan.week_start),capacity_limit=target,apply_case_overrides=False)
-        cases={r.sku:min(current[r.sku],int(r.final_cases)) for r in result.itertuples()}
+                              overrides=load_overrides(session,plan.week_start),capacity_limit=target,
+                              apply_case_overrides=False,initial_cases=current)
+        cases={r.sku:int(r.final_cases) for r in result.itertuples()}
     for sku,count in cases.items():
         put_override(session,{'tag_path':[],'districts':[],'type':'cases','value':{'sku':sku,'cases':count},'note':'Order quantity edit'})
     session.flush()
@@ -244,8 +245,10 @@ def undo_context(session, plan, edit_id):
         return {'edit_id':edit.id,'undone':True,'affected_orders':[]}
     before, after = value['before'], value['after']
     current = edit_snapshot(session,plan)
-    current_summary={k:v for k,v in (current['summary'] or {}).items() if k!='discussion'}
-    after_summary={k:v for k,v in (after['summary'] or {}).items() if k!='discussion'}
+    # Read-time model/card refreshes and conversation do not edit the plan.
+    derived = {'discussion', 'cohort_model', 'cohort_cards', 'weekly_review'}
+    current_summary={k:v for k,v in (current['summary'] or {}).items() if k not in derived}
+    after_summary={k:v for k,v in (after['summary'] or {}).items() if k not in derived}
     if {**current,'summary':current_summary} != {**after,'summary':after_summary}:
         raise HTTPException(409, 'Later plan edits exist. Undo those changes first.')
     save_overrides(session, before['overrides'])

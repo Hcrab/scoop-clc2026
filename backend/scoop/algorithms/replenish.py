@@ -85,7 +85,8 @@ def _uncertain_ratio_quantiles(ratios: np.ndarray, variance: float, probabilitie
 
 
 def plan_orders(items: list[SkuInput], ratios: np.ndarray, capacity_pallets: float, service_level: float | None = None, capacity_baseline: np.ndarray | None = None,
-                arrival_mask: np.ndarray | None = None) -> pd.DataFrame:
+                arrival_mask: np.ndarray | None = None,
+                initial_cases: dict[str, int] | None = None) -> pd.DataFrame:
     rows = []
     for it in items:
         cr = critical_ratio(it.price, it.cost, service_level)
@@ -99,6 +100,8 @@ def plan_orders(items: list[SkuInput], ratios: np.ndarray, capacity_pallets: flo
         cases = math.ceil(need / it.units_per_case) if need > 0 else 0
         if cases:
             cases = max(cases, it.moq_cases)
+        if initial_cases is not None:
+            cases = initial_cases.get(it.sku, 0)
         rows.append({
             "sku": it.sku,
             "pdays": it.pdays,
