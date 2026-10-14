@@ -44,7 +44,7 @@ def test_duplicate_adds_and_foreign_ids_cannot_cross_plans(api):
         other=Plan(id='OTHER',week_start=date(2026,6,29),stage='execute',goal='margin',created_at=datetime.now(),summary={})
         session.add(other);session.flush()
         plan=session.get(Plan,'TESTAPI')
-        args={'operation':'add','title':'Check heat next week','finding_id':'TESTAPI-F','note':'Follow up'}
+        args={'operation':'add','title':'Could next week’s heat change store demand?','finding_id':'TESTAPI-F','note':'Follow up'}
         first,_=tools.execute('update_discussion',args,session,plan,'discover')
         second,_=tools.execute('update_discussion',args,session,plan,'discover')
         assert first==second and len(second['discussion']['items'])==2
@@ -58,6 +58,9 @@ def test_duplicate_adds_and_foreign_ids_cannot_cross_plans(api):
             tools.execute('update_discussion',{'operation':'add','title':'x'*161},session,plan,'discover')
         with pytest.raises(ValidationError):
             tools.execute('update_discussion',{'operation':'add','title':'Heat','note':'x'*2001},session,plan,'discover')
+        for title in ['Monitor demand next week','Monitor demand next week?','Understand the change?']:
+            result,_=tools.execute('update_discussion',{'operation':'add','title':title},session,plan,'discover')
+            assert any(item['title']==title for item in result['discussion']['items'])
 
 
 def test_answered_seeds_and_offline_classification_resolve(api):

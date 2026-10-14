@@ -523,6 +523,9 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
                             assumption=w["assumption"], scope=w["scope"], origin=w["origin"], status="active"))
         if accept_defaults:
             s.add(Decision(plan_id=pid, stage="direction", key="accepted_ai_draft", value={"directions": len(directions)}, source="system", created_at=now))
+        from .algorithms.trend_scan import scan
+        plan=s.get(Plan,pid)
+        plan.summary={**plan.summary,'raw_trends':scan(s,plan)}
     return pid
 
 

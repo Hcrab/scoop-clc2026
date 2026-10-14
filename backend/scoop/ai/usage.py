@@ -13,6 +13,10 @@ LEDGER = ROOT / 'data' / 'cache' / 'assistant-usage.sqlite3'
 INPUT_USD_PER_MILLION = 1.5
 OUTPUT_USD_PER_MILLION = 7.5
 
+def rates(model):
+    # Argon standard rates after its introductory period; reserve conservatively.
+    return (4.0,20.0) if model.startswith('gemini-4') else (INPUT_USD_PER_MILLION,OUTPUT_USD_PER_MILLION)
+
 
 class UsageLimit(Exception):
     pass
@@ -36,7 +40,8 @@ def ledger(path=None):
 
 
 def reserve(model, request_hash, max_input_tokens, max_output_tokens, *, path=None):
-    amount=(max_input_tokens*INPUT_USD_PER_MILLION+max_output_tokens*OUTPUT_USD_PER_MILLION)/1_000_000
+    input_rate,output_rate=rates(model)
+    amount=(max_input_tokens*input_rate+max_output_tokens*output_rate)/1_000_000
     with ledger(path) as db:
         db.execute('BEGIN IMMEDIATE')
         total,count=db.execute('SELECT COALESCE(SUM(COALESCE(estimated_usd,reserved_usd)),0), COUNT(*) FROM calls').fetchone()
@@ -50,8 +55,10 @@ def reserve(model, request_hash, max_input_tokens, max_output_tokens, *, path=No
 def finish(rid, usage, status='ok', *, path=None):
     incoming=int(usage.get('promptTokenCount',0))
     outgoing=int(usage.get('candidatesTokenCount',0))+int(usage.get('thoughtsTokenCount',0))
-    amount=(incoming*INPUT_USD_PER_MILLION+outgoing*OUTPUT_USD_PER_MILLION)/1_000_000
     with ledger(path) as db:
+        model=db.execute('SELECT model FROM calls WHERE id=?',(rid,)).fetchone()[0]
+        input_rate,output_rate=rates(model)
+        amount=(incoming*input_rate+outgoing*output_rate)/1_000_000
         # Unknown transport outcomes retain the reservation rather than pretending zero use.
         db.execute('UPDATE calls SET status=?,input_tokens=?,output_tokens=?,estimated_usd=? WHERE id=?',
                    (status,incoming,outgoing,amount if usage else None,rid))

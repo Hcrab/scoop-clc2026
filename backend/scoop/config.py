@@ -18,10 +18,10 @@ class Settings:
         "DATABASE_URL", "postgresql+psycopg://postgres:postgres@localhost:5432/scoop"
     )
     llm_provider: str = os.getenv("SCOOP_LLM_PROVIDER", "scripted")
-    gemini_model: str = os.getenv("SCOOP_GEMINI_MODEL", "gemini-3.8-flash")
+    gemini_model: str = os.getenv("SCOOP_GEMINI_MODEL", "gemini-4-argon")
     llm_budget_usd: float = float(os.getenv("SCOOP_LLM_BUDGET_USD", "3"))
     llm_max_calls: int = int(os.getenv("SCOOP_LLM_MAX_CALLS", "120"))
-    llm_timeout_seconds: float = float(os.getenv("SCOOP_LLM_TIMEOUT_SECONDS", "35"))
+    llm_timeout_seconds: float = float(os.getenv("SCOOP_LLM_TIMEOUT_SECONDS", "75"))
     reports_dir: Path = ROOT / "reports"
     seed: int = int(os.getenv("SCOOP_SEED", "42"))
 

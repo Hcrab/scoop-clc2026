@@ -29,6 +29,7 @@ from .catalog import (
     FORMAT_CASES_PER_PALLET,
     FORMAT_UNITS_PER_CASE,
     PRODUCTS,
+    SEED93_PRODUCTS,
     SUPPLIERS,
 )
 
@@ -99,7 +100,7 @@ def _ramp(days: np.ndarray, start: date, full: date, peak: float) -> np.ndarray:
 # --------------------------------------------------------------------------- catalog
 
 
-def build_catalog(rng: np.random.Generator):
+def build_catalog(rng: np.random.Generator, *, seed: int | None = None):
     stores = []
     n = 1
     for district, names in DISTRICTS.items():
@@ -128,7 +129,8 @@ def build_catalog(rng: np.random.Generator):
     )
 
     products, nutrition, ptags = [], [], []
-    for k, (name, brand, fmt, flavours, family, dairy, rich, sweet, features, health, size_ml, price) in enumerate(PRODUCTS, 1):
+    catalog = PRODUCTS + SEED93_PRODUCTS if seed == 93 else PRODUCTS
+    for k, (name, brand, fmt, flavours, family, dairy, rich, sweet, features, health, size_ml, price) in enumerate(catalog, 1):
         sku = f"IC{k:03d}"
         cost = round(price * rng.uniform(0.52, 0.62), 2)
         upc = FORMAT_UNITS_PER_CASE[fmt]
@@ -415,7 +417,7 @@ def null_orders(seed: int = 42) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
     rng = np.random.default_rng(seed)
     days = _dates()
-    stores, _, products, _, _, _, product_tags = build_catalog(rng)
+    stores, _, products, _, _, _, product_tags = build_catalog(rng, seed=seed)
     weather, _, _ = build_weather(rng, days)
     orders, _, _ = build_demand(rng, days, stores, products, product_tags, weather, planted=False)
     idx = pd.MultiIndex.from_product([days, stores.id, products.sku], names=["date", "store_id", "sku"])
@@ -426,9 +428,18 @@ def null_orders(seed: int = 42) -> tuple[pd.DataFrame, pd.DataFrame]:
 def generate(seed: int = 42) -> World:
     rng = np.random.default_rng(seed)
     days = _dates()
-    stores, suppliers, products, nutrition, tag_dimensions, tags, product_tags = build_catalog(rng)
+    stores, suppliers, products, nutrition, tag_dimensions, tags, product_tags = build_catalog(rng, seed=seed)
     weather, forecasts, _ = build_weather(rng, days)
     orders, promotions, events = build_demand(rng, days, stores, products, product_tags, weather)
+    if seed == 91:
+        from .challenge import inject
+        events = pd.concat([events, inject(orders, days, stores, products)], ignore_index=True)
+    if seed == 92:
+        from .combination_challenge import inject
+        events = pd.concat([events, inject(orders, days, stores, products, nutrition, product_tags)], ignore_index=True)
+    if seed == 93:
+        from .strawberry_challenge import inject
+        events = pd.concat([events, inject(orders, days, stores, products, product_tags)], ignore_index=True)
     shipped, inventory, purchase_orders = simulate_dc(rng, days, stores, products, suppliers, orders)
 
     n_d, n_s, n_i = orders.shape

@@ -30,6 +30,7 @@ class DiscussionArgs(Parameters):
     finding_id:str|None=Field(default=None,max_length=120)
 
 
+
 class OrderArgs(Parameters):
     sku:str
 
@@ -86,11 +87,13 @@ MUTATING={'classify_finding','set_goal','set_direction','add_watch'}
 
 
 def declarations():
+    from .exploration_tools import declarations as exploration_declarations
     return [{'name':name,'description':description,'parametersJsonSchema':model.model_json_schema()}
-            for name,(model,description) in TOOL_MODELS.items()]
+            for name,(model,description) in TOOL_MODELS.items()]+exploration_declarations()
 
 
 def context(session,plan,focus=None):
+    import json
     from ..discussion import view
     from ..api.service import clean,objects,row
     from .narrator import saved_explanation
@@ -99,6 +102,8 @@ def context(session,plan,focus=None):
     return clean({
         'plan':{'id':plan.id,'week_start':plan.week_start,'stage':plan.stage,'goal':plan.goal,'service_level':plan.service_level},
         'discussion':view(session,plan),'focus':focus or {},'data_kind':'synthetic demonstration, not sponsor/customer data',
+        'weekly_review':{k:v for k,v in (plan.summary or {}).get('weekly_review',{}).items() if k in {'status','report','claims','model'}},
+        'review_evidence':[{'id':q['id'],'name':q['name'],'args':q['args'],'result_excerpt':json.dumps(q['result'],ensure_ascii=False)[:2500]} for q in (plan.summary or {}).get('weekly_review',{}).get('queries',[])],
         'cutoff':plan.week_start-timedelta(days=1),
         'findings':[{'id':f.id,'category':f.evidence.get('display',f.tag_id),'tag_id':f.tag_id,'districts':f.evidence.get('districts',[]),'direction':f.direction,'interpretation':f.classification,'summary':saved_explanation(f)} for f in findings],
         'directions':[row(d) for d in objects(session,DirectionItem,plan.id)],
@@ -128,6 +133,9 @@ def _scope(session,args):
 
 def execute(name,arguments,session,plan,stage):
     from ..api.service import clean,objects,row,decision,recompute,validate_direction,DirectionEdit,WatchEdit,add_watch,watch_view,today
+    if name in {'catalog_groups','query_group','query_operations','preview_group_orders'}:
+        from .exploration_tools import execute as explore
+        return clean(explore(name,arguments,session,plan)),None
     if name not in TOOL_MODELS: raise ValueError('This planning tool is not supported.')
     args=TOOL_MODELS[name][0].model_validate(arguments)
     if name=='update_discussion':
