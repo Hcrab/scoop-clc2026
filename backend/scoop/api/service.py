@@ -473,3 +473,18 @@ def chat(pid:str,body:ChatEdit):
     with session_scope() as s:
         result=assistant_answer(s,plan_for(s,pid),body)
     return clean(result)
+
+
+class PlayRequest(BaseModel):
+    days: Literal[7, 14, 21] = 7
+
+@router.post('/plans/{pid}/play')
+def play(pid: str, body: PlayRequest):
+    """Run the warehouse forward from the plan's Monday: this plan's orders vs the moving-average rule."""
+    from ..play import simulate
+    with session_scope() as s:
+        p = plan_for(s, pid)
+        week = p.week_start
+    if week + timedelta(days=body.days - 1) > MAX_DAY: raise HTTPException(422, 'Not enough simulated days after this week to play that long.')
+    try: return clean(simulate(pid, week, body.days))
+    except Exception as exc: raise HTTPException(503, f'Play failed: {type(exc).__name__}: {exc}') from exc
