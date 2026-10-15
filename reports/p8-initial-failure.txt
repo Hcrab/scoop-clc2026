@@ -1,0 +1,26 @@
+
+Running 1 test using 1 worker
+
+
+
+(node:40188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] e2e\walkthrough.spec.ts:5:1 › P8 real Gemini report to evidence, context, orders, widgets and Play result
+  1) e2e\walkthrough.spec.ts:5:1 › P8 real Gemini report to evidence, context, orders, widgets and Play result
+
+    TimeoutError: page.waitForResponse: Timeout 90000ms exceeded while waiting for event "response"
+
+      54 |     const undo=page.waitForResponse(r=>r.url().endsWith(`/edits/${contextEdit}/undo`)&&r.request().method()==='POST');
+      55 |     await receipt.getByRole('button',{name:'Undo',exact:true}).click();expect((await undo).ok()).toBeTruthy();
+    > 56 |     expect(orders(await read())).toEqual(orders(initial));contextEdit=undefined;record.context.exact_undo=true;
+         |                        ^
+      57 |     await settle();await top();
+      58 |     const advance=page.waitForResponse(r=>r.url().endsWith('/advance')&&r.request().method()==='POST');
+      59 |     await page.getByRole('button',{name:'Review orders',exact:true}).click();expect((await advance).ok()).toBeTruthy();
+        at C:\Users\ping\Documents\Codex\2026-10-14\new-chat\work\scoop-clc2026\frontend\e2e\walkthrough.spec.ts:56:24
+
+    Error Context: test-results\walkthrough-P8-real-Gemini-94712-ers-widgets-and-Play-result\error-context.md
+
+
+  1 failed
+    e2e\walkthrough.spec.ts:5:1 › P8 real Gemini report to evidence, context, orders, widgets and Play result

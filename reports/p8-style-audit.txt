@@ -1,0 +1,12 @@
+COMMAND: rg --pcre2 -n -o font-size\s*:\s*(?!\s|var\(|inherit\b|unset\b)[^;}\n]+ frontend/src
+EXIT: 1
+(no matches)
+COMMAND: rg --pcre2 -n -o font\s*:[^;}\n]*\b\d+(?:\.\d+)?(?:px|rem|em|pt)\b frontend/src
+EXIT: 1
+(no matches)
+COMMAND: rg -n fontSize frontend/src
+EXIT: 1
+(no matches)
+COMMAND: rg -n -o -i MAKE EVERY CASE COUNT|Follow the evidence\. Set a clear direction\. Buy with confidence\.|The right stock, on the right day\.|One warehouse\. A smarter weekly rhythm\.|Where demand is changing|Keep attention where it matters frontend/src backend/scoop
+EXIT: 1
+(no matches)

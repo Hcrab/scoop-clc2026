@@ -1,0 +1,5165 @@
+{
+  "mocked_responses": false,
+  "plan": "P20260720",
+  "screens": [
+    "docs/screenshots/p8-01-report.png",
+    "docs/screenshots/p8-02-report-observation.png",
+    "docs/screenshots/p8-03-report-source.png",
+    "docs/screenshots/p8-04-cohort-evidence.png",
+    "docs/screenshots/p8-05-context-diff.png",
+    "docs/screenshots/p8-06-orders.png",
+    "docs/screenshots/p8-07-dashboard.png",
+    "docs/screenshots/p8-08-widget-preview.png",
+    "docs/screenshots/p8-09-gemini-widget.png",
+    "docs/screenshots/p8-10-play.png",
+    "docs/screenshots/p8-11-result.png",
+    "docs/screenshots/p8-12-comparison.png",
+    "docs/screenshots/p8-13-two-policy-chart.png"
+  ],
+  "widget_edit_ids": [
+    96,
+    97
+  ],
+  "errors": [],
+  "initial": {
+    "stage": "discover",
+    "locked_at": null,
+    "goal": "margin",
+    "service_level": null,
+    "orders": [
+      {
+        "plan_id": "P20260720",
+        "sku": "IC001",
+        "order_date": "2026-07-23",
+        "protection_days": 18,
+        "demand_p10": 2546.654198607746,
+        "demand_p50": 2740.3998716217106,
+        "demand_p90": 2940.1704274066465,
+        "adjustment": 1.1608835952534786,
+        "critical_ratio": 0.7833260963960051,
+        "target_units": 2857.962074490655,
+        "on_hand_units": 382,
+        "on_order_units": 1640,
+        "inventory_position": 2022,
+        "suggested_cases": 21,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "18-day protection period: p50 demand 2,740 units; adjusted +16% for this week's cohort signal; target 2,858 at the 78% service point; position 2,022 (on hand 382 + on order 1,640).",
+        "name": "Mango Splash Ice Bar",
+        "brand": "Sunny Isle",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Sunny Isle Frozen",
+        "effective_cases": 21
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC002",
+        "order_date": "2026-07-23",
+        "protection_days": 18,
+        "demand_p10": 1956.6185248715503,
+        "demand_p50": 2096.5399533860077,
+        "demand_p90": 2243.1707619768235,
+        "adjustment": 1.2177942219630187,
+        "critical_ratio": 0.7804452204277608,
+        "target_units": 2181.5009522757887,
+        "on_hand_units": 165,
+        "on_order_units": 1360,
+        "inventory_position": 1525,
+        "suggested_cases": 17,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "18-day protection period: p50 demand 2,097 units; adjusted +22% for this week's cohort signal; target 2,182 at the 78% service point; position 1,525 (on hand 165 + on order 1,360).",
+        "name": "Lychee Frost Bar",
+        "brand": "Sunny Isle",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Sunny Isle Frozen",
+        "effective_cases": 17
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC003",
+        "order_date": "2026-07-23",
+        "protection_days": 18,
+        "demand_p10": 6460.40762000119,
+        "demand_p50": 6918.6693603012955,
+        "demand_p90": 7392.849095130589,
+        "adjustment": 1.2652626332522043,
+        "critical_ratio": 0.7235772357723577,
+        "target_units": 7133.725311553725,
+        "on_hand_units": 598,
+        "on_order_units": 4280,
+        "inventory_position": 4878,
+        "suggested_cases": 57,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "18-day protection period: p50 demand 6,919 units; adjusted +27% for this week's cohort signal; target 7,134 at the 72% service point; position 4,878 (on hand 598 + on order 4,280).",
+        "name": "Watermelon Chill Bar",
+        "brand": "Sunny Isle",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Sunny Isle Frozen",
+        "effective_cases": 57
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC004",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 2504.028552786784,
+        "demand_p50": 2693.8995369854456,
+        "demand_p90": 2889.909647236176,
+        "adjustment": 1.1817246862358948,
+        "critical_ratio": 0.7399165507649513,
+        "target_units": 2791.8044015411833,
+        "on_hand_units": 99,
+        "on_order_units": 1152,
+        "inventory_position": 1251,
+        "suggested_cases": 65,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 2,694 units; adjusted +18% for this week's cohort signal; target 2,792 at the 74% service point; position 1,251 (on hand 99 + on order 1,152).",
+        "name": "Passion Fruit Sorbet Cup",
+        "brand": "Coastline",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 65
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC005",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 1943.3196922695165,
+        "demand_p50": 2081.283217334663,
+        "demand_p90": 2223.3041483190805,
+        "adjustment": 1.3041993730594834,
+        "critical_ratio": 0.7462850853054486,
+        "target_units": 2152.3509146036745,
+        "on_hand_units": 10,
+        "on_order_units": 1032,
+        "inventory_position": 1042,
+        "suggested_cases": 47,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 2,081 units; adjusted +30% for this week's cohort signal; target 2,152 at the 75% service point; position 1,042 (on hand 10 + on order 1,032).",
+        "name": "Yuzu Lemon Sorbet Cup",
+        "brand": "Coastline",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 47
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC006",
+        "order_date": "2026-07-20",
+        "protection_days": 11,
+        "demand_p10": 2649.0000093224003,
+        "demand_p50": 2832.019914131699,
+        "demand_p90": 3020.2026644383905,
+        "adjustment": 1.8945306029551892,
+        "critical_ratio": 0.7828241123038812,
+        "target_units": 2942.3329522094696,
+        "on_hand_units": 1169,
+        "on_order_units": 0,
+        "inventory_position": 1169,
+        "suggested_cases": 45,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "11-day protection period: p50 demand 2,832 units; adjusted +89% for this week's cohort signal; target 2,942 at the 78% service point; position 1,169 (on hand 1,169 + on order 0).",
+        "name": "Strawberry Burst Bar",
+        "brand": "Harbour Chill",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Harbour Chill Foods",
+        "effective_cases": 45
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC007",
+        "order_date": "2026-07-23",
+        "protection_days": 15,
+        "demand_p10": 1439.243634178006,
+        "demand_p50": 1559.7061494278246,
+        "demand_p90": 1684.7521473884315,
+        "adjustment": 1.1764680199149864,
+        "critical_ratio": 0.7583883573642366,
+        "target_units": 1626.89006384371,
+        "on_hand_units": 8,
+        "on_order_units": 1048,
+        "inventory_position": 1056,
+        "suggested_cases": 72,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 1,560 units; adjusted +18% for this week's cohort signal; target 1,627 at the 76% service point; position 1,056 (on hand 8 + on order 1,048).",
+        "name": "Mixed Berry Ice Pop 6-Pack",
+        "brand": "Little Panda",
+        "units_per_case": 8,
+        "moq_cases": 2,
+        "supplier_name": "Little Panda Treats",
+        "effective_cases": 72
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC008",
+        "order_date": "2026-07-23",
+        "protection_days": 15,
+        "demand_p10": 807.3282035196563,
+        "demand_p50": 873.1179976482803,
+        "demand_p90": 942.7397061368936,
+        "adjustment": 1.2298976433444886,
+        "critical_ratio": 0.7293318233295583,
+        "target_units": 906.1548269202506,
+        "on_hand_units": 0,
+        "on_order_units": 584,
+        "inventory_position": 584,
+        "suggested_cases": 41,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 873 units; adjusted +23% for this week's cohort signal; target 906 at the 73% service point; position 584 (on hand 0 + on order 584).",
+        "name": "Tropical Ice Pop 6-Pack",
+        "brand": "Little Panda",
+        "units_per_case": 8,
+        "moq_cases": 2,
+        "supplier_name": "Little Panda Treats",
+        "effective_cases": 41
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC009",
+        "order_date": "2026-07-23",
+        "protection_days": 18,
+        "demand_p10": 5837.593460573862,
+        "demand_p50": 6236.097971983539,
+        "demand_p90": 6646.87859681762,
+        "adjustment": 1.2659056032472185,
+        "critical_ratio": 0.7862446268073466,
+        "target_units": 6483.960192435438,
+        "on_hand_units": 1227,
+        "on_order_units": 3640,
+        "inventory_position": 4867,
+        "suggested_cases": 41,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "18-day protection period: p50 demand 6,236 units; adjusted +27% for this week's cohort signal; target 6,484 at the 79% service point; position 4,867 (on hand 1,227 + on order 3,640).",
+        "name": "Coconut Water Ice Bar",
+        "brand": "Sunny Isle",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Sunny Isle Frozen",
+        "effective_cases": 41
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC010",
+        "order_date": "2026-07-21",
+        "protection_days": 15,
+        "demand_p10": 6053.188355325989,
+        "demand_p50": 6395.398020314508,
+        "demand_p90": 6773.517359284088,
+        "adjustment": 1.1074912225447575,
+        "critical_ratio": 0.7238095238095238,
+        "target_units": 6555.607126958409,
+        "on_hand_units": 3799,
+        "on_order_units": 0,
+        "inventory_position": 3799,
+        "suggested_cases": 69,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 6,395 units; adjusted +11% for this week's cohort signal; target 6,556 at the 72% service point; position 3,799 (on hand 3,799 + on order 0).",
+        "name": "Mango Sticky Rice Bar",
+        "brand": "Jade Garden",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Jade Garden Sweets",
+        "effective_cases": 69
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC011",
+        "order_date": "2026-07-21",
+        "protection_days": 15,
+        "demand_p10": 1452.1805713843692,
+        "demand_p50": 1560.3321136786485,
+        "demand_p90": 1672.7909028754455,
+        "adjustment": 1.1687731961206447,
+        "critical_ratio": 0.7433628318584071,
+        "target_units": 1616.736923910161,
+        "on_hand_units": 41,
+        "on_order_units": 960,
+        "inventory_position": 1001,
+        "suggested_cases": 16,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 1,560 units; adjusted +17% for this week's cohort signal; target 1,617 at the 74% service point; position 1,001 (on hand 41 + on order 960).",
+        "name": "Peach Oolong Ice Bar",
+        "brand": "Jade Garden",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Jade Garden Sweets",
+        "effective_cases": 16
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC012",
+        "order_date": "2026-07-24",
+        "protection_days": 16,
+        "demand_p10": 796.01991492181,
+        "demand_p50": 841.0545959198988,
+        "demand_p90": 891.1697087420042,
+        "adjustment": 1.0996302890088256,
+        "critical_ratio": 0.7761194029850746,
+        "target_units": 868.4716390949409,
+        "on_hand_units": 139,
+        "on_order_units": 480,
+        "inventory_position": 619,
+        "suggested_cases": 11,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 841 units; adjusted +10% for this week's cohort signal; target 868 at the 78% service point; position 619 (on hand 139 + on order 480).",
+        "name": "Pineapple Bun Ice Cream Sandwich",
+        "brand": "Kowloon Creamery",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Kowloon Creamery",
+        "effective_cases": 11
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC013",
+        "order_date": "2026-07-22",
+        "protection_days": 12,
+        "demand_p10": 428.1013018051609,
+        "demand_p50": 452.3144224686871,
+        "demand_p90": 479.2612380464556,
+        "adjustment": 1.1005816960471893,
+        "critical_ratio": 0.7638603696098563,
+        "target_units": 466.30723973777293,
+        "on_hand_units": 268,
+        "on_order_units": 0,
+        "inventory_position": 268,
+        "suggested_cases": 34,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "12-day protection period: p50 demand 452 units; adjusted +10% for this week's cohort signal; target 466 at the 76% service point; position 268 (on hand 268 + on order 0).",
+        "name": "Raspberry Ripple Tub",
+        "brand": "Lantau Dairy",
+        "units_per_case": 6,
+        "moq_cases": 2,
+        "supplier_name": "Lantau Dairy Co",
+        "effective_cases": 34
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC014",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 777.3644975723283,
+        "demand_p50": 842.6121313950017,
+        "demand_p90": 910.200087594629,
+        "adjustment": 1.3295832214728067,
+        "critical_ratio": 0.7545668294447458,
+        "target_units": 878.6536981497926,
+        "on_hand_units": 8,
+        "on_order_units": 408,
+        "inventory_position": 416,
+        "suggested_cases": 78,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 843 units; adjusted +33% for this week's cohort signal; target 879 at the 75% service point; position 416 (on hand 8 + on order 408).",
+        "name": "Green Apple Sorbet Tub",
+        "brand": "Coastline",
+        "units_per_case": 6,
+        "moq_cases": 2,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 78
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC015",
+        "order_date": "2026-07-23",
+        "protection_days": 18,
+        "demand_p10": 4589.13459588026,
+        "demand_p50": 4892.9610355628265,
+        "demand_p90": 5215.15728121882,
+        "adjustment": 1.1919038915449849,
+        "critical_ratio": 0.7392120075046905,
+        "target_units": 5050.256385917833,
+        "on_hand_units": 658,
+        "on_order_units": 2760,
+        "inventory_position": 3418,
+        "suggested_cases": 41,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "18-day protection period: p50 demand 4,893 units; adjusted +19% for this week's cohort signal; target 5,050 at the 74% service point; position 3,418 (on hand 658 + on order 2,760).",
+        "name": "Guava Ice Bar",
+        "brand": "Sunny Isle",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Sunny Isle Frozen",
+        "effective_cases": 41
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC016",
+        "order_date": "2026-07-20",
+        "protection_days": 11,
+        "demand_p10": 884.4844440986761,
+        "demand_p50": 934.5182257470108,
+        "demand_p90": 990.0242526320795,
+        "adjustment": 1.1020978754153359,
+        "critical_ratio": 0.7239488117001828,
+        "target_units": 958.0278249326302,
+        "on_hand_units": 414,
+        "on_order_units": 0,
+        "inventory_position": 414,
+        "suggested_cases": 23,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "11-day protection period: p50 demand 935 units; adjusted +10% for this week's cohort signal; target 958 at the 72% service point; position 414 (on hand 414 + on order 0).",
+        "name": "Dragon Fruit Smoothie Cup",
+        "brand": "Harbour Chill",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Harbour Chill Foods",
+        "effective_cases": 23
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC017",
+        "order_date": "2026-07-21",
+        "protection_days": 14,
+        "demand_p10": 1313.8314889519017,
+        "demand_p50": 1389.4620544084046,
+        "demand_p90": 1473.0255715648332,
+        "adjustment": 0.8828964683075362,
+        "critical_ratio": 0.7827191867852605,
+        "target_units": 1437.2651831143287,
+        "on_hand_units": 261,
+        "on_order_units": 720,
+        "inventory_position": 981,
+        "suggested_cases": 12,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "14-day protection period: p50 demand 1,389 units; adjusted -12% for this week's cohort signal; target 1,437 at the 78% service point; position 981 (on hand 261 + on order 720).",
+        "name": "Classic Choc Crunch Bar",
+        "brand": "Polar Peak",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Polar Peak Ltd",
+        "effective_cases": 12
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC018",
+        "order_date": "2026-07-21",
+        "protection_days": 14,
+        "demand_p10": 1948.1204505887506,
+        "demand_p50": 2060.263790502868,
+        "demand_p90": 2184.169936811957,
+        "adjustment": 0.8828964683075362,
+        "critical_ratio": 0.7550104696380497,
+        "target_units": 2123.3191520228834,
+        "on_hand_units": 1956,
+        "on_order_units": 0,
+        "inventory_position": 1956,
+        "suggested_cases": 7,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "14-day protection period: p50 demand 2,060 units; adjusted -12% for this week's cohort signal; target 2,123 at the 76% service point; position 1,956 (on hand 1,956 + on order 0).",
+        "name": "Double Choc Cone",
+        "brand": "Polar Peak",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Polar Peak Ltd",
+        "effective_cases": 7
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC019",
+        "order_date": "2026-07-21",
+        "protection_days": 14,
+        "demand_p10": 3183.9105273133587,
+        "demand_p50": 3388.4312332578565,
+        "demand_p90": 3603.8899649939067,
+        "adjustment": 0.9692226696466625,
+        "critical_ratio": 0.7702702702702703,
+        "target_units": 3508.4454254897178,
+        "on_hand_units": 407,
+        "on_order_units": 1800,
+        "inventory_position": 2207,
+        "suggested_cases": 33,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "14-day protection period: p50 demand 3,388 units; adjusted -3% for this week's cohort signal; target 3,508 at the 77% service point; position 2,207 (on hand 407 + on order 1,800).",
+        "name": "Almond Choc Coated Bar",
+        "brand": "Polar Peak",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Polar Peak Ltd",
+        "effective_cases": 33
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC020",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 1240.3042447199568,
+        "demand_p50": 1318.1592340494553,
+        "demand_p90": 1399.931810230845,
+        "adjustment": 1.0448208884322454,
+        "critical_ratio": 0.7606403748535728,
+        "target_units": 1361.5127743228252,
+        "on_hand_units": 346,
+        "on_order_units": 624,
+        "inventory_position": 970,
+        "suggested_cases": 17,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 1,318 units; adjusted +4% for this week's cohort signal; target 1,362 at the 76% service point; position 970 (on hand 346 + on order 624).",
+        "name": "Dark Choc Truffle Cup",
+        "brand": "Coastline",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 17
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC021",
+        "order_date": "2026-07-22",
+        "protection_days": 12,
+        "demand_p10": 678.9182151589345,
+        "demand_p50": 721.8526001873254,
+        "demand_p90": 766.6418760832676,
+        "adjustment": 1.0467502285073873,
+        "critical_ratio": 0.7315992450972347,
+        "target_units": 742.5079127665217,
+        "on_hand_units": 450,
+        "on_order_units": 0,
+        "inventory_position": 450,
+        "suggested_cases": 49,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "12-day protection period: p50 demand 722 units; adjusted +5% for this week's cohort signal; target 743 at the 73% service point; position 450 (on hand 450 + on order 0).",
+        "name": "Choc Fudge Tub",
+        "brand": "Lantau Dairy",
+        "units_per_case": 6,
+        "moq_cases": 2,
+        "supplier_name": "Lantau Dairy Co",
+        "effective_cases": 49
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC022",
+        "order_date": "2026-07-23",
+        "protection_days": 15,
+        "demand_p10": 852.5106261307625,
+        "demand_p50": 901.5853067531472,
+        "demand_p90": 955.8074706545056,
+        "adjustment": 0.8828964683075362,
+        "critical_ratio": 0.7423305727283331,
+        "target_units": 927.2001377936258,
+        "on_hand_units": 242,
+        "on_order_units": 416,
+        "inventory_position": 658,
+        "suggested_cases": 34,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 902 units; adjusted -12% for this week's cohort signal; target 927 at the 74% service point; position 658 (on hand 242 + on order 416).",
+        "name": "Mini Choc Bites 8-Pack",
+        "brand": "Little Panda",
+        "units_per_case": 8,
+        "moq_cases": 2,
+        "supplier_name": "Little Panda Treats",
+        "effective_cases": 34
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC023",
+        "order_date": "2026-07-20",
+        "protection_days": 11,
+        "demand_p10": 783.7335099438862,
+        "demand_p50": 828.0619376613395,
+        "demand_p90": 877.3085674508727,
+        "adjustment": 1.0997523536667242,
+        "critical_ratio": 0.7569644572526417,
+        "target_units": 852.5655518886986,
+        "on_hand_units": 421,
+        "on_order_units": 0,
+        "inventory_position": 421,
+        "suggested_cases": 18,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "11-day protection period: p50 demand 828 units; adjusted +10% for this week's cohort signal; target 853 at the 76% service point; position 421 (on hand 421 + on order 0).",
+        "name": "Cookies and Cream Sandwich",
+        "brand": "Harbour Chill",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Harbour Chill Foods",
+        "effective_cases": 18
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC024",
+        "order_date": "2026-07-21",
+        "protection_days": 14,
+        "demand_p10": 1400.5641860481908,
+        "demand_p50": 1481.1875096933352,
+        "demand_p90": 1570.2674795172295,
+        "adjustment": 0.8828964683075362,
+        "critical_ratio": 0.7630453378956372,
+        "target_units": 1527.4901775639983,
+        "on_hand_units": 639,
+        "on_order_units": 696,
+        "inventory_position": 1335,
+        "suggested_cases": 9,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "14-day protection period: p50 demand 1,481 units; adjusted -12% for this week's cohort signal; target 1,527 at the 76% service point; position 1,335 (on hand 639 + on order 696).",
+        "name": "Choc Hazelnut Cone",
+        "brand": "Polar Peak",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Polar Peak Ltd",
+        "effective_cases": 9
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC025",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 3680.632678300269,
+        "demand_p50": 3917.403080336353,
+        "demand_p90": 4167.334779557511,
+        "adjustment": 0.9618268025638972,
+        "critical_ratio": 0.7627707943300348,
+        "target_units": 4050.900953239073,
+        "on_hand_units": 2632,
+        "on_order_units": 0,
+        "inventory_position": 2632,
+        "suggested_cases": 36,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 3,917 units; adjusted -4% for this week's cohort signal; target 4,051 at the 76% service point; position 2,632 (on hand 2,632 + on order 0).",
+        "name": "White Choc Raspberry Bar",
+        "brand": "Coastline",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 36
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC026",
+        "order_date": "2026-07-22",
+        "protection_days": 12,
+        "demand_p10": 1006.419671725561,
+        "demand_p50": 1063.3560681985248,
+        "demand_p90": 1126.5996881458718,
+        "adjustment": 1.0998494182260847,
+        "critical_ratio": 0.778108268887567,
+        "target_units": 1098.1689177657336,
+        "on_hand_units": 545,
+        "on_order_units": 0,
+        "inventory_position": 545,
+        "suggested_cases": 24,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "12-day protection period: p50 demand 1,063 units; adjusted +10% for this week's cohort signal; target 1,098 at the 78% service point; position 545 (on hand 545 + on order 0).",
+        "name": "Choc Mint Cup",
+        "brand": "Lantau Dairy",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Lantau Dairy Co",
+        "effective_cases": 24
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC027",
+        "order_date": "2026-07-22",
+        "protection_days": 12,
+        "demand_p10": 417.14025469764005,
+        "demand_p50": 443.5086282532542,
+        "demand_p90": 471.13622018025535,
+        "adjustment": 1.0664295847773075,
+        "critical_ratio": 0.7272727272727273,
+        "target_units": 456.1087858559748,
+        "on_hand_units": 411,
+        "on_order_units": 0,
+        "inventory_position": 411,
+        "suggested_cases": 8,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "12-day protection period: p50 demand 444 units; adjusted +7% for this week's cohort signal; target 456 at the 73% service point; position 411 (on hand 411 + on order 0).",
+        "name": "Vanilla Bean Tub",
+        "brand": "Lantau Dairy",
+        "units_per_case": 6,
+        "moq_cases": 2,
+        "supplier_name": "Lantau Dairy Co",
+        "effective_cases": 8
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC028",
+        "order_date": "2026-07-21",
+        "protection_days": 14,
+        "demand_p10": 1390.3264810322673,
+        "demand_p50": 1468.961613150336,
+        "demand_p90": 1556.3078090437066,
+        "adjustment": 1.102144596375504,
+        "critical_ratio": 0.7841845140032949,
+        "target_units": 1518.4599046816613,
+        "on_hand_units": 554,
+        "on_order_units": 624,
+        "inventory_position": 1178,
+        "suggested_cases": 15,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "14-day protection period: p50 demand 1,469 units; adjusted +10% for this week's cohort signal; target 1,518 at the 78% service point; position 1,178 (on hand 554 + on order 624).",
+        "name": "Vanilla Classic Cone",
+        "brand": "Polar Peak",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Polar Peak Ltd",
+        "effective_cases": 15
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC029",
+        "order_date": "2026-07-24",
+        "protection_days": 16,
+        "demand_p10": 1862.8636515443131,
+        "demand_p50": 1968.2874783344284,
+        "demand_p90": 2085.0741876489806,
+        "adjustment": 1.101621797664426,
+        "critical_ratio": 0.7113062568605929,
+        "target_units": 2013.2015249056988,
+        "on_hand_units": 1423,
+        "on_order_units": 0,
+        "inventory_position": 1423,
+        "suggested_cases": 15,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 1,968 units; adjusted +10% for this week's cohort signal; target 2,013 at the 71% service point; position 1,423 (on hand 1,423 + on order 0).",
+        "name": "Milk Ice Bar",
+        "brand": "Kowloon Creamery",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Kowloon Creamery",
+        "effective_cases": 15
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC030",
+        "order_date": "2026-07-21",
+        "protection_days": 14,
+        "demand_p10": 2076.2642310446704,
+        "demand_p50": 2195.784153615782,
+        "demand_p90": 2327.8406183535762,
+        "adjustment": 0.8828964683075362,
+        "critical_ratio": 0.7835051546391752,
+        "target_units": 2271.588114151425,
+        "on_hand_units": 473,
+        "on_order_units": 1120,
+        "inventory_position": 1593,
+        "suggested_cases": 17,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "14-day protection period: p50 demand 2,196 units; adjusted -12% for this week's cohort signal; target 2,272 at the 78% service point; position 1,593 (on hand 473 + on order 1,120).",
+        "name": "Vanilla Choc Dip Bar",
+        "brand": "Polar Peak",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Polar Peak Ltd",
+        "effective_cases": 17
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC031",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 712.5606814337833,
+        "demand_p50": 757.686168348364,
+        "demand_p90": 804.6872723470871,
+        "adjustment": 1.036702325049305,
+        "critical_ratio": 0.7346205657835653,
+        "target_units": 779.9637903234079,
+        "on_hand_units": 241,
+        "on_order_units": 264,
+        "inventory_position": 505,
+        "suggested_cases": 12,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 758 units; adjusted +4% for this week's cohort signal; target 780 at the 73% service point; position 505 (on hand 241 + on order 264).",
+        "name": "Salted Caramel Cup",
+        "brand": "Coastline",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 12
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC032",
+        "order_date": "2026-07-22",
+        "protection_days": 12,
+        "demand_p10": 698.2553536847657,
+        "demand_p50": 742.1627988175705,
+        "demand_p90": 788.0890935654326,
+        "adjustment": 1.0233767667248292,
+        "critical_ratio": 0.7648409314529353,
+        "target_units": 767.0960518373635,
+        "on_hand_units": 478,
+        "on_order_units": 0,
+        "inventory_position": 478,
+        "suggested_cases": 49,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "12-day protection period: p50 demand 742 units; adjusted +2% for this week's cohort signal; target 767 at the 76% service point; position 478 (on hand 478 + on order 0).",
+        "name": "Caramel Swirl Tub",
+        "brand": "Lantau Dairy",
+        "units_per_case": 6,
+        "moq_cases": 2,
+        "supplier_name": "Lantau Dairy Co",
+        "effective_cases": 49
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC033",
+        "order_date": "2026-07-20",
+        "protection_days": 11,
+        "demand_p10": 1063.9520551122323,
+        "demand_p50": 1125.198338386306,
+        "demand_p90": 1192.8687942694376,
+        "adjustment": 0.8828964683075362,
+        "critical_ratio": 0.7217125382262998,
+        "target_units": 1153.4525380773955,
+        "on_hand_units": 964,
+        "on_order_units": 0,
+        "inventory_position": 964,
+        "suggested_cases": 8,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "11-day protection period: p50 demand 1,125 units; adjusted -12% for this week's cohort signal; target 1,153 at the 72% service point; position 964 (on hand 964 + on order 0).",
+        "name": "Toffee Crunch Cone",
+        "brand": "Harbour Chill",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Harbour Chill Foods",
+        "effective_cases": 8
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC034",
+        "order_date": "2026-07-24",
+        "protection_days": 16,
+        "demand_p10": 998.3173156387832,
+        "demand_p50": 1061.1907180353098,
+        "demand_p90": 1127.0707406891772,
+        "adjustment": 1.0377722721027194,
+        "critical_ratio": 0.7113062568605929,
+        "target_units": 1088.6971298241565,
+        "on_hand_units": 306,
+        "on_order_units": 600,
+        "inventory_position": 906,
+        "suggested_cases": 8,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 1,061 units; adjusted +4% for this week's cohort signal; target 1,089 at the 71% service point; position 906 (on hand 306 + on order 600).",
+        "name": "Hokkaido Milk Soft Cup",
+        "brand": "Kowloon Creamery",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Kowloon Creamery",
+        "effective_cases": 8
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC035",
+        "order_date": "2026-07-20",
+        "protection_days": 11,
+        "demand_p10": 598.9525657237618,
+        "demand_p50": 632.8053437789129,
+        "demand_p90": 670.478237004383,
+        "adjustment": 1.099344723794759,
+        "critical_ratio": 0.7257663628831814,
+        "target_units": 648.8579752124276,
+        "on_hand_units": 262,
+        "on_order_units": 0,
+        "inventory_position": 262,
+        "suggested_cases": 17,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "11-day protection period: p50 demand 633 units; adjusted +10% for this week's cohort signal; target 649 at the 73% service point; position 262 (on hand 262 + on order 0).",
+        "name": "Vanilla Sandwich",
+        "brand": "Harbour Chill",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Harbour Chill Foods",
+        "effective_cases": 17
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC036",
+        "order_date": "2026-07-20",
+        "protection_days": 11,
+        "demand_p10": 1929.3912976455015,
+        "demand_p50": 2038.5802446106113,
+        "demand_p90": 2159.4654099972267,
+        "adjustment": 1.102736543743209,
+        "critical_ratio": 0.7288428324697754,
+        "target_units": 2091.122161759065,
+        "on_hand_units": 924,
+        "on_order_units": 0,
+        "inventory_position": 924,
+        "suggested_cases": 30,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "11-day protection period: p50 demand 2,039 units; adjusted +10% for this week's cohort signal; target 2,091 at the 73% service point; position 924 (on hand 924 + on order 0).",
+        "name": "Light Vanilla Bar",
+        "brand": "Harbour Chill",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Harbour Chill Foods",
+        "effective_cases": 30
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC037",
+        "order_date": "2026-07-21",
+        "protection_days": 15,
+        "demand_p10": 2422.903785102194,
+        "demand_p50": 2559.9276347731316,
+        "demand_p90": 2711.9096707228414,
+        "adjustment": 1.1010700297834917,
+        "critical_ratio": 0.734375,
+        "target_units": 2628.032115185164,
+        "on_hand_units": 324,
+        "on_order_units": 1320,
+        "inventory_position": 1644,
+        "suggested_cases": 25,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 2,560 units; adjusted +10% for this week's cohort signal; target 2,628 at the 73% service point; position 1,644 (on hand 324 + on order 1,320).",
+        "name": "Matcha Red Bean Bar",
+        "brand": "Jade Garden",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Jade Garden Sweets",
+        "effective_cases": 25
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC038",
+        "order_date": "2026-07-21",
+        "protection_days": 15,
+        "demand_p10": 1303.3791765948981,
+        "demand_p50": 1377.1074208598304,
+        "demand_p90": 1458.9327149147002,
+        "adjustment": 1.1012811222034538,
+        "critical_ratio": 0.7150953116950025,
+        "target_units": 1410.0113729360949,
+        "on_hand_units": 217,
+        "on_order_units": 696,
+        "inventory_position": 913,
+        "suggested_cases": 21,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 1,377 units; adjusted +10% for this week's cohort signal; target 1,410 at the 72% service point; position 913 (on hand 217 + on order 696).",
+        "name": "Uji Matcha Cup",
+        "brand": "Jade Garden",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Jade Garden Sweets",
+        "effective_cases": 21
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC039",
+        "order_date": "2026-07-21",
+        "protection_days": 15,
+        "demand_p10": 1069.822500802555,
+        "demand_p50": 1130.3080156088486,
+        "demand_p90": 1197.5686519707244,
+        "adjustment": 1.1009437746591484,
+        "critical_ratio": 0.7420546932742055,
+        "target_units": 1161.0658967340476,
+        "on_hand_units": 127,
+        "on_order_units": 540,
+        "inventory_position": 667,
+        "suggested_cases": 42,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 1,130 units; adjusted +10% for this week's cohort signal; target 1,161 at the 74% service point; position 667 (on hand 127 + on order 540).",
+        "name": "Black Sesame Mochi 6-Pack",
+        "brand": "Jade Garden",
+        "units_per_case": 12,
+        "moq_cases": 2,
+        "supplier_name": "Jade Garden Sweets",
+        "effective_cases": 42
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC040",
+        "order_date": "2026-07-21",
+        "protection_days": 15,
+        "demand_p10": 853.3882431703935,
+        "demand_p50": 901.6649864744161,
+        "demand_p90": 955.2505314096558,
+        "adjustment": 1.0987441011106793,
+        "critical_ratio": 0.7771984706291275,
+        "target_units": 931.1043064986321,
+        "on_hand_units": 138,
+        "on_order_units": 444,
+        "inventory_position": 582,
+        "suggested_cases": 30,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 902 units; adjusted +10% for this week's cohort signal; target 931 at the 78% service point; position 582 (on hand 138 + on order 444).",
+        "name": "Mango Mochi 6-Pack",
+        "brand": "Jade Garden",
+        "units_per_case": 12,
+        "moq_cases": 2,
+        "supplier_name": "Jade Garden Sweets",
+        "effective_cases": 30
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC041",
+        "order_date": "2026-07-24",
+        "protection_days": 16,
+        "demand_p10": 4788.57870347167,
+        "demand_p50": 5059.40910972466,
+        "demand_p90": 5358.653183238263,
+        "adjustment": 1.0998435358919672,
+        "critical_ratio": 0.7629592350276799,
+        "target_units": 5215.325850842149,
+        "on_hand_units": 540,
+        "on_order_units": 3080,
+        "inventory_position": 3620,
+        "suggested_cases": 40,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 5,059 units; adjusted +10% for this week's cohort signal; target 5,215 at the 76% service point; position 3,620 (on hand 540 + on order 3,080).",
+        "name": "Red Bean Ice Bar",
+        "brand": "Kowloon Creamery",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Kowloon Creamery",
+        "effective_cases": 40
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC042",
+        "order_date": "2026-07-24",
+        "protection_days": 16,
+        "demand_p10": 1087.517185778213,
+        "demand_p50": 1149.069533620077,
+        "demand_p90": 1217.436186702505,
+        "adjustment": 1.1018662257526868,
+        "critical_ratio": 0.7129563350035791,
+        "target_units": 1176.1109442402878,
+        "on_hand_units": 138,
+        "on_order_units": 720,
+        "inventory_position": 858,
+        "suggested_cases": 14,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 1,149 units; adjusted +10% for this week's cohort signal; target 1,176 at the 71% service point; position 858 (on hand 138 + on order 720).",
+        "name": "Taro Milk Cup",
+        "brand": "Kowloon Creamery",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Kowloon Creamery",
+        "effective_cases": 14
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC043",
+        "order_date": "2026-07-24",
+        "protection_days": 16,
+        "demand_p10": 4267.5815262989445,
+        "demand_p50": 4509.073433239233,
+        "demand_p90": 4776.706639288369,
+        "adjustment": 1.0993723112882978,
+        "critical_ratio": 0.7716186252771619,
+        "target_units": 4653.417462508564,
+        "on_hand_units": 626,
+        "on_order_units": 2640,
+        "inventory_position": 3266,
+        "suggested_cases": 35,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 4,509 units; adjusted +10% for this week's cohort signal; target 4,653 at the 77% service point; position 3,266 (on hand 626 + on order 2,640).",
+        "name": "Milk Tea Bar",
+        "brand": "Kowloon Creamery",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Kowloon Creamery",
+        "effective_cases": 35
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC044",
+        "order_date": "2026-07-21",
+        "protection_days": 15,
+        "demand_p10": 1963.1756994167215,
+        "demand_p50": 2074.2125457742727,
+        "demand_p90": 2197.412687455401,
+        "adjustment": 1.099886502950232,
+        "critical_ratio": 0.7375633005659815,
+        "target_units": 2129.840966617164,
+        "on_hand_units": 701,
+        "on_order_units": 1128,
+        "inventory_position": 1829,
+        "suggested_cases": 13,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 2,074 units; adjusted +10% for this week's cohort signal; target 2,130 at the 74% service point; position 1,829 (on hand 701 + on order 1,128).",
+        "name": "Hojicha Cone",
+        "brand": "Jade Garden",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Jade Garden Sweets",
+        "effective_cases": 13
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC045",
+        "order_date": "2026-07-21",
+        "protection_days": 15,
+        "demand_p10": 1825.476264923058,
+        "demand_p50": 1940.209219173077,
+        "demand_p90": 2060.5886730946186,
+        "adjustment": 1.0238811569015807,
+        "critical_ratio": 0.7371146152035772,
+        "target_units": 1998.2383526255453,
+        "on_hand_units": 449,
+        "on_order_units": 936,
+        "inventory_position": 1385,
+        "suggested_cases": 26,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 1,940 units; adjusted +2% for this week's cohort signal; target 1,998 at the 74% service point; position 1,385 (on hand 449 + on order 936).",
+        "name": "Durian Cream Cup",
+        "brand": "Jade Garden",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Jade Garden Sweets",
+        "effective_cases": 26
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC046",
+        "order_date": "2026-07-21",
+        "protection_days": 14,
+        "demand_p10": 3770.094100414359,
+        "demand_p50": 3987.1191535024277,
+        "demand_p90": 4226.90814142861,
+        "adjustment": 0.8828964683075362,
+        "critical_ratio": 0.7659574468085106,
+        "target_units": 4112.255434303666,
+        "on_hand_units": 765,
+        "on_order_units": 2000,
+        "inventory_position": 2765,
+        "suggested_cases": 34,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "14-day protection period: p50 demand 3,987 units; adjusted -12% for this week's cohort signal; target 4,112 at the 77% service point; position 2,765 (on hand 765 + on order 2,000).",
+        "name": "Coffee Crunch Bar",
+        "brand": "Polar Peak",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Polar Peak Ltd",
+        "effective_cases": 34
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC047",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 1038.785084849247,
+        "demand_p50": 1104.0441190500856,
+        "demand_p90": 1172.551599045719,
+        "adjustment": 1.0357366912622827,
+        "critical_ratio": 0.7578765645230902,
+        "target_units": 1139.9549448537355,
+        "on_hand_units": 729,
+        "on_order_units": 0,
+        "inventory_position": 729,
+        "suggested_cases": 18,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 1,104 units; adjusted +4% for this week's cohort signal; target 1,140 at the 76% service point; position 729 (on hand 729 + on order 0).",
+        "name": "Espresso Gelato Cup",
+        "brand": "Coastline",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 18
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC048",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 625.1458557021556,
+        "demand_p50": 664.7351272810454,
+        "demand_p90": 706.0385699952209,
+        "adjustment": 1.0314100913062743,
+        "critical_ratio": 0.716279764126297,
+        "target_units": 682.328308428033,
+        "on_hand_units": 193,
+        "on_order_units": 276,
+        "inventory_position": 469,
+        "suggested_cases": 36,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 665 units; adjusted +3% for this week's cohort signal; target 682 at the 72% service point; position 469 (on hand 193 + on order 276).",
+        "name": "Pistachio Gelato Tub",
+        "brand": "Coastline",
+        "units_per_case": 6,
+        "moq_cases": 2,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 36
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC049",
+        "order_date": "2026-07-20",
+        "protection_days": 11,
+        "demand_p10": 918.8582373050505,
+        "demand_p50": 976.7439292396117,
+        "demand_p90": 1037.355067963101,
+        "adjustment": 1.0481797826016737,
+        "critical_ratio": 0.7365728900255754,
+        "target_units": 1005.8291343437946,
+        "on_hand_units": 746,
+        "on_order_units": 0,
+        "inventory_position": 746,
+        "suggested_cases": 11,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "11-day protection period: p50 demand 977 units; adjusted +5% for this week's cohort signal; target 1,006 at the 74% service point; position 746 (on hand 746 + on order 0).",
+        "name": "Peanut Butter Cone",
+        "brand": "Harbour Chill",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Harbour Chill Foods",
+        "effective_cases": 11
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC050",
+        "order_date": "2026-07-22",
+        "protection_days": 12,
+        "demand_p10": 1451.7604003882159,
+        "demand_p50": 1542.9693809668142,
+        "demand_p90": 1638.692447148418,
+        "adjustment": 1.0375181647480425,
+        "critical_ratio": 0.7478622602264849,
+        "target_units": 1590.980787355756,
+        "on_hand_units": 952,
+        "on_order_units": 0,
+        "inventory_position": 952,
+        "suggested_cases": 27,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "12-day protection period: p50 demand 1,543 units; adjusted +4% for this week's cohort signal; target 1,591 at the 75% service point; position 952 (on hand 952 + on order 0).",
+        "name": "Macadamia Cup",
+        "brand": "Lantau Dairy",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Lantau Dairy Co",
+        "effective_cases": 27
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC051",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 955.6355521566361,
+        "demand_p50": 1030.2076455829465,
+        "demand_p90": 1109.163060939162,
+        "adjustment": 1.1548651076766516,
+        "critical_ratio": 0.7522728980389211,
+        "target_units": 1070.9674620034803,
+        "on_hand_units": 104,
+        "on_order_units": 426,
+        "inventory_position": 530,
+        "suggested_cases": 91,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 1,030 units; adjusted +15% for this week's cohort signal; target 1,071 at the 75% service point; position 530 (on hand 104 + on order 426).",
+        "name": "Oat Milk Vanilla Tub",
+        "brand": "Coastline",
+        "units_per_case": 6,
+        "moq_cases": 2,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 91
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC052",
+        "order_date": "2026-07-21",
+        "protection_days": 14,
+        "demand_p10": 1497.501589072564,
+        "demand_p50": 1594.2496553801664,
+        "demand_p90": 1695.9701431969263,
+        "adjustment": 0.966193299588142,
+        "critical_ratio": 0.7633587786259542,
+        "target_units": 1648.5489464571824,
+        "on_hand_units": 200,
+        "on_order_units": 920,
+        "inventory_position": 1120,
+        "suggested_cases": 14,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "14-day protection period: p50 demand 1,594 units; adjusted -3% for this week's cohort signal; target 1,649 at the 76% service point; position 1,120 (on hand 200 + on order 920).",
+        "name": "Zero Sugar Choc Bar",
+        "brand": "Polar Peak",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Polar Peak Ltd",
+        "effective_cases": 14
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC053",
+        "order_date": "2026-07-20",
+        "protection_days": 11,
+        "demand_p10": 950.0033228868257,
+        "demand_p50": 1003.7325637902577,
+        "demand_p90": 1063.404550228132,
+        "adjustment": 1.1020258951567428,
+        "critical_ratio": 0.7285748388636907,
+        "target_units": 1029.5006064232575,
+        "on_hand_units": 390,
+        "on_order_units": 0,
+        "inventory_position": 390,
+        "suggested_cases": 27,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "11-day protection period: p50 demand 1,004 units; adjusted +10% for this week's cohort signal; target 1,030 at the 73% service point; position 390 (on hand 390 + on order 0).",
+        "name": "Protein Berry Cup",
+        "brand": "Harbour Chill",
+        "units_per_case": 24,
+        "moq_cases": 3,
+        "supplier_name": "Harbour Chill Foods",
+        "effective_cases": 27
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC054",
+        "order_date": "2026-07-22",
+        "protection_days": 12,
+        "demand_p10": 2572.863912530804,
+        "demand_p50": 2718.47099994851,
+        "demand_p90": 2879.894293538569,
+        "adjustment": 1.1021038802419358,
+        "critical_ratio": 0.7339599509603597,
+        "target_units": 2790.8411417931425,
+        "on_hand_units": 1580,
+        "on_order_units": 0,
+        "inventory_position": 1580,
+        "suggested_cases": 31,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "12-day protection period: p50 demand 2,718 units; adjusted +10% for this week's cohort signal; target 2,791 at the 73% service point; position 1,580 (on hand 1,580 + on order 0).",
+        "name": "Light Mango Yogurt Bar",
+        "brand": "Lantau Dairy",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Lantau Dairy Co",
+        "effective_cases": 31
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC055",
+        "order_date": "2026-07-23",
+        "protection_days": 15,
+        "demand_p10": 2599.8804441322236,
+        "demand_p50": 2793.937477381821,
+        "demand_p90": 2995.0062137037044,
+        "adjustment": 1.1714816982463168,
+        "critical_ratio": 0.7129563350035791,
+        "target_units": 2878.909686104836,
+        "on_hand_units": 9,
+        "on_order_units": 1880,
+        "inventory_position": 1889,
+        "suggested_cases": 25,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 2,794 units; adjusted +17% for this week's cohort signal; target 2,879 at the 71% service point; position 1,889 (on hand 9 + on order 1,880).",
+        "name": "Kids Rainbow Pop",
+        "brand": "Little Panda",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Little Panda Treats",
+        "effective_cases": 25
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC056",
+        "order_date": "2026-07-23",
+        "protection_days": 15,
+        "demand_p10": 752.3510715904094,
+        "demand_p50": 794.9179722156772,
+        "demand_p90": 842.2480877058124,
+        "adjustment": 1.1004428804627857,
+        "critical_ratio": 0.7733445331093378,
+        "target_units": 820.5935192696529,
+        "on_hand_units": 96,
+        "on_order_units": 416,
+        "inventory_position": 512,
+        "suggested_cases": 39,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 795 units; adjusted +10% for this week's cohort signal; target 821 at the 77% service point; position 512 (on hand 96 + on order 416).",
+        "name": "Kids Choc Cone 4-Pack",
+        "brand": "Little Panda",
+        "units_per_case": 8,
+        "moq_cases": 2,
+        "supplier_name": "Little Panda Treats",
+        "effective_cases": 39
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC057",
+        "order_date": "2026-07-23",
+        "protection_days": 15,
+        "demand_p10": 807.6113647627767,
+        "demand_p50": 853.3007177203801,
+        "demand_p90": 904.0511081970186,
+        "adjustment": 1.1036102392585492,
+        "critical_ratio": 0.7604726100966702,
+        "target_units": 879.3537373190647,
+        "on_hand_units": 77,
+        "on_order_units": 480,
+        "inventory_position": 557,
+        "suggested_cases": 41,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 853 units; adjusted +10% for this week's cohort signal; target 879 at the 76% service point; position 557 (on hand 77 + on order 480).",
+        "name": "Mini Milk 10-Pack",
+        "brand": "Little Panda",
+        "units_per_case": 8,
+        "moq_cases": 2,
+        "supplier_name": "Little Panda Treats",
+        "effective_cases": 41
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC058",
+        "order_date": "2026-07-22",
+        "protection_days": 12,
+        "demand_p10": 613.6342409801225,
+        "demand_p50": 652.2118803880187,
+        "demand_p90": 692.7025130394632,
+        "adjustment": 1.0191542364643769,
+        "critical_ratio": 0.7742055726400149,
+        "target_units": 675.118481807725,
+        "on_hand_units": 375,
+        "on_order_units": 0,
+        "inventory_position": 375,
+        "suggested_cases": 51,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "12-day protection period: p50 demand 652 units; adjusted +2% for this week's cohort signal; target 675 at the 77% service point; position 375 (on hand 375 + on order 0).",
+        "name": "Family Neapolitan Tub",
+        "brand": "Lantau Dairy",
+        "units_per_case": 6,
+        "moq_cases": 2,
+        "supplier_name": "Lantau Dairy Co",
+        "effective_cases": 51
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC059",
+        "order_date": "2026-07-24",
+        "protection_days": 16,
+        "demand_p10": 2026.235410011289,
+        "demand_p50": 2182.895767489716,
+        "demand_p90": 2345.6045714076367,
+        "adjustment": 1.2116875373342302,
+        "critical_ratio": 0.773938795656466,
+        "target_units": 2273.169184584282,
+        "on_hand_units": 10,
+        "on_order_units": 1600,
+        "inventory_position": 1610,
+        "suggested_cases": 17,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 2,183 units; adjusted +21% for this week's cohort signal; target 2,273 at the 77% service point; position 1,610 (on hand 10 + on order 1,600).",
+        "name": "Lemon Tea Ice Bar",
+        "brand": "Kowloon Creamery",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Kowloon Creamery",
+        "effective_cases": 17
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC060",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 2413.7303843041745,
+        "demand_p50": 2585.7729793267376,
+        "demand_p90": 2765.021362893785,
+        "adjustment": 1.2850030235893115,
+        "critical_ratio": 0.7258921791951405,
+        "target_units": 2667.657282790805,
+        "on_hand_units": 556,
+        "on_order_units": 1400,
+        "inventory_position": 1956,
+        "suggested_cases": 18,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 2,586 units; adjusted +29% for this week's cohort signal; target 2,668 at the 73% service point; position 1,956 (on hand 556 + on order 1,400).",
+        "name": "Grapefruit Sorbet Bar",
+        "brand": "Coastline",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 18
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC061",
+        "order_date": "2026-07-23",
+        "protection_days": 18,
+        "demand_p10": 3428.9250408803046,
+        "demand_p50": 3677.9387560682235,
+        "demand_p90": 3936.429948468778,
+        "adjustment": 1.9036926956129328,
+        "critical_ratio": 0.7853881278538813,
+        "target_units": 3831.099891464371,
+        "on_hand_units": 9,
+        "on_order_units": 2840,
+        "inventory_position": 2849,
+        "suggested_cases": 25,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "18-day protection period: p50 demand 3,678 units; adjusted +90% for this week's cohort signal; target 3,831 at the 79% service point; position 2,849 (on hand 9 + on order 2,840).",
+        "name": "Strawberry Spring Ice Bar",
+        "brand": "Sunny Isle",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Sunny Isle Frozen",
+        "effective_cases": 25
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC062",
+        "order_date": "2026-07-23",
+        "protection_days": 15,
+        "demand_p10": 7611.102850173017,
+        "demand_p50": 8084.413796614781,
+        "demand_p90": 8581.934170376679,
+        "adjustment": 1.7999899554017624,
+        "critical_ratio": 0.773109243697479,
+        "target_units": 8357.870827261448,
+        "on_hand_units": 4861,
+        "on_order_units": 0,
+        "inventory_position": 4861,
+        "suggested_cases": 88,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 8,084 units; adjusted +80% for this week's cohort signal; target 8,358 at the 77% service point; position 4,861 (on hand 4,861 + on order 0).",
+        "name": "Strawberry Orchard Ice Bar",
+        "brand": "Little Panda",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Little Panda Treats",
+        "effective_cases": 88
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC063",
+        "order_date": "2026-07-24",
+        "protection_days": 16,
+        "demand_p10": 5493.558402078853,
+        "demand_p50": 5849.080959807684,
+        "demand_p90": 6228.545530436546,
+        "adjustment": 1.9153101173275768,
+        "critical_ratio": 0.768839966130398,
+        "target_units": 6056.503075948901,
+        "on_hand_units": 8,
+        "on_order_units": 4560,
+        "inventory_position": 4568,
+        "suggested_cases": 38,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 5,849 units; adjusted +92% for this week's cohort signal; target 6,057 at the 77% service point; position 4,568 (on hand 8 + on order 4,560).",
+        "name": "Strawberry Breeze Ice Bar",
+        "brand": "Kowloon Creamery",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Kowloon Creamery",
+        "effective_cases": 38
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC064",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 5719.504570152682,
+        "demand_p50": 6084.317311493857,
+        "demand_p90": 6467.192483876797,
+        "adjustment": 1.2007070665597583,
+        "critical_ratio": 0.7157484154071185,
+        "target_units": 6247.626033837657,
+        "on_hand_units": 9,
+        "on_order_units": 2560,
+        "inventory_position": 2569,
+        "suggested_cases": 92,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 6,084 units; adjusted +20% for this week's cohort signal; target 6,248 at the 72% service point; position 2,569 (on hand 9 + on order 2,560).",
+        "name": "Strawberry Puree Sorbet Bar",
+        "brand": "Coastline",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 92
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC065",
+        "order_date": "2026-07-21",
+        "protection_days": 15,
+        "demand_p10": 3160.901411713735,
+        "demand_p50": 3383.5582155044726,
+        "demand_p90": 3611.944421259948,
+        "adjustment": 1.168321042635656,
+        "critical_ratio": 0.7188940092165899,
+        "target_units": 3485.215156952776,
+        "on_hand_units": 10,
+        "on_order_units": 1880,
+        "inventory_position": 1890,
+        "suggested_cases": 40,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 3,384 units; adjusted +17% for this week's cohort signal; target 3,485 at the 72% service point; position 1,890 (on hand 10 + on order 1,880).",
+        "name": "Strawberry Garden Sorbet Bar",
+        "brand": "Jade Garden",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Jade Garden Sweets",
+        "effective_cases": 40
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC066",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 2666.3473010088715,
+        "demand_p50": 2865.1074576599212,
+        "demand_p90": 3071.6989760430065,
+        "adjustment": 1.140156732463796,
+        "critical_ratio": 0.7441077441077442,
+        "target_units": 2968.9192415100993,
+        "on_hand_units": 368,
+        "on_order_units": 1280,
+        "inventory_position": 1648,
+        "suggested_cases": 34,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 2,865 units; adjusted +14% for this week's cohort signal; target 2,969 at the 74% service point; position 1,648 (on hand 368 + on order 1,280).",
+        "name": "Strawberry Coastal Sorbet Bar",
+        "brand": "Coastline",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 34
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC067",
+        "order_date": "2026-07-22",
+        "protection_days": 12,
+        "demand_p10": 2212.5234341559008,
+        "demand_p50": 2337.721075126985,
+        "demand_p90": 2476.41188252364,
+        "adjustment": 1.0971198510758844,
+        "critical_ratio": 0.7569644572526417,
+        "target_units": 2406.6082253352797,
+        "on_hand_units": 1326,
+        "on_order_units": 0,
+        "inventory_position": 1326,
+        "suggested_cases": 28,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "12-day protection period: p50 demand 2,338 units; adjusted +10% for this week's cohort signal; target 2,407 at the 76% service point; position 1,326 (on hand 1,326 + on order 0).",
+        "name": "Strawberry Milk Ice Bar",
+        "brand": "Lantau Dairy",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Lantau Dairy Co",
+        "effective_cases": 28
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC068",
+        "order_date": "2026-07-20",
+        "protection_days": 11,
+        "demand_p10": 1996.9164094680496,
+        "demand_p50": 2109.9153918940583,
+        "demand_p90": 2235.1388244727327,
+        "adjustment": 1.1011883381045802,
+        "critical_ratio": 0.7458256029684601,
+        "target_units": 2168.00163909325,
+        "on_hand_units": 1091,
+        "on_order_units": 0,
+        "inventory_position": 1091,
+        "suggested_cases": 27,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "11-day protection period: p50 demand 2,110 units; adjusted +10% for this week's cohort signal; target 2,168 at the 75% service point; position 1,091 (on hand 1,091 + on order 0).",
+        "name": "Strawberry Cream Ice Bar",
+        "brand": "Harbour Chill",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Harbour Chill Foods",
+        "effective_cases": 27
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC069",
+        "order_date": "2026-07-24",
+        "protection_days": 16,
+        "demand_p10": 1239.181271240634,
+        "demand_p50": 1317.0437486614612,
+        "demand_p90": 1398.6585664181375,
+        "adjustment": 1.0321332908697916,
+        "critical_ratio": 0.7821413807358413,
+        "target_units": 1365.614959575732,
+        "on_hand_units": 217,
+        "on_order_units": 840,
+        "inventory_position": 1057,
+        "suggested_cases": 8,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 1,317 units; adjusted +3% for this week's cohort signal; target 1,366 at the 78% service point; position 1,057 (on hand 217 + on order 840).",
+        "name": "Strawberry Dairy Ice Bar",
+        "brand": "Kowloon Creamery",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Kowloon Creamery",
+        "effective_cases": 8
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC070",
+        "order_date": "2026-07-23",
+        "protection_days": 18,
+        "demand_p10": 2587.806359172473,
+        "demand_p50": 2776.176872853042,
+        "demand_p90": 2971.0452446441054,
+        "adjustment": 1.205531022025725,
+        "critical_ratio": 0.7468230694037146,
+        "target_units": 2873.8219213365237,
+        "on_hand_units": 338,
+        "on_order_units": 1520,
+        "inventory_position": 1858,
+        "suggested_cases": 26,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "18-day protection period: p50 demand 2,776 units; adjusted +21% for this week's cohort signal; target 2,874 at the 75% service point; position 1,858 (on hand 338 + on order 1,520).",
+        "name": "Peach Spring Ice Bar",
+        "brand": "Sunny Isle",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Sunny Isle Frozen",
+        "effective_cases": 26
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC071",
+        "order_date": "2026-07-23",
+        "protection_days": 15,
+        "demand_p10": 3661.6633532406377,
+        "demand_p50": 3917.0111487300833,
+        "demand_p90": 4179.5983442926345,
+        "adjustment": 1.2081284724070607,
+        "critical_ratio": 0.7450069670227588,
+        "target_units": 4047.361599383319,
+        "on_hand_units": 9,
+        "on_order_units": 2760,
+        "inventory_position": 2769,
+        "suggested_cases": 32,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "15-day protection period: p50 demand 3,917 units; adjusted +21% for this week's cohort signal; target 4,047 at the 75% service point; position 2,769 (on hand 9 + on order 2,760).",
+        "name": "Apple Orchard Ice Bar",
+        "brand": "Little Panda",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Little Panda Treats",
+        "effective_cases": 32
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC072",
+        "order_date": "2026-07-24",
+        "protection_days": 16,
+        "demand_p10": 3207.767892059544,
+        "demand_p50": 3416.4190506460736,
+        "demand_p90": 3638.3102899320434,
+        "adjustment": 1.1856735542094317,
+        "critical_ratio": 0.7821413807358413,
+        "target_units": 3546.3832673303577,
+        "on_hand_units": 12,
+        "on_order_units": 2360,
+        "inventory_position": 2372,
+        "suggested_cases": 30,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 3,416 units; adjusted +19% for this week's cohort signal; target 3,546 at the 78% service point; position 2,372 (on hand 12 + on order 2,360).",
+        "name": "Pineapple Breeze Ice Bar",
+        "brand": "Kowloon Creamery",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Kowloon Creamery",
+        "effective_cases": 30
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC073",
+        "order_date": "2026-07-22",
+        "protection_days": 12,
+        "demand_p10": 1409.0259276434224,
+        "demand_p50": 1497.5603373945542,
+        "demand_p90": 1590.4436358742316,
+        "adjustment": 1.04367879160843,
+        "critical_ratio": 0.749884845693229,
+        "target_units": 1544.354270859429,
+        "on_hand_units": 904,
+        "on_order_units": 0,
+        "inventory_position": 904,
+        "suggested_cases": 17,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "12-day protection period: p50 demand 1,498 units; adjusted +4% for this week's cohort signal; target 1,544 at the 75% service point; position 904 (on hand 904 + on order 0).",
+        "name": "Strawberry Velvet Cream Bar",
+        "brand": "Lantau Dairy",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Lantau Dairy Co",
+        "effective_cases": 17
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC074",
+        "order_date": "2026-07-20",
+        "protection_days": 11,
+        "demand_p10": 1585.5056247337764,
+        "demand_p50": 1684.360746796366,
+        "demand_p90": 1788.976849436729,
+        "adjustment": 1.0418838824794476,
+        "critical_ratio": 0.7386262265834077,
+        "target_units": 1733.7762106911534,
+        "on_hand_units": 815,
+        "on_order_units": 0,
+        "inventory_position": 815,
+        "suggested_cases": 23,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "11-day protection period: p50 demand 1,684 units; adjusted +4% for this week's cohort signal; target 1,734 at the 74% service point; position 815 (on hand 815 + on order 0).",
+        "name": "Strawberry Meadow Cream Bar",
+        "brand": "Harbour Chill",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Harbour Chill Foods",
+        "effective_cases": 23
+      },
+      {
+        "plan_id": "P20260720",
+        "sku": "IC075",
+        "order_date": "2026-07-20",
+        "protection_days": 16,
+        "demand_p10": 2424.0062240185407,
+        "demand_p50": 2574.5736601416493,
+        "demand_p90": 2732.2502208695414,
+        "adjustment": 1.0305142299291663,
+        "critical_ratio": 0.7422419252691577,
+        "target_units": 2652.231461092783,
+        "on_hand_units": 659,
+        "on_order_units": 1280,
+        "inventory_position": 1939,
+        "suggested_cases": 18,
+        "capacity_cut_cases": 0,
+        "final_cases": null,
+        "status": "suggested",
+        "reason": "16-day protection period: p50 demand 2,575 units; adjusted +3% for this week's cohort signal; target 2,652 at the 74% service point; position 1,939 (on hand 659 + on order 1,280).",
+        "name": "Strawberry Reserve Cream Bar",
+        "brand": "Coastline",
+        "units_per_case": 40,
+        "moq_cases": 3,
+        "supplier_name": "Coastline Gelato",
+        "effective_cases": 18
+      }
+    ],
+    "widget_ids": [
+      "afd038ddffd2499a8e7463959ab5f14d",
+      "f06be8c21ce04adbbbf6d8fd43403f09",
+      "386ead0eeccf40d08ed5d0c6ad2c70af",
+      "6e9ccca9f2904cfb80487f0f93fd8f12",
+      "2c7116e179ed41c88c8f585fe5b43eae"
+    ],
+    "message_ids": []
+  },
+  "report_model": "gemini-3.8-flash",
+  "context": {
+    "edit_id": 93,
+    "ends_on": "2026-07-27",
+    "affected_orders": [
+      {
+        "sku": "IC001",
+        "before": 21,
+        "after": 11,
+        "factor_before": 1.1608835952534786,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC002",
+        "before": 17,
+        "after": 7,
+        "factor_before": 1.2177942219630187,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC003",
+        "before": 57,
+        "after": 18,
+        "factor_before": 1.2652626332522043,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC004",
+        "before": 65,
+        "after": 46,
+        "factor_before": 1.1817246862358948,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC005",
+        "before": 47,
+        "after": 25,
+        "factor_before": 1.3041993730594834,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC006",
+        "before": 45,
+        "after": 25,
+        "factor_before": 1.8945306029551892,
+        "factor_after": 1.3850031591624277
+      },
+      {
+        "sku": "IC007",
+        "before": 72,
+        "after": 39,
+        "factor_before": 1.1764680199149864,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC008",
+        "before": 41,
+        "after": 18,
+        "factor_before": 1.2298976433444886,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC009",
+        "before": 41,
+        "after": 6,
+        "factor_before": 1.2659056032472185,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC011",
+        "before": 16,
+        "after": 10,
+        "factor_before": 1.1687731961206447,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC014",
+        "before": 78,
+        "after": 39,
+        "factor_before": 1.3295832214728067,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC015",
+        "before": 41,
+        "after": 20,
+        "factor_before": 1.1919038915449849,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC051",
+        "before": 91,
+        "after": 65,
+        "factor_before": 1.1548651076766516,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC055",
+        "before": 25,
+        "after": 14,
+        "factor_before": 1.1714816982463168,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC059",
+        "before": 17,
+        "after": 7,
+        "factor_before": 1.2116875373342302,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC060",
+        "before": 18,
+        "after": 3,
+        "factor_before": 1.2850030235893115,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC061",
+        "before": 25,
+        "after": 0,
+        "factor_before": 1.9036926956129328,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC062",
+        "before": 88,
+        "after": 0,
+        "factor_before": 1.7999899554017624,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC063",
+        "before": 38,
+        "after": 0,
+        "factor_before": 1.9153101173275768,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC064",
+        "before": 92,
+        "after": 66,
+        "factor_before": 1.2007070665597583,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC065",
+        "before": 40,
+        "after": 27,
+        "factor_before": 1.168321042635656,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC066",
+        "before": 34,
+        "after": 24,
+        "factor_before": 1.140156732463796,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC070",
+        "before": 26,
+        "after": 13,
+        "factor_before": 1.205531022025725,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC071",
+        "before": 32,
+        "after": 14,
+        "factor_before": 1.2081284724070607,
+        "factor_after": 1
+      },
+      {
+        "sku": "IC072",
+        "before": 30,
+        "after": 16,
+        "factor_before": 1.1856735542094317,
+        "factor_after": 1
+      }
+    ],
+    "exact_undo": true
+  },
+  "orders": {
+    "groups": [
+      {
+        "id": "C1548dfa641a2",
+        "rows": 25
+      },
+      {
+        "id": "C6f4af776c73a",
+        "rows": 24
+      },
+      {
+        "id": "Cee474106a8b3",
+        "rows": 16
+      },
+      {
+        "id": "Ca693b9f78ee2",
+        "rows": 3
+      },
+      {
+        "id": "Cf3b066880cd4",
+        "rows": 7
+      }
+    ],
+    "page_rows": 20,
+    "capacity": {
+      "capacity_pallets": 71,
+      "projected_peak_pallets": 51.494565622754926,
+      "inherited_peak_pallets": 51.494565622754926,
+      "incremental_overcapacity_pallets": 0,
+      "feasible": true,
+      "model_run": {
+        "version": "M202607-v1-s93",
+        "logic_version": "monthly-issued-v1",
+        "effective_start": "2026-07-01",
+        "effective_end": "2026-07-31",
+        "training_start": "2024-06-01",
+        "trained_through": "2026-06-30",
+        "calibration_start": "2026-06-01",
+        "calibration_end": "2026-06-30",
+        "calibration_source_version": "M202606-v1-s93",
+        "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+        "weather_cutoff": "previous_day_issued_forecast",
+        "seed": 93,
+        "protection_calibration_issues": [
+          "2026-06-01",
+          "2026-06-08"
+        ],
+        "protection_calibration_samples": 150,
+        "protection_calibration_outcome_end": "2026-06-24"
+      },
+      "series": [
+        {
+          "date": "2026-07-20",
+          "value": 33.25368055555555
+        },
+        {
+          "date": "2026-07-21",
+          "value": 42.25196276457495
+        },
+        {
+          "date": "2026-07-22",
+          "value": 51.494565622754926
+        },
+        {
+          "date": "2026-07-23",
+          "value": 45.12450342406583
+        },
+        {
+          "date": "2026-07-24",
+          "value": 50.553559773562384
+        },
+        {
+          "date": "2026-07-25",
+          "value": 49.03100241828198
+        },
+        {
+          "date": "2026-07-26",
+          "value": 41.00811895185522
+        },
+        {
+          "date": "2026-07-27",
+          "value": 37.13012367016276
+        },
+        {
+          "date": "2026-07-28",
+          "value": 43.69844911593572
+        },
+        {
+          "date": "2026-07-29",
+          "value": 50.4613968609163
+        },
+        {
+          "date": "2026-07-30",
+          "value": 46.595266381766336
+        },
+        {
+          "date": "2026-07-31",
+          "value": 46.533205524298644
+        }
+      ]
+    }
+  },
+  "chat_message": "Add a warehouse on-hand widget titled \"Warehouse on hand mv945pox\".",
+  "chat_message_ids": [
+    59,
+    60
+  ],
+  "chat": {
+    "provider": "gemini",
+    "reply": "The warehouse on-hand widget titled **Warehouse on hand mv945pox** has been added to your dashboard (Edit ID: 97). \n\nIt is tracking total warehouse inventory across all products, currently showing 43,598 units on hand as of July 19.",
+    "edit_id": 97,
+    "tool_trace": [
+      {
+        "name": "add_widget",
+        "status": "ok"
+      }
+    ]
+  },
+  "play": {
+    "days": 16,
+    "start": "2026-07-20",
+    "end": "2026-08-04",
+    "summary": {
+      "scoop": {
+        "fill_rate": 0.9368622833200975,
+        "lost_units": 11528,
+        "lost_margin": 60737.38,
+        "avg_pallets": 36.640171440972225,
+        "peak_pallets": 49.95499999999999,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 69,
+        "ending_on_hand": 58653,
+        "ordered_cases": 7616
+      },
+      "baseline": {
+        "fill_rate": 0.9441849001834762,
+        "lost_units": 10191,
+        "lost_margin": 53735.369999999995,
+        "avg_pallets": 44.616924913194445,
+        "peak_pallets": 65.40333333333334,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 61,
+        "ending_on_hand": 72220,
+        "ordered_cases": 7572
+      }
+    },
+    "affected_comparison": {
+      "units_saved": -1337,
+      "pallet_difference": -7.976753472222214,
+      "stockout_days_avoided": -8
+    },
+    "affected_skus": [
+      "IC001",
+      "IC002",
+      "IC003",
+      "IC004",
+      "IC005",
+      "IC006",
+      "IC007",
+      "IC008",
+      "IC009",
+      "IC010",
+      "IC011",
+      "IC012",
+      "IC013",
+      "IC014",
+      "IC015",
+      "IC016",
+      "IC017",
+      "IC018",
+      "IC019",
+      "IC020",
+      "IC021",
+      "IC022",
+      "IC023",
+      "IC024",
+      "IC025",
+      "IC026",
+      "IC027",
+      "IC028",
+      "IC029",
+      "IC030",
+      "IC031",
+      "IC032",
+      "IC033",
+      "IC034",
+      "IC035",
+      "IC036",
+      "IC037",
+      "IC038",
+      "IC039",
+      "IC040",
+      "IC041",
+      "IC042",
+      "IC043",
+      "IC044",
+      "IC045",
+      "IC046",
+      "IC047",
+      "IC048",
+      "IC049",
+      "IC050",
+      "IC051",
+      "IC052",
+      "IC053",
+      "IC054",
+      "IC055",
+      "IC056",
+      "IC057",
+      "IC058",
+      "IC059",
+      "IC060",
+      "IC061",
+      "IC062",
+      "IC063",
+      "IC064",
+      "IC065",
+      "IC066",
+      "IC067",
+      "IC068",
+      "IC069",
+      "IC070",
+      "IC071",
+      "IC072",
+      "IC073",
+      "IC074",
+      "IC075"
+    ],
+    "widget_ids": [
+      "afd038ddffd2499a8e7463959ab5f14d",
+      "f06be8c21ce04adbbbf6d8fd43403f09",
+      "386ead0eeccf40d08ed5d0c6ad2c70af",
+      "6e9ccca9f2904cfb80487f0f93fd8f12",
+      "2c7116e179ed41c88c8f585fe5b43eae",
+      "38e9aaa6a1fd4c229e9e06064672d6c0",
+      "cc027e9540df4f53a9644cec3abb7cea"
+    ],
+    "rule_stockout_dot_days": 10,
+    "events": [
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC004",
+        "order_date": "2026-07-20",
+        "cases": 65,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 65 cases of Passion Fruit Sorbet Cup under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC005",
+        "order_date": "2026-07-20",
+        "cases": 47,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 47 cases of Yuzu Lemon Sorbet Cup under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC006",
+        "order_date": "2026-07-20",
+        "cases": 45,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 45 cases of Strawberry Burst Bar under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC014",
+        "order_date": "2026-07-20",
+        "cases": 78,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 78 cases of Green Apple Sorbet Tub under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC016",
+        "order_date": "2026-07-20",
+        "cases": 23,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 23 cases of Dragon Fruit Smoothie Cup under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC020",
+        "order_date": "2026-07-20",
+        "cases": 17,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 17 cases of Dark Choc Truffle Cup under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC023",
+        "order_date": "2026-07-20",
+        "cases": 18,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 18 cases of Cookies and Cream Sandwich under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC025",
+        "order_date": "2026-07-20",
+        "cases": 36,
+        "card_ids": [
+          "Ca693b9f78ee2"
+        ],
+        "text": "Ordered 36 cases of White Choc Raspberry Bar under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC031",
+        "order_date": "2026-07-20",
+        "cases": 12,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 12 cases of Salted Caramel Cup under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC033",
+        "order_date": "2026-07-20",
+        "cases": 8,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Ordered 8 cases of Toffee Crunch Cone under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC035",
+        "order_date": "2026-07-20",
+        "cases": 17,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 17 cases of Vanilla Sandwich under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC036",
+        "order_date": "2026-07-20",
+        "cases": 30,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 30 cases of Light Vanilla Bar under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC047",
+        "order_date": "2026-07-20",
+        "cases": 18,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 18 cases of Espresso Gelato Cup under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC048",
+        "order_date": "2026-07-20",
+        "cases": 36,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 36 cases of Pistachio Gelato Tub under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC049",
+        "order_date": "2026-07-20",
+        "cases": 11,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 11 cases of Peanut Butter Cone under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC051",
+        "order_date": "2026-07-20",
+        "cases": 91,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 91 cases of Oat Milk Vanilla Tub under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC053",
+        "order_date": "2026-07-20",
+        "cases": 27,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 27 cases of Protein Berry Cup under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC060",
+        "order_date": "2026-07-20",
+        "cases": 18,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 18 cases of Grapefruit Sorbet Bar under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC064",
+        "order_date": "2026-07-20",
+        "cases": 92,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 92 cases of Strawberry Puree Sorbet Bar under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC066",
+        "order_date": "2026-07-20",
+        "cases": 34,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 34 cases of Strawberry Coastal Sorbet Bar under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC068",
+        "order_date": "2026-07-20",
+        "cases": 27,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 27 cases of Strawberry Cream Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC074",
+        "order_date": "2026-07-20",
+        "cases": 23,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 23 cases of Strawberry Meadow Cream Bar under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC075",
+        "order_date": "2026-07-20",
+        "cases": 18,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 18 cases of Strawberry Reserve Cream Bar under this plan."
+      },
+      {
+        "date": "2026-07-20",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Strawberry Puree Sorbet Bar, Strawberry Breeze Ice Bar, Strawberry Spring Ice Bar (1,073 units short; 1,073 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC064",
+            "name": "Strawberry Puree Sorbet Bar",
+            "units": 424
+          },
+          {
+            "sku": "IC063",
+            "name": "Strawberry Breeze Ice Bar",
+            "units": 375
+          },
+          {
+            "sku": "IC061",
+            "name": "Strawberry Spring Ice Bar",
+            "units": 274
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-20"
+        ],
+        "rule_order_dates": [
+          "2026-07-20"
+        ]
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC010",
+        "order_date": "2026-07-21",
+        "cases": 69,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 69 cases of Mango Sticky Rice Bar under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC011",
+        "order_date": "2026-07-21",
+        "cases": 16,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 16 cases of Peach Oolong Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC017",
+        "order_date": "2026-07-21",
+        "cases": 12,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Ordered 12 cases of Classic Choc Crunch Bar under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC018",
+        "order_date": "2026-07-21",
+        "cases": 7,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Ordered 7 cases of Double Choc Cone under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC019",
+        "order_date": "2026-07-21",
+        "cases": 33,
+        "card_ids": [
+          "Ca693b9f78ee2"
+        ],
+        "text": "Ordered 33 cases of Almond Choc Coated Bar under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC024",
+        "order_date": "2026-07-21",
+        "cases": 9,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Ordered 9 cases of Choc Hazelnut Cone under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC028",
+        "order_date": "2026-07-21",
+        "cases": 15,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 15 cases of Vanilla Classic Cone under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC030",
+        "order_date": "2026-07-21",
+        "cases": 17,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Ordered 17 cases of Vanilla Choc Dip Bar under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC037",
+        "order_date": "2026-07-21",
+        "cases": 25,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 25 cases of Matcha Red Bean Bar under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC038",
+        "order_date": "2026-07-21",
+        "cases": 21,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 21 cases of Uji Matcha Cup under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC039",
+        "order_date": "2026-07-21",
+        "cases": 42,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 42 cases of Black Sesame Mochi 6-Pack under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC040",
+        "order_date": "2026-07-21",
+        "cases": 30,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 30 cases of Mango Mochi 6-Pack under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC044",
+        "order_date": "2026-07-21",
+        "cases": 13,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 13 cases of Hojicha Cone under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC045",
+        "order_date": "2026-07-21",
+        "cases": 26,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 26 cases of Durian Cream Cup under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC046",
+        "order_date": "2026-07-21",
+        "cases": 34,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Ordered 34 cases of Coffee Crunch Bar under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC052",
+        "order_date": "2026-07-21",
+        "cases": 14,
+        "card_ids": [
+          "Ca693b9f78ee2"
+        ],
+        "text": "Ordered 14 cases of Zero Sugar Choc Bar under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC065",
+        "order_date": "2026-07-21",
+        "cases": 40,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 40 cases of Strawberry Garden Sorbet Bar under this plan."
+      },
+      {
+        "date": "2026-07-21",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Watermelon Chill Bar, Red Bean Ice Bar, Lychee Frost Bar (277 units short; 277 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC003",
+            "name": "Watermelon Chill Bar",
+            "units": 116
+          },
+          {
+            "sku": "IC041",
+            "name": "Red Bean Ice Bar",
+            "units": 92
+          },
+          {
+            "sku": "IC002",
+            "name": "Lychee Frost Bar",
+            "units": 69
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2",
+          "C6f4af776c73a"
+        ],
+        "order_dates": [],
+        "rule_order_dates": []
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC013",
+        "order_date": "2026-07-22",
+        "cases": 34,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 34 cases of Raspberry Ripple Tub under this plan."
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC021",
+        "order_date": "2026-07-22",
+        "cases": 49,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 49 cases of Choc Fudge Tub under this plan."
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC026",
+        "order_date": "2026-07-22",
+        "cases": 24,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 24 cases of Choc Mint Cup under this plan."
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC027",
+        "order_date": "2026-07-22",
+        "cases": 8,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 8 cases of Vanilla Bean Tub under this plan."
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC032",
+        "order_date": "2026-07-22",
+        "cases": 49,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 49 cases of Caramel Swirl Tub under this plan."
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC050",
+        "order_date": "2026-07-22",
+        "cases": 27,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 27 cases of Macadamia Cup under this plan."
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC054",
+        "order_date": "2026-07-22",
+        "cases": 31,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 31 cases of Light Mango Yogurt Bar under this plan."
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC058",
+        "order_date": "2026-07-22",
+        "cases": 51,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 51 cases of Family Neapolitan Tub under this plan."
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC067",
+        "order_date": "2026-07-22",
+        "cases": 28,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 28 cases of Strawberry Milk Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC073",
+        "order_date": "2026-07-22",
+        "cases": 17,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 17 cases of Strawberry Velvet Cream Bar under this plan."
+      },
+      {
+        "date": "2026-07-22",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Guava Ice Bar, Peach Spring Ice Bar, Uji Matcha Cup (255 units short; 255 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC015",
+            "name": "Guava Ice Bar",
+            "units": 96
+          },
+          {
+            "sku": "IC070",
+            "name": "Peach Spring Ice Bar",
+            "units": 90
+          },
+          {
+            "sku": "IC038",
+            "name": "Uji Matcha Cup",
+            "units": 69
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2",
+          "C6f4af776c73a"
+        ],
+        "order_dates": [
+          "2026-07-21"
+        ],
+        "rule_order_dates": [
+          "2026-07-21"
+        ]
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC001",
+        "order_date": "2026-07-23",
+        "cases": 21,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 21 cases of Mango Splash Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC002",
+        "order_date": "2026-07-23",
+        "cases": 17,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 17 cases of Lychee Frost Bar under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC003",
+        "order_date": "2026-07-23",
+        "cases": 57,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 57 cases of Watermelon Chill Bar under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC007",
+        "order_date": "2026-07-23",
+        "cases": 72,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 72 cases of Mixed Berry Ice Pop 6-Pack under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC008",
+        "order_date": "2026-07-23",
+        "cases": 41,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 41 cases of Tropical Ice Pop 6-Pack under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC009",
+        "order_date": "2026-07-23",
+        "cases": 41,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 41 cases of Coconut Water Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC015",
+        "order_date": "2026-07-23",
+        "cases": 41,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 41 cases of Guava Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC022",
+        "order_date": "2026-07-23",
+        "cases": 34,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Ordered 34 cases of Mini Choc Bites 8-Pack under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC055",
+        "order_date": "2026-07-23",
+        "cases": 25,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 25 cases of Kids Rainbow Pop under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC056",
+        "order_date": "2026-07-23",
+        "cases": 39,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 39 cases of Kids Choc Cone 4-Pack under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC057",
+        "order_date": "2026-07-23",
+        "cases": 41,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 41 cases of Mini Milk 10-Pack under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC061",
+        "order_date": "2026-07-23",
+        "cases": 25,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 25 cases of Strawberry Spring Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC062",
+        "order_date": "2026-07-23",
+        "cases": 88,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 88 cases of Strawberry Orchard Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC070",
+        "order_date": "2026-07-23",
+        "cases": 26,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 26 cases of Peach Spring Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-23",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC071",
+        "order_date": "2026-07-23",
+        "cases": 32,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 32 cases of Apple Orchard Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC012",
+        "order_date": "2026-07-24",
+        "cases": 11,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 11 cases of Pineapple Bun Ice Cream Sandwich under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC029",
+        "order_date": "2026-07-24",
+        "cases": 15,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 15 cases of Milk Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC034",
+        "order_date": "2026-07-24",
+        "cases": 8,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 8 cases of Hokkaido Milk Soft Cup under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC041",
+        "order_date": "2026-07-24",
+        "cases": 40,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 40 cases of Red Bean Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC042",
+        "order_date": "2026-07-24",
+        "cases": 14,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 14 cases of Taro Milk Cup under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC043",
+        "order_date": "2026-07-24",
+        "cases": 35,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Ordered 35 cases of Milk Tea Bar under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC059",
+        "order_date": "2026-07-24",
+        "cases": 17,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 17 cases of Lemon Tea Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC063",
+        "order_date": "2026-07-24",
+        "cases": 38,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 38 cases of Strawberry Breeze Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC069",
+        "order_date": "2026-07-24",
+        "cases": 8,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Ordered 8 cases of Strawberry Dairy Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC072",
+        "order_date": "2026-07-24",
+        "cases": 30,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 30 cases of Pineapple Breeze Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 229 cases across 10 products. 3,016 fewer units arrived than under the rule.",
+        "skus": [
+          "IC006",
+          "IC016",
+          "IC023",
+          "IC033",
+          "IC035",
+          "IC036",
+          "IC049",
+          "IC053",
+          "IC068",
+          "IC074"
+        ],
+        "order_dates": [
+          "2026-07-20"
+        ],
+        "card_ids": [
+          "C1548dfa641a2",
+          "C6f4af776c73a",
+          "Cee474106a8b3",
+          "Cf3b066880cd4"
+        ]
+      },
+      {
+        "date": "2026-07-24",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Coconut Water Ice Bar (241 units short; 241 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC009",
+            "name": "Coconut Water Ice Bar",
+            "units": 241
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-23"
+        ],
+        "rule_order_dates": [
+          "2026-07-23"
+        ]
+      },
+      {
+        "date": "2026-07-25",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 318 cases across 10 products. 2,058 fewer units arrived than under the rule.",
+        "skus": [
+          "IC013",
+          "IC021",
+          "IC026",
+          "IC027",
+          "IC032",
+          "IC050",
+          "IC054",
+          "IC058",
+          "IC067",
+          "IC073"
+        ],
+        "order_dates": [
+          "2026-07-22"
+        ],
+        "card_ids": [
+          "C6f4af776c73a",
+          "Cee474106a8b3"
+        ]
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "scan",
+        "tone": "neutral",
+        "text": "Weekly early warnings: Strawberry flavour; Chocolate-coated; Mid price; Cones."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC004",
+        "order_date": "2026-07-27",
+        "cases": 51,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 51 cases of Passion Fruit Sorbet Cup for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC005",
+        "order_date": "2026-07-27",
+        "cases": 45,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 45 cases of Yuzu Lemon Sorbet Cup for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC006",
+        "order_date": "2026-07-27",
+        "cases": 54,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 54 cases of Strawberry Burst Bar for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC014",
+        "order_date": "2026-07-27",
+        "cases": 38,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 38 cases of Green Apple Sorbet Tub for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC016",
+        "order_date": "2026-07-27",
+        "cases": 29,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 29 cases of Dragon Fruit Smoothie Cup for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC020",
+        "order_date": "2026-07-27",
+        "cases": 32,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 32 cases of Dark Choc Truffle Cup for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC023",
+        "order_date": "2026-07-27",
+        "cases": 24,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 24 cases of Cookies and Cream Sandwich for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC025",
+        "order_date": "2026-07-27",
+        "cases": 42,
+        "card_ids": [
+          "Ca693b9f78ee2"
+        ],
+        "text": "Automatically ordered 42 cases of White Choc Raspberry Bar for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC031",
+        "order_date": "2026-07-27",
+        "cases": 18,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 18 cases of Salted Caramel Cup for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC033",
+        "order_date": "2026-07-27",
+        "cases": 29,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 29 cases of Toffee Crunch Cone for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC035",
+        "order_date": "2026-07-27",
+        "cases": 18,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 18 cases of Vanilla Sandwich for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC036",
+        "order_date": "2026-07-27",
+        "cases": 35,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 35 cases of Light Vanilla Bar for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC047",
+        "order_date": "2026-07-27",
+        "cases": 28,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 28 cases of Espresso Gelato Cup for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC048",
+        "order_date": "2026-07-27",
+        "cases": 59,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 59 cases of Pistachio Gelato Tub for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC049",
+        "order_date": "2026-07-27",
+        "cases": 31,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 31 cases of Peanut Butter Cone for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC051",
+        "order_date": "2026-07-27",
+        "cases": 94,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 94 cases of Oat Milk Vanilla Tub for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC053",
+        "order_date": "2026-07-27",
+        "cases": 31,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 31 cases of Protein Berry Cup for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC060",
+        "order_date": "2026-07-27",
+        "cases": 33,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 33 cases of Grapefruit Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC064",
+        "order_date": "2026-07-27",
+        "cases": 61,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 61 cases of Strawberry Puree Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC066",
+        "order_date": "2026-07-27",
+        "cases": 42,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 42 cases of Strawberry Coastal Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC068",
+        "order_date": "2026-07-27",
+        "cases": 34,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 34 cases of Strawberry Cream Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC074",
+        "order_date": "2026-07-27",
+        "cases": 33,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 33 cases of Strawberry Meadow Cream Bar for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC075",
+        "order_date": "2026-07-27",
+        "cases": 37,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 37 cases of Strawberry Reserve Cream Bar for the next week."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 141 cases across 8 products. 3,624 fewer units arrived than under the rule.",
+        "skus": [
+          "IC017",
+          "IC018",
+          "IC019",
+          "IC024",
+          "IC028",
+          "IC030",
+          "IC046",
+          "IC052"
+        ],
+        "order_dates": [
+          "2026-07-21"
+        ],
+        "card_ids": [
+          "C6f4af776c73a",
+          "Ca693b9f78ee2",
+          "Cf3b066880cd4"
+        ]
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Strawberry Orchard Ice Bar (38 units short; 38 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC062",
+            "name": "Strawberry Orchard Ice Bar",
+            "units": 38
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-23"
+        ],
+        "rule_order_dates": [
+          "2026-07-23"
+        ]
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC010",
+        "order_date": "2026-07-28",
+        "cases": 91,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 91 cases of Mango Sticky Rice Bar for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC011",
+        "order_date": "2026-07-28",
+        "cases": 22,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 22 cases of Peach Oolong Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC017",
+        "order_date": "2026-07-28",
+        "cases": 20,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 20 cases of Classic Choc Crunch Bar for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC018",
+        "order_date": "2026-07-28",
+        "cases": 40,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 40 cases of Double Choc Cone for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC019",
+        "order_date": "2026-07-28",
+        "cases": 34,
+        "card_ids": [
+          "Ca693b9f78ee2"
+        ],
+        "text": "Automatically ordered 34 cases of Almond Choc Coated Bar for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC024",
+        "order_date": "2026-07-28",
+        "cases": 30,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 30 cases of Choc Hazelnut Cone for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC028",
+        "order_date": "2026-07-28",
+        "cases": 32,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 32 cases of Vanilla Classic Cone for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC030",
+        "order_date": "2026-07-28",
+        "cases": 35,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 35 cases of Vanilla Choc Dip Bar for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC037",
+        "order_date": "2026-07-28",
+        "cases": 36,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 36 cases of Matcha Red Bean Bar for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC038",
+        "order_date": "2026-07-28",
+        "cases": 21,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 21 cases of Uji Matcha Cup for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC039",
+        "order_date": "2026-07-28",
+        "cases": 51,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 51 cases of Black Sesame Mochi 6-Pack for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC040",
+        "order_date": "2026-07-28",
+        "cases": 39,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 39 cases of Mango Mochi 6-Pack for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC044",
+        "order_date": "2026-07-28",
+        "cases": 46,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 46 cases of Hojicha Cone for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC045",
+        "order_date": "2026-07-28",
+        "cases": 58,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 58 cases of Durian Cream Cup for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC046",
+        "order_date": "2026-07-28",
+        "cases": 59,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 59 cases of Coffee Crunch Bar for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC052",
+        "order_date": "2026-07-28",
+        "cases": 20,
+        "card_ids": [
+          "Ca693b9f78ee2"
+        ],
+        "text": "Automatically ordered 20 cases of Zero Sugar Choc Bar for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC065",
+        "order_date": "2026-07-28",
+        "cases": 60,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 60 cases of Strawberry Garden Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 654 cases across 17 products. 6,352 fewer units arrived than under the rule.",
+        "skus": [
+          "IC007",
+          "IC008",
+          "IC010",
+          "IC011",
+          "IC022",
+          "IC037",
+          "IC038",
+          "IC039",
+          "IC040",
+          "IC044",
+          "IC045",
+          "IC055",
+          "IC056",
+          "IC057",
+          "IC062",
+          "IC065",
+          "IC071"
+        ],
+        "order_dates": [
+          "2026-07-21",
+          "2026-07-23"
+        ],
+        "card_ids": [
+          "C1548dfa641a2",
+          "C6f4af776c73a",
+          "Cee474106a8b3",
+          "Cf3b066880cd4"
+        ]
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Oat Milk Vanilla Tub (4 units short; 4 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC051",
+            "name": "Oat Milk Vanilla Tub",
+            "units": 4
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-20",
+          "2026-07-27"
+        ],
+        "rule_order_dates": [
+          "2026-07-20",
+          "2026-07-27"
+        ]
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC013",
+        "order_date": "2026-07-29",
+        "cases": 50,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 50 cases of Raspberry Ripple Tub for the next week."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC021",
+        "order_date": "2026-07-29",
+        "cases": 85,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 85 cases of Choc Fudge Tub for the next week."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC026",
+        "order_date": "2026-07-29",
+        "cases": 30,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 30 cases of Choc Mint Cup for the next week."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC027",
+        "order_date": "2026-07-29",
+        "cases": 46,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 46 cases of Vanilla Bean Tub for the next week."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC032",
+        "order_date": "2026-07-29",
+        "cases": 91,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 91 cases of Caramel Swirl Tub for the next week."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC050",
+        "order_date": "2026-07-29",
+        "cases": 47,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 47 cases of Macadamia Cup for the next week."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC054",
+        "order_date": "2026-07-29",
+        "cases": 46,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 46 cases of Light Mango Yogurt Bar for the next week."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC058",
+        "order_date": "2026-07-29",
+        "cases": 87,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 87 cases of Family Neapolitan Tub for the next week."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC067",
+        "order_date": "2026-07-29",
+        "cases": 37,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 37 cases of Strawberry Milk Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC073",
+        "order_date": "2026-07-29",
+        "cases": 24,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 24 cases of Strawberry Velvet Cream Bar for the next week."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 778 cases across 23 products. 5,404 fewer units arrived than under the rule.",
+        "skus": [
+          "IC004",
+          "IC005",
+          "IC012",
+          "IC014",
+          "IC020",
+          "IC025",
+          "IC029",
+          "IC031",
+          "IC034",
+          "IC041",
+          "IC042",
+          "IC043",
+          "IC047",
+          "IC048",
+          "IC051",
+          "IC059",
+          "IC060",
+          "IC063",
+          "IC064",
+          "IC066",
+          "IC069",
+          "IC072",
+          "IC075"
+        ],
+        "order_dates": [
+          "2026-07-20",
+          "2026-07-24"
+        ],
+        "card_ids": [
+          "C1548dfa641a2",
+          "C6f4af776c73a",
+          "Ca693b9f78ee2",
+          "Cee474106a8b3"
+        ]
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC001",
+        "order_date": "2026-07-30",
+        "cases": 40,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 40 cases of Mango Splash Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC002",
+        "order_date": "2026-07-30",
+        "cases": 21,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 21 cases of Lychee Frost Bar for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC003",
+        "order_date": "2026-07-30",
+        "cases": 74,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 74 cases of Watermelon Chill Bar for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC007",
+        "order_date": "2026-07-30",
+        "cases": 142,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 142 cases of Mixed Berry Ice Pop 6-Pack for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC008",
+        "order_date": "2026-07-30",
+        "cases": 66,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 66 cases of Tropical Ice Pop 6-Pack for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC009",
+        "order_date": "2026-07-30",
+        "cases": 61,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 61 cases of Coconut Water Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC015",
+        "order_date": "2026-07-30",
+        "cases": 50,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 50 cases of Guava Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC022",
+        "order_date": "2026-07-30",
+        "cases": 57,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 57 cases of Mini Choc Bites 8-Pack for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC055",
+        "order_date": "2026-07-30",
+        "cases": 47,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 47 cases of Kids Rainbow Pop for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC056",
+        "order_date": "2026-07-30",
+        "cases": 49,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 49 cases of Kids Choc Cone 4-Pack for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC057",
+        "order_date": "2026-07-30",
+        "cases": 53,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 53 cases of Mini Milk 10-Pack for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC061",
+        "order_date": "2026-07-30",
+        "cases": 28,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 28 cases of Strawberry Spring Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC062",
+        "order_date": "2026-07-30",
+        "cases": 151,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 151 cases of Strawberry Orchard Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC070",
+        "order_date": "2026-07-30",
+        "cases": 20,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 20 cases of Peach Spring Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC071",
+        "order_date": "2026-07-30",
+        "cases": 52,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 52 cases of Apple Orchard Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC012",
+        "order_date": "2026-07-31",
+        "cases": 17,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 17 cases of Pineapple Bun Ice Cream Sandwich for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC029",
+        "order_date": "2026-07-31",
+        "cases": 23,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 23 cases of Milk Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC034",
+        "order_date": "2026-07-31",
+        "cases": 31,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 31 cases of Hokkaido Milk Soft Cup for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC041",
+        "order_date": "2026-07-31",
+        "cases": 56,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 56 cases of Red Bean Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC042",
+        "order_date": "2026-07-31",
+        "cases": 23,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 23 cases of Taro Milk Cup for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC043",
+        "order_date": "2026-07-31",
+        "cases": 58,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 58 cases of Milk Tea Bar for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC059",
+        "order_date": "2026-07-31",
+        "cases": 23,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 23 cases of Lemon Tea Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC063",
+        "order_date": "2026-07-31",
+        "cases": 63,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 63 cases of Strawberry Breeze Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC069",
+        "order_date": "2026-07-31",
+        "cases": 20,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 20 cases of Strawberry Dairy Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC072",
+        "order_date": "2026-07-31",
+        "cases": 50,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 50 cases of Pineapple Breeze Ice Bar for the next week."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 228 cases across 7 products. 2,560 fewer units arrived than under the rule.",
+        "skus": [
+          "IC001",
+          "IC002",
+          "IC003",
+          "IC009",
+          "IC015",
+          "IC061",
+          "IC070"
+        ],
+        "order_dates": [
+          "2026-07-23"
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ]
+      },
+      {
+        "date": "2026-08-02",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Strawberry Orchard Ice Bar, Durian Cream Cup (536 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC062",
+            "name": "Strawberry Orchard Ice Bar",
+            "units": 522
+          },
+          {
+            "sku": "IC045",
+            "name": "Durian Cream Cup",
+            "units": 14
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2",
+          "Cee474106a8b3"
+        ],
+        "order_dates": [
+          "2026-07-21",
+          "2026-07-23",
+          "2026-07-28",
+          "2026-07-30"
+        ],
+        "rule_order_dates": [
+          "2026-07-21",
+          "2026-07-23",
+          "2026-07-28",
+          "2026-07-30"
+        ]
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC004",
+        "order_date": "2026-08-03",
+        "cases": 72,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 72 cases of Passion Fruit Sorbet Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC005",
+        "order_date": "2026-08-03",
+        "cases": 39,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 39 cases of Yuzu Lemon Sorbet Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC006",
+        "order_date": "2026-08-03",
+        "cases": 68,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 68 cases of Strawberry Burst Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC014",
+        "order_date": "2026-08-03",
+        "cases": 58,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 58 cases of Green Apple Sorbet Tub for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC016",
+        "order_date": "2026-08-03",
+        "cases": 29,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 29 cases of Dragon Fruit Smoothie Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC020",
+        "order_date": "2026-08-03",
+        "cases": 31,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 31 cases of Dark Choc Truffle Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC023",
+        "order_date": "2026-08-03",
+        "cases": 24,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 24 cases of Cookies and Cream Sandwich for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC025",
+        "order_date": "2026-08-03",
+        "cases": 46,
+        "card_ids": [
+          "Ca693b9f78ee2"
+        ],
+        "text": "Automatically ordered 46 cases of White Choc Raspberry Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC031",
+        "order_date": "2026-08-03",
+        "cases": 18,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 18 cases of Salted Caramel Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC033",
+        "order_date": "2026-08-03",
+        "cases": 36,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 36 cases of Toffee Crunch Cone for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC035",
+        "order_date": "2026-08-03",
+        "cases": 18,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 18 cases of Vanilla Sandwich for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC036",
+        "order_date": "2026-08-03",
+        "cases": 39,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 39 cases of Light Vanilla Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC047",
+        "order_date": "2026-08-03",
+        "cases": 24,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 24 cases of Espresso Gelato Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC048",
+        "order_date": "2026-08-03",
+        "cases": 61,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 61 cases of Pistachio Gelato Tub for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC049",
+        "order_date": "2026-08-03",
+        "cases": 31,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 31 cases of Peanut Butter Cone for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC051",
+        "order_date": "2026-08-03",
+        "cases": 83,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 83 cases of Oat Milk Vanilla Tub for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC053",
+        "order_date": "2026-08-03",
+        "cases": 35,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 35 cases of Protein Berry Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC060",
+        "order_date": "2026-08-03",
+        "cases": 41,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 41 cases of Grapefruit Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC064",
+        "order_date": "2026-08-03",
+        "cases": 94,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 94 cases of Strawberry Puree Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC066",
+        "order_date": "2026-08-03",
+        "cases": 46,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 46 cases of Strawberry Coastal Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC068",
+        "order_date": "2026-08-03",
+        "cases": 38,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 38 cases of Strawberry Cream Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC074",
+        "order_date": "2026-08-03",
+        "cases": 35,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 35 cases of Strawberry Meadow Cream Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC075",
+        "order_date": "2026-08-03",
+        "cases": 36,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 36 cases of Strawberry Reserve Cream Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Strawberry Garden Sorbet Bar, Mixed Berry Ice Pop 6-Pack, Peach Oolong Ice Bar (118 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC065",
+            "name": "Strawberry Garden Sorbet Bar",
+            "units": 56
+          },
+          {
+            "sku": "IC007",
+            "name": "Mixed Berry Ice Pop 6-Pack",
+            "units": 31
+          },
+          {
+            "sku": "IC011",
+            "name": "Peach Oolong Ice Bar",
+            "units": 31
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-21",
+          "2026-07-23",
+          "2026-07-28",
+          "2026-07-30"
+        ],
+        "rule_order_dates": [
+          "2026-07-21",
+          "2026-07-23",
+          "2026-07-28",
+          "2026-07-30"
+        ]
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC010",
+        "order_date": "2026-08-04",
+        "cases": 105,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 105 cases of Mango Sticky Rice Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC011",
+        "order_date": "2026-08-04",
+        "cases": 35,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 35 cases of Peach Oolong Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC017",
+        "order_date": "2026-08-04",
+        "cases": 22,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 22 cases of Classic Choc Crunch Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC018",
+        "order_date": "2026-08-04",
+        "cases": 63,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 63 cases of Double Choc Cone for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC019",
+        "order_date": "2026-08-04",
+        "cases": 52,
+        "card_ids": [
+          "Ca693b9f78ee2"
+        ],
+        "text": "Automatically ordered 52 cases of Almond Choc Coated Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC024",
+        "order_date": "2026-08-04",
+        "cases": 46,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 46 cases of Choc Hazelnut Cone for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC028",
+        "order_date": "2026-08-04",
+        "cases": 48,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 48 cases of Vanilla Classic Cone for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC030",
+        "order_date": "2026-08-04",
+        "cases": 36,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 36 cases of Vanilla Choc Dip Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC037",
+        "order_date": "2026-08-04",
+        "cases": 43,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 43 cases of Matcha Red Bean Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC038",
+        "order_date": "2026-08-04",
+        "cases": 34,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 34 cases of Uji Matcha Cup for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC039",
+        "order_date": "2026-08-04",
+        "cases": 59,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 59 cases of Black Sesame Mochi 6-Pack for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC040",
+        "order_date": "2026-08-04",
+        "cases": 51,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 51 cases of Mango Mochi 6-Pack for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC044",
+        "order_date": "2026-08-04",
+        "cases": 55,
+        "card_ids": [
+          "C6f4af776c73a"
+        ],
+        "text": "Automatically ordered 55 cases of Hojicha Cone for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC045",
+        "order_date": "2026-08-04",
+        "cases": 52,
+        "card_ids": [
+          "Cee474106a8b3"
+        ],
+        "text": "Automatically ordered 52 cases of Durian Cream Cup for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC046",
+        "order_date": "2026-08-04",
+        "cases": 67,
+        "card_ids": [
+          "Cf3b066880cd4"
+        ],
+        "text": "Automatically ordered 67 cases of Coffee Crunch Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC052",
+        "order_date": "2026-08-04",
+        "cases": 26,
+        "card_ids": [
+          "Ca693b9f78ee2"
+        ],
+        "text": "Automatically ordered 26 cases of Zero Sugar Choc Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC065",
+        "order_date": "2026-08-04",
+        "cases": 62,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 62 cases of Strawberry Garden Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Hokkaido Milk Soft Cup, Grapefruit Sorbet Bar (67 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC034",
+            "name": "Hokkaido Milk Soft Cup",
+            "units": 62
+          },
+          {
+            "sku": "IC060",
+            "name": "Grapefruit Sorbet Bar",
+            "units": 5
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2",
+          "Cee474106a8b3"
+        ],
+        "order_dates": [
+          "2026-07-20",
+          "2026-07-24",
+          "2026-07-27",
+          "2026-07-31",
+          "2026-08-03"
+        ],
+        "rule_order_dates": [
+          "2026-07-20",
+          "2026-07-24",
+          "2026-07-27",
+          "2026-07-31",
+          "2026-08-03"
+        ]
+      }
+    ]
+  },
+  "accepted": true,
+  "widget_undo": [
+    {
+      "id": 97,
+      "status": 200
+    },
+    {
+      "id": 96,
+      "status": 200
+    }
+  ],
+  "widget_exact_undo": true,
+  "order_quantities_unchanged": true
+}

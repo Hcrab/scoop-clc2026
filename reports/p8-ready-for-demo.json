@@ -1,0 +1,10 @@
+{
+  "stage": "discover",
+  "orders": 75,
+  "cases": 2348,
+  "widgets": 5,
+  "active_overrides": 0,
+  "review": "complete",
+  "model": "gemini-3.8-flash",
+  "review_button_enabled": true
+}

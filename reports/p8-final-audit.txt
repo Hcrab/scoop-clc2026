@@ -1,0 +1,4 @@
+Current ledger: 34 checks; 3 explicitly BLOCKED under no-tuning exception; no pending acceptance items.
+Accepted actual Edge walkthrough: 13 step screenshots, native chart lines/dots, exact context and widget Undo, no page errors.
+Restored ready state: Discover; 75 orders / 2348 cases; 5 widgets; 0 active overrides; complete gemini-3.8-flash report.
+Technical design: 31 actual code paths verified; architecture, 12 method sections, Simplifications, Limitations and AI disclosure present.

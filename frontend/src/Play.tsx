@@ -28,7 +28,7 @@ function Comparison({result,products}:{result:PlayResult;products:Product[]}){
   return <section className="play-comparison"><h2>Results · {fullDate(result.start)} – {fullDate(result.end)}</h2>
     <div className="play-outcomes"><div><span>{affected.units_saved<0?'Extra units short':'Units saved'}</span><strong>{n(Math.abs(affected.units_saved))}</strong></div><div><span>Average pallet difference</span><strong>{n(affected.pallet_difference,1)}</strong></div><div><span>{affected.stockout_days_avoided<0?'Extra stockout product-days':'Stockout product-days avoided'}</span><strong>{n(Math.abs(affected.stockout_days_avoided))}</strong></div></div>
     <details><summary>Affected products · {result.affected_skus.length}</summary><ul>{result.affected_skus.map(sku=><li key={sku}>{names.get(sku)||sku}</li>)}</ul></details>
-    <details><summary>See full comparison</summary>{table('Affected products',result.affected_summary)}{table('Whole warehouse',result.summary)}<p className="muted">Cold-store limit: {n(result.capacity_pallets)} pallets.</p></details>
+    <details><summary>See full comparison</summary>{result.affected_skus.length===result.skus.length?table(`Whole warehouse · ${result.affected_skus.length} affected products`,result.summary):<>{table('Affected products',result.affected_summary)}{table('Whole warehouse',result.summary)}</>}<p className="muted">Cold-store limit: {n(result.capacity_pallets)} pallets.</p></details>
   </section>;
 }
 

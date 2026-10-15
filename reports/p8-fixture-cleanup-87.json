@@ -1,0 +1,12 @@
+{
+  "plan": "P20260720",
+  "context_edit": 87,
+  "stage": "discover",
+  "orders": 75,
+  "cases": 2348,
+  "widgets": 5,
+  "removed_test_messages": [],
+  "method": "Explicit fixture restoration from the already-undone context snapshot; context/widget Undo are separate real API checks",
+  "not_a_user_approval_undo": true,
+  "source_data_or_algorithm_changed": false
+}
