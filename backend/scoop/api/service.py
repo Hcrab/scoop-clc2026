@@ -97,7 +97,15 @@ def recompute(s, p):
     from ..planning import plan_cohort_cards
     p.summary={**p.summary,'cohort_cards':plan_cohort_cards(p.week_start,orders,p.goal,p.service_level)
                if orders.attrs.get('cohort_model',{}).get('leaves') else []}
+    p.summary={**p.summary,'cohort_observations':cohort_observations(s,p)}
     # Recomputing orders must leave the planner's chosen dashboard untouched.
+
+
+def cohort_observations(s,p):
+    from ..cohort_cards import build_observations
+    from ..ai.exploration_tools import _groups
+    summary=p.summary or {}
+    return build_observations(summary.get('cohort_model',{}),summary.get('cohort_cards',[]),_groups(s))
 
 def catalog(s):
     suppliers = {x.id: x for x in s.scalars(select(Supplier))}
@@ -227,7 +235,7 @@ def get_plan(pid:str):
         for order in orders: order['effective_cases']=order['final_cases'] if order['final_cases'] is not None else max(0,order['suggested_cases']-order['capacity_cut_cases'])
         from ..ai.weekly import display_view
         from .flow import state as flow_state
-        return clean({'raw_trends':(p.summary or {}).get('raw_trends'),'review':display_view(p),'discussion':discussion_view(s,p),'plan':row(p),'flow':flow_state(s,p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'dashboard':dashboard.view(s,p),'decisions':decision_history(s,pid),'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
+        return clean({'raw_trends':(p.summary or {}).get('raw_trends'),'review':display_view(p),'discussion':discussion_view(s,p),'plan':row(p),'flow':flow_state(s,p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'cohort_cards':(p.summary or {}).get('cohort_cards',[]),'cohort_observations':(p.summary or {}).get('cohort_observations') or cohort_observations(s,p),'dashboard':dashboard.view(s,p),'decisions':decision_history(s,pid),'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
 
 class NewPlan(BaseModel): week_start: date
 @router.post('/plans')
@@ -241,6 +249,9 @@ def create_plan(body:NewPlan):
         from ..planning import build_plan
         try:
             pid=build_plan(week)
+            with session_scope() as s:
+                plan=plan_for(s,pid)
+                plan.summary={**(plan.summary or {}),'cohort_observations':cohort_observations(s,plan)}
             from ..ai.weekly import prepare
             prepare(pid)
             return {'id':pid}

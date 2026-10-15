@@ -1,0 +1,11 @@
+Early warnings UI
+rg -n -i early warnings frontend/src --glob *.tsx --glob *.ts --glob *.css
+exit 1
+No matches.
+
+Font sizes outside type tokens
+rg -n --pcre2 font-size\s*:\s*+(?!var\(--type-)\S[^;}]* frontend/src --glob *.css
+exit 1
+No matches.
+
+Seed 93 API: {"cards": ["Water-based", "Other mid calorie / 100 ml", "Other higher price / 100 ml · Chocolate-coated", "Other chocolate-coated"], "observations": 5, "all_cards_have_positive_condition": true, "all_negative_leaf_kept_without_card": true}

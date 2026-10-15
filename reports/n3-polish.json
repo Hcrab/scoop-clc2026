@@ -1,0 +1,98 @@
+{
+  "mocked_responses": false,
+  "screenshots": [
+    "docs/screenshots/n3-01-report.png",
+    "docs/screenshots/n3-02-native-adjustment.png",
+    "docs/screenshots/n3-03-evidence-from-report.png",
+    "docs/screenshots/n3-04-evidence-search.png",
+    "docs/screenshots/n3-05-evidence-pages.png",
+    "docs/screenshots/n3-06-observations-both.png",
+    "docs/screenshots/n3-07-observations-in-cards.png",
+    "docs/screenshots/n3-08-observations-outside-cards.png",
+    "docs/screenshots/n3-09-round-ticks.png",
+    "docs/screenshots/n3-10-results.png"
+  ],
+  "errors": [],
+  "cards": [
+    {
+      "id": "C1548dfa641a2",
+      "name": "Water-based",
+      "case_change": 599
+    },
+    {
+      "id": "C6f4af776c73a",
+      "name": "Other mid calorie / 100 ml",
+      "case_change": 164
+    },
+    {
+      "id": "Ca693b9f78ee2",
+      "name": "Other higher price / 100 ml · Chocolate-coated",
+      "case_change": -6
+    },
+    {
+      "id": "Cf3b066880cd4",
+      "name": "Other chocolate-coated",
+      "case_change": -68
+    }
+  ],
+  "observations": [
+    {
+      "id": "C1548dfa641a2",
+      "name": "Water-based",
+      "in_card": true
+    },
+    {
+      "id": "Ca693b9f78ee2",
+      "name": "Other higher price / 100 ml · Chocolate-coated",
+      "in_card": true
+    },
+    {
+      "id": "Cf3b066880cd4",
+      "name": "Other chocolate-coated",
+      "in_card": true
+    },
+    {
+      "id": "C6f4af776c73a",
+      "name": "Other mid calorie / 100 ml",
+      "in_card": true
+    },
+    {
+      "id": "Cee474106a8b3",
+      "name": "Other products",
+      "in_card": false
+    }
+  ],
+  "numeric_sort": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    5,
+    5,
+    5,
+    6,
+    8,
+    9,
+    9,
+    10,
+    11,
+    11,
+    11,
+    11,
+    12,
+    12,
+    13,
+    14,
+    14,
+    22,
+    22,
+    22
+  ],
+  "widget_key_tops": [
+    507.078125,
+    507.078125,
+    507.078125
+  ],
+  "accepted": true
+}

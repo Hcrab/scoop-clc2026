@@ -1,0 +1,51 @@
+{
+  "plan": "P20260720",
+  "model": "gemini-3.8-flash",
+  "title": "Water-based requests surge +37% while chocolate-coated demand contracts",
+  "native_card_ids": [
+    "C1548dfa641a2",
+    "C6f4af776c73a",
+    "Cf3b066880cd4",
+    "Ca693b9f78ee2"
+  ],
+  "cards": [
+    {
+      "id": "C1548dfa641a2",
+      "name": "Water-based"
+    },
+    {
+      "id": "C6f4af776c73a",
+      "name": "Other mid calorie / 100 ml"
+    },
+    {
+      "id": "Ca693b9f78ee2",
+      "name": "Other higher price / 100 ml · Choc Coated"
+    },
+    {
+      "id": "Cf3b066880cd4",
+      "name": "Other choc Coated"
+    }
+  ],
+  "observations": 5,
+  "order_hash": "2d0571e67136a121181c6f72aebecce37529ea4f980470e691649d8a8389897e",
+  "orders_and_widgets_unchanged": true,
+  "payload_bytes": [
+    90469
+  ],
+  "usage_before": {
+    "calls": 139,
+    "estimated_usd": 14.755959,
+    "input_tokens": 4914493,
+    "output_tokens": 260741,
+    "limit_usd": 20.0,
+    "call_limit": 200
+  },
+  "usage_after": {
+    "calls": 140,
+    "estimated_usd": 14.842303,
+    "input_tokens": 4949625,
+    "output_tokens": 265227,
+    "limit_usd": 20.0,
+    "call_limit": 200
+  }
+}

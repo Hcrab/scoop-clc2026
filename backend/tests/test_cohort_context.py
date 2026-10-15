@@ -23,7 +23,9 @@ def test_card_endpoint_and_offline_report_use_the_same_saved_plan_result(api,mon
     assert shown['cards']==[card]
     assert shown['method']=={'model_version':'saved-model'}
     assert report['queries'][0]['result']==shown['cards'][0]
-    assert '+7 cases' in report['presentation']['html']
+    assert '<figure data-card="cohort" data-id="leaf-1"></figure>' in report['presentation']['html']
+    assert report['queries'][0]['result']['case_change']==7
+    assert '+7 cases' not in report['presentation']['html']
 
 
 def test_history_serves_visible_diff_and_keeps_complete_undo_snapshot(api):

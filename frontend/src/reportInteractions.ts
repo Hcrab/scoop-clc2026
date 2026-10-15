@@ -1,4 +1,5 @@
 import type { Detail } from './types';
+import { evidenceSources } from './evidence';
 
 export const interactionStyles = `
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -6,6 +7,7 @@ export const interactionStyles = `
 .chart .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:var(--type-label)}.chart .legend i{display:inline-block;width:16px;height:2px;margin-right:8px;vertical-align:middle}
 .chart .chart-summary{font-size:var(--type-label);color:#617566}.chart-empty{font-size:var(--type-body);color:#617566}
 figure[data-chart]{margin:16px 0;height:auto!important;max-height:none!important;min-height:0}figure[data-chart] figcaption{font-weight:600;margin-bottom:8px}
+figure[data-card="cohort"]{margin:16px 0!important}
 .report-range button{border:1px solid #dde5d8;border-radius:7px;background:white;color:#476b56;padding:5px 11px;font-size:var(--type-label);min-height:32px}.report-range button[aria-pressed=true]{background:#e5eee3;color:#254f3e}
 
 [data-trend-id],[data-evidence-id]{cursor:pointer;text-decoration:none}
@@ -17,6 +19,8 @@ figure[data-chart]{margin:16px 0;height:auto!important;max-height:none!important
 .report-inline button{border:1px solid #dde5d8;border-radius:7px;background:white;color:#476b56;padding:5px 11px;font-size:var(--type-label);min-height:32px}.report-inline button:disabled{opacity:.45;cursor:default}.report-inline button[aria-pressed=true]{background:#e5eee3;color:#254f3e}
 .report-range{display:flex;gap:4px;flex-wrap:wrap}.report-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:var(--type-label);color:#617566}.report-legend span:before{content:'';display:inline-block;width:18px;border-top:2px solid #377663;vertical-align:middle;margin-right:6px}.report-legend span:nth-child(2):before{border-color:#9985b6;border-top-style:dashed}.report-legend span:nth-child(3):before{border-color:#91a7b3;border-top-style:dotted}
 .report-plot{display:block;width:100%;height:auto;margin-top:12px}.report-inline pre{white-space:pre-wrap;overflow-wrap:anywhere;font-family:Consolas,monospace;font-size:var(--type-label);line-height:1.7;margin:8px 0}.report-inline dl{display:grid;grid-template-columns:minmax(90px,auto) 1fr;gap:4px 16px;margin:10px 0}.report-inline dt{color:#718273}.report-inline dd{margin:0}.report-inline p{margin:8px 0}.report-inline details{margin:10px 0}.report-inline-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.native-cohort-card{display:flex;gap:16px;padding:18px;background:#f6f8f3;border:1px solid #dce6dc;border-radius:12px;color:#284f3d}.native-cohort-icon{display:grid;place-items:center;width:42px;height:42px;flex:none;border-radius:50%;background:#dfede2;color:#205a4e;font-size:var(--type-section)!important;font-weight:700}.native-cohort-main{min-width:0;flex:1}.native-cohort-main h4,.native-cohort-main p{margin:0}.native-cohort-effect,.native-cohort-impact{color:#607563}.native-cohort-cases{display:block;margin:9px 0 2px;font-size:var(--type-key)!important;line-height:1.15;font-variant-numeric:tabular-nums}.native-cohort-main button{margin-top:10px;padding:5px 0;background:none;border:0;color:#205a4e;text-decoration:underline;cursor:pointer}.native-cohort-image{width:48px;height:48px;flex:none}.native-cohort-image:empty{display:none}
+.report-evidence-summary{color:#607563;margin-right:8px;font-size:var(--type-label)!important}
 body *{font-size:var(--type-body)!important}
 body h1{font-size:var(--type-page)!important}body h2,body h3,body h4{font-size:var(--type-section)!important}
 body small,body figcaption,body .metric-label,body .card-meta,body .chart .legend,body .chart svg text,body .report-range button{font-size:var(--type-label)!important}
@@ -28,7 +32,7 @@ body .card-meta,body .metric-label{text-transform:none!important;letter-spacing:
 
 // This is host-owned code, never generated JavaScript. Escape every script terminator in data.
 export function reportInteractionScript(detail: Detail, channel: string, charts:ReturnType<typeof import('./reportCharts').reportCharts>) {
-  const payload = JSON.stringify({channel, charts, queries: detail.review?.queries || [], findings: detail.findings})
+  const payload = JSON.stringify({channel, charts, queries: evidenceSources(detail).filter(source=>source.kind==='query').map(source=>({id:source.id,title:source.title,summary:source.summary})), findings: detail.findings.map(f=>({id:f.id,tag_id:f.tag_id,evidence:{display:f.evidence.display}}))})
     .replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
   return String.raw`(()=>{
 const data=${payload},send=value=>parent.postMessage({channel:data.channel,...value},'*');
@@ -37,41 +41,19 @@ const schedule=()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=
 const element=(tag,text,className)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el};
 // Inline priority wins over authored selector rules while leaving layout, color,
 // table sizing, and every piece of authored copy untouched.
-const keyElements=new Set(Array.from(document.querySelectorAll('[data-report-card]')).map(card=>card.querySelector('[data-report-key],.metric-val,.key-number,.key-metric,.stat-value,.big-number')).filter(Boolean));
+const keyElements=new Set(Array.from(document.querySelectorAll('[data-report-card]')).map(card=>card.querySelector('[data-report-key],.native-cohort-cases,.metric-val,.key-number,.key-metric,.stat-value,.big-number')).filter(Boolean));
 document.body.querySelectorAll('*').forEach(el=>{
  if(!(el instanceof HTMLElement))return;
- const role=keyElements.has(el)?'key':/^H1$/.test(el.tagName)?'page':/^H[234]$/.test(el.tagName)?'section':el.matches('small,figcaption,button,.metric-label,.card-meta')?'label':'body';
+ const role=keyElements.has(el)?'key':/^H1$/.test(el.tagName)?'page':/^H[234]$/.test(el.tagName)?'section':el.matches('small,figcaption,button,.metric-label,.card-meta,.native-cohort-impact,.native-cohort-effect,.report-evidence-summary')?'label':'body';
  el.style.setProperty('font-size','var(--type-'+role+')','important');
 });
 const entries=new Map(data.queries.map((q,i)=>[q.id||'Q'+(i+1),{...q,kind:'query'}]));data.findings.forEach(f=>entries.set(f.id,{...f,kind:'finding'}));
 const pretty=value=>JSON.stringify(value,null,2),label=key=>key.replaceAll('_',' ');
 const cardFor=el=>el.closest('[data-report-card],article,.card')||el.parentElement;
 const button=(text,run)=>{const el=element('button',text);el.type='button';el.addEventListener('click',run);return el};
-const titleFor=item=>item.kind==='query'?label(item.name):(typeof item.evidence.display==='string'?item.evidence.display:item.tag_id);
+const titleFor=item=>item.kind==='query'?item.title:(typeof item.evidence.display==='string'?item.evidence.display:item.tag_id);
 const setOpen=(trigger,open,panel)=>{trigger.setAttribute('aria-expanded',String(open));trigger.setAttribute('aria-controls',panel.id)};
-function evidence(trigger,id){
- const item=entries.get(id);if(!item)return;const card=cardFor(trigger);let panel=Array.from(card.children).find(n=>n.dataset.reportEvidence===id);
- if(panel){const open=panel.hidden;panel.hidden=!open;setOpen(trigger,open,panel);schedule();return}
- panel=element('div',undefined,'report-inline');panel.dataset.reportEvidence=id;panel.id='report-evidence-'+(++serial);panel.setAttribute('role','region');panel.setAttribute('aria-label','Evidence '+id);
- const head=element('div',undefined,'report-inline-head');head.append(element('h4',id+' · '+titleFor(item)));panel.append(head);
- const appendSource=(source,sourceId,related=false)=>{
- if(related)panel.append(element('h4',sourceId+' · '+titleFor(source)));
- if(source.kind==='query'){
-  panel.append(element('h4','Scope examined'),element('pre',pretty(source.args)));
-  const result=source.result;const summary=element('dl');if(result&&typeof result==='object')Object.entries(result).forEach(([key,value])=>{
-   let text;if(Array.isArray(value))text=value.length+' rows';else if(value!==null&&typeof value==='object')text=Object.entries(value).filter(([,v])=>v===null||typeof v!=='object').map(([k,v])=>label(k)+': '+String(v)).join(' · ');else text=String(value);
-   if(text){summary.append(element('dt',label(key)),element('dd',text))}
-  });else summary.append(element('dd',String(result)));panel.append(summary);
-  const raw=element('details');raw.append(element('summary','Full saved result'),element('pre',pretty(result)));panel.append(raw);
- }else{
-  panel.append(element('p',source.district),element('p',source.explanation));const checks=element('details');checks.append(element('summary','Checks and supporting evidence'),element('pre',pretty({checks:source.evidence.checks,hypotheses:source.hypotheses})));panel.append(checks);
- }
- };
- appendSource(item,id);
- const relatedIds=new Set(Array.from(card.querySelectorAll('[data-evidence-id]')).map(node=>node.dataset.evidenceId));
- relatedIds.delete(id);relatedIds.forEach(sourceId=>{const source=entries.get(sourceId);if(source)appendSource(source,sourceId,true)});
- const actions=element('div',undefined,'report-inline-actions');actions.append(button('Close',()=>{panel.hidden=true;setOpen(trigger,false,panel);trigger.focus();schedule()}),button('Discuss this evidence',()=>send({type:'discuss',id})));panel.append(actions);card.append(panel);setOpen(trigger,true,panel);schedule();
-}
+function evidence(_trigger,id){if(entries.has(id))send({type:'evidence',id})}
 function trend(trigger,id){
  const item=entries.get(id);if(!item)return;const card=cardFor(trigger);let panel=Array.from(card.children).find(n=>n.dataset.reportTrend===id);
  const toggle=open=>{panel.hidden=!open;card.classList.toggle('report-card-expanded',open);setOpen(trigger,open,panel);trigger.setAttribute('aria-label',(open?'Collapse':'Expand')+' '+titleFor(item)+' trend');schedule()};
@@ -99,7 +81,7 @@ document.querySelectorAll('figure[data-chart="line"]').forEach(figure=>{
  figure.replaceChildren();if(caption)figure.append(caption);
  if(chart)mountChart(figure,chart);else figure.append(element('p','No daily series in this evidence.'));
 });
-document.querySelectorAll('[data-evidence-id],[data-trend-id]').forEach(el=>{if(el.tagName==='FIGURE')return;if(!el.hasAttribute('tabindex'))el.tabIndex=0;if(el.tagName!=='BUTTON'&&!el.hasAttribute('role'))el.setAttribute('role','button');el.setAttribute('aria-expanded','false');if(!el.hasAttribute('aria-label'))el.setAttribute('aria-label',(el.hasAttribute('data-trend-id')?'Expand trend ':'View evidence ')+(el.dataset.trendId||el.dataset.evidenceId))});
+document.querySelectorAll('[data-evidence-id],[data-trend-id]').forEach(el=>{if(el.tagName==='FIGURE')return;if(!el.hasAttribute('tabindex'))el.tabIndex=0;if(el.tagName!=='BUTTON'&&!el.hasAttribute('role'))el.setAttribute('role','button');if(el.hasAttribute('data-trend-id'))el.setAttribute('aria-expanded','false');if(!el.hasAttribute('aria-label'))el.setAttribute('aria-label',(el.hasAttribute('data-trend-id')?'Expand trend for ':'Open evidence: ')+(entries.get(el.dataset.trendId||el.dataset.evidenceId)?titleFor(entries.get(el.dataset.trendId||el.dataset.evidenceId)):(el.dataset.trendId||el.dataset.evidenceId)));if(el.hasAttribute('data-evidence-id')&&el.tagName==='BUTTON'&&!el.closest('.native-cohort-card')){const item=entries.get(el.dataset.evidenceId);if(item){const summary=element('span',item.kind==='finding'?titleFor(item):item.summary);summary.className='report-evidence-summary';el.before(summary);el.textContent='Open'}}});
 const activate=event=>{if(event.target instanceof Element&&event.target.closest('.report-inline,figure[data-chart]'))return;const el=event.target instanceof Element?event.target.closest('[data-trend-id],[data-evidence-id]'):null;if(!el||el.tagName==='FIGURE')return;event.preventDefault();if(el.hasAttribute('data-trend-id'))trend(el,el.dataset.trendId);else evidence(el,el.dataset.evidenceId)};
 document.addEventListener('click',activate);document.addEventListener('keydown',event=>{if((event.key==='Enter'||event.key===' ')&&event.target?.tagName!=='BUTTON')activate(event)});
 new ResizeObserver(schedule).observe(document.body);document.addEventListener('toggle',schedule,true);window.addEventListener('load',schedule);schedule();

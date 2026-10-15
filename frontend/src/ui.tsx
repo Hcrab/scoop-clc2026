@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { n, pct, date } from './api';
+import { chartTicks } from './chartTicks';
 export function Icon({ name, size = 20 }: { name: string; size?: number }) {
   const paths: Record<string, ReactNode> = {
     settings: <><circle cx="12" cy="12" r="3"/><path d="m9 3 1-1h4l1 1 1 3 3 1 2 3-1 3-2 2-1 3-3 2-3-1-2-2-3-1-2-3 1-3 2-2 1-3Z"/></>,
@@ -42,9 +43,11 @@ export function Chart({ data, lines, percent = false, small = false, plotWidth }
     return () => observer.disconnect();
   }, [plotWidth, data.length, visibleLines.length]);
   if (!data.length || !visibleLines.length) return <div className="chart-empty">No daily values available.</div>;
-  const width = Math.max(200, plotWidth ?? measuredWidth), height = small ? 150 : 260, left = 48, right = 18, top = 20, bottom = 36;
+  const width = Math.max(200, plotWidth ?? measuredWidth), height = small ? 150 : 260, right = 18, top = 20, bottom = 36;
   const values = data.flatMap(d => visibleLines.map(l => d[l.key])).filter((v): v is number => typeof v === 'number' && Number.isFinite(v));
-  const lo = Math.min(0, ...values), hi = Math.max(...values, 0.001) * 1.12;
+  const scale = chartTicks(values, percent);
+  const lo = scale.minimum, hi = scale.maximum;
+  const left = Math.min(width / 2, Math.max(48, ...scale.ticks.map(value=>scale.label(value).length * 7 + 14)));
   const times=data.map(row=>Date.parse(String(row.date)));
   const first=times[0],duration=times.at(-1)!-first;
   const x = (i: number) => left + (Number.isFinite(duration)&&duration>0?(times[i]-first)/duration:i/Math.max(1,data.length-1)) * (width - left - right);
@@ -52,7 +55,7 @@ export function Chart({ data, lines, percent = false, small = false, plotWidth }
   const segments=(key:string)=>{const paths:string[][]=[];let current:string[]=[];data.forEach((row,i)=>{const value=row[key];if(typeof value==='number'&&Number.isFinite(value))current.push(`${x(i)},${y(value)}`);else if(current.length){paths.push(current);current=[]}});if(current.length)paths.push(current);return paths};
   const summary = `${date(String(data[0].date))} to ${date(String(data.at(-1)!.date))}. ${visibleLines.map(l=>{const value = data.at(-1)?.[l.key];return `${l.label}: ${typeof value!=='number'||!Number.isFinite(value)?'unavailable':percent?pct(value):n(value,1)} at the latest observation`}).join('. ')}.`;
   return <div ref={container} className={`chart ${small ? 'small' : ''}`}><svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={summary}>
-    {[0, 1, 2, 3].map(i => { const val = lo + (hi - lo) * i / 3; return <g key={i}><line x1={left} x2={width - right} y1={y(val)} y2={y(val)} stroke="#e4e9e3"/><text x={left - 10} y={y(val) + 4} textAnchor="end">{percent ? pct(val) : n(val)}</text></g>; })}
+    {scale.ticks.map(val => <g key={val}><line x1={left} x2={width - right} y1={y(val)} y2={y(val)} stroke="#e4e9e3"/><text x={left - 10} y={y(val) + 4} textAnchor="end">{scale.label(val)}</text></g>)}
     {visibleLines.map(l => l.dots?<g key={l.key} data-series={l.key}>{data.map((d,i)=>({i,v:d[l.key]})).filter((point): point is {i:number;v:number}=>typeof point.v==='number'&&Number.isFinite(point.v)).map(d=><circle key={d.i} cx={x(d.i)} cy={y(d.v)} r="3.8" fill={l.color}/>)}</g>:<g key={l.key} data-series={l.key}>{segments(l.key).map((points,i)=><polyline key={i} fill="none" stroke={l.color} strokeWidth="2.8" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinejoin="round" strokeLinecap="round" points={points.join(' ')}/>)}</g>)}
     {[0, ...(width >= 360 ? [Math.floor((data.length - 1) / 2)] : []), data.length - 1].filter((v, i, a) => a.indexOf(v) === i).map(i => <text key={i} x={x(i)} y={height - 10} textAnchor={i === 0 ? 'start' : i === data.length - 1 ? 'end' : 'middle'}>{date(String(data[i].date))}</text>)}
   </svg><div className="legend">{visibleLines.map(l => <span key={l.key}><i style={{ background:l.dashed?'none':l.color,borderTop:l.dashed?`2px dashed ${l.color}`:undefined }}/>{l.label}</span>)}</div><p className="chart-summary sr-only">{summary}</p></div>;

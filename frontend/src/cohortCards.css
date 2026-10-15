@@ -41,3 +41,8 @@
 .cohort-card-controls{display:flex;align-items:center;gap:8px}.cohort-chart{margin:16px 0}.cohort-chart>label{display:flex;align-items:center;gap:8px}.cohort-chart select{font:inherit;padding:8px;border:1px solid #cbd9cd;background:#fff;border-radius:6px}
 
 .edit-receipt-heading .text-button{white-space:nowrap;flex-shrink:0}
+.cohort-effect{color:#607563;margin:4px 0 0}.cohort-numbers{display:flex;align-items:center;gap:14px;margin:16px 0 4px}.cohort-direction{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#e5eee3;color:#205a4e;font-size:var(--type-section);font-weight:700;flex:none}.cohort-impact{color:#607563;font-size:var(--type-label);margin:2px 0 0;font-variant-numeric:tabular-nums}.cohort-capacity{color:#607563;font-size:var(--type-label);margin:4px 0 14px}.observation-filters{display:flex;gap:20px;flex-wrap:wrap;margin:16px 0}.observation-filters label{display:flex;align-items:center;gap:7px;color:#284f3d;cursor:pointer;font-size:var(--type-label)}.observation-filters input{accent-color:#205a4e}
+
+.discover-with-cohorts>.original-findings{grid-column:1/-1;min-width:0;border-top:1px solid var(--line);padding-top:20px;margin-top:4px}
+
+.discover-with-cohorts>.original-findings .signal-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr))}.original-findings .signal-choice:last-child:nth-child(odd){grid-column:auto}

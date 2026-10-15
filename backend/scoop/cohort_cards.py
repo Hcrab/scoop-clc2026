@@ -4,6 +4,39 @@ import numpy as np
 from scipy.stats import norm
 
 
+def cohort_name(leaf, groups):
+    """Name the included scope; exclusions only qualify a positive parent."""
+    priority = {'price_hkd':0, 'price_100ml':0, 'flavour':1, 'dairy':2, 'format':2}
+    included = [step for step in leaf['tag_path'] if step['included']]
+    product = [step for step in included if not step['id'].startswith('district:')]
+    product.sort(key=lambda step:(priority.get(getattr(groups.get(step['id']), 'dimension', ''),3),step['id']))
+    name = ' · '.join(getattr(groups.get(step['id']), 'name', step['id']).replace('Choc Coated','Chocolate-coated') for step in product)
+    if any(not step['included'] for step in leaf['tag_path']):
+        name = 'Other '+(name[0].lower()+name[1:] if name else 'products')
+    if not name:
+        name = ' · '.join(leaf['districts']) if included else 'Other products'
+    elif any(step['id'].startswith('district:') for step in included):
+        name += ' · '+', '.join(leaf['districts'])
+    return name
+
+
+def build_observations(result, cards, groups):
+    """Project stored model leaves for the report without fitting or ordering again."""
+    card_ids = {card['id'] for card in cards}
+    observations = []
+    for leaf in result.get('leaves', []):
+        mean = leaf.get('posterior_mean',0.)
+        low, high = leaf.get('interval_80',[mean,mean])
+        observations.append({'id':leaf['id'], 'name':cohort_name(leaf,groups),
+                             'tag_path':leaf['tag_path'], 'districts':leaf['districts'],
+                             'skus':leaf['skus'], 'effect_pct':float(np.expm1(mean)*100),
+                             'interval_pct':[float(np.expm1(low)*100),float(np.expm1(high)*100)],
+                             'daily':leaf.get('daily',[]), 'in_card':leaf['id'] in card_ids,
+                             'card_id':leaf['id'] if leaf['id'] in card_ids else None,
+                             'method':{'leaf':leaf,'trace':result.get('method',{})}})
+    return observations
+
+
 def _shortage(mean, sigma, stock):
     if sigma <= 0:
         return max(0., mean-stock)
@@ -16,16 +49,11 @@ def build_cards(result, orders, baseline, products, groups, names):
     plain = baseline.set_index('sku')
     catalog = products.set_index('sku')
     cards = []
-    priority = {'price_hkd':0, 'price_100ml':0, 'flavour':1, 'dairy':2, 'format':2}
     for leaf in result['leaves']:
         low, high = leaf['interval_80']
-        if not leaf['split_p_values'] or not (low > 0 or high < 0):
+        if not any(step['included'] for step in leaf['tag_path']) or not leaf['split_p_values'] or not (low > 0 or high < 0):
             continue
-        tags = [t for t in leaf['tag_path'] if not t['id'].startswith('district:')]
-        tags.sort(key=lambda t:(priority.get(getattr(groups.get(t['id']), 'dimension', ''),3),t['id']))
-        title = ' · '.join(('' if t['included'] else 'Not ') + getattr(groups.get(t['id']), 'name', t['id']) for t in tags)
-        if any(t['id'].startswith('district:') for t in leaf['tag_path']):
-            title += ' · '+', '.join(leaf['districts'])
+        title = cohort_name(leaf, groups)
         skus = [s for s in leaf['skus'] if s in actual.index and s in plain.index]
         units = [u for u in result['units'] if u['leaf_id']==leaf['id']]
         shares = {}

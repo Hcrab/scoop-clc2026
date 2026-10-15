@@ -38,8 +38,8 @@ class Report(BaseModel):
 
 SYSTEM='''You are Scoop's weekly purchasing analyst. Mechanical monitoring has already run.
 The supplied cohort_cards are the backbone of this report. Each Q-cohort ID cites a complete
-measured card with effect, interval and purchasing implications. CUSUM findings are early
-warnings. Use these leads to choose what deserves closer investigation. Supplied cards do not
+measured card with effect, interval and purchasing implications. Include All observations,
+including leaves without a card, when choosing what deserves closer investigation. Supplied cards do not
 consume your query allowance. Compare related groups and districts where useful.
 The cohort effect is an estimated sustained change after baseline comparison and shrinkage.
 Label it as an estimate. Raw recent deviation comes from query_group's recent.deviation_pct.
@@ -52,7 +52,9 @@ Inherited_peak_pallets comes from existing stock and in-transit commitments befo
 When it exceeds the limit, reducing this week's new purchases cannot erase that inherited excess.
 Weather is already in the forecast: a residual change alone does not establish a seasonal cause.
 The order list owns final quantities. In the report's action section, state which groups to
-increase, reduce or hold and why. Use a card's computed case_change when a quantity is useful;
+increase, reduce or hold and why. Show each proposed adjustment once through its native
+<figure data-card="cohort" data-id="leaf-0"></figure>, using the supplied card's actual id;
+cite that card with Q-cohort-<id>. The host presents computed cases and pallets;
 the per-product orders already include uncertainty, stock, lead times and shared capacity.
 A cohort mean effect or a subgroup's observed deviation is not an instruction to multiply its
 purchase quantities by that percentage. Preserve catalog product names and formats.
@@ -114,8 +116,11 @@ def finding_evidence(session,plan):
             for f in session.scalars(select(Finding).where(Finding.plan_id==plan.id))}
 
 def _context(session,plan):
+    from ..api.service import cohort_observations
     findings=list(session.scalars(select(Finding).where(Finding.plan_id==plan.id).order_by(Finding.id)))
     return {'week_start':str(plan.week_start),'goal':plan.goal,'stage':plan.stage,
+            'all_observations':[{k:v for k,v in observation.items() if k not in {'method','daily'}} for observation in
+                                ((plan.summary or {}).get('cohort_observations') or cohort_observations(session,plan))],
             'cohort_cards':[{**q,'result':{**{k:v for k,v in q['result'].items() if k not in {'method','sku_factors'}},
                 **({'order_rows':[{k:v for k,v in row.items() if k in {'sku','name','before_cases','cases','case_change'}} for row in q['result']['sku_factors']]} if 'sku_factors' in q['result'] else {})}} for q in program_evidence(plan)],
             'mechanical_findings':[{'id':f.id,'name':(f.evidence or {}).get('display',f.tag_id),
@@ -150,17 +155,23 @@ class GroundingError(ValueError):
 def offline_report(plan,queries=None,*,grounding_errors=None,usage=None):
     supplied=program_evidence(plan)
     cards=[q for q in supplied]
+    observations=(plan.summary or {}).get('cohort_observations',[])
     if cards:
         rows=[]
         for q in cards:
-            c=q['result'];low,high=c['interval_pct']
-            rows.append(f'<article data-report-card><h3>{escape(str(c["name"]))}</h3>'
-                        f'<p>Effect {c["effect_pct"]:.1f}% (80% interval {low:.1f}% to {high:.1f}%). '
-                        f'{c["case_change"]:+,} cases; {c["pallet_change"]:+.2f} pallets.</p>'
+            c=q['result']
+            rows.append('<article data-report-card>'
+                        f'<figure data-card="cohort" data-id="{escape(str(c["id"]))}"></figure>'
                         f'<button data-evidence-id="{escape(q["id"])}">View evidence</button></article>')
-        title='Cohort changes this week';html='<section>'+''.join(rows)+'</section>'
+        for observation in observations:
+            if not observation['in_card']:
+                rows.append(f'<article><h3>{escape(str(observation["name"]))}</h3>'
+                            f'<p>Estimated request change {observation["effect_pct"]:+.1f}%.</p></article>')
+        title='Measured demand and purchasing adjustments';html='<section><h2>All observations</h2>'+''.join(rows)+'</section>'
     else:
-        title='No cohort changes this week';html='<p>No measured cohort changes to report.</p>'
+        title='Demand observations this week'
+        html='<section><h2>All observations</h2>'+(''.join(f'<article><h3>{escape(str(o["name"]))}</h3><p>Estimated request change {o["effect_pct"]:+.1f}%.</p></article>' for o in observations)
+             if observations else '<p>No measured cohort changes to report.</p>')+'</section>'
     result={'status':'offline','report':title,'presentation':{'title':title,'html':html,'css':''},
             'queries':(queries or [])+supplied,'error':'The evidence-grounded report could not be completed.'}
     if grounding_errors is not None:result['grounding_failure']={'mismatches':grounding_errors,'repair_attempted':True}
@@ -250,6 +261,8 @@ def investigate(session,plan,wire=None,*,prior_queries=None):
 def authoring_evidence(result):
     """Avoid repeating row-level traces during layout authoring; saved evidence stays full."""
     result=compact_result(result)
+    result.pop('method',None)
+    result.pop('sku_factors',None)
     if 'checks' in result and 'score' in result:
         # Program cards already have window totals, parent comparisons and an explanation.
         # The host retains their full daily series for interactive expansion.
@@ -327,7 +340,10 @@ def run(session,plan):
         from ..cohort_context import load_overrides
         orders=suggest_orders(plan.week_start,[],goal=plan.goal,service_level=plan.service_level,
                               overrides=load_overrides(session,plan.week_start))
-        plan.summary={**(plan.summary or {}),'cohort_cards':plan_cohort_cards(plan.week_start,orders,plan.goal,plan.service_level)}
+        plan.summary={**(plan.summary or {}),'cohort_model':orders.attrs.get('cohort_model',{}),
+                      'cohort_cards':plan_cohort_cards(plan.week_start,orders,plan.goal,plan.service_level)}
+        from ..api.service import cohort_observations
+        plan.summary={**plan.summary,'cohort_observations':cohort_observations(session,plan)}
     if not provider_info()['live']:
         result={**existing,'presentation_error':'A live assistant is needed to prepare the visual report.'} if legacy else {
             **offline_report(plan),'error':'A live assistant is needed for additional exploration.'}

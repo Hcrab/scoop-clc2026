@@ -17,6 +17,17 @@ const metrics:{id:DashboardMetric;label:string}[] = [
 ];
 const format=(value:number|null|undefined,unit:DashboardWidget['unit'])=>unit==='ratio'?pct(value):unit==='days'?`${n(value,1)} days`:unit==='pallets'?`${n(value,1)} pallets`:`${n(value)} units`;
 const label=(w:DashboardWidget, data:DashboardData)=>data.options.find(o=>o.kind===w.scope.kind&&o.key===w.scope.key)?.label || (w.scope.kind==='warehouse'?'Whole warehouse':w.scope.key||w.scope.kind);
+type NamedCohort = {id:string;tag_path:{id:string;included:boolean}[];districts:string[]};
+function widgetTitle(widget:DashboardWidget, data:DashboardData, detail:Detail) {
+  if (widget.scope.kind !== 'cohort' || widget.metric !== 'requested_vs_expected' || !widget.title.endsWith(' requests')) return widget.title;
+  const card = (detail as Detail & {cohort_cards?:NamedCohort[]}).cohort_cards?.find(item=>item.id===widget.scope.key);
+  if (!card) return widget.title;
+  const oldParts = card.tag_path.filter(term=>!term.id.startsWith('district:')).map(term=>`${term.included?'':'Not '}${data.options.find(option=>option.kind==='tag'&&option.key===term.id)?.label||term.id}`);
+  if (card.tag_path.some(term=>term.id.startsWith('district:'))) oldParts.push(card.districts.join(', '));
+  const savedParts = widget.title.slice(0,-' requests'.length).split(' · ');
+  oldParts.sort();savedParts.sort();
+  return oldParts.length === savedParts.length && oldParts.every((part,index)=>part===savedParts[index]) ? `${label(widget,data)} requests` : widget.title;
+}
 const receipt=(value:unknown, name:string):PlanEdit=>({...value as PlanEdit,label:name});
 
 function WidgetChart({widget,result,day,minute,products}:{widget:DashboardWidget;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[]}) {
@@ -45,10 +56,13 @@ function WidgetChart({widget,result,day,minute,products}:{widget:DashboardWidget
     <details className="dashboard-evidence"><summary>Source data</summary><p className="muted">{widget.skus.length} products · {metrics.find(m=>m.id===widget.metric)?.label}{simulated?` · Simulated from ${date(result!.dates[0])}`:''}</p><div className="table-wrap"><table><thead><tr><th>Date</th><th>{simulated?'Recorded / this plan':'Recorded'}</th>{simulated&&<th>Moving-average rule</th>}{hasExpected&&<th>Expected</th>}</tr></thead><tbody>{data.map(row=><tr key={row.date}><th scope="row">{date(row.date)}</th><td>{cell(row.plan)}</td>{simulated&&<td>{cell(row.rule)}</td>}{hasExpected&&<td>{cell(row.expected)}</td>}</tr>)}</tbody></table></div></details></>;
 }
 
-function WidgetCard({widget,index,count,data,result,day,minute,products,disabled,readonly,dragged,drop,move,remove,edit}:{widget:DashboardWidget;index:number;count:number;data:DashboardData;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];disabled:boolean;readonly:boolean;dragged:React.RefObject<string|null>;drop:(before?:string)=>void;move:(id:string,delta:number)=>void;remove:(widget:DashboardWidget)=>void;edit:(widget:DashboardWidget)=>void}) {
+function WidgetCard({widget,index,count,data,detail,result,day,minute,products,disabled,readonly,dragged,drop,move,remove,edit}:{widget:DashboardWidget;index:number;count:number;data:DashboardData;detail:Detail;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];disabled:boolean;readonly:boolean;dragged:React.RefObject<string|null>;drop:(before?:string)=>void;move:(id:string,delta:number)=>void;remove:(widget:DashboardWidget)=>void;edit:(widget:DashboardWidget)=>void}) {
   const value=result&&day>=0?widgetPoint(result,widget,'scoop',products,day,minute).value:widget.value;
   const warning=value!=null&&!!widget.threshold&&(widget.threshold.operator==='lt'?value<widget.threshold.value:value>widget.threshold.value);
-  return <article className={`dashboard-widget ${warning?'warning':''}`} draggable={!disabled} onDragStart={(e:DragEvent)=>{dragged.current=widget.id;e.dataTransfer.effectAllowed='move'}} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.stopPropagation();drop(widget.id)}}><header><div><h3>{widget.title}</h3><small>{label(widget,data)}{widget.threshold?` · ${widget.threshold.operator==='lt'?'Below':'Above'} ${format(widget.threshold.value,widget.unit)}`:''}</small></div>{warning&&<span className="dashboard-warning">Alert</span>}</header><WidgetChart widget={widget} result={result} day={day} minute={minute} products={products}/>{!readonly&&<div className="dashboard-actions"><button className="text-button" disabled={disabled||index===0} aria-label={`Move ${widget.title} up`} onClick={()=>move(widget.id,-1)}>↑</button><button className="text-button" disabled={disabled||index===count-1} aria-label={`Move ${widget.title} down`} onClick={()=>move(widget.id,1)}>↓</button><button className="text-button" disabled={disabled} onClick={()=>edit(widget)}>Edit</button><button className="text-button" disabled={disabled} onClick={()=>remove(widget)}>Remove</button></div>}</article>;
+  const title=widgetTitle(widget,data,detail),scopeLabel=label(widget,data);
+  const scopeRepeated=title.toLocaleLowerCase().includes(scopeLabel.toLocaleLowerCase());
+  const subtitle=[!scopeRepeated?scopeLabel:null,widget.threshold?`${widget.threshold.operator==='lt'?'Below':'Above'} ${format(widget.threshold.value,widget.unit)}`:null].filter(Boolean).join(' · ');
+  return <article className={`dashboard-widget ${warning?'warning':''}`} draggable={!disabled} onDragStart={(e:DragEvent)=>{dragged.current=widget.id;e.dataTransfer.effectAllowed='move'}} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.stopPropagation();drop(widget.id)}}><header><div><h3>{title}</h3>{subtitle&&<small>{subtitle}</small>}</div>{warning&&<span className="dashboard-warning">Alert</span>}</header><WidgetChart widget={widget} result={result} day={day} minute={minute} products={products}/>{!readonly&&<div className="dashboard-actions"><button className="text-button" disabled={disabled||index===0} aria-label={`Move ${title} up`} onClick={()=>move(widget.id,-1)}>↑</button><button className="text-button" disabled={disabled||index===count-1} aria-label={`Move ${title} down`} onClick={()=>move(widget.id,1)}>↓</button><button className="text-button" disabled={disabled} onClick={()=>edit(widget)}>Edit</button><button className="text-button" disabled={disabled} onClick={()=>remove(widget)}>Remove</button></div>}</article>;
 }
 
 function Editor({item,data,path,close,saved}:{item?:DashboardWidget;data:DashboardData;path:string;close:()=>void;saved:(value:unknown,name:string)=>void}) {
@@ -92,8 +106,8 @@ export function Dashboard({detail,products,path,result,day=-1,minute=null,pendin
     {error&&<p role="alert" className="chat-error">{error}</p>}
     {!data&&!error&&<p className="muted">Loading dashboard…</p>}
     {data&&!data.widgets.length&&<p className="muted">No widgets yet. Add a measure to follow.</p>}
-    <div className="dashboard-grid" onDragOver={e=>e.preventDefault()} onDrop={()=>drop()}>{data?.widgets.map((widget,index)=><WidgetCard key={widget.id} widget={widget} index={index} count={data.widgets.length} data={data} result={result} day={day} minute={minute} products={products} disabled={disabled} readonly={readonly} dragged={dragged} drop={drop} move={move} remove={remove} edit={setEditing}/>)}</div>
+    <div className="dashboard-grid" onDragOver={e=>e.preventDefault()} onDrop={()=>drop()}>{data?.widgets.map((widget,index)=><WidgetCard key={widget.id} widget={widget} index={index} count={data.widgets.length} data={data} detail={detail} result={result} day={day} minute={minute} products={products} disabled={disabled} readonly={readonly} dragged={dragged} drop={drop} move={move} remove={remove} edit={setEditing}/>)}</div>
     {edit&&<EditReceipt key={edit.edit_id} edit={edit} detail={detail} path={path} onChanged={()=>{void refresh();onChanged?.()}} disabled={disabled}/>}
-    {editing!==undefined&&data&&<Editor item={editing||undefined} data={data} path={path} close={()=>setEditing(undefined)} saved={changed}/>}
+    {editing!==undefined&&data&&<Editor item={editing?{...editing,title:widgetTitle(editing,data,detail)}:undefined} data={data} path={path} close={()=>setEditing(undefined)} saved={changed}/>}
   </section>;
 }

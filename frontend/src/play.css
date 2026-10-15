@@ -64,4 +64,8 @@
 .results-view .play-comparison{margin-top:0;padding:26px}
 .results-view .play-outcomes{gap:24px;margin:24px 0}
 .results-view .play-outcomes strong{font-size:var(--type-key)}
+.results-view .results-reading{font-size:var(--type-body);line-height:1.55;color:var(--ink);margin:0 0 22px;max-width:68ch}
+.results-chart{min-width:0;border-top:1px solid var(--line);padding:20px 0 16px;margin-bottom:10px}
+.results-chart h3{font-size:var(--type-label);font-weight:600;color:var(--ink);margin:0 0 12px}
+.results-chart .chart{width:100%}
 @media(max-width:620px){.flow-primary{justify-content:stretch}.flow-primary .button{width:100%}.results-view .play-comparison{padding:18px}}

@@ -96,7 +96,15 @@ VISUAL DIRECTION
 Warm off-white background, white cards, dark green text, muted green / coral / violet accents.
 Use restrained typography, generous but purposeful spacing, equal-width cards and aligned metrics.
 Let card widths and column counts follow the content and available space, stacking on a narrow screen.
-Use a real grid/table for action rows, never variable-width text columns that drift out of alignment.
+Use a real grid for action rows, never variable-width text columns that drift out of alignment.
+Place each supplied purchasing adjustment with <figure data-card="cohort" data-id="leaf-0"></figure>,
+using the actual id of a supplied cohort card. The host draws its cases, pallets and other values.
+The native card already contains its group name, effect and purchasing adjustment; surrounding
+copy should explain the proposed response rather than repeat that heading or its numbers.
+Arrange the native figures as a simple list or CSS grid. Keep them out of tables. In particular,
+an "Operational focus" cell must not repeat cases or pallets already supplied by a native card.
+Use Q-cohort-<id> as the associated evidence source. Do not author a second adjustment table
+or repeat card quantities in prose. You may still use tables for other analytical data.
 Use a host-rendered line chart figure for quantities. The host labels values and units.
 Don't decorate all text
 with dotted underlines. Query IDs should not be displayed as prominent badges.
@@ -157,12 +165,37 @@ class _Fragment(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.ids=ids
         self.evidence=evidence or {}
+        self.tables=[]
+        self.table=None
+        self.cell=None
 
     def handle_starttag(self,tag,attrs):
         if tag not in self.allowed:raise ValueError('Unsupported report HTML element: '+tag)
         attributes=dict(attrs)
+        if len(attributes)!=len(attrs):raise ValueError('Duplicate report HTML attributes are unsupported.')
+        if tag=='table':
+            self.table={'caption':'','rows':[]}
+            self.tables.append(self.table)
+        elif tag=='tr' and self.table is not None:
+            self.table['rows'].append([])
+        elif tag in {'th','td'} and self.table is not None and self.table['rows']:
+            self.cell={'kind':tag,'text':''}
+            self.table['rows'][-1].append(self.cell)
         if tag!='figure' and any(key in attributes for key in ('data-chart','data-series')):
             raise ValueError('Chart specifications belong on figure elements.')
+        if tag!='figure' and any(key in attributes for key in ('data-card','data-id')):
+            raise ValueError('Native card specifications belong on figure elements.')
+        if tag=='figure' and ('data-card' in attributes or 'data-id' in attributes):
+            if set(attributes) & {'data-chart','data-series','data-evidence-id'}:
+                raise ValueError('A figure cannot mix a chart and a native card.')
+            card_id=attributes.get('data-id')
+            if attributes.get('data-card')!='cohort' or not card_id or any(key not in {'data-card','data-id','class'} for key in attributes):
+                raise ValueError('Malformed native cohort card figure.')
+            evidence_id='Q-cohort-'+card_id
+            source=self.evidence.get(evidence_id,{})
+            excluded=source.get('in_card') is False or ('tag_path' in source and not any(step.get('included') for step in source['tag_path']))
+            if evidence_id not in self.ids or source.get('id')!=card_id or excluded:
+                raise ValueError('Native cohort card must cite a supplied card.')
         if tag=='figure' and 'data-chart' in attributes:
             if attributes.get('data-chart')!='line':raise ValueError('Only line chart figures are supported.')
             source=attributes.get('data-evidence-id')
@@ -193,6 +226,48 @@ class _Fragment(HTMLParser):
 
     def handle_startendtag(self,tag,attrs):self.handle_starttag(tag,attrs)
 
+    def handle_data(self,data):
+        if self.cell is not None:self.cell['text']+=data
+        elif self.table is not None:self.table['caption']+=data
+
+    def handle_endtag(self,tag):
+        if tag in {'td','th'}:self.cell=None
+        elif tag=='table':self.table=None
+
+    def check_adjustment_tables(self):
+        cards=[value for key,value in self.evidence.items() if key.startswith('Q-cohort-') and isinstance(value,dict) and 'id' in value]
+        for table in self.tables:
+            rows=table['rows']
+            headings=next(([cell['text'] for cell in row] for row in rows if any(cell['kind']=='th' for cell in row)),
+                          [cell['text'] for cell in rows[0]] if rows else [])
+            columns=[i for i,heading in enumerate(headings) if re.search(r'\b(cases?|pallets?)\b',heading,re.I)]
+            context=' '.join(headings)+' '+table['caption']
+            adjustment=bool(re.search(r'\b(change|adjust(?:ment)?|increase|reduce|decrease|add|remove|buy|purchase|order|proposed)\b',context,re.I))
+            for row in rows:
+                if any(cell['kind']=='th' for cell in row):continue
+                values=[cell['text'] for cell in row]
+                for card in cards:
+                    matched=set()
+                    for i in columns:
+                        if i>=len(values):continue
+                        heading=headings[i].lower()
+                        target=card.get('pallet_change') if 'pallet' in heading else card.get('case_change')
+                        if target is None:continue
+                        tokens=re.findall(r'(?<![\w.])[-+]?\d[\d,]*(?:\.\d+)?(?![\w.])',values[i].replace('−','-'))
+                        if any(abs(float(token.replace(',',''))-float(target))<=
+                               .5*10**(-len(token.partition('.')[2]))+1e-9 for token in tokens):
+                            matched.add('pallet' if 'pallet' in heading else 'case')
+                    row_names=' '.join(values).casefold()
+                    for token,unit in re.findall(r'(?<![\w.])([-+−]?\d[\d,]*(?:\.\d+)?)\s*(cases?|pallets?)\b',row_names):
+                        target=card.get('pallet_change') if unit.startswith('pallet') else card.get('case_change')
+                        token=token.replace('−','-')
+                        if target is not None and abs(float(token.replace(',',''))-float(target))<=.5*10**(-len(token.partition('.')[2]))+1e-9:
+                            matched.add('pallet' if unit.startswith('pallet') else 'case')
+                    named=bool(card.get('name') and card['name'].casefold() in row_names)
+                    instruction=bool(re.search(r'\b(increase|reduce|decrease|add|remove|trim|buy|purchase|order)\b',row_names))
+                    if matched and (adjustment or instruction or len(matched)==2 or named):
+                        raise ValueError('Adjustment quantities belong in native cohort cards, not an AI table.')
+
     def handle_decl(self,decl):raise ValueError('Supply an HTML fragment, not a document declaration.')
 
     def unknown_decl(self,data):raise ValueError('Unsupported report HTML declaration.')
@@ -202,6 +277,7 @@ def validate(value,ids,evidence=None):
     presentation=Presentation.model_validate(value)
     _css(presentation.css)
     parser=_Fragment(set(ids),evidence);parser.feed(presentation.html);parser.close()
+    parser.check_adjustment_tables()
     return presentation.model_dump()
 
 

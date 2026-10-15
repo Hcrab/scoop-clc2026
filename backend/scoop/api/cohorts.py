@@ -224,20 +224,12 @@ def get_overrides(pid: str):
 
 @router.get('/plans/{pid}/cohorts')
 def get_cohorts(pid: str):
-    from ..planning import suggest_orders, plan_cohort_cards
     with service.session_scope() as session:
         plan = service.plan_for(session, pid)
         saved=plan.summary or {}
-        if 'cohort_cards' in saved and 'cohort_model' in saved:
-            return service.clean({'cards':saved['cohort_cards'],
-                                  'method':saved['cohort_model'].get('method',{}),
-                                  'overrides':load_overrides(session,plan.week_start)})
-        orders = suggest_orders(plan.week_start, [], goal=plan.goal, service_level=plan.service_level,
-                                overrides=load_overrides(session, plan.week_start))
-        cards = plan_cohort_cards(plan.week_start, orders, plan.goal, plan.service_level)
-        plan.summary = {**(plan.summary or {}), 'cohort_model': orders.attrs['cohort_model'],
-                        'cohort_cards': cards}
-        return service.clean({'cards':cards,'method':orders.attrs['cohort_model']['method'],
+        return service.clean({'cards':saved.get('cohort_cards',[]),
+                              'observations':saved.get('cohort_observations') or service.cohort_observations(session,plan),
+                              'method':saved.get('cohort_model',{}).get('method',{}),
                               'overrides':load_overrides(session, plan.week_start)})
 
 
@@ -266,7 +258,7 @@ def undo_context(session, plan, edit_id):
         session.flush()
         return {'edit_id': edit.id, 'undone': True, 'before': after, 'after': before, 'affected_orders': []}
     # Read-time model/card refreshes and conversation do not edit the plan.
-    derived = {'discussion', 'cohort_model', 'cohort_cards', 'weekly_review', 'flow'}
+    derived = {'discussion', 'cohort_model', 'cohort_cards', 'cohort_observations', 'weekly_review', 'flow'}
     current_summary={k:v for k,v in (current['summary'] or {}).items() if k not in derived}
     after_summary={k:v for k,v in (after['summary'] or {}).items() if k not in derived}
     if {**current,'summary':current_summary} != {**after,'summary':after_summary}:

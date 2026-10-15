@@ -1,0 +1,51 @@
+{
+  "cause": "Edge dispatched a fast post-scroll click to the tall iframe previous compositor hit region, although document.elementFromPoint reported SUMMARY. Explicit scroll and two animation frames let input follow the painted host element.",
+  "accepted_trace": [
+    {
+      "type": "click",
+      "target": "SUMMARY",
+      "open": false,
+      "prevented": false,
+      "connected": true
+    },
+    {
+      "type": "click-after",
+      "open": false,
+      "prevented": false,
+      "connected": true
+    },
+    {
+      "type": "toggle",
+      "target": "DETAILS",
+      "open": true,
+      "prevented": false,
+      "connected": true
+    },
+    {
+      "type": "toggle-after",
+      "open": true,
+      "prevented": false,
+      "connected": true
+    }
+  ],
+  "accepted_pointer": [
+    "N3POINTER {\"frame\":\"host\",\"type\":\"pointerdown\",\"target\":\"SUMMARY\",\"x\":568.5599975585938,\"y\":923.280029296875}",
+    "N3POINTER {\"frame\":\"host\",\"type\":\"mousedown\",\"target\":\"SUMMARY\",\"x\":568,\"y\":923}",
+    "N3POINTER {\"frame\":\"host\",\"type\":\"mouseup\",\"target\":\"SUMMARY\",\"x\":568,\"y\":923}",
+    "N3POINTER {\"frame\":\"host\",\"type\":\"click\",\"target\":\"SUMMARY\",\"x\":568,\"y\":923}"
+  ],
+  "accepted_state": {
+    "open": true,
+    "same": true,
+    "connected": true,
+    "rect": {
+      "x": 246,
+      "y": 913.28125,
+      "width": 645.125,
+      "height": 1840.234375
+    },
+    "hit": "SUMMARY",
+    "scrollY": 5408
+  },
+  "browser_pass": true
+}

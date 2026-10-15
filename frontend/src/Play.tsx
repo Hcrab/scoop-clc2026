@@ -1,6 +1,7 @@
 import { useEffect, useMemo, type Dispatch, type SetStateAction } from 'react';
 import { date, fullDate, n, pct } from './api';
 import { Dashboard, type DashboardPlay } from './Dashboard';
+import { Chart } from './ui';
 import { palletsFor } from './replayData';
 import type { Detail, Product } from './types';
 
@@ -24,8 +25,20 @@ export function Results({result,detail,products,path,revision=0}:{result:PlayRes
   const table=(caption:string,summary:Record<Policy,Summary>)=><table><caption>{caption}</caption><thead><tr><th/><th>{POLICY_LABEL.scoop}</th><th>{POLICY_LABEL.baseline}</th></tr></thead><tbody>{rows.map(([name,format,compare])=>{const better=compare(summary.scoop,summary.baseline);return <tr key={name}><td>{name}</td><td className={better>1e-9?'better':better< -1e-9?'worse':''}>{format(summary.scoop)}</td><td>{format(summary.baseline)}</td></tr>})}</tbody></table>;
   const affected=result.affected_comparison;
   const names=new Map(products.map(product=>[product.sku,product.name]));
+  const affectedIndexes=result.affected_skus.map(sku=>result.skus.indexOf(sku)).filter(index=>index>=0);
+  let planShort=0,ruleShort=0;
+  const comparison=result.dates.map((at,day)=>{
+    planShort+=affectedIndexes.reduce((sum,index)=>sum+(result.runs.scoop.per_sku.lost[day]?.[index]||0),0);
+    ruleShort+=affectedIndexes.reduce((sum,index)=>sum+(result.runs.baseline.per_sku.lost[day]?.[index]||0),0);
+    return {date:at,plan:planShort,rule:ruleShort};
+  });
+  const spaceDifference=result.affected_summary.scoop.avg_pallets-result.affected_summary.baseline.avg_pallets;
+  const spacePhrase=Math.abs(spaceDifference)<0.05?'the same average cold-store space':`${n(Math.abs(spaceDifference),1)} ${Math.abs(spaceDifference)<1.05?'pallet':'pallets'} ${spaceDifference<0?'less':'more'} on average`;
+  const shortagePhrase=affected.units_saved>0?'left fewer units short than the moving-average rule':affected.units_saved<0?'left more units short than the moving-average rule':'left the same number of units short as the moving-average rule';
   return <section className="results-view"><div className="play-comparison"><h2>Results · {fullDate(result.start)} – {fullDate(result.end)}</h2>
     <div className="play-outcomes"><div><span>{affected.units_saved<0?'Extra units short':'Units short avoided'}</span><strong>{n(Math.abs(affected.units_saved))}</strong></div><div><span>{affected.stockout_days_avoided<0?'Extra stockout product-days':'Stockout product-days avoided'}</span><strong>{n(Math.abs(affected.stockout_days_avoided))}</strong></div><div><span>{result.affected_summary.baseline.lost_margin-result.affected_summary.scoop.lost_margin<0?'Extra margin lost':'Lost margin avoided'}</span><strong>HK${n(Math.abs(result.affected_summary.baseline.lost_margin-result.affected_summary.scoop.lost_margin))}</strong></div></div>
+    <p className="results-reading">Using {spacePhrase}, this plan {shortagePhrase}.</p>
+    <div className="results-chart"><h3>Cumulative units short · affected products</h3><Chart data={comparison} lines={[{key:'plan',label:'This plan',color:'#205a4e'},{key:'rule',label:'Moving-average rule',color:'#b28a5a'}]}/></div>
     <details><summary>Affected products · {result.affected_skus.length}</summary><ul>{result.affected_skus.map(sku=><li key={sku}>{names.get(sku)||sku}</li>)}</ul></details>
     <details><summary>See full comparison</summary>{result.affected_skus.length===result.skus.length?table(`Whole warehouse · ${result.affected_skus.length} affected products`,result.summary):<>{table('Affected products',result.affected_summary)}{table('Whole warehouse',result.summary)}</>}<p className="muted">Cold-store limit: {n(result.capacity_pallets)} pallets.</p></details>
   </div><Dashboard detail={detail} products={products} path={path} result={result} day={result.days-1} readonly revision={revision}/></section>;

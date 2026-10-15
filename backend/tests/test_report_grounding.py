@@ -6,6 +6,30 @@ from test_weekly_review import api, cohort_cards, presentation, report, saved_ca
 from scoop.ai import weekly
 from scoop.ai.grounding import mismatches
 from scoop.ai.report_design import validate
+
+
+def test_native_cohort_figure_and_adjustment_table_structure():
+    supplied={'Q-cohort-leaf-0':{'id':'leaf-0','name':'Mid calorie',
+                                 'case_change':4,'pallet_change':.4}}
+    def design(html):return {'title':'Measured adjustment','html':html,'css':''}
+    ids=set(supplied)
+    assert validate(design('<figure data-card="cohort" data-id="leaf-0"></figure>'),ids,supplied)
+    with pytest.raises(ValueError):
+        validate(design('<figure data-card="cohort" data-id="leaf-0"></figure>'),ids,
+                 {'Q-cohort-leaf-0':{**supplied['Q-cohort-leaf-0'],'in_card':False}})
+    for html in ('<figure data-card="cohort" data-id="missing"></figure>',
+                 '<figure data-card="cohort"></figure>',
+                 '<figure data-card="cohort" data-id="leaf-0" data-chart="line" data-series="actual"></figure>'):
+        with pytest.raises(ValueError):validate(design(html),ids,supplied)
+    duplicate='<table><thead><tr><th>Group</th><th>Case change</th><th>Pallet change</th></tr></thead><tbody><tr><td>Mid calorie</td><td><strong>+&#52;</strong></td><td><span>+0.</span><span>4</span></td></tr></tbody></table>'
+    with pytest.raises(ValueError,match='native cohort cards'):validate(design(duplicate),ids,supplied)
+    rounded={'Q-cohort-leaf-0':{**supplied['Q-cohort-leaf-0'],'case_change':-4,'pallet_change':-.436}}
+    with pytest.raises(ValueError,match='native cohort cards'):
+        validate(design('<table><tr><th>Group</th><th>Case change</th><th>Pallet change</th></tr><tr><td>Mid calorie</td><td>−4</td><td>−0.4</td></tr></table>'),ids,rounded)
+    with pytest.raises(ValueError,match='native cohort cards'):
+        validate(design('<table><tr><th>Direction</th><th>Operational focus</th></tr><tr><td>Increase</td><td>Order <b>+4</b> cases for Mid calorie.</td></tr></table>'),ids,supplied)
+    assert validate(design('<table><tr><th>Store</th><th>Requested units</th></tr><tr><td>Kowloon</td><td>4</td></tr></table><p>Four cases of a product were inspected.</p>'),ids,supplied)
+    with pytest.raises(ValueError):validate(design('<svg><path /></svg>'),ids,supplied)
 from scoop.models import Plan
 
 
