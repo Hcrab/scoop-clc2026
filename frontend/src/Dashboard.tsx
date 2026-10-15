@@ -3,7 +3,7 @@ import { api, date, n, pct } from './api';
 import { EditReceipt, type PlanEdit } from './EditReceipt';
 import type { DashboardData, DashboardMetric, DashboardScope, DashboardSpec, DashboardWidget, Detail, Product } from './types';
 import { Chart, Icon, Modal } from './ui';
-import { widgetHourPoint, widgetPoint } from './replayData';
+import { widgetPoint } from './replayData';
 import { ProductIcon } from './ProductIcon';
 import './dashboard.css';
 
@@ -32,28 +32,28 @@ function widgetTitle(widget:DashboardWidget, data:DashboardData, detail:Detail) 
 const receipt=(value:unknown, name:string):PlanEdit=>({...value as PlanEdit,label:name});
 
 function WidgetChart({widget,result,day,minute,products}:{widget:DashboardWidget;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[]}) {
-  const chartMinute=minute===null?null:Math.floor(minute/60)*60;
-  // Recalculate chart history only on an hour boundary or when a widget/result changes.
+  const partial=minute!==null&&minute<1430;
+  // The replay updates the current day's cumulative point at every exact 10-minute tick.
   const data=useMemo(()=>{
     const past=widget.series.map(point=>({date:point.date,plan:point.value??NaN,expected:point.expected??NaN,rule:NaN,dot:NaN}));
     const future=result&&day>=0?result.dates.slice(0,day+1).map((at,i)=>{
-      const pointMinute=i===day?chartMinute:null;
-      const plan=pointMinute===null?widgetPoint(result,widget,'scoop',products,i,null):widgetHourPoint(result,widget,'scoop',products,i,pointMinute/60);
-      const rule=pointMinute===null?widgetPoint(result,widget,'baseline',products,i,null):widgetHourPoint(result,widget,'baseline',products,i,pointMinute/60);
-      const lost=i===day&&pointMinute!==null?result.skus.map((_,skuIndex)=>result.runs.baseline.hourly.lost.slice(i*24,i*24+pointMinute/60).reduce((total,row)=>total+(row?.[skuIndex]||0),0)):result.runs.baseline.per_sku.lost[i];
-      const dot=widget.skus.some(sku=>{const index=result.skus.indexOf(sku);return index>=0&&(lost?.[index]||0)>0});
+      const pointMinute=i===day?minute:null;
+      const plan=widgetPoint(result,widget,'scoop',products,i,pointMinute);
+      const rule=widgetPoint(result,widget,'baseline',products,i,pointMinute);
+      const dot=(widgetPoint(result,{...widget,metric:'lost_units'},'baseline',products,i,pointMinute).value||0)>0;
       return {date:at,plan:plan.value??NaN,rule:rule.value??NaN,expected:plan.expected??NaN,dot:dot?rule.value??NaN:NaN};
     }):[];
     return [...past,...future];
-  },[widget,result,day,chartMinute,products]);
+  },[widget,result,day,minute,products]);
   const hasExpected=data.some(row=>Number.isFinite(row.expected));
   const live=result&&day>=0?widgetPoint(result,widget,'scoop',products,day,minute):null;
   const value=live?live.value:widget.value;
   const state=value==null?'unknown':widget.threshold?((widget.threshold.operator==='lt'?value<widget.threshold.value:value>widget.threshold.value)?'warning':'normal'):'normal';
   const simulated=!!result&&day>=0;
   const cell=(value:number)=>Number.isFinite(value)?format(value,widget.unit):'—';
-  const chart=useMemo(()=>data.some(row=>Number.isFinite(row.plan))?<Chart small data={data} percent={widget.unit==='ratio'} lines={[{key:'plan',label:simulated?'This plan':'Recorded',color:'#205a4e'},{key:'rule',label:'Moving-average rule',color:'#b28a5a'},{key:'dot',label:'Rule stockout',color:'#c96c59',dots:true},...(hasExpected?[{key:'expected',label:'Expected',color:'#8f87a6',dashed:true}]:[])]}/>:<p className="muted">No recorded history yet.</p>,[data,widget.unit,simulated,hasExpected]);
-  return <><strong className="dashboard-value">{value==null?'Not available':format(value,widget.unit)}</strong>{widget.threshold&&<small className={`dashboard-current-state ${state}`}>{state==='warning'?'Alert':state==='unknown'?'Threshold unavailable':'Within threshold'}</small>}{chart}
+  const chart=useMemo(()=>data.some(row=>Number.isFinite(row.plan))?<Chart small data={data} partialLast={simulated&&partial} percent={widget.unit==='ratio'} lines={[{key:'plan',label:simulated?'This plan':'Recorded',color:'#205a4e'},{key:'rule',label:'Moving-average rule',color:'#b28a5a'},{key:'dot',label:'Rule stockout',color:'#c96c59',dots:true},...(hasExpected?[{key:'expected',label:'Expected',color:'#8f87a6',dashed:true}]:[])]}/>:<p className="muted">No recorded history yet.</p>,[data,widget.unit,simulated,hasExpected,partial]);
+  const flow=widget.metric==='demand'||widget.metric==='lost_units'||widget.metric==='requested_vs_expected'||widget.metric==='fill_rate';
+  return <><div className="dashboard-value"><strong>{value==null?(widget.metric==='fill_rate'&&simulated&&partial&&minute!==null&&minute<1080?'Pending dispatch':'Not available'):format(value,widget.unit)}</strong>{simulated&&partial&&flow&&<small>Today so far</small>}</div>{widget.threshold&&<small className={`dashboard-current-state ${state}`}>{state==='warning'?'Alert':state==='unknown'?'Threshold unavailable':'Within threshold'}</small>}{chart}
     <details className="dashboard-evidence"><summary>Source data</summary><p className="muted">{widget.skus.length} products · {metrics.find(m=>m.id===widget.metric)?.label}{simulated?` · Simulated from ${date(result!.dates[0])}`:''}</p><div className="table-wrap"><table><thead><tr><th>Date</th><th>{simulated?'Recorded / this plan':'Recorded'}</th>{simulated&&<th>Moving-average rule</th>}{hasExpected&&<th>Expected</th>}</tr></thead><tbody>{data.map(row=><tr key={row.date}><th scope="row">{date(row.date)}</th><td>{cell(row.plan)}</td>{simulated&&<td>{cell(row.rule)}</td>}{hasExpected&&<td>{cell(row.expected)}</td>}</tr>)}</tbody></table></div></details></>;
 }
 

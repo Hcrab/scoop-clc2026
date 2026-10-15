@@ -49,6 +49,18 @@ def first_shortage_minute(demand: float, opening: float, arrived: float, receipt
     return None
 
 
+def cumulative_loss(demand: float, opening: float, arrived: float,
+                    receipt: int, final_loss: float) -> list[float]:
+    """Monotone presentation loss, capped by the unchanged daily loss."""
+    curve = []
+    maximum = 0.0
+    for minute, fraction in zip(MINUTES, DEMAND_CDF):
+        landed = arrived if minute >= receipt else 0.0
+        maximum = max(maximum, min(final_loss, max(0.0, demand * fraction - opening - landed)))
+        curve.append(maximum)
+    return curve
+
+
 def enrich(result: dict, suppliers: list[str]) -> None:
     """Attach immutable profile and exact hourly increments to the result."""
     dates = result['dates']
@@ -67,6 +79,10 @@ def enrich(result: dict, suppliers: list[str]) -> None:
         hourly = {key: [] for key in ('on_hand', 'on_hand_delta', 'demand', 'shipped', 'lost', 'arrived')}
         prior = opening[:]
         for day, receipt_row in enumerate(arrivals):
+            loss_curves = [cumulative_loss(
+                per['demand'][day][j], prior[j], per['arrived'][day][j],
+                receipt_row[j], per['lost'][day][j],
+            ) for j in range(len(skus))]
             for hour in range(24):
                 end = (hour + 1) * 60
                 prev = hour * 60
@@ -76,16 +92,12 @@ def enrich(result: dict, suppliers: list[str]) -> None:
                 for j in range(len(skus)):
                     dem = per['demand'][day][j]
                     ship = per['shipped'][day][j]
-                    loss = per['lost'][day][j]
                     arrived = per['arrived'][day][j]
                     receipt = receipt_row[j]
-                    def lost_at(index: int, minute: int) -> float:
-                        landed = arrived if minute >= receipt else 0.0
-                        return min(loss, max(0.0, dem * DEMAND_CDF[index] - prior[j] - landed))
                     arrived_hour = arrived if prev < receipt <= end else 0.0
                     shipped_hour = ship * (DISPATCH_CDF[step] - DISPATCH_CDF[last])
                     demand_hour = dem * (DEMAND_CDF[step] - DEMAND_CDF[last])
-                    lost_hour = lost_at(step, end) - lost_at(last, prev)
+                    lost_hour = loss_curves[j][step] - loss_curves[j][last]
                     level = prior[j] + (arrived if end >= receipt else 0.0) - ship * DISPATCH_CDF[step]
                     previous_level = prior[j] + (arrived if prev >= receipt else 0.0) - ship * DISPATCH_CDF[last]
                     row['on_hand'].append(level)

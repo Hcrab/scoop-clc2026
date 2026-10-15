@@ -31,10 +31,13 @@ settings = Settings()
 
 
 # Presentation-only intraday profile. The physical simulation still settles daily.
+# Spread 10% of the existing daytime request shape uniformly over the whole day
+# so an overnight Play clock shows synthetic requests without changing daily demand.
 INTRADAY_STEP_MINUTES = 10
-DEMAND_HOURLY_WEIGHTS = (0.0,) * 10 + (
+DAYTIME_REQUEST_WEIGHTS = (0.0,) * 10 + (
     .04, .06, .08, .10, .14, .16, .14, .10, .07, .05, .04, .02,
 ) + (0.0,) * 2
+DEMAND_HOURLY_WEIGHTS = tuple(.9 * weight + .1 / 24 for weight in DAYTIME_REQUEST_WEIGHTS)
 DISPATCH_HOURLY_WEIGHTS = (0.0,) * 18 + (.15, .30, .35, .20) + (0.0,) * 2
 ORDER_CUTOFF_MINUTE = 14 * 60
 SUPPLIER_WINDOWS = {

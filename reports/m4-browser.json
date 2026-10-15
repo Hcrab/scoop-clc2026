@@ -1,0 +1,149 @@
+{
+  "mocked_responses": false,
+  "errors": [],
+  "midnight": {
+    "clock": "29 Jul 00:50",
+    "day": 2,
+    "minute": 50,
+    "widgets": [
+      {
+        "title": "Value price · Strawberry · Water-based requests",
+        "metric": "requested_vs_expected",
+        "value": "3 unitsToday so far"
+      },
+      {
+        "title": "Other chocolate-coated requests",
+        "metric": "requested_vs_expected",
+        "value": "4 unitsToday so far"
+      },
+      {
+        "title": "Warehouse stock",
+        "metric": "on_hand",
+        "value": "74,327 units"
+      },
+      {
+        "title": "Warehouse pallets",
+        "metric": "pallets",
+        "value": "51.8 pallets"
+      },
+      {
+        "title": "Store fill rate",
+        "metric": "fill_rate",
+        "value": "Pending dispatchToday so far"
+      }
+    ]
+  },
+  "daily_comparison": {
+    "reference": "reports/m1-replay.json (capacity60 before M2)",
+    "current_capacity": 66,
+    "summary": {
+      "scoop": {
+        "fill_rate": 0.9458662372184171,
+        "lost_units": 11160,
+        "lost_margin": 68203.72,
+        "avg_pallets": 36.86417317708333,
+        "peak_pallets": 57.98659722222222,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 89,
+        "ending_on_hand": 65475,
+        "ordered_cases": 8349
+      },
+      "baseline": {
+        "fill_rate": 0.9439065562001591,
+        "lost_units": 11564,
+        "lost_margin": 61438.78,
+        "avg_pallets": 36.60944444444444,
+        "peak_pallets": 57.98659722222222,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 75,
+        "ending_on_hand": 48539,
+        "ordered_cases": 8209
+      }
+    },
+    "demand_unchanged": true,
+    "compared_daily_fields": [
+      "date",
+      "demand",
+      "shipped",
+      "lost",
+      "lost_margin"
+    ],
+    "settled_flows_unchanged": true,
+    "inventory_context": {
+      "prior_capacity": 60,
+      "prior_summary": {
+        "scoop": {
+          "fill_rate": 0.9458662372184171,
+          "lost_units": 11160,
+          "lost_margin": 68203.72,
+          "avg_pallets": 36.578548177083334,
+          "peak_pallets": 57.98659722222222,
+          "days_over_capacity": 0,
+          "stockout_sku_days": 89,
+          "ending_on_hand": 61147,
+          "ordered_cases": 7977
+        },
+        "baseline": {
+          "fill_rate": 0.9439065562001591,
+          "lost_units": 11564,
+          "lost_margin": 61438.78,
+          "avg_pallets": 36.60944444444444,
+          "peak_pallets": 57.98659722222222,
+          "days_over_capacity": 0,
+          "stockout_sku_days": 75,
+          "ending_on_hand": 48539,
+          "ordered_cases": 8209
+        }
+      },
+      "differences": [
+        {
+          "policy": "scoop",
+          "date": "2026-08-06",
+          "changes": {
+            "ordered_cases": {
+              "prior": 936,
+              "current": 1297
+            }
+          }
+        },
+        {
+          "policy": "scoop",
+          "date": "2026-08-07",
+          "changes": {
+            "ordered_cases": {
+              "prior": 156,
+              "current": 242
+            }
+          }
+        },
+        {
+          "policy": "scoop",
+          "date": "2026-08-10",
+          "changes": {
+            "ordered_cases": {
+              "prior": 912,
+              "current": 837
+            }
+          }
+        },
+        {
+          "policy": "scoop",
+          "date": "2026-08-11",
+          "changes": {
+            "on_hand": {
+              "prior": 61147,
+              "current": 65475
+            },
+            "pallets": {
+              "prior": 43.92423611111111,
+              "current": 48.494236111111114
+            }
+          }
+        }
+      ],
+      "note": "M1 used 60 pallets; M2 increased capacity to 66. Inventory and later orders may differ. The intraday enrich conservation test compares identical-capacity physical arrays before and after enrichment."
+    }
+  },
+  "screenshot": "docs/screenshots/m4-midnight.png",
+  "full_day_at_close": true
+}

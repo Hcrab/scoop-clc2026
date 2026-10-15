@@ -7,8 +7,8 @@
 | Requested pre-step: fast Reset | Accepted | `425ab1f` | Reset API 174 / 85 / 94 ms; usable report after 1.404 s; 47 focused backend tests and the real Settings flow pass. |
 | M1 Same cold store | Accepted | `517d776` | 25 tests + real Results capture; both peaks 57.9866 / 60; 404 units avoided, 14 extra product-days, HK$6,764.94 extra lost margin. Five-SKU diagnosis and fixes recorded. |
 | M2 Demo start state | Accepted | `b564792` | Capacity 66 pallets; projected peak 61.3046 = 92.8857%. Source requests, stock, policy settings and ledger retained. |
-| M3 Report layout and language | Accepted | See phase commit | 76 tests + real preview/Apply/Undo/action-link/scroll flow; Gemini report regenerated; screenshots reviewed. |
-| M4 Play widget values | Not started | — | Today-so-far values and partial daily curves without a midnight zero drop. |
+| M3 Report layout and language | Accepted | `f176128` | 76 tests + real preview/Apply/Undo/action-link/scroll flow; Gemini report regenerated; screenshots reviewed. |
+| M4 Play widget values | Accepted | This phase | 27 backend + 4 frontend tests; real 00:50 capture shows 3 / 4 units and separate partial points; full-day close verified. |
 | M5 Walkthrough and docs | Not started | — | Refresh the five-step captures and document the delivered comparison. |
 
 Branch `claude/scoop-prototype`; starting revision `43b44fae4c70806137e276cfc4479ae5d955abee`. Night 2 is archived in [reports/night2.md](reports/night2.md). The user explicitly requested fast Reset before supplying the Night 3 handoff; finish and push it before M1. Work proceeds M1→M5 in order, with evidence for every check and a push after each accepted phase. No multi-seed work, deployment, slide deck, rebase or force-push.
@@ -47,7 +47,8 @@ Local runtime repair: PostgreSQL accepted TCP but could not complete new session
 
 ## M4 — Play widget values
 
-- ❌ Pending — A midnight capture shows meaningful non-zero widget values and curves without a zero drop.
+- ✅ Midnight and closing state — `night3-m4.spec.ts` against the real API: **1 passed (2.7 min)**. At **29 Jul 00:50**, cohort widgets show **3 / 4 units today so far**, warehouse stock **74,327**, and **51.8 pallets**. Screenshot `docs/screenshots/m4-midnight.png` personally reviewed: complete-day lines stop before independent hollow partial points. Full-day closing values agree with raw daily totals; saved orders unchanged; no page errors. `reports/m4-browser.txt/json`.
+- ✅ Supporting checks — **27 backend + 4 frontend tests**, production build and `git diff --check` pass (`reports/m4-tests.txt`, `m4-frontend-python.txt`, `m4-build.txt`). Daily enrichment conservation and monotone cumulative shortage are tested. The illustrative clock adds 10% uniform background requests while keeping daily quantities and policy outcomes unchanged; no forecast/policy tuning or provider calls. [Details and the different-capacity comparison correction](reports/night3-m4.md).
 
 ## M5 — Walkthrough and documentation
 

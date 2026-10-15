@@ -1,0 +1,12 @@
+✔ today uses growing cumulative requests, then closes to raw daily totals (1.8159ms)
+✔ fill rate stays pending before dispatch and uses actual cumulative quantities afterward (0.4679ms)
+✔ cumulative shortage cannot fall when stock arrives (0.3814ms)
+✔ partial last chart value remains a hollow marker outside connected lines (26.2377ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 552.0156
