@@ -1,0 +1,9 @@
+
+Running 1 test using 1 worker
+
+
+
+(node:50892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] e2e\n6-empty-key.spec.ts:5:1 › N6 empty-key process serves native report cards and editable order view
+  1 passed (8.1s)

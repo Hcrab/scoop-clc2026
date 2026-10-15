@@ -1,0 +1,422 @@
+{
+  "mocked_responses": false,
+  "plan": "P20260727",
+  "screenshots": [
+    "docs/screenshots/n6-01-report.png",
+    "docs/screenshots/n6-02-orders.png",
+    "docs/screenshots/n6-03-watch.png",
+    "docs/screenshots/n6-04-play.png",
+    "docs/screenshots/n6-05-midplay.png",
+    "docs/screenshots/n6-06-results.png"
+  ],
+  "errors": [],
+  "simulation_requests": [],
+  "initial": {
+    "stage": "execute",
+    "quantities": [
+      [
+        "IC001",
+        22
+      ],
+      [
+        "IC002",
+        13
+      ],
+      [
+        "IC003",
+        51
+      ],
+      [
+        "IC004",
+        32
+      ],
+      [
+        "IC005",
+        22
+      ],
+      [
+        "IC006",
+        36
+      ],
+      [
+        "IC007",
+        85
+      ],
+      [
+        "IC008",
+        38
+      ],
+      [
+        "IC009",
+        48
+      ],
+      [
+        "IC010",
+        54
+      ],
+      [
+        "IC011",
+        14
+      ],
+      [
+        "IC012",
+        12
+      ],
+      [
+        "IC013",
+        31
+      ],
+      [
+        "IC014",
+        18
+      ],
+      [
+        "IC015",
+        40
+      ],
+      [
+        "IC016",
+        18
+      ],
+      [
+        "IC017",
+        14
+      ],
+      [
+        "IC018",
+        21
+      ],
+      [
+        "IC019",
+        27
+      ],
+      [
+        "IC020",
+        16
+      ],
+      [
+        "IC021",
+        48
+      ],
+      [
+        "IC022",
+        43
+      ],
+      [
+        "IC023",
+        14
+      ],
+      [
+        "IC024",
+        15
+      ],
+      [
+        "IC025",
+        27
+      ],
+      [
+        "IC026",
+        24
+      ],
+      [
+        "IC027",
+        35
+      ],
+      [
+        "IC028",
+        12
+      ],
+      [
+        "IC029",
+        17
+      ],
+      [
+        "IC030",
+        23
+      ],
+      [
+        "IC031",
+        10
+      ],
+      [
+        "IC032",
+        62
+      ],
+      [
+        "IC033",
+        14
+      ],
+      [
+        "IC034",
+        15
+      ],
+      [
+        "IC035",
+        12
+      ],
+      [
+        "IC036",
+        23
+      ],
+      [
+        "IC037",
+        21
+      ],
+      [
+        "IC038",
+        19
+      ],
+      [
+        "IC039",
+        32
+      ],
+      [
+        "IC040",
+        25
+      ],
+      [
+        "IC041",
+        48
+      ],
+      [
+        "IC042",
+        16
+      ],
+      [
+        "IC043",
+        39
+      ],
+      [
+        "IC044",
+        19
+      ],
+      [
+        "IC045",
+        29
+      ],
+      [
+        "IC046",
+        38
+      ],
+      [
+        "IC047",
+        14
+      ],
+      [
+        "IC048",
+        22
+      ],
+      [
+        "IC049",
+        17
+      ],
+      [
+        "IC050",
+        29
+      ],
+      [
+        "IC051",
+        42
+      ],
+      [
+        "IC052",
+        15
+      ],
+      [
+        "IC053",
+        16
+      ],
+      [
+        "IC054",
+        33
+      ],
+      [
+        "IC055",
+        29
+      ],
+      [
+        "IC056",
+        33
+      ],
+      [
+        "IC057",
+        45
+      ],
+      [
+        "IC058",
+        63
+      ],
+      [
+        "IC059",
+        21
+      ],
+      [
+        "IC060",
+        19
+      ],
+      [
+        "IC061",
+        31
+      ],
+      [
+        "IC062",
+        100
+      ],
+      [
+        "IC063",
+        61
+      ],
+      [
+        "IC064",
+        45
+      ],
+      [
+        "IC065",
+        31
+      ],
+      [
+        "IC066",
+        24
+      ],
+      [
+        "IC067",
+        30
+      ],
+      [
+        "IC068",
+        21
+      ],
+      [
+        "IC069",
+        14
+      ],
+      [
+        "IC070",
+        19
+      ],
+      [
+        "IC071",
+        37
+      ],
+      [
+        "IC072",
+        35
+      ],
+      [
+        "IC073",
+        18
+      ],
+      [
+        "IC074",
+        21
+      ],
+      [
+        "IC075",
+        18
+      ]
+    ],
+    "widgets": [
+      {
+        "id": "c8010de5afbc4faa8ef8ea73f28cf651",
+        "title": "Value price · Strawberry · Water-based requests",
+        "metric": "requested_vs_expected",
+        "scope": {
+          "kind": "cohort",
+          "key": "C831a53fca012"
+        },
+        "threshold": null
+      },
+      {
+        "id": "e676f277a7a64a149ce324ecf6cf3353",
+        "title": "Other chocolate-coated requests",
+        "metric": "requested_vs_expected",
+        "scope": {
+          "kind": "cohort",
+          "key": "C6b627a31b52c"
+        },
+        "threshold": null
+      },
+      {
+        "id": "9e90f196de994133bf7d28ec8402a913",
+        "title": "Warehouse stock",
+        "metric": "on_hand",
+        "scope": {
+          "kind": "warehouse",
+          "key": ""
+        },
+        "threshold": null
+      },
+      {
+        "id": "5ec96dc9361c420d8d11869ede478568",
+        "title": "Warehouse pallets",
+        "metric": "pallets",
+        "scope": {
+          "kind": "warehouse",
+          "key": ""
+        },
+        "threshold": null
+      },
+      {
+        "id": "aee3ee6186344fc4942a9b5859bfb94e",
+        "title": "Store fill rate",
+        "metric": "fill_rate",
+        "scope": {
+          "kind": "warehouse",
+          "key": ""
+        },
+        "threshold": null
+      }
+    ]
+  },
+  "report": {
+    "model": "gemini-3.8-flash",
+    "title": "Value water-based strawberry surges while chocolate-coated lines soften",
+    "first_card": "Value price · Strawberry · Water-based"
+  },
+  "preparation": {
+    "status": "ready",
+    "order_hash": "a1430332a347bbb19ddcde8fbc630fe58e4581152c31d93915c394c519b203e8",
+    "completed_at": "2026-10-15T20:51:54.847330",
+    "elapsed_seconds": 47.82799999999406
+  },
+  "play_entered_at": "2026-10-15T13:17:18.528Z",
+  "midplay": {
+    "clock": "2 Aug 00:50",
+    "event": "1 Aug · 17:20Grapefruit Sorbet Bar ran out."
+  },
+  "result": {
+    "matched": {
+      "scoop": {
+        "fill_rate": 0.9458662372184171,
+        "lost_units": 11160,
+        "lost_margin": 68203.72,
+        "avg_pallets": 36.578548177083334,
+        "peak_pallets": 57.98659722222222,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 89,
+        "ending_on_hand": 61147,
+        "ordered_cases": 7977
+      },
+      "baseline": {
+        "fill_rate": 0.9439065562001591,
+        "lost_units": 11564,
+        "lost_margin": 61438.78,
+        "avg_pallets": 36.60944444444444,
+        "peak_pallets": 57.98659722222222,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 75,
+        "ending_on_hand": 48539,
+        "ordered_cases": 8209
+      }
+    },
+    "space_gap": 0.0008439425353201803,
+    "simulation_count": 3,
+    "differences": [
+      404,
+      -14,
+      -6764.940000000002
+    ],
+    "performance_exception": "N5: three-metric superiority remains BLOCKED; walkthrough checks truthful rendering and flow."
+  },
+  "exact_widget_and_quantity_restoration": true
+}

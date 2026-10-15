@@ -1,0 +1,16 @@
+{
+  "provider": {
+    "provider": "scripted",
+    "label": "Demo assistant",
+    "live": false,
+    "available": true
+  },
+  "review_status": "offline",
+  "cards": [
+    "Value price · Strawberry · Water-based",
+    "Other chocolate-coated"
+  ],
+  "orders": 75,
+  "orders_unchanged": true,
+  "errors": []
+}

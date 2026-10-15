@@ -1,0 +1,31 @@
+import {test,expect} from '@playwright/test';
+import {mkdir,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+
+test('N6 empty-key process serves native report cards and editable order view',async({page,request})=>{
+  test.setTimeout(120_000);
+  const endpoint='/api/plans/P20260727',errors:string[]=[];
+  page.on('pageerror',error=>errors.push(error.message));
+  const response=await request.get(endpoint);expect(response.ok()).toBeTruthy();
+  const initial=await response.json();
+  expect(initial.assistant.live).toBe(false);
+  expect(initial.assistant.provider).toBe('scripted');
+  expect(initial.review.status).toBe('offline');
+  expect(initial.cohort_cards).toHaveLength(2);
+  const setFlow=await request.put(endpoint+'/flow',{data:{step:'report'}});expect(setFlow.ok()).toBeTruthy();
+  await page.goto('/');
+  const frame=page.frameLocator('.generated-report iframe');
+  await expect(frame.locator('figure[data-card="cohort"]')).toHaveCount(initial.cohort_cards.length);
+  await expect(frame.locator('figure[data-card="cohort"]').first()).toContainText('Strawberry');
+  await expect(page.locator('.cohort-card').first()).toContainText('Strawberry');
+  await mkdir(path.resolve('..','docs','screenshots'),{recursive:true});
+  await page.screenshot({path:path.resolve('..','docs','screenshots','n6-empty-key.png'),animations:'disabled'});
+  await page.getByRole('button',{name:'Review orders',exact:true}).click();
+  await expect(page.locator('.action-list')).toBeVisible();
+  await expect(page.getByRole('link',{name:'Export orders',exact:true})).toBeVisible();
+  const final=await(await request.get(endpoint)).json();
+  expect(final.orders).toEqual(initial.orders);
+  expect(errors).toEqual([]);
+  await request.put(endpoint+'/flow',{data:{step:'report'}});
+  await writeFile(path.resolve('..','reports','n6-empty-key.json'),JSON.stringify({provider:initial.assistant,review_status:initial.review.status,cards:initial.cohort_cards.map((card:any)=>card.name),orders:initial.orders.length,orders_unchanged:true,errors},null,2)+'\n');
+});

@@ -1,8 +1,8 @@
 # Scoop
 
-Scoop is a synthetic ice-cream replenishment planner for the Corporate Link Challenge 2026. It connects a weekly demand report to case-level purchases, a configurable dashboard, and a replay that compares proposed orders with a moving-average rule. Confirmations are local demo records; no supplier order is transmitted.
+Scoop is a synthetic ice-cream replenishment planner for the Corporate Link Challenge 2026. Its five-step flow connects a weekly demand report to case-level orders, a saved monitoring dashboard, a timed replay and measured results against a moving-average rule. Approvals are local demo records; no supplier order is transmitted.
 
-The **public demo** uses seed 93: one distribution centre, 20 stores, four districts, 75 products, eight suppliers and a 71-pallet cold store. It opens on **20 July 2026**. A quieter **22 June 2026** week is available in Settings. Other seeds are retained for private evaluation and are not selectable in the public interface.
+The **public demo** uses seed 93: one distribution centre, 20 stores, four districts, 75 products, eight suppliers and a 60-pallet cold store. It opens on **27 July 2026** with plan `P20260727`. A quieter **22 June 2026** week is available in Settings. Other seeds are retained for private evaluation and are not selectable in the public interface.
 
 ## Quick start
 
@@ -36,7 +36,7 @@ python -m scoop.synth.load
 python -m scoop.prepare_demo
 ```
 
-**`scoop.synth.load` replaces the configured database's demo tables.** Run it only for first setup or an intentional full reset. `scoop.prepare_demo` builds the 20 July plan without an LLM call or another data load. Normal app restarts preserve progress. To explicitly prepare a live AI report as well, configure Gemini as described below and run `python -m scoop.prepare_demo --report`; this can consume provider allowance.
+**`scoop.synth.load` replaces the configured database's demo tables.** Run it only for first setup or an intentional full reset. `scoop.prepare_demo` builds the 27 July plan without an LLM call or another data load. Normal app restarts preserve progress. To explicitly prepare a live AI report as well, configure Gemini as described below and run `python -m scoop.prepare_demo --report`; this can consume provider allowance.
 
 Build the frontend and start the same-origin app:
 
@@ -58,9 +58,11 @@ With an empty key, the app remains usable: the report is a minimal evidence card
 
 ## Demo flow
 
-1. **Report & direction:** read the weekly report and cohort cards, inspect their source data, and discuss uncertain changes. Optional context rules can be applied, recomputed and undone. Adjust the stock-versus-space service preference; it changes the calculation rather than guaranteeing a measured fulfilment rate.
-2. **Orders:** review grouped case quantities, supplier timing, warehouse space and order evidence. Edit quantities or use Undo, then approve the orders for the next stage.
-3. **Watch & play:** use server-saved dashboard widgets, confirm a synthetic purchase line or export CSV, and run Play. Play continues through the longest positive ordered supplier lead plus seven days, capped at 21 days and by the available calendar. It shows the same widgets for this plan and a moving-average rule, then three outcome numbers for affected products and an expandable full comparison.
+1. **Report:** read the weekly report and cohort cards, inspect their source data and drilldown, and discuss uncertain changes. Optional context rules can be applied, recomputed and undone. Adjust the stock-versus-space service preference; it changes the calculation rather than guaranteeing a measured fulfilment rate.
+2. **Orders:** review grouped case quantities, supplier timing, warehouse space and order evidence. Edit quantities or use Undo, export the CSV here, then approve. Approval queues one persisted replay for the effective physical order inputs.
+3. **Watch:** add and arrange server-saved dashboard widgets. Their layout and sources continue into Play; editing a widget does not rerun the simulation.
+4. **Play:** watch the prepared order replay advance automatically at fixed 2× through a ten-minute clock, about two seconds per simulated day. Pause, Resume and Replay are available. The final frame waits for **See results**.
+5. **Results:** compare short units, stockout product-days, lost margin and space use with the unchanged moving-average rule. The matched-average-space comparison and the actual approved-order outcome remain visible, alongside final widget states.
 
 Settings changes the demo week and resets planning progress for the current simulation. The quiet 22 June week has no cohort cards, although it can have early CUSUM warnings. See the [demonstration guide](docs/DEMO.md) for a presenter sequence.
 
@@ -74,9 +76,9 @@ pnpm --dir frontend build
 
 API tests need PostgreSQL and use disposable schemas. The ordinary test suite forces the assistant offline and does not spend provider allowance. Model caches live under `data/cache/`; evaluation outputs live under `reports/`. If Windows denies the global pytest temporary directory, use a fresh workspace-local `--basetemp` path that contains no user files.
 
-The setup recipe was checked from a clean clone with a new database and no copied model cache on Python3.12.14, PostgreSQL17.11, Node24.19.0 and pnpm11.25.0. An empty-key ASGI startup and Edge browser run passed with zero provider calls. Commands and output are in [the runtime log](reports/p7-clean-runtime.txt) and [acceptance ledger](docs/overnight-report.md).
+An earlier P7 revision of this setup recipe was checked from a clean clone with a new database and no copied model cache on Python3.12.14, PostgreSQL17.11, Node24.19.0 and pnpm11.25.0. That revision's empty-key ASGI startup and Edge browser run passed with zero provider calls. This is historical setup evidence, not a fresh-clone result for the current N5 scenario. Commands and output are in [the runtime log](reports/p7-clean-runtime.txt) and [acceptance ledger](docs/overnight-report.md).
 
-The forecast, cohort detector, capacity allocation and Play comparison use synthetic data. P1 statistical acceptance remains blocked without tuning: after the corrected permutation, **4 of 34 null weeks had a root split**, exceeding the allowed maximum of 3, and the default week does not isolate the planted strawberry four as its first card. The 20 July replay also does **not** show a policy win: the current unmodified plan lost 11,528 units versus 10,191 for the rule over 16 days. These results are documented, not hidden by parameter changes. See the current [work ledger](docs/overnight-report.md); [algorithm notes](docs/ALGORITHM_NOTES.md) retain earlier evaluation history. Synthetic results do not establish savings for a real retailer.
+The forecast, cohort detector, capacity allocation and Play comparison use synthetic data. In the current designed 27 July example, the first card isolates four strawberry × value-price × water-based products with a +38.1552% estimated change. Its matched comparison uses 36.5785 versus 36.6094 average pallets (0.0844% apart). The plan has **11,160 versus 11,564 short units**, but **89 versus 75 stockout product-days** and **HK$68,203.72 versus HK$61,438.78 lost margin**. The all-three-measures target remains blocked; this is not a policy win or a multi-seed evaluation. See the [work ledger](docs/overnight-report.md) and [demonstration guide](docs/DEMO.md). [Algorithm notes](docs/ALGORITHM_NOTES.md) retain earlier evaluation history. Synthetic results do not establish savings for a real retailer.
 
 ## Further reading
 
