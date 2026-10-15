@@ -98,14 +98,14 @@ def test_stage_and_scope_enforced_even_when_model_requests_invalid_change(api):
         plan=s.get(Plan,'TESTAPI');plan.stage='execute';s.flush()
         result,action=tools.execute('set_goal',{'goal':'sales'},s,plan,'execute')
         assert action['type']=='edit' and plan.stage=='direction'
-        watch_count=s.scalar(select(func.count()).select_from(WatchItem))
+        widget_count=s.scalar(select(func.count()).select_from(WatchItem))
         with pytest.raises(ValueError,match='current plan'):
             tools.execute('inspect_finding',{'finding_id':'ANOTHERPLAN-F'},s,plan,'execute')
         with pytest.raises(ValueError,match='districts'):
             tools.execute('inspect_metric',{'kind':'fill_rate','districts':['Unknown']},s,plan,'execute')
         with pytest.raises(HTTPException,match='Unknown catalog group'):
             tools.execute('add_widget',{'spec':{'title':'Bad group','scope':{'kind':'tag','key':'family:unknown'},'metric':'fill_rate'}},s,plan,'execute')
-        assert s.scalar(select(func.count()).select_from(WatchItem))==watch_count
+        assert s.scalar(select(func.count()).select_from(WatchItem))==widget_count
 
 
 def test_failed_provider_uses_honest_scripted_fallback(api,monkeypatch):
@@ -198,12 +198,12 @@ def test_scripted_fallback_respects_no_change_and_chinese_widget_scope(api):
     before=c.get('/api/plans/TESTAPI').json()
     c.post('/api/plans/TESTAPI/chat',json={'message':'Can I watch fruit? Do not change the plan.','stage':'discover'})
     after=c.get('/api/plans/TESTAPI').json()
-    assert len(after['watch'])==len(before['watch']) and len(after['decisions'])==len(before['decisions'])
+    assert after['dashboard']==before['dashboard'] and len(after['decisions'])==len(before['decisions'])
     answer=c.post('/api/plans/TESTAPI/chat',json={'message':'帮我盯住九龙水果类的缺货','stage':'discover'}).json()
     assert answer['actions']==[]
     assert '地区级' in answer['reply']
     unchanged=c.get('/api/plans/TESTAPI').json()
-    assert unchanged['watch']==after['watch'] and unchanged['decisions']==after['decisions']
+    assert unchanged['dashboard']==after['dashboard'] and unchanged['decisions']==after['decisions']
     answer=c.post('/api/plans/TESTAPI/chat',json={'message':'帮我盯住水果类的缺货','stage':'discover'}).json()
     assert answer['actions'][0]['type']=='edit'
     edit=answer['actions'][0]
@@ -232,6 +232,6 @@ def test_negated_requests_preserve_fallback_plan(api,message):
     response=c.post('/api/plans/TESTAPI/chat',json={'message':message,'stage':'discover'})
     assert response.status_code==200 and response.json()['actions']==[]
     after=c.get('/api/plans/TESTAPI').json()
-    assert after['watch']==before['watch']
+    assert after['dashboard']==before['dashboard']
     assert after['decisions']==before['decisions']
     assert after['plan']==before['plan']

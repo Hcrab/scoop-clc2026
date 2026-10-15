@@ -11,6 +11,7 @@ NATURAL_DATE = re.compile(r'\b(\d{1,2})(?:\s*[–—-]\s*(\d{1,2}))?\s+(Jan\w*|F
 MONTHS = {name:i+1 for i,name in enumerate(('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'))}
 
 ID = re.compile(r'\b(?:Q(?:-cohort)?-[\w-]+|Q\d+|T\d+|[A-Za-z][A-Za-z0-9_-]*\d+[A-Za-z0-9_-]*)\b')
+UNIT_BASIS = re.compile(r'(?:/|\bper)\s*(?P<value>\d+(?:\.\d+)?)\s*(?P<unit>ml|kg|g|l)\b',re.I)
 
 
 def visible_report_claims(report, evidence_ids):
@@ -74,6 +75,18 @@ def _dates(value):
             yield from _dates(child)
 
 
+def _labels(value):
+    if isinstance(value,dict):
+        for key,child in value.items():
+            if key=='name' and isinstance(child,str):
+                yield child
+                yield from child.split(' · ')
+            else:
+                yield from _labels(child)
+    elif isinstance(value,list):
+        for child in value:yield from _labels(child)
+
+
 def mismatches(claims, evidence):
     """Return actionable mismatches, scoped to each claim's cited results only."""
     errors = []
@@ -82,6 +95,14 @@ def mismatches(claims, evidence):
         text = claim.text if hasattr(claim, 'text') else claim['text']
         values = [item for evidence_id in ids for item in _evidence_values(evidence.get(evidence_id, {}))]
         dates = {item for evidence_id in ids for item in _dates(evidence.get(evidence_id, {}))}
+        # Catalog names such as "Lower price / 100 ml" are labels, not a claim
+        # that the group ordered 100 units. Only names actually cited are masked.
+        quantitative_text=text
+        labels={label for evidence_id in ids for label in _labels(evidence.get(evidence_id,{}))}
+        bases={(Decimal(match['value']),match['unit'].lower()) for label in labels for match in UNIT_BASIS.finditer(label)}
+        quantitative_text=UNIT_BASIS.sub(lambda match:' ' if (Decimal(match['value']),match['unit'].lower()) in bases else match.group(),quantitative_text)
+        for label in sorted(labels,key=len,reverse=True):
+            if label:quantitative_text=re.sub(re.escape(label),' ',quantitative_text,flags=re.I)
         for found in DATE.findall(text):
             if found not in dates:
                 errors.append({'claim_index': index, 'number': found, 'evidence_ids': ids,
@@ -95,10 +116,15 @@ def mismatches(claims, evidence):
                 if not any(d.endswith(suffix) and (not year or d.startswith(year+'-')) for d in dates):
                     errors.append({'claim_index':index,'number':match.group(),'evidence_ids':ids,
                                    'reason':'Date is absent from cited evidence.'})
-        for number, percent, decimals, token in _numbers(text):
+        for number, percent, decimals, token in _numbers(quantitative_text):
             tolerance = Decimal('0.5') * (Decimal(10) ** -decimals)
-            matched = any(abs(number - (value*100 if percent and kind=='ratio' else value)) <= tolerance
-                          for value,kind in values if not percent or kind in {'percent','ratio'})
+            unsigned=token[0] not in '+-−'
+            comparable=[value*100 if percent and kind=='ratio' else value
+                        for value,kind in values if not percent or kind in {'percent','ratio'}]
+            # "Fell 14.7%" states the magnitude of an evidenced -14.7% change.
+            # An explicit opposite sign still fails. Prose is not rewritten.
+            matched=any(abs(number-value)<=tolerance or
+                        unsigned and value<0 and abs(number+value)<=tolerance for value in comparable)
             if not matched:
                 errors.append({'claim_index': index, 'number': token, 'evidence_ids': ids,
                                'reason': 'No cited evidence value matches within displayed rounding.'})

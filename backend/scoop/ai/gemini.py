@@ -75,7 +75,9 @@ def _wire(payload, *, transport=None):
     except UsageLimit as exc:raise ProviderUnavailable('usage_limit') from exc
     request=urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent',data=encoded,headers={'x-goog-api-key':key,'Content-Type':'application/json'})
     try:
-        with (transport or urllib.request.urlopen)(request,timeout=settings.llm_timeout_seconds) as response:
+        thinking=payload.get('generationConfig',{}).get('thinkingConfig',{}).get('thinkingLevel')
+        timeout=max(settings.llm_timeout_seconds,180) if thinking in {'MEDIUM','HIGH'} else settings.llm_timeout_seconds
+        with (transport or urllib.request.urlopen)(request,timeout=timeout) as response:
             data=json.load(response)
     except urllib.error.HTTPError as exc:
         finish(rid,{},'http_'+str(exc.code))

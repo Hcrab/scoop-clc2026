@@ -132,6 +132,7 @@ def _stats(actual,expected,skus,denominator):
     denominator_expected=expected[expected.sku.isin(denominator)]
     expected_total=float(denominator_expected['mean'].sum()) if len(denominator_expected) else None
     return {'requested_units':ordered,'expected_units':forecast,'excess_units':ordered-forecast if forecast is not None else None,
+            'deviation_pct':(ordered/forecast-1)*100 if forecast is not None and forecast>0 else None,
             'denominator_requested_units':total,'denominator_expected_units':expected_total,
             'actual_share':_ratio(ordered,total),'expected_share':_ratio(forecast,expected_total),
             'observed_days':int(actual.date.nunique()),'expected_days':int(expected.date.nunique())}
@@ -203,6 +204,8 @@ def _query_group(session,plan,args):
     ba=_filter(actual,before_start,start-timedelta(days=1),districts)
     be=_filter(expected,before_start,start-timedelta(days=1),districts)
     recent=_stats(a,e,skus,denominator);before=_stats(ba,be,skus,denominator)
+    recent_7d=_stats(_filter(actual,cutoff-timedelta(days=6),cutoff,districts),
+                    _filter(expected,cutoff-timedelta(days=6),cutoff,districts),skus,denominator)
     decomposition=decompose(before['denominator_requested_units'],before['requested_units'],
                             recent['denominator_requested_units'],recent['requested_units'])
     members=a[a.sku.isin(skus)];predicted=e[e.sku.isin(skus)]
@@ -224,7 +227,7 @@ def _query_group(session,plan,args):
     return {'scope':{'group_ids':ids,'districts':districts,'skus':sorted(skus),'sku_count':len(skus),
                      'denominator_group_id':args.denominator_group_id},'evidence_through':cutoff.isoformat(),
             'window_start':start.isoformat(),'before_start':before_start.isoformat(),'window_days':args.window_days,
-            'exploratory':True,'family_fdr_significant':False,'recent':recent,'before':before,
+            'exploratory':True,'family_fdr_significant':False,'recent':recent,'before':before,'recent_7d':recent_7d,
             'sample':{'adequate':adequate,'sku_count':len(skus),'store_count':int(members.store_id.nunique()),
                       'expected_row_coverage':coverage,'rule':'At least 3 products, 7 observed days, 100 requested units and 95% expected-row coverage; this is an adequacy heuristic.'},
             'daily':daily,'prior_year_basis':'Same calendar dates one year earlier, same products and districts; not weather-adjusted.',

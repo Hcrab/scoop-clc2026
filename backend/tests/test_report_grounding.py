@@ -42,8 +42,13 @@ def test_chart_specs_use_saved_series_and_reject_svg_or_unmeasured_series():
     with pytest.raises(ValueError):validate(spec,evidence,evidence)
     spec['html']='<svg><path d="M0 1"/></svg>'
     with pytest.raises(ValueError):validate(spec,evidence,evidence)
-    spec['html']='<div style="width:80%">Chart</div>'
+    spec['html']='<table><tr><td style="width:25%">Group</td></tr></table>'
+    validate(spec,evidence,evidence)
+    spec['html']='<div style="background:url(https://example.com/chart.svg)">Chart</div>'
     with pytest.raises(ValueError):validate(spec,evidence,evidence)
+    evidence['Q1']['daily'][0]['prior_year_requested_units']=12
+    spec['html']='<figure data-chart="line" data-evidence-id="Q1" data-series="actual,expected,prior"></figure>'
+    validate(spec,evidence,evidence)
 
 
 def test_one_grounding_repair_then_offline_with_queries_and_usage(api):
@@ -136,3 +141,13 @@ def test_natural_date_ranges_use_cited_window_dates():
     evidence={'Q1':{'window_recent':['2026-07-13','2026-07-26'],'effect_pct':12.3}}
     assert not mismatches([{'text':'Requests rose 12.3% over 13–26 Jul 2026.','evidence_ids':['Q1']}],evidence)
     assert mismatches([{'text':'Requests rose 12.3% over 13–27 Jul 2026.','evidence_ids':['Q1']}],evidence)
+
+
+def test_decline_magnitudes_and_cited_numeric_catalog_labels_are_valid():
+    evidence={'Q1':{'name':'Lower price / 100 ml · Choc coated','effect_pct':-14.6935669,'case_change':-46}}
+    assert not mismatches([{'text':'Lower price / 100 ml fell 14.69%; reduce by 46 cases.','evidence_ids':['Q1']}],evidence)
+    assert mismatches([{'text':'The change is +14.69%.','evidence_ids':['Q1']}],evidence)
+    assert mismatches([{'text':'Reduce by 47 cases.','evidence_ids':['Q1']}],evidence)
+    assert mismatches([{'text':'Demand is 100 units.','evidence_ids':['Q1']}],evidence)
+    assert not mismatches([{'text':'Lower-price per 100 ml lines fell 14.69%.','evidence_ids':['Q1']}],evidence)
+    assert mismatches([{'text':'Lower-price per 200 ml lines fell 14.69%.','evidence_ids':['Q1']}],evidence)

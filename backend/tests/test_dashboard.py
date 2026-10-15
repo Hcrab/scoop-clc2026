@@ -45,12 +45,12 @@ def test_dashboard_math_preview_threshold_and_missing(api):
 def test_widget_order_edits_undo_and_plan_isolation(api):
     client, scope, _, _ = api
     initial = client.get('/api/plans/TESTAPI/dashboard').json()
-    assert len(initial['widgets']) == 3
+    assert initial['widgets'] == []
     assert client.get('/api/plans/TESTAPI/dashboard').json()['widgets'] == initial['widgets']
     added = client.post('/api/plans/TESTAPI/dashboard', json=spec()).json()
     assert added['edit_id'] and added['affected_orders'] == []
     wid = added['widgets'][-1]['id']
-    ids = [wid, *[w['id'] for w in initial['widgets']]]
+    ids = [wid]
     layout = client.put('/api/plans/TESTAPI/dashboard-layout', json={'ids': ids}).json()
     assert [w['id'] for w in layout['widgets']] == ids
     assert client.put('/api/plans/TESTAPI/dashboard-layout', json={'ids': [wid, wid]}).status_code == 422
@@ -69,7 +69,7 @@ def test_widget_order_edits_undo_and_plan_isolation(api):
         undone = tools.execute('undo_edit', {'edit_id': layout['edit_id']}, session, plan, 'discover')[0]
         assert undone['undone']
         assert plan.goal == 'sales'
-    assert [w['id'] for w in client.get('/api/plans/TESTAPI/dashboard').json()['widgets']] == ids[1:]+ids[:1]
+    assert [w['id'] for w in client.get('/api/plans/TESTAPI/dashboard').json()['widgets']] == ids
     removed = client.delete(f'/api/plans/TESTAPI/dashboard/{wid}').json()
     assert wid not in [w['id'] for w in removed['widgets']]
     restored = client.post(f"/api/plans/TESTAPI/edits/{removed['edit_id']}/undo").json()

@@ -360,6 +360,8 @@ def suggest_orders(as_of: date, directions: list[dict], service_level: float | N
                      / units_per_pallet[None, :]).sum(axis=1)
         plan['projected_pallets'] = float(occupancy.max())
     plan.attrs["cohort_model"] = cohort_result
+    plan.attrs["capacity_pallets"] = capacity
+    plan.attrs["inherited_peak_pallets"] = float((np.maximum(baseline,0)/(st.products.units_per_case*st.products.cases_per_pallet).to_numpy()[None,:]).sum(axis=1).max())
     plan["model_version"] = model.version
     plan["trained_through"] = model.trained_through
     plan["order_date"] = [as_of + timedelta(days=int((w - as_of.weekday()) % 7)) for w in wd]
@@ -512,6 +514,7 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
     directions = []
     orders = suggest_orders(week_start, directions, cohort_result=cohort_result)
     cohort_result = orders.attrs["cohort_model"]
+    cards = plan_cohort_cards(week_start,orders) if cohort_result.get('leaves') else []
     names = dict(read_sql("SELECT sku, name FROM products").values)
     now = datetime(week_start.year, week_start.month, week_start.day, 9, 0)
     with session_scope() as s:
@@ -527,7 +530,7 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
                    summary={"findings": len(findings), "orders_due": int((orders.final_cases > 0).sum()),
                             "model_run":artifacts().run_for(week_start).metadata,
                             "weak_reviews": monitoring().review_log.get(week_start.isoformat(),[]),
-                            "cohort_model": cohort_result}))
+                            "cohort_model": cohort_result,"cohort_cards":cards}))
         s.flush()
         for i, f in enumerate(findings):
             fid = f"{pid}-F{i + 1}"
@@ -554,9 +557,8 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
                 final_cases=int(r.final_cases) if accept_defaults or r.sku in cohort_result.get("cases_overrides", {}) else None, status="confirmed" if accept_defaults else "suggested",
                 reason=reason_text(r, names, directions),
             ))
-        for w in watch_items(findings, directions):
-            s.add(WatchItem(id=f"{pid}-W{hashlib.sha256(w['title'].encode()).hexdigest()[:12]}", plan_id=pid, kind=w["kind"], title=w["title"],
-                            assumption=w["assumption"], scope=w["scope"], origin=w["origin"], status="active"))
+        from .dashboard import seed_defaults
+        seed_defaults(s,s.get(Plan,pid))
     return pid
 
 

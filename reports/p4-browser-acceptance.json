@@ -1,0 +1,5401 @@
+{
+  "mocked_responses": false,
+  "plan": "P20260727",
+  "report_model": "gemini-3.8-flash",
+  "context_edit": {
+    "id": 78,
+    "ends_on": "2026-08-03"
+  },
+  "order_groups": [
+    {
+      "id": "C1548dfa641a2",
+      "count": 25
+    },
+    {
+      "id": "C14958972908b",
+      "count": 40
+    },
+    {
+      "id": "Cd4835997b328",
+      "count": 4
+    },
+    {
+      "id": "C76a24f44caf9",
+      "count": 6
+    }
+  ],
+  "inline_edit": {
+    "edit_id": 79,
+    "exact_undo": true,
+    "before_cases": 0,
+    "after_cases": 8160,
+    "before_peak_pallets": 71.62909432947241,
+    "peak_pallets": 182.9451788070607
+  },
+  "dashboard": {
+    "layout_persisted_after_reload": true,
+    "remove_exact_undo": true
+  },
+  "chat_widget": {
+    "title": "Warehouse stock mv91bw8y",
+    "provider": "gemini",
+    "tool_trace": [
+      {
+        "name": "add_widget",
+        "title": "Added a widget",
+        "arguments": {
+          "spec": {
+            "metric": "on_hand",
+            "title": "Warehouse stock mv91bw8y",
+            "scope": {
+              "kind": "warehouse",
+              "key": ""
+            },
+            "threshold": null
+          }
+        },
+        "result": {
+          "affected_orders": [],
+          "edit_id": 84,
+          "widgets": [
+            {
+              "id": "31cbe3580eaf4bfea31adb2358c4a2c8",
+              "title": "Warehouse pallets mv91bw8y",
+              "scope": {
+                "kind": "warehouse",
+                "key": ""
+              },
+              "metric": "pallets",
+              "threshold": null,
+              "skus": [
+                "IC001",
+                "IC002",
+                "IC003",
+                "IC004",
+                "IC005",
+                "IC006",
+                "IC007",
+                "IC008",
+                "IC009",
+                "IC010",
+                "IC011",
+                "IC012",
+                "IC013",
+                "IC014",
+                "IC015",
+                "IC016",
+                "IC017",
+                "IC018",
+                "IC019",
+                "IC020",
+                "IC021",
+                "IC022",
+                "IC023",
+                "IC024",
+                "IC025",
+                "IC026",
+                "IC027",
+                "IC028",
+                "IC029",
+                "IC030",
+                "IC031",
+                "IC032",
+                "IC033",
+                "IC034",
+                "IC035",
+                "IC036",
+                "IC037",
+                "IC038",
+                "IC039",
+                "IC040",
+                "IC041",
+                "IC042",
+                "IC043",
+                "IC044",
+                "IC045",
+                "IC046",
+                "IC047",
+                "IC048",
+                "IC049",
+                "IC050",
+                "IC051",
+                "IC052",
+                "IC053",
+                "IC054",
+                "IC055",
+                "IC056",
+                "IC057",
+                "IC058",
+                "IC059",
+                "IC060",
+                "IC061",
+                "IC062",
+                "IC063",
+                "IC064",
+                "IC065",
+                "IC066",
+                "IC067",
+                "IC068",
+                "IC069",
+                "IC070",
+                "IC071",
+                "IC072",
+                "IC073",
+                "IC074",
+                "IC075"
+              ],
+              "unit": "pallets",
+              "series": [
+                {
+                  "date": "2026-06-29",
+                  "value": 45.7546875
+                },
+                {
+                  "date": "2026-06-30",
+                  "value": 47.71225694444444
+                },
+                {
+                  "date": "2026-07-01",
+                  "value": 46.37690972222222
+                },
+                {
+                  "date": "2026-07-02",
+                  "value": 45.846493055555555
+                },
+                {
+                  "date": "2026-07-03",
+                  "value": 45.67604166666667
+                },
+                {
+                  "date": "2026-07-04",
+                  "value": 46.40145833333333
+                },
+                {
+                  "date": "2026-07-05",
+                  "value": 42.30777777777778
+                },
+                {
+                  "date": "2026-07-06",
+                  "value": 42.32309027777778
+                },
+                {
+                  "date": "2026-07-07",
+                  "value": 44.01569444444444
+                },
+                {
+                  "date": "2026-07-08",
+                  "value": 44.73628472222222
+                },
+                {
+                  "date": "2026-07-09",
+                  "value": 45.310763888888886
+                },
+                {
+                  "date": "2026-07-10",
+                  "value": 41.74920138888889
+                },
+                {
+                  "date": "2026-07-11",
+                  "value": 42.03392361111111
+                },
+                {
+                  "date": "2026-07-12",
+                  "value": 36.717083333333335
+                },
+                {
+                  "date": "2026-07-13",
+                  "value": 39.21482638888889
+                },
+                {
+                  "date": "2026-07-14",
+                  "value": 41.39302083333333
+                },
+                {
+                  "date": "2026-07-15",
+                  "value": 39.63086805555555
+                },
+                {
+                  "date": "2026-07-16",
+                  "value": 35.40475694444444
+                },
+                {
+                  "date": "2026-07-17",
+                  "value": 29.524340277777778
+                },
+                {
+                  "date": "2026-07-18",
+                  "value": 27.2690625
+                },
+                {
+                  "date": "2026-07-19",
+                  "value": 29.145347222222224
+                },
+                {
+                  "date": "2026-07-20",
+                  "value": 32.14756944444444
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 36.15965277777778
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 38.76125
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 41.99666666666667
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 43.813402777777775
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 45.63034722222222
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 42.52708333333333
+                }
+              ],
+              "recent_demand": [
+                {
+                  "date": "2026-07-20",
+                  "value": 11493
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 10631
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 10015
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 8862
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 10446
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 13435
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 12418
+                }
+              ],
+              "value": 42.52708333333333,
+              "state": "normal"
+            },
+            {
+              "id": "1ffeab9d359a4d3c9334575105feaa47",
+              "title": "Warehouse pallets mv916jtl",
+              "scope": {
+                "kind": "warehouse",
+                "key": ""
+              },
+              "metric": "pallets",
+              "threshold": null,
+              "skus": [
+                "IC001",
+                "IC002",
+                "IC003",
+                "IC004",
+                "IC005",
+                "IC006",
+                "IC007",
+                "IC008",
+                "IC009",
+                "IC010",
+                "IC011",
+                "IC012",
+                "IC013",
+                "IC014",
+                "IC015",
+                "IC016",
+                "IC017",
+                "IC018",
+                "IC019",
+                "IC020",
+                "IC021",
+                "IC022",
+                "IC023",
+                "IC024",
+                "IC025",
+                "IC026",
+                "IC027",
+                "IC028",
+                "IC029",
+                "IC030",
+                "IC031",
+                "IC032",
+                "IC033",
+                "IC034",
+                "IC035",
+                "IC036",
+                "IC037",
+                "IC038",
+                "IC039",
+                "IC040",
+                "IC041",
+                "IC042",
+                "IC043",
+                "IC044",
+                "IC045",
+                "IC046",
+                "IC047",
+                "IC048",
+                "IC049",
+                "IC050",
+                "IC051",
+                "IC052",
+                "IC053",
+                "IC054",
+                "IC055",
+                "IC056",
+                "IC057",
+                "IC058",
+                "IC059",
+                "IC060",
+                "IC061",
+                "IC062",
+                "IC063",
+                "IC064",
+                "IC065",
+                "IC066",
+                "IC067",
+                "IC068",
+                "IC069",
+                "IC070",
+                "IC071",
+                "IC072",
+                "IC073",
+                "IC074",
+                "IC075"
+              ],
+              "unit": "pallets",
+              "series": [
+                {
+                  "date": "2026-06-29",
+                  "value": 45.7546875
+                },
+                {
+                  "date": "2026-06-30",
+                  "value": 47.71225694444444
+                },
+                {
+                  "date": "2026-07-01",
+                  "value": 46.37690972222222
+                },
+                {
+                  "date": "2026-07-02",
+                  "value": 45.846493055555555
+                },
+                {
+                  "date": "2026-07-03",
+                  "value": 45.67604166666667
+                },
+                {
+                  "date": "2026-07-04",
+                  "value": 46.40145833333333
+                },
+                {
+                  "date": "2026-07-05",
+                  "value": 42.30777777777778
+                },
+                {
+                  "date": "2026-07-06",
+                  "value": 42.32309027777778
+                },
+                {
+                  "date": "2026-07-07",
+                  "value": 44.01569444444444
+                },
+                {
+                  "date": "2026-07-08",
+                  "value": 44.73628472222222
+                },
+                {
+                  "date": "2026-07-09",
+                  "value": 45.310763888888886
+                },
+                {
+                  "date": "2026-07-10",
+                  "value": 41.74920138888889
+                },
+                {
+                  "date": "2026-07-11",
+                  "value": 42.03392361111111
+                },
+                {
+                  "date": "2026-07-12",
+                  "value": 36.717083333333335
+                },
+                {
+                  "date": "2026-07-13",
+                  "value": 39.21482638888889
+                },
+                {
+                  "date": "2026-07-14",
+                  "value": 41.39302083333333
+                },
+                {
+                  "date": "2026-07-15",
+                  "value": 39.63086805555555
+                },
+                {
+                  "date": "2026-07-16",
+                  "value": 35.40475694444444
+                },
+                {
+                  "date": "2026-07-17",
+                  "value": 29.524340277777778
+                },
+                {
+                  "date": "2026-07-18",
+                  "value": 27.2690625
+                },
+                {
+                  "date": "2026-07-19",
+                  "value": 29.145347222222224
+                },
+                {
+                  "date": "2026-07-20",
+                  "value": 32.14756944444444
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 36.15965277777778
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 38.76125
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 41.99666666666667
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 43.813402777777775
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 45.63034722222222
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 42.52708333333333
+                }
+              ],
+              "recent_demand": [
+                {
+                  "date": "2026-07-20",
+                  "value": 11493
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 10631
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 10015
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 8862
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 10446
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 13435
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 12418
+                }
+              ],
+              "value": 42.52708333333333,
+              "state": "normal"
+            },
+            {
+              "id": "def8bf1b8cc044c497cea33f0319e73e",
+              "title": "Water-based requests",
+              "scope": {
+                "kind": "cohort",
+                "key": "C1548dfa641a2"
+              },
+              "metric": "requested_vs_expected",
+              "threshold": null,
+              "skus": [
+                "IC001",
+                "IC002",
+                "IC003",
+                "IC004",
+                "IC005",
+                "IC006",
+                "IC007",
+                "IC008",
+                "IC009",
+                "IC011",
+                "IC014",
+                "IC015",
+                "IC051",
+                "IC055",
+                "IC059",
+                "IC060",
+                "IC061",
+                "IC062",
+                "IC063",
+                "IC064",
+                "IC065",
+                "IC066",
+                "IC070",
+                "IC071",
+                "IC072"
+              ],
+              "unit": "units",
+              "series": [
+                {
+                  "date": "2026-06-29",
+                  "value": 3517,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-06-30",
+                  "value": 3310,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-01",
+                  "value": 4372,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-02",
+                  "value": 3050,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-03",
+                  "value": 2961,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-04",
+                  "value": 4303,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-05",
+                  "value": 4274,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-06",
+                  "value": 3344,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-07",
+                  "value": 3283,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-08",
+                  "value": 3753,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-09",
+                  "value": 4124,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-10",
+                  "value": 5522,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-11",
+                  "value": 4988,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-12",
+                  "value": 6100,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-13",
+                  "value": 5293,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-14",
+                  "value": 7508,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-15",
+                  "value": 8464,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-16",
+                  "value": 7310,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-17",
+                  "value": 10249,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-18",
+                  "value": 9528,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-19",
+                  "value": 5942,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-20",
+                  "value": 5716,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 5016,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 4642,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 4135,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 4820,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 6258,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 6086,
+                  "expected": null,
+                  "expected_run_id": null
+                }
+              ],
+              "recent_demand": [
+                {
+                  "date": "2026-07-20",
+                  "value": 5716
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 5016
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 4642
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 4135
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 4820
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 6258
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 6086
+                }
+              ],
+              "value": 6086,
+              "state": "normal"
+            },
+            {
+              "id": "38ad5529db6b499ea121c1a6f2c28778",
+              "title": "Not Water-based · Not Choc Coated requests",
+              "scope": {
+                "kind": "cohort",
+                "key": "C14958972908b"
+              },
+              "metric": "requested_vs_expected",
+              "threshold": null,
+              "skus": [
+                "IC010",
+                "IC012",
+                "IC013",
+                "IC016",
+                "IC020",
+                "IC021",
+                "IC023",
+                "IC026",
+                "IC027",
+                "IC028",
+                "IC029",
+                "IC031",
+                "IC032",
+                "IC034",
+                "IC035",
+                "IC036",
+                "IC037",
+                "IC038",
+                "IC039",
+                "IC040",
+                "IC041",
+                "IC042",
+                "IC043",
+                "IC044",
+                "IC045",
+                "IC047",
+                "IC048",
+                "IC049",
+                "IC050",
+                "IC053",
+                "IC054",
+                "IC056",
+                "IC057",
+                "IC058",
+                "IC067",
+                "IC068",
+                "IC069",
+                "IC073",
+                "IC074",
+                "IC075"
+              ],
+              "unit": "units",
+              "series": [
+                {
+                  "date": "2026-06-29",
+                  "value": 3613,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-06-30",
+                  "value": 3482,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-01",
+                  "value": 4994,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-02",
+                  "value": 3689,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-03",
+                  "value": 3416,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-04",
+                  "value": 5280,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-05",
+                  "value": 5352,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-06",
+                  "value": 3982,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-07",
+                  "value": 3816,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-08",
+                  "value": 3811,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-09",
+                  "value": 4395,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-10",
+                  "value": 4956,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-11",
+                  "value": 4688,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-12",
+                  "value": 5861,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-13",
+                  "value": 4332,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-14",
+                  "value": 5199,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-15",
+                  "value": 6174,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-16",
+                  "value": 5141,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-17",
+                  "value": 6947,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-18",
+                  "value": 6688,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-19",
+                  "value": 5135,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-20",
+                  "value": 4428,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 4325,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 4132,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 3615,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 4275,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 5531,
+                  "expected": null,
+                  "expected_run_id": null
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 4879,
+                  "expected": null,
+                  "expected_run_id": null
+                }
+              ],
+              "recent_demand": [
+                {
+                  "date": "2026-07-20",
+                  "value": 4428
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 4325
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 4132
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 3615
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 4275
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 5531
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 4879
+                }
+              ],
+              "value": 4879,
+              "state": "normal"
+            },
+            {
+              "id": "948a5ff3f3214103853dbe696317d878",
+              "title": "Warehouse stock",
+              "scope": {
+                "kind": "warehouse",
+                "key": ""
+              },
+              "metric": "on_hand",
+              "threshold": null,
+              "skus": [
+                "IC001",
+                "IC002",
+                "IC003",
+                "IC004",
+                "IC005",
+                "IC006",
+                "IC007",
+                "IC008",
+                "IC009",
+                "IC010",
+                "IC011",
+                "IC012",
+                "IC013",
+                "IC014",
+                "IC015",
+                "IC016",
+                "IC017",
+                "IC018",
+                "IC019",
+                "IC020",
+                "IC021",
+                "IC022",
+                "IC023",
+                "IC024",
+                "IC025",
+                "IC026",
+                "IC027",
+                "IC028",
+                "IC029",
+                "IC030",
+                "IC031",
+                "IC032",
+                "IC033",
+                "IC034",
+                "IC035",
+                "IC036",
+                "IC037",
+                "IC038",
+                "IC039",
+                "IC040",
+                "IC041",
+                "IC042",
+                "IC043",
+                "IC044",
+                "IC045",
+                "IC046",
+                "IC047",
+                "IC048",
+                "IC049",
+                "IC050",
+                "IC051",
+                "IC052",
+                "IC053",
+                "IC054",
+                "IC055",
+                "IC056",
+                "IC057",
+                "IC058",
+                "IC059",
+                "IC060",
+                "IC061",
+                "IC062",
+                "IC063",
+                "IC064",
+                "IC065",
+                "IC066",
+                "IC067",
+                "IC068",
+                "IC069",
+                "IC070",
+                "IC071",
+                "IC072",
+                "IC073",
+                "IC074",
+                "IC075"
+              ],
+              "unit": "units",
+              "series": [
+                {
+                  "date": "2026-06-29",
+                  "value": 65979
+                },
+                {
+                  "date": "2026-06-30",
+                  "value": 71588
+                },
+                {
+                  "date": "2026-07-01",
+                  "value": 71375
+                },
+                {
+                  "date": "2026-07-02",
+                  "value": 70228
+                },
+                {
+                  "date": "2026-07-03",
+                  "value": 70480
+                },
+                {
+                  "date": "2026-07-04",
+                  "value": 72884
+                },
+                {
+                  "date": "2026-07-05",
+                  "value": 67600
+                },
+                {
+                  "date": "2026-07-06",
+                  "value": 63975
+                },
+                {
+                  "date": "2026-07-07",
+                  "value": 69576
+                },
+                {
+                  "date": "2026-07-08",
+                  "value": 70960
+                },
+                {
+                  "date": "2026-07-09",
+                  "value": 71189
+                },
+                {
+                  "date": "2026-07-10",
+                  "value": 65716
+                },
+                {
+                  "date": "2026-07-11",
+                  "value": 62726
+                },
+                {
+                  "date": "2026-07-12",
+                  "value": 55338
+                },
+                {
+                  "date": "2026-07-13",
+                  "value": 55691
+                },
+                {
+                  "date": "2026-07-14",
+                  "value": 57800
+                },
+                {
+                  "date": "2026-07-15",
+                  "value": 57377
+                },
+                {
+                  "date": "2026-07-16",
+                  "value": 52287
+                },
+                {
+                  "date": "2026-07-17",
+                  "value": 42978
+                },
+                {
+                  "date": "2026-07-18",
+                  "value": 37949
+                },
+                {
+                  "date": "2026-07-19",
+                  "value": 43598
+                },
+                {
+                  "date": "2026-07-20",
+                  "value": 44988
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 46745
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 54471
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 61956
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 68839
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 69639
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 65078
+                }
+              ],
+              "recent_demand": [
+                {
+                  "date": "2026-07-20",
+                  "value": 11493
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 10631
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 10015
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 8862
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 10446
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 13435
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 12418
+                }
+              ],
+              "value": 65078,
+              "state": "normal"
+            },
+            {
+              "id": "2b5b9d2adc8243589a523fd1d7c7725d",
+              "title": "Warehouse pallets",
+              "scope": {
+                "kind": "warehouse",
+                "key": ""
+              },
+              "metric": "pallets",
+              "threshold": null,
+              "skus": [
+                "IC001",
+                "IC002",
+                "IC003",
+                "IC004",
+                "IC005",
+                "IC006",
+                "IC007",
+                "IC008",
+                "IC009",
+                "IC010",
+                "IC011",
+                "IC012",
+                "IC013",
+                "IC014",
+                "IC015",
+                "IC016",
+                "IC017",
+                "IC018",
+                "IC019",
+                "IC020",
+                "IC021",
+                "IC022",
+                "IC023",
+                "IC024",
+                "IC025",
+                "IC026",
+                "IC027",
+                "IC028",
+                "IC029",
+                "IC030",
+                "IC031",
+                "IC032",
+                "IC033",
+                "IC034",
+                "IC035",
+                "IC036",
+                "IC037",
+                "IC038",
+                "IC039",
+                "IC040",
+                "IC041",
+                "IC042",
+                "IC043",
+                "IC044",
+                "IC045",
+                "IC046",
+                "IC047",
+                "IC048",
+                "IC049",
+                "IC050",
+                "IC051",
+                "IC052",
+                "IC053",
+                "IC054",
+                "IC055",
+                "IC056",
+                "IC057",
+                "IC058",
+                "IC059",
+                "IC060",
+                "IC061",
+                "IC062",
+                "IC063",
+                "IC064",
+                "IC065",
+                "IC066",
+                "IC067",
+                "IC068",
+                "IC069",
+                "IC070",
+                "IC071",
+                "IC072",
+                "IC073",
+                "IC074",
+                "IC075"
+              ],
+              "unit": "pallets",
+              "series": [
+                {
+                  "date": "2026-06-29",
+                  "value": 45.7546875
+                },
+                {
+                  "date": "2026-06-30",
+                  "value": 47.71225694444444
+                },
+                {
+                  "date": "2026-07-01",
+                  "value": 46.37690972222222
+                },
+                {
+                  "date": "2026-07-02",
+                  "value": 45.846493055555555
+                },
+                {
+                  "date": "2026-07-03",
+                  "value": 45.67604166666667
+                },
+                {
+                  "date": "2026-07-04",
+                  "value": 46.40145833333333
+                },
+                {
+                  "date": "2026-07-05",
+                  "value": 42.30777777777778
+                },
+                {
+                  "date": "2026-07-06",
+                  "value": 42.32309027777778
+                },
+                {
+                  "date": "2026-07-07",
+                  "value": 44.01569444444444
+                },
+                {
+                  "date": "2026-07-08",
+                  "value": 44.73628472222222
+                },
+                {
+                  "date": "2026-07-09",
+                  "value": 45.310763888888886
+                },
+                {
+                  "date": "2026-07-10",
+                  "value": 41.74920138888889
+                },
+                {
+                  "date": "2026-07-11",
+                  "value": 42.03392361111111
+                },
+                {
+                  "date": "2026-07-12",
+                  "value": 36.717083333333335
+                },
+                {
+                  "date": "2026-07-13",
+                  "value": 39.21482638888889
+                },
+                {
+                  "date": "2026-07-14",
+                  "value": 41.39302083333333
+                },
+                {
+                  "date": "2026-07-15",
+                  "value": 39.63086805555555
+                },
+                {
+                  "date": "2026-07-16",
+                  "value": 35.40475694444444
+                },
+                {
+                  "date": "2026-07-17",
+                  "value": 29.524340277777778
+                },
+                {
+                  "date": "2026-07-18",
+                  "value": 27.2690625
+                },
+                {
+                  "date": "2026-07-19",
+                  "value": 29.145347222222224
+                },
+                {
+                  "date": "2026-07-20",
+                  "value": 32.14756944444444
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 36.15965277777778
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 38.76125
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 41.99666666666667
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 43.813402777777775
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 45.63034722222222
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 42.52708333333333
+                }
+              ],
+              "recent_demand": [
+                {
+                  "date": "2026-07-20",
+                  "value": 11493
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 10631
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 10015
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 8862
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 10446
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 13435
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 12418
+                }
+              ],
+              "value": 42.52708333333333,
+              "state": "normal"
+            },
+            {
+              "id": "b8e3f9a1971f45268f5a2c5a4ecf11e4",
+              "title": "Store fill rate",
+              "scope": {
+                "kind": "warehouse",
+                "key": ""
+              },
+              "metric": "fill_rate",
+              "threshold": null,
+              "skus": [
+                "IC001",
+                "IC002",
+                "IC003",
+                "IC004",
+                "IC005",
+                "IC006",
+                "IC007",
+                "IC008",
+                "IC009",
+                "IC010",
+                "IC011",
+                "IC012",
+                "IC013",
+                "IC014",
+                "IC015",
+                "IC016",
+                "IC017",
+                "IC018",
+                "IC019",
+                "IC020",
+                "IC021",
+                "IC022",
+                "IC023",
+                "IC024",
+                "IC025",
+                "IC026",
+                "IC027",
+                "IC028",
+                "IC029",
+                "IC030",
+                "IC031",
+                "IC032",
+                "IC033",
+                "IC034",
+                "IC035",
+                "IC036",
+                "IC037",
+                "IC038",
+                "IC039",
+                "IC040",
+                "IC041",
+                "IC042",
+                "IC043",
+                "IC044",
+                "IC045",
+                "IC046",
+                "IC047",
+                "IC048",
+                "IC049",
+                "IC050",
+                "IC051",
+                "IC052",
+                "IC053",
+                "IC054",
+                "IC055",
+                "IC056",
+                "IC057",
+                "IC058",
+                "IC059",
+                "IC060",
+                "IC061",
+                "IC062",
+                "IC063",
+                "IC064",
+                "IC065",
+                "IC066",
+                "IC067",
+                "IC068",
+                "IC069",
+                "IC070",
+                "IC071",
+                "IC072",
+                "IC073",
+                "IC074",
+                "IC075"
+              ],
+              "unit": "ratio",
+              "series": [
+                {
+                  "date": "2026-06-29",
+                  "value": 1
+                },
+                {
+                  "date": "2026-06-30",
+                  "value": 1
+                },
+                {
+                  "date": "2026-07-01",
+                  "value": 1
+                },
+                {
+                  "date": "2026-07-02",
+                  "value": 1
+                },
+                {
+                  "date": "2026-07-03",
+                  "value": 0.9974299665895656
+                },
+                {
+                  "date": "2026-07-04",
+                  "value": 1
+                },
+                {
+                  "date": "2026-07-05",
+                  "value": 1
+                },
+                {
+                  "date": "2026-07-06",
+                  "value": 0.9844978912572666
+                },
+                {
+                  "date": "2026-07-07",
+                  "value": 0.9708932359179826
+                },
+                {
+                  "date": "2026-07-08",
+                  "value": 0.9925558312655087
+                },
+                {
+                  "date": "2026-07-09",
+                  "value": 0.9931125291198217
+                },
+                {
+                  "date": "2026-07-10",
+                  "value": 0.9864598719842442
+                },
+                {
+                  "date": "2026-07-11",
+                  "value": 0.99644128113879
+                },
+                {
+                  "date": "2026-07-12",
+                  "value": 0.9833212472806382
+                },
+                {
+                  "date": "2026-07-13",
+                  "value": 0.9801800163651241
+                },
+                {
+                  "date": "2026-07-14",
+                  "value": 0.8872599628329548
+                },
+                {
+                  "date": "2026-07-15",
+                  "value": 0.9539052496798975
+                },
+                {
+                  "date": "2026-07-16",
+                  "value": 0.9528646019598026
+                },
+                {
+                  "date": "2026-07-17",
+                  "value": 0.8546481500673645
+                },
+                {
+                  "date": "2026-07-18",
+                  "value": 0.8319158216116018
+                },
+                {
+                  "date": "2026-07-19",
+                  "value": 0.8482376237623762
+                },
+                {
+                  "date": "2026-07-20",
+                  "value": 0.7990951013660489
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 0.8005832000752516
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 0.7790314528207688
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 0.848454073572557
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 0.8972812559831514
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 0.9382954968366207
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 0.9860686100821389
+                }
+              ],
+              "recent_demand": [
+                {
+                  "date": "2026-07-20",
+                  "value": 11493
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 10631
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 10015
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 8862
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 10446
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 13435
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 12418
+                }
+              ],
+              "value": 0.9860686100821389,
+              "state": "normal"
+            },
+            {
+              "id": "b1f0efffc49141108d47520ab4b4f6c5",
+              "title": "Warehouse stock mv91bw8y",
+              "scope": {
+                "kind": "warehouse",
+                "key": ""
+              },
+              "metric": "on_hand",
+              "threshold": null,
+              "skus": [
+                "IC001",
+                "IC002",
+                "IC003",
+                "IC004",
+                "IC005",
+                "IC006",
+                "IC007",
+                "IC008",
+                "IC009",
+                "IC010",
+                "IC011",
+                "IC012",
+                "IC013",
+                "IC014",
+                "IC015",
+                "IC016",
+                "IC017",
+                "IC018",
+                "IC019",
+                "IC020",
+                "IC021",
+                "IC022",
+                "IC023",
+                "IC024",
+                "IC025",
+                "IC026",
+                "IC027",
+                "IC028",
+                "IC029",
+                "IC030",
+                "IC031",
+                "IC032",
+                "IC033",
+                "IC034",
+                "IC035",
+                "IC036",
+                "IC037",
+                "IC038",
+                "IC039",
+                "IC040",
+                "IC041",
+                "IC042",
+                "IC043",
+                "IC044",
+                "IC045",
+                "IC046",
+                "IC047",
+                "IC048",
+                "IC049",
+                "IC050",
+                "IC051",
+                "IC052",
+                "IC053",
+                "IC054",
+                "IC055",
+                "IC056",
+                "IC057",
+                "IC058",
+                "IC059",
+                "IC060",
+                "IC061",
+                "IC062",
+                "IC063",
+                "IC064",
+                "IC065",
+                "IC066",
+                "IC067",
+                "IC068",
+                "IC069",
+                "IC070",
+                "IC071",
+                "IC072",
+                "IC073",
+                "IC074",
+                "IC075"
+              ],
+              "unit": "units",
+              "series": [
+                {
+                  "date": "2026-06-29",
+                  "value": 65979
+                },
+                {
+                  "date": "2026-06-30",
+                  "value": 71588
+                },
+                {
+                  "date": "2026-07-01",
+                  "value": 71375
+                },
+                {
+                  "date": "2026-07-02",
+                  "value": 70228
+                },
+                {
+                  "date": "2026-07-03",
+                  "value": 70480
+                },
+                {
+                  "date": "2026-07-04",
+                  "value": 72884
+                },
+                {
+                  "date": "2026-07-05",
+                  "value": 67600
+                },
+                {
+                  "date": "2026-07-06",
+                  "value": 63975
+                },
+                {
+                  "date": "2026-07-07",
+                  "value": 69576
+                },
+                {
+                  "date": "2026-07-08",
+                  "value": 70960
+                },
+                {
+                  "date": "2026-07-09",
+                  "value": 71189
+                },
+                {
+                  "date": "2026-07-10",
+                  "value": 65716
+                },
+                {
+                  "date": "2026-07-11",
+                  "value": 62726
+                },
+                {
+                  "date": "2026-07-12",
+                  "value": 55338
+                },
+                {
+                  "date": "2026-07-13",
+                  "value": 55691
+                },
+                {
+                  "date": "2026-07-14",
+                  "value": 57800
+                },
+                {
+                  "date": "2026-07-15",
+                  "value": 57377
+                },
+                {
+                  "date": "2026-07-16",
+                  "value": 52287
+                },
+                {
+                  "date": "2026-07-17",
+                  "value": 42978
+                },
+                {
+                  "date": "2026-07-18",
+                  "value": 37949
+                },
+                {
+                  "date": "2026-07-19",
+                  "value": 43598
+                },
+                {
+                  "date": "2026-07-20",
+                  "value": 44988
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 46745
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 54471
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 61956
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 68839
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 69639
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 65078
+                }
+              ],
+              "recent_demand": [
+                {
+                  "date": "2026-07-20",
+                  "value": 11493
+                },
+                {
+                  "date": "2026-07-21",
+                  "value": 10631
+                },
+                {
+                  "date": "2026-07-22",
+                  "value": 10015
+                },
+                {
+                  "date": "2026-07-23",
+                  "value": 8862
+                },
+                {
+                  "date": "2026-07-24",
+                  "value": 10446
+                },
+                {
+                  "date": "2026-07-25",
+                  "value": 13435
+                },
+                {
+                  "date": "2026-07-26",
+                  "value": 12418
+                }
+              ],
+              "value": 65078,
+              "state": "normal"
+            }
+          ],
+          "options": [
+            {
+              "kind": "warehouse",
+              "key": "",
+              "label": "Whole warehouse"
+            },
+            {
+              "kind": "cohort",
+              "key": "C1548dfa641a2",
+              "label": "Water-based"
+            },
+            {
+              "kind": "cohort",
+              "key": "C14958972908b",
+              "label": "Not Water-based · Not Choc Coated"
+            },
+            {
+              "kind": "cohort",
+              "key": "Cd4835997b328",
+              "label": "Lower price / 100 ml · Not Water-based · Choc Coated"
+            },
+            {
+              "kind": "cohort",
+              "key": "C76a24f44caf9",
+              "label": "Not Lower price / 100 ml · Not Water-based · Choc Coated"
+            },
+            {
+              "kind": "tag",
+              "key": "family:asian",
+              "label": "Asian"
+            },
+            {
+              "kind": "tag",
+              "key": "family:chocolate",
+              "label": "Chocolate"
+            },
+            {
+              "kind": "tag",
+              "key": "family:classic",
+              "label": "Classic"
+            },
+            {
+              "kind": "tag",
+              "key": "family:coffee_nut",
+              "label": "Coffee Nut"
+            },
+            {
+              "kind": "tag",
+              "key": "family:fruit",
+              "label": "Fruit"
+            },
+            {
+              "kind": "tag",
+              "key": "format:cone",
+              "label": "Cone"
+            },
+            {
+              "kind": "tag",
+              "key": "format:cup",
+              "label": "Cup"
+            },
+            {
+              "kind": "tag",
+              "key": "format:multipack",
+              "label": "Multipack"
+            },
+            {
+              "kind": "tag",
+              "key": "format:sandwich",
+              "label": "Sandwich"
+            },
+            {
+              "kind": "tag",
+              "key": "format:stick",
+              "label": "Stick"
+            },
+            {
+              "kind": "tag",
+              "key": "format:tub",
+              "label": "Tub"
+            },
+            {
+              "kind": "tag",
+              "key": "feature:choc_coated",
+              "label": "Choc Coated"
+            },
+            {
+              "kind": "tag",
+              "key": "feature:crunchy",
+              "label": "Crunchy"
+            },
+            {
+              "kind": "tag",
+              "key": "feature:filled",
+              "label": "Filled"
+            },
+            {
+              "kind": "tag",
+              "key": "feature:fruit_pieces",
+              "label": "Fruit Pieces"
+            },
+            {
+              "kind": "tag",
+              "key": "health:low_sugar",
+              "label": "Low Sugar"
+            },
+            {
+              "kind": "tag",
+              "key": "flavour:chocolate",
+              "label": "Chocolate"
+            },
+            {
+              "kind": "tag",
+              "key": "flavour:mango",
+              "label": "Mango"
+            },
+            {
+              "kind": "tag",
+              "key": "flavour:milk",
+              "label": "Milk"
+            },
+            {
+              "kind": "tag",
+              "key": "flavour:pineapple",
+              "label": "Pineapple"
+            },
+            {
+              "kind": "tag",
+              "key": "flavour:strawberry",
+              "label": "Strawberry"
+            },
+            {
+              "kind": "tag",
+              "key": "flavour:vanilla",
+              "label": "Vanilla"
+            },
+            {
+              "kind": "tag",
+              "key": "band:dairy:0",
+              "label": "Water-based"
+            },
+            {
+              "kind": "tag",
+              "key": "band:dairy:1",
+              "label": "Mixed"
+            },
+            {
+              "kind": "tag",
+              "key": "band:dairy:2",
+              "label": "Creamy"
+            },
+            {
+              "kind": "tag",
+              "key": "band:sweetness:0",
+              "label": "Less sweet"
+            },
+            {
+              "kind": "tag",
+              "key": "band:sweetness:1",
+              "label": "Medium sweet"
+            },
+            {
+              "kind": "tag",
+              "key": "band:sweetness:2",
+              "label": "Very sweet"
+            },
+            {
+              "kind": "tag",
+              "key": "band:sugar_100ml:0",
+              "label": "Lower sugar"
+            },
+            {
+              "kind": "tag",
+              "key": "band:sugar_100ml:1",
+              "label": "Mid sugar"
+            },
+            {
+              "kind": "tag",
+              "key": "band:sugar_100ml:2",
+              "label": "Higher sugar"
+            },
+            {
+              "kind": "tag",
+              "key": "band:price_hkd:0",
+              "label": "Value price"
+            },
+            {
+              "kind": "tag",
+              "key": "band:price_hkd:1",
+              "label": "Mid price"
+            },
+            {
+              "kind": "tag",
+              "key": "band:price_hkd:2",
+              "label": "Premium price"
+            },
+            {
+              "kind": "tag",
+              "key": "band:price_100ml:0",
+              "label": "Lower price / 100 ml"
+            },
+            {
+              "kind": "tag",
+              "key": "band:price_100ml:1",
+              "label": "Mid price / 100 ml"
+            },
+            {
+              "kind": "tag",
+              "key": "band:price_100ml:2",
+              "label": "Higher price / 100 ml"
+            },
+            {
+              "kind": "tag",
+              "key": "band:kcal_100ml:0",
+              "label": "Lower calorie / 100 ml"
+            },
+            {
+              "kind": "tag",
+              "key": "band:kcal_100ml:1",
+              "label": "Mid calorie / 100 ml"
+            },
+            {
+              "kind": "tag",
+              "key": "band:kcal_100ml:2",
+              "label": "Higher calorie / 100 ml"
+            },
+            {
+              "kind": "brand",
+              "key": "Coastline",
+              "label": "Coastline"
+            },
+            {
+              "kind": "brand",
+              "key": "Harbour Chill",
+              "label": "Harbour Chill"
+            },
+            {
+              "kind": "brand",
+              "key": "Jade Garden",
+              "label": "Jade Garden"
+            },
+            {
+              "kind": "brand",
+              "key": "Kowloon Creamery",
+              "label": "Kowloon Creamery"
+            },
+            {
+              "kind": "brand",
+              "key": "Lantau Dairy",
+              "label": "Lantau Dairy"
+            },
+            {
+              "kind": "brand",
+              "key": "Little Panda",
+              "label": "Little Panda"
+            },
+            {
+              "kind": "brand",
+              "key": "Polar Peak",
+              "label": "Polar Peak"
+            },
+            {
+              "kind": "brand",
+              "key": "Sunny Isle",
+              "label": "Sunny Isle"
+            },
+            {
+              "kind": "sku",
+              "key": "IC001",
+              "label": "Mango Splash Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC002",
+              "label": "Lychee Frost Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC003",
+              "label": "Watermelon Chill Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC004",
+              "label": "Passion Fruit Sorbet Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC005",
+              "label": "Yuzu Lemon Sorbet Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC006",
+              "label": "Strawberry Burst Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC007",
+              "label": "Mixed Berry Ice Pop 6-Pack"
+            },
+            {
+              "kind": "sku",
+              "key": "IC008",
+              "label": "Tropical Ice Pop 6-Pack"
+            },
+            {
+              "kind": "sku",
+              "key": "IC009",
+              "label": "Coconut Water Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC010",
+              "label": "Mango Sticky Rice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC011",
+              "label": "Peach Oolong Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC012",
+              "label": "Pineapple Bun Ice Cream Sandwich"
+            },
+            {
+              "kind": "sku",
+              "key": "IC013",
+              "label": "Raspberry Ripple Tub"
+            },
+            {
+              "kind": "sku",
+              "key": "IC014",
+              "label": "Green Apple Sorbet Tub"
+            },
+            {
+              "kind": "sku",
+              "key": "IC015",
+              "label": "Guava Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC016",
+              "label": "Dragon Fruit Smoothie Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC017",
+              "label": "Classic Choc Crunch Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC018",
+              "label": "Double Choc Cone"
+            },
+            {
+              "kind": "sku",
+              "key": "IC019",
+              "label": "Almond Choc Coated Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC020",
+              "label": "Dark Choc Truffle Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC021",
+              "label": "Choc Fudge Tub"
+            },
+            {
+              "kind": "sku",
+              "key": "IC022",
+              "label": "Mini Choc Bites 8-Pack"
+            },
+            {
+              "kind": "sku",
+              "key": "IC023",
+              "label": "Cookies and Cream Sandwich"
+            },
+            {
+              "kind": "sku",
+              "key": "IC024",
+              "label": "Choc Hazelnut Cone"
+            },
+            {
+              "kind": "sku",
+              "key": "IC025",
+              "label": "White Choc Raspberry Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC026",
+              "label": "Choc Mint Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC027",
+              "label": "Vanilla Bean Tub"
+            },
+            {
+              "kind": "sku",
+              "key": "IC028",
+              "label": "Vanilla Classic Cone"
+            },
+            {
+              "kind": "sku",
+              "key": "IC029",
+              "label": "Milk Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC030",
+              "label": "Vanilla Choc Dip Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC031",
+              "label": "Salted Caramel Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC032",
+              "label": "Caramel Swirl Tub"
+            },
+            {
+              "kind": "sku",
+              "key": "IC033",
+              "label": "Toffee Crunch Cone"
+            },
+            {
+              "kind": "sku",
+              "key": "IC034",
+              "label": "Hokkaido Milk Soft Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC035",
+              "label": "Vanilla Sandwich"
+            },
+            {
+              "kind": "sku",
+              "key": "IC036",
+              "label": "Light Vanilla Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC037",
+              "label": "Matcha Red Bean Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC038",
+              "label": "Uji Matcha Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC039",
+              "label": "Black Sesame Mochi 6-Pack"
+            },
+            {
+              "kind": "sku",
+              "key": "IC040",
+              "label": "Mango Mochi 6-Pack"
+            },
+            {
+              "kind": "sku",
+              "key": "IC041",
+              "label": "Red Bean Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC042",
+              "label": "Taro Milk Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC043",
+              "label": "Milk Tea Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC044",
+              "label": "Hojicha Cone"
+            },
+            {
+              "kind": "sku",
+              "key": "IC045",
+              "label": "Durian Cream Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC046",
+              "label": "Coffee Crunch Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC047",
+              "label": "Espresso Gelato Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC048",
+              "label": "Pistachio Gelato Tub"
+            },
+            {
+              "kind": "sku",
+              "key": "IC049",
+              "label": "Peanut Butter Cone"
+            },
+            {
+              "kind": "sku",
+              "key": "IC050",
+              "label": "Macadamia Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC051",
+              "label": "Oat Milk Vanilla Tub"
+            },
+            {
+              "kind": "sku",
+              "key": "IC052",
+              "label": "Zero Sugar Choc Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC053",
+              "label": "Protein Berry Cup"
+            },
+            {
+              "kind": "sku",
+              "key": "IC054",
+              "label": "Light Mango Yogurt Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC055",
+              "label": "Kids Rainbow Pop"
+            },
+            {
+              "kind": "sku",
+              "key": "IC056",
+              "label": "Kids Choc Cone 4-Pack"
+            },
+            {
+              "kind": "sku",
+              "key": "IC057",
+              "label": "Mini Milk 10-Pack"
+            },
+            {
+              "kind": "sku",
+              "key": "IC058",
+              "label": "Family Neapolitan Tub"
+            },
+            {
+              "kind": "sku",
+              "key": "IC059",
+              "label": "Lemon Tea Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC060",
+              "label": "Grapefruit Sorbet Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC061",
+              "label": "Strawberry Spring Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC062",
+              "label": "Strawberry Orchard Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC063",
+              "label": "Strawberry Breeze Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC064",
+              "label": "Strawberry Puree Sorbet Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC065",
+              "label": "Strawberry Garden Sorbet Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC066",
+              "label": "Strawberry Coastal Sorbet Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC067",
+              "label": "Strawberry Milk Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC068",
+              "label": "Strawberry Cream Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC069",
+              "label": "Strawberry Dairy Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC070",
+              "label": "Peach Spring Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC071",
+              "label": "Apple Orchard Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC072",
+              "label": "Pineapple Breeze Ice Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC073",
+              "label": "Strawberry Velvet Cream Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC074",
+              "label": "Strawberry Meadow Cream Bar"
+            },
+            {
+              "kind": "sku",
+              "key": "IC075",
+              "label": "Strawberry Reserve Cream Bar"
+            }
+          ],
+          "facts_through": "2026-07-26",
+          "order_change": {
+            "product_count": 0,
+            "before_cases": 0,
+            "after_cases": 0,
+            "delta_cases": 0
+          },
+          "before": {
+            "orders": []
+          },
+          "after": {
+            "orders": []
+          },
+          "applied": true
+        },
+        "elapsed_ms": 531,
+        "status": "ok"
+      }
+    ]
+  },
+  "play": {
+    "days": 16,
+    "affected_skus": [
+      "IC001",
+      "IC002",
+      "IC003",
+      "IC004",
+      "IC005",
+      "IC006",
+      "IC007",
+      "IC008",
+      "IC009",
+      "IC010",
+      "IC011",
+      "IC012",
+      "IC013",
+      "IC014",
+      "IC015",
+      "IC016",
+      "IC017",
+      "IC018",
+      "IC019",
+      "IC020",
+      "IC021",
+      "IC022",
+      "IC023",
+      "IC024",
+      "IC025",
+      "IC026",
+      "IC027",
+      "IC028",
+      "IC029",
+      "IC030",
+      "IC031",
+      "IC032",
+      "IC033",
+      "IC034",
+      "IC035",
+      "IC036",
+      "IC037",
+      "IC038",
+      "IC039",
+      "IC040",
+      "IC041",
+      "IC042",
+      "IC043",
+      "IC044",
+      "IC045",
+      "IC046",
+      "IC047",
+      "IC048",
+      "IC049",
+      "IC050",
+      "IC051",
+      "IC052",
+      "IC053",
+      "IC054",
+      "IC055",
+      "IC056",
+      "IC057",
+      "IC058",
+      "IC059",
+      "IC060",
+      "IC061",
+      "IC062",
+      "IC063",
+      "IC064",
+      "IC065",
+      "IC066",
+      "IC067",
+      "IC068",
+      "IC069",
+      "IC070",
+      "IC071",
+      "IC072",
+      "IC073",
+      "IC074",
+      "IC075"
+    ],
+    "summary": {
+      "scoop": {
+        "fill_rate": 0.8682680326734044,
+        "lost_units": 26642,
+        "lost_margin": 140747.69,
+        "avg_pallets": 39.05884114583333,
+        "peak_pallets": 68.59826388888888,
+        "days_over_capacity": 1,
+        "stockout_sku_days": 115,
+        "ending_on_hand": 54528,
+        "ordered_cases": 6507
+      },
+      "baseline": {
+        "fill_rate": 0.9848944838907459,
+        "lost_units": 3055,
+        "lost_margin": 18200.43,
+        "avg_pallets": 48.92881727430556,
+        "peak_pallets": 68.59826388888888,
+        "days_over_capacity": 1,
+        "stockout_sku_days": 17,
+        "ending_on_hand": 61067,
+        "ordered_cases": 7736
+      }
+    },
+    "affected_comparison": {
+      "units_saved": -23587,
+      "pallet_difference": -9.869976128472217,
+      "stockout_days_avoided": -98
+    },
+    "same_widgets": [
+      "31cbe3580eaf4bfea31adb2358c4a2c8",
+      "1ffeab9d359a4d3c9334575105feaa47",
+      "def8bf1b8cc044c497cea33f0319e73e",
+      "38ad5529db6b499ea121c1a6f2c28778",
+      "948a5ff3f3214103853dbe696317d878",
+      "2b5b9d2adc8243589a523fd1d7c7725d",
+      "b8e3f9a1971f45268f5a2c5a4ecf11e4",
+      "b1f0efffc49141108d47520ab4b4f6c5"
+    ],
+    "rule_stockout_dots": 12,
+    "events": [
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC005",
+        "order_date": "2026-07-27",
+        "cases": 3,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 3 cases of Yuzu Lemon Sorbet Cup under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC006",
+        "order_date": "2026-07-27",
+        "cases": 16,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 16 cases of Strawberry Burst Bar under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC016",
+        "order_date": "2026-07-27",
+        "cases": 11,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 11 cases of Dragon Fruit Smoothie Cup under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC020",
+        "order_date": "2026-07-27",
+        "cases": 8,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 8 cases of Dark Choc Truffle Cup under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC023",
+        "order_date": "2026-07-27",
+        "cases": 8,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 8 cases of Cookies and Cream Sandwich under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC025",
+        "order_date": "2026-07-27",
+        "cases": 20,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Ordered 20 cases of White Choc Raspberry Bar under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC031",
+        "order_date": "2026-07-27",
+        "cases": 5,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 5 cases of Salted Caramel Cup under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC035",
+        "order_date": "2026-07-27",
+        "cases": 10,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 10 cases of Vanilla Sandwich under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC036",
+        "order_date": "2026-07-27",
+        "cases": 14,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 14 cases of Light Vanilla Bar under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC047",
+        "order_date": "2026-07-27",
+        "cases": 8,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 8 cases of Espresso Gelato Cup under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC048",
+        "order_date": "2026-07-27",
+        "cases": 18,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 18 cases of Pistachio Gelato Tub under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC049",
+        "order_date": "2026-07-27",
+        "cases": 4,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 4 cases of Peanut Butter Cone under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC051",
+        "order_date": "2026-07-27",
+        "cases": 17,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 17 cases of Oat Milk Vanilla Tub under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC053",
+        "order_date": "2026-07-27",
+        "cases": 9,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 9 cases of Protein Berry Cup under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC068",
+        "order_date": "2026-07-27",
+        "cases": 14,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 14 cases of Strawberry Cream Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC074",
+        "order_date": "2026-07-27",
+        "cases": 15,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 15 cases of Strawberry Meadow Cream Bar under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC075",
+        "order_date": "2026-07-27",
+        "cases": 11,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 11 cases of Strawberry Reserve Cream Bar under this plan."
+      },
+      {
+        "date": "2026-07-27",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Strawberry Orchard Ice Bar (38 units short; 38 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC062",
+            "name": "Strawberry Orchard Ice Bar",
+            "units": 38
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [],
+        "rule_order_dates": []
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC010",
+        "order_date": "2026-07-28",
+        "cases": 25,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 25 cases of Mango Sticky Rice Bar under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC011",
+        "order_date": "2026-07-28",
+        "cases": 3,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 3 cases of Peach Oolong Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC017",
+        "order_date": "2026-07-28",
+        "cases": 11,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Ordered 11 cases of Classic Choc Crunch Bar under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC018",
+        "order_date": "2026-07-28",
+        "cases": 3,
+        "card_ids": [
+          "Cd4835997b328"
+        ],
+        "text": "Ordered 3 cases of Double Choc Cone under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC019",
+        "order_date": "2026-07-28",
+        "cases": 21,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Ordered 21 cases of Almond Choc Coated Bar under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC028",
+        "order_date": "2026-07-28",
+        "cases": 3,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 3 cases of Vanilla Classic Cone under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC030",
+        "order_date": "2026-07-28",
+        "cases": 21,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Ordered 21 cases of Vanilla Choc Dip Bar under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC037",
+        "order_date": "2026-07-28",
+        "cases": 10,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 10 cases of Matcha Red Bean Bar under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC039",
+        "order_date": "2026-07-28",
+        "cases": 13,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 13 cases of Black Sesame Mochi 6-Pack under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC040",
+        "order_date": "2026-07-28",
+        "cases": 13,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 13 cases of Mango Mochi 6-Pack under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC045",
+        "order_date": "2026-07-28",
+        "cases": 20,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 20 cases of Durian Cream Cup under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC046",
+        "order_date": "2026-07-28",
+        "cases": 31,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Ordered 31 cases of Coffee Crunch Bar under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC052",
+        "order_date": "2026-07-28",
+        "cases": 10,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Ordered 10 cases of Zero Sugar Choc Bar under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC065",
+        "order_date": "2026-07-28",
+        "cases": 6,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 6 cases of Strawberry Garden Sorbet Bar under this plan."
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Oat Milk Vanilla Tub (4 units short; 4 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC051",
+            "name": "Oat Milk Vanilla Tub",
+            "units": 4
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-27"
+        ],
+        "rule_order_dates": [
+          "2026-07-27"
+        ]
+      },
+      {
+        "date": "2026-07-28",
+        "kind": "capacity",
+        "tone": "warn",
+        "text": "Cold store at 65 of 68 pallets after deliveries."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC013",
+        "order_date": "2026-07-29",
+        "cases": 26,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 26 cases of Raspberry Ripple Tub under this plan."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC021",
+        "order_date": "2026-07-29",
+        "cases": 41,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 41 cases of Choc Fudge Tub under this plan."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC026",
+        "order_date": "2026-07-29",
+        "cases": 17,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 17 cases of Choc Mint Cup under this plan."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC027",
+        "order_date": "2026-07-29",
+        "cases": 11,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 11 cases of Vanilla Bean Tub under this plan."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC032",
+        "order_date": "2026-07-29",
+        "cases": 42,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 42 cases of Caramel Swirl Tub under this plan."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC050",
+        "order_date": "2026-07-29",
+        "cases": 20,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 20 cases of Macadamia Cup under this plan."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC054",
+        "order_date": "2026-07-29",
+        "cases": 16,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 16 cases of Light Mango Yogurt Bar under this plan."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC058",
+        "order_date": "2026-07-29",
+        "cases": 41,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 41 cases of Family Neapolitan Tub under this plan."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC067",
+        "order_date": "2026-07-29",
+        "cases": 21,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 21 cases of Strawberry Milk Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC073",
+        "order_date": "2026-07-29",
+        "cases": 14,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 14 cases of Strawberry Velvet Cream Bar under this plan."
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Strawberry Coastal Sorbet Bar (4 units short; 4 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC066",
+            "name": "Strawberry Coastal Sorbet Bar",
+            "units": 4
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [],
+        "rule_order_dates": [
+          "2026-07-27"
+        ]
+      },
+      {
+        "date": "2026-07-29",
+        "kind": "capacity",
+        "tone": "warn",
+        "text": "Cold store at 69 of 68 pallets after deliveries."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC001",
+        "order_date": "2026-07-30",
+        "cases": 4,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 4 cases of Mango Splash Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC003",
+        "order_date": "2026-07-30",
+        "cases": 4,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 4 cases of Watermelon Chill Bar under this plan."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC007",
+        "order_date": "2026-07-30",
+        "cases": 28,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 28 cases of Mixed Berry Ice Pop 6-Pack under this plan."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC008",
+        "order_date": "2026-07-30",
+        "cases": 13,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 13 cases of Tropical Ice Pop 6-Pack under this plan."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC022",
+        "order_date": "2026-07-30",
+        "cases": 29,
+        "card_ids": [
+          "Cd4835997b328"
+        ],
+        "text": "Ordered 29 cases of Mini Choc Bites 8-Pack under this plan."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC055",
+        "order_date": "2026-07-30",
+        "cases": 13,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 13 cases of Kids Rainbow Pop under this plan."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC056",
+        "order_date": "2026-07-30",
+        "cases": 20,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 20 cases of Kids Choc Cone 4-Pack under this plan."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC057",
+        "order_date": "2026-07-30",
+        "cases": 26,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 26 cases of Mini Milk 10-Pack under this plan."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC071",
+        "order_date": "2026-07-30",
+        "cases": 11,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 11 cases of Apple Orchard Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Matcha Red Bean Bar (167 units short; 167 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC037",
+            "name": "Matcha Red Bean Bar",
+            "units": 167
+          }
+        ],
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "order_dates": [
+          "2026-07-28"
+        ],
+        "rule_order_dates": [
+          "2026-07-28"
+        ]
+      },
+      {
+        "date": "2026-07-30",
+        "kind": "capacity",
+        "tone": "warn",
+        "text": "Cold store at 65 of 68 pallets after deliveries."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC012",
+        "order_date": "2026-07-31",
+        "cases": 9,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 9 cases of Pineapple Bun Ice Cream Sandwich under this plan."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC029",
+        "order_date": "2026-07-31",
+        "cases": 10,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 10 cases of Milk Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC034",
+        "order_date": "2026-07-31",
+        "cases": 10,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 10 cases of Hokkaido Milk Soft Cup under this plan."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC041",
+        "order_date": "2026-07-31",
+        "cases": 26,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 26 cases of Red Bean Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC042",
+        "order_date": "2026-07-31",
+        "cases": 9,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 9 cases of Taro Milk Cup under this plan."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC043",
+        "order_date": "2026-07-31",
+        "cases": 24,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 24 cases of Milk Tea Bar under this plan."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC059",
+        "order_date": "2026-07-31",
+        "cases": 6,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 6 cases of Lemon Tea Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC069",
+        "order_date": "2026-07-31",
+        "cases": 8,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Ordered 8 cases of Strawberry Dairy Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC072",
+        "order_date": "2026-07-31",
+        "cases": 13,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Ordered 13 cases of Pineapple Breeze Ice Bar under this plan."
+      },
+      {
+        "date": "2026-07-31",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 101 cases across 9 products. 3,976 fewer units arrived than under the rule.",
+        "skus": [
+          "IC006",
+          "IC016",
+          "IC023",
+          "IC035",
+          "IC036",
+          "IC049",
+          "IC053",
+          "IC068",
+          "IC074"
+        ],
+        "order_dates": [
+          "2026-07-27"
+        ],
+        "card_ids": [
+          "C14958972908b",
+          "C1548dfa641a2"
+        ]
+      },
+      {
+        "date": "2026-08-01",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 249 cases across 10 products. 2,200 fewer units arrived than under the rule.",
+        "skus": [
+          "IC013",
+          "IC021",
+          "IC026",
+          "IC027",
+          "IC032",
+          "IC050",
+          "IC054",
+          "IC058",
+          "IC067",
+          "IC073"
+        ],
+        "order_dates": [
+          "2026-07-29"
+        ],
+        "card_ids": [
+          "C14958972908b"
+        ]
+      },
+      {
+        "date": "2026-08-01",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Grapefruit Sorbet Bar (124 units short; 124 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC060",
+            "name": "Grapefruit Sorbet Bar",
+            "units": 124
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [],
+        "rule_order_dates": [
+          "2026-07-27"
+        ]
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC004",
+        "order_date": "2026-08-03",
+        "cases": 87,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 87 cases of Passion Fruit Sorbet Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC005",
+        "order_date": "2026-08-03",
+        "cases": 59,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 59 cases of Yuzu Lemon Sorbet Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC006",
+        "order_date": "2026-08-03",
+        "cases": 64,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 64 cases of Strawberry Burst Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC014",
+        "order_date": "2026-08-03",
+        "cases": 60,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 60 cases of Green Apple Sorbet Tub for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC016",
+        "order_date": "2026-08-03",
+        "cases": 35,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 35 cases of Dragon Fruit Smoothie Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC020",
+        "order_date": "2026-08-03",
+        "cases": 38,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 38 cases of Dark Choc Truffle Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC023",
+        "order_date": "2026-08-03",
+        "cases": 29,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 29 cases of Cookies and Cream Sandwich for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC025",
+        "order_date": "2026-08-03",
+        "cases": 52,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 52 cases of White Choc Raspberry Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC031",
+        "order_date": "2026-08-03",
+        "cases": 21,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 21 cases of Salted Caramel Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC033",
+        "order_date": "2026-08-03",
+        "cases": 37,
+        "card_ids": [
+          "Cd4835997b328"
+        ],
+        "text": "Automatically ordered 37 cases of Toffee Crunch Cone for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC035",
+        "order_date": "2026-08-03",
+        "cases": 21,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 21 cases of Vanilla Sandwich for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC036",
+        "order_date": "2026-08-03",
+        "cases": 44,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 44 cases of Light Vanilla Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC047",
+        "order_date": "2026-08-03",
+        "cases": 32,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 32 cases of Espresso Gelato Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC048",
+        "order_date": "2026-08-03",
+        "cases": 76,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 76 cases of Pistachio Gelato Tub for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC049",
+        "order_date": "2026-08-03",
+        "cases": 34,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 34 cases of Peanut Butter Cone for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC051",
+        "order_date": "2026-08-03",
+        "cases": 111,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 111 cases of Oat Milk Vanilla Tub for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC053",
+        "order_date": "2026-08-03",
+        "cases": 40,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 40 cases of Protein Berry Cup for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC060",
+        "order_date": "2026-08-03",
+        "cases": 45,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 45 cases of Grapefruit Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC064",
+        "order_date": "2026-08-03",
+        "cases": 104,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 104 cases of Strawberry Puree Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC066",
+        "order_date": "2026-08-03",
+        "cases": 29,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 29 cases of Strawberry Coastal Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC068",
+        "order_date": "2026-08-03",
+        "cases": 44,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 44 cases of Strawberry Cream Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC074",
+        "order_date": "2026-08-03",
+        "cases": 40,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 40 cases of Strawberry Meadow Cream Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC075",
+        "order_date": "2026-08-03",
+        "cases": 43,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 43 cases of Strawberry Reserve Cream Bar for the next week."
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 100 cases across 7 products. 2,136 fewer units arrived than under the rule.",
+        "skus": [
+          "IC017",
+          "IC018",
+          "IC019",
+          "IC028",
+          "IC030",
+          "IC046",
+          "IC052"
+        ],
+        "order_dates": [
+          "2026-07-28"
+        ],
+        "card_ids": [
+          "C14958972908b",
+          "C76a24f44caf9",
+          "Cd4835997b328"
+        ]
+      },
+      {
+        "date": "2026-08-03",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Strawberry Burst Bar (284 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC006",
+            "name": "Strawberry Burst Bar",
+            "units": 284
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-27",
+          "2026-08-03"
+        ],
+        "rule_order_dates": [
+          "2026-07-27",
+          "2026-08-03"
+        ]
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC010",
+        "order_date": "2026-08-04",
+        "cases": 131,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 131 cases of Mango Sticky Rice Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC011",
+        "order_date": "2026-08-04",
+        "cases": 39,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 39 cases of Peach Oolong Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC017",
+        "order_date": "2026-08-04",
+        "cases": 23,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 23 cases of Classic Choc Crunch Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC018",
+        "order_date": "2026-08-04",
+        "cases": 63,
+        "card_ids": [
+          "Cd4835997b328"
+        ],
+        "text": "Automatically ordered 63 cases of Double Choc Cone for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC019",
+        "order_date": "2026-08-04",
+        "cases": 54,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 54 cases of Almond Choc Coated Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC024",
+        "order_date": "2026-08-04",
+        "cases": 49,
+        "card_ids": [
+          "Cd4835997b328"
+        ],
+        "text": "Automatically ordered 49 cases of Choc Hazelnut Cone for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC028",
+        "order_date": "2026-08-04",
+        "cases": 53,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 53 cases of Vanilla Classic Cone for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC030",
+        "order_date": "2026-08-04",
+        "cases": 39,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 39 cases of Vanilla Choc Dip Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC037",
+        "order_date": "2026-08-04",
+        "cases": 44,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 44 cases of Matcha Red Bean Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC038",
+        "order_date": "2026-08-04",
+        "cases": 40,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 40 cases of Uji Matcha Cup for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC039",
+        "order_date": "2026-08-04",
+        "cases": 73,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 73 cases of Black Sesame Mochi 6-Pack for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC040",
+        "order_date": "2026-08-04",
+        "cases": 61,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 61 cases of Mango Mochi 6-Pack for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC044",
+        "order_date": "2026-08-04",
+        "cases": 63,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 63 cases of Hojicha Cone for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC045",
+        "order_date": "2026-08-04",
+        "cases": 71,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 71 cases of Durian Cream Cup for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC046",
+        "order_date": "2026-08-04",
+        "cases": 72,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 72 cases of Coffee Crunch Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC052",
+        "order_date": "2026-08-04",
+        "cases": 28,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 28 cases of Zero Sugar Choc Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC065",
+        "order_date": "2026-08-04",
+        "cases": 77,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 77 cases of Strawberry Garden Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 230 cases across 14 products. 8,412 fewer units arrived than under the rule.",
+        "skus": [
+          "IC007",
+          "IC008",
+          "IC010",
+          "IC011",
+          "IC022",
+          "IC037",
+          "IC039",
+          "IC040",
+          "IC045",
+          "IC055",
+          "IC056",
+          "IC057",
+          "IC065",
+          "IC071"
+        ],
+        "order_dates": [
+          "2026-07-28",
+          "2026-07-30"
+        ],
+        "card_ids": [
+          "C14958972908b",
+          "C1548dfa641a2",
+          "Cd4835997b328"
+        ]
+      },
+      {
+        "date": "2026-08-04",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Strawberry Orchard Ice Bar (332 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC062",
+            "name": "Strawberry Orchard Ice Bar",
+            "units": 332
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [],
+        "rule_order_dates": [
+          "2026-07-30"
+        ]
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC013",
+        "order_date": "2026-08-05",
+        "cases": 64,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 64 cases of Raspberry Ripple Tub for the next week."
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC021",
+        "order_date": "2026-08-05",
+        "cases": 89,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 89 cases of Choc Fudge Tub for the next week."
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC026",
+        "order_date": "2026-08-05",
+        "cases": 32,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 32 cases of Choc Mint Cup for the next week."
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC027",
+        "order_date": "2026-08-05",
+        "cases": 59,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 59 cases of Vanilla Bean Tub for the next week."
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC032",
+        "order_date": "2026-08-05",
+        "cases": 103,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 103 cases of Caramel Swirl Tub for the next week."
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC050",
+        "order_date": "2026-08-05",
+        "cases": 54,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 54 cases of Macadamia Cup for the next week."
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC054",
+        "order_date": "2026-08-05",
+        "cases": 55,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 55 cases of Light Mango Yogurt Bar for the next week."
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC058",
+        "order_date": "2026-08-05",
+        "cases": 85,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 85 cases of Family Neapolitan Tub for the next week."
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC067",
+        "order_date": "2026-08-05",
+        "cases": 44,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 44 cases of Strawberry Milk Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC073",
+        "order_date": "2026-08-05",
+        "cases": 30,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 30 cases of Strawberry Velvet Cream Bar for the next week."
+      },
+      {
+        "date": "2026-08-05",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 205 cases across 17 products. 7,856 fewer units arrived than under the rule.",
+        "skus": [
+          "IC005",
+          "IC012",
+          "IC020",
+          "IC025",
+          "IC029",
+          "IC031",
+          "IC034",
+          "IC041",
+          "IC042",
+          "IC043",
+          "IC047",
+          "IC048",
+          "IC051",
+          "IC059",
+          "IC069",
+          "IC072",
+          "IC075"
+        ],
+        "order_dates": [
+          "2026-07-27",
+          "2026-07-31"
+        ],
+        "card_ids": [
+          "C14958972908b",
+          "C1548dfa641a2",
+          "C76a24f44caf9"
+        ]
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC001",
+        "order_date": "2026-08-06",
+        "cases": 49,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 49 cases of Mango Splash Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC002",
+        "order_date": "2026-08-06",
+        "cases": 36,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 36 cases of Lychee Frost Bar for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC003",
+        "order_date": "2026-08-06",
+        "cases": 120,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 120 cases of Watermelon Chill Bar for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC007",
+        "order_date": "2026-08-06",
+        "cases": 160,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 160 cases of Mixed Berry Ice Pop 6-Pack for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC008",
+        "order_date": "2026-08-06",
+        "cases": 90,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 90 cases of Tropical Ice Pop 6-Pack for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC009",
+        "order_date": "2026-08-06",
+        "cases": 99,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 99 cases of Coconut Water Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC015",
+        "order_date": "2026-08-06",
+        "cases": 82,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 82 cases of Guava Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC022",
+        "order_date": "2026-08-06",
+        "cases": 64,
+        "card_ids": [
+          "Cd4835997b328"
+        ],
+        "text": "Automatically ordered 64 cases of Mini Choc Bites 8-Pack for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC055",
+        "order_date": "2026-08-06",
+        "cases": 59,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 59 cases of Kids Rainbow Pop for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC056",
+        "order_date": "2026-08-06",
+        "cases": 68,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 68 cases of Kids Choc Cone 4-Pack for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC057",
+        "order_date": "2026-08-06",
+        "cases": 69,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 69 cases of Mini Milk 10-Pack for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC061",
+        "order_date": "2026-08-06",
+        "cases": 46,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 46 cases of Strawberry Spring Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC062",
+        "order_date": "2026-08-06",
+        "cases": 130,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 130 cases of Strawberry Orchard Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC070",
+        "order_date": "2026-08-06",
+        "cases": 37,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 37 cases of Peach Spring Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC071",
+        "order_date": "2026-08-06",
+        "cases": 82,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 82 cases of Apple Orchard Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-06",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Strawberry Breeze Ice Bar, Protein Berry Cup (564 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC063",
+            "name": "Strawberry Breeze Ice Bar",
+            "units": 454
+          },
+          {
+            "sku": "IC053",
+            "name": "Protein Berry Cup",
+            "units": 110
+          }
+        ],
+        "card_ids": [
+          "C14958972908b",
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-27",
+          "2026-08-03"
+        ],
+        "rule_order_dates": [
+          "2026-07-27",
+          "2026-07-31",
+          "2026-08-03"
+        ]
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC012",
+        "order_date": "2026-08-07",
+        "cases": 21,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 21 cases of Pineapple Bun Ice Cream Sandwich for the next week."
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC029",
+        "order_date": "2026-08-07",
+        "cases": 32,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 32 cases of Milk Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC034",
+        "order_date": "2026-08-07",
+        "cases": 31,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 31 cases of Hokkaido Milk Soft Cup for the next week."
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC041",
+        "order_date": "2026-08-07",
+        "cases": 80,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 80 cases of Red Bean Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC042",
+        "order_date": "2026-08-07",
+        "cases": 30,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 30 cases of Taro Milk Cup for the next week."
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC043",
+        "order_date": "2026-08-07",
+        "cases": 76,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 76 cases of Milk Tea Bar for the next week."
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC059",
+        "order_date": "2026-08-07",
+        "cases": 47,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 47 cases of Lemon Tea Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC063",
+        "order_date": "2026-08-07",
+        "cases": 83,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 83 cases of Strawberry Breeze Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC069",
+        "order_date": "2026-08-07",
+        "cases": 21,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 21 cases of Strawberry Dairy Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC072",
+        "order_date": "2026-08-07",
+        "cases": 71,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 71 cases of Pineapple Breeze Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "arrival",
+        "tone": "good",
+        "text": "This week's orders arrived: 8 cases across 2 products. 3,200 fewer units arrived than under the rule.",
+        "skus": [
+          "IC001",
+          "IC003"
+        ],
+        "order_dates": [
+          "2026-07-30"
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ]
+      },
+      {
+        "date": "2026-08-07",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Peach Oolong Ice Bar, Apple Orchard Ice Bar, Tropical Ice Pop 6-Pack (207 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC011",
+            "name": "Peach Oolong Ice Bar",
+            "units": 102
+          },
+          {
+            "sku": "IC071",
+            "name": "Apple Orchard Ice Bar",
+            "units": 93
+          },
+          {
+            "sku": "IC008",
+            "name": "Tropical Ice Pop 6-Pack",
+            "units": 12
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-28",
+          "2026-07-30",
+          "2026-08-04",
+          "2026-08-06"
+        ],
+        "rule_order_dates": [
+          "2026-07-28",
+          "2026-07-30",
+          "2026-08-04",
+          "2026-08-06"
+        ]
+      },
+      {
+        "date": "2026-08-08",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Watermelon Chill Bar, Kids Rainbow Pop, Strawberry Spring Ice Bar (818 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC003",
+            "name": "Watermelon Chill Bar",
+            "units": 319
+          },
+          {
+            "sku": "IC055",
+            "name": "Kids Rainbow Pop",
+            "units": 278
+          },
+          {
+            "sku": "IC061",
+            "name": "Strawberry Spring Ice Bar",
+            "units": 221
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-30",
+          "2026-08-06"
+        ],
+        "rule_order_dates": [
+          "2026-07-30",
+          "2026-08-06"
+        ]
+      },
+      {
+        "date": "2026-08-09",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Strawberry Puree Sorbet Bar, Mango Sticky Rice Bar, Vanilla Classic Cone (579 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC064",
+            "name": "Strawberry Puree Sorbet Bar",
+            "units": 255
+          },
+          {
+            "sku": "IC010",
+            "name": "Mango Sticky Rice Bar",
+            "units": 197
+          },
+          {
+            "sku": "IC028",
+            "name": "Vanilla Classic Cone",
+            "units": 127
+          }
+        ],
+        "card_ids": [
+          "C14958972908b",
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-28",
+          "2026-08-03",
+          "2026-08-04"
+        ],
+        "rule_order_dates": [
+          "2026-07-27",
+          "2026-07-28",
+          "2026-08-03",
+          "2026-08-04"
+        ]
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC004",
+        "order_date": "2026-08-10",
+        "cases": 39,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 39 cases of Passion Fruit Sorbet Cup for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC005",
+        "order_date": "2026-08-10",
+        "cases": 30,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 30 cases of Yuzu Lemon Sorbet Cup for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC006",
+        "order_date": "2026-08-10",
+        "cases": 28,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 28 cases of Strawberry Burst Bar for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC014",
+        "order_date": "2026-08-10",
+        "cases": 81,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 81 cases of Green Apple Sorbet Tub for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC016",
+        "order_date": "2026-08-10",
+        "cases": 28,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 28 cases of Dragon Fruit Smoothie Cup for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC020",
+        "order_date": "2026-08-10",
+        "cases": 30,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 30 cases of Dark Choc Truffle Cup for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC023",
+        "order_date": "2026-08-10",
+        "cases": 20,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 20 cases of Cookies and Cream Sandwich for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC025",
+        "order_date": "2026-08-10",
+        "cases": 47,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 47 cases of White Choc Raspberry Bar for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC031",
+        "order_date": "2026-08-10",
+        "cases": 16,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 16 cases of Salted Caramel Cup for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC033",
+        "order_date": "2026-08-10",
+        "cases": 35,
+        "card_ids": [
+          "Cd4835997b328"
+        ],
+        "text": "Automatically ordered 35 cases of Toffee Crunch Cone for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC035",
+        "order_date": "2026-08-10",
+        "cases": 17,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 17 cases of Vanilla Sandwich for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC036",
+        "order_date": "2026-08-10",
+        "cases": 35,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 35 cases of Light Vanilla Bar for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC047",
+        "order_date": "2026-08-10",
+        "cases": 25,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 25 cases of Espresso Gelato Cup for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC048",
+        "order_date": "2026-08-10",
+        "cases": 56,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 56 cases of Pistachio Gelato Tub for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC049",
+        "order_date": "2026-08-10",
+        "cases": 29,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 29 cases of Peanut Butter Cone for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC051",
+        "order_date": "2026-08-10",
+        "cases": 81,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 81 cases of Oat Milk Vanilla Tub for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC053",
+        "order_date": "2026-08-10",
+        "cases": 27,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 27 cases of Protein Berry Cup for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC060",
+        "order_date": "2026-08-10",
+        "cases": 23,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 23 cases of Grapefruit Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC064",
+        "order_date": "2026-08-10",
+        "cases": 61,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 61 cases of Strawberry Puree Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC066",
+        "order_date": "2026-08-10",
+        "cases": 41,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 41 cases of Strawberry Coastal Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC068",
+        "order_date": "2026-08-10",
+        "cases": 32,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 32 cases of Strawberry Cream Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC074",
+        "order_date": "2026-08-10",
+        "cases": 28,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 28 cases of Strawberry Meadow Cream Bar for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC075",
+        "order_date": "2026-08-10",
+        "cases": 34,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 34 cases of Strawberry Reserve Cream Bar for the next week."
+      },
+      {
+        "date": "2026-08-10",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Coconut Water Ice Bar, Mango Splash Ice Bar, Lychee Frost Bar (526 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC009",
+            "name": "Coconut Water Ice Bar",
+            "units": 308
+          },
+          {
+            "sku": "IC001",
+            "name": "Mango Splash Ice Bar",
+            "units": 112
+          },
+          {
+            "sku": "IC002",
+            "name": "Lychee Frost Bar",
+            "units": 106
+          }
+        ],
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "order_dates": [
+          "2026-07-30",
+          "2026-08-06"
+        ],
+        "rule_order_dates": [
+          "2026-07-30",
+          "2026-08-06"
+        ]
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC010",
+        "order_date": "2026-08-11",
+        "cases": 39,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 39 cases of Mango Sticky Rice Bar for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC011",
+        "order_date": "2026-08-11",
+        "cases": 3,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 3 cases of Peach Oolong Ice Bar for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC017",
+        "order_date": "2026-08-11",
+        "cases": 10,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 10 cases of Classic Choc Crunch Bar for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC018",
+        "order_date": "2026-08-11",
+        "cases": 28,
+        "card_ids": [
+          "Cd4835997b328"
+        ],
+        "text": "Automatically ordered 28 cases of Double Choc Cone for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC019",
+        "order_date": "2026-08-11",
+        "cases": 22,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 22 cases of Almond Choc Coated Bar for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC024",
+        "order_date": "2026-08-11",
+        "cases": 18,
+        "card_ids": [
+          "Cd4835997b328"
+        ],
+        "text": "Automatically ordered 18 cases of Choc Hazelnut Cone for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC028",
+        "order_date": "2026-08-11",
+        "cases": 18,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 18 cases of Vanilla Classic Cone for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC030",
+        "order_date": "2026-08-11",
+        "cases": 18,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 18 cases of Vanilla Choc Dip Bar for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC037",
+        "order_date": "2026-08-11",
+        "cases": 19,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 19 cases of Matcha Red Bean Bar for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC038",
+        "order_date": "2026-08-11",
+        "cases": 22,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 22 cases of Uji Matcha Cup for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC039",
+        "order_date": "2026-08-11",
+        "cases": 28,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 28 cases of Black Sesame Mochi 6-Pack for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC040",
+        "order_date": "2026-08-11",
+        "cases": 21,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 21 cases of Mango Mochi 6-Pack for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC044",
+        "order_date": "2026-08-11",
+        "cases": 29,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 29 cases of Hojicha Cone for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC045",
+        "order_date": "2026-08-11",
+        "cases": 21,
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "text": "Automatically ordered 21 cases of Durian Cream Cup for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC046",
+        "order_date": "2026-08-11",
+        "cases": 28,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 28 cases of Coffee Crunch Bar for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC052",
+        "order_date": "2026-08-11",
+        "cases": 13,
+        "card_ids": [
+          "C76a24f44caf9"
+        ],
+        "text": "Automatically ordered 13 cases of Zero Sugar Choc Bar for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "order",
+        "tone": "neutral",
+        "sku": "IC065",
+        "order_date": "2026-08-11",
+        "cases": 11,
+        "card_ids": [
+          "C1548dfa641a2"
+        ],
+        "text": "Automatically ordered 11 cases of Strawberry Garden Sorbet Bar for the next week."
+      },
+      {
+        "date": "2026-08-11",
+        "kind": "stockout",
+        "tone": "bad",
+        "policy": "scoop",
+        "text": "Ran out: Milk Ice Bar, Hokkaido Milk Soft Cup, Espresso Gelato Cup (223 units short; 0 under the rule for these products).",
+        "skus": [
+          {
+            "sku": "IC029",
+            "name": "Milk Ice Bar",
+            "units": 99
+          },
+          {
+            "sku": "IC034",
+            "name": "Hokkaido Milk Soft Cup",
+            "units": 62
+          },
+          {
+            "sku": "IC047",
+            "name": "Espresso Gelato Cup",
+            "units": 62
+          }
+        ],
+        "card_ids": [
+          "C14958972908b"
+        ],
+        "order_dates": [
+          "2026-07-27",
+          "2026-07-31",
+          "2026-08-03",
+          "2026-08-07",
+          "2026-08-10"
+        ],
+        "rule_order_dates": [
+          "2026-07-27",
+          "2026-07-31",
+          "2026-08-03",
+          "2026-08-07",
+          "2026-08-10"
+        ]
+      }
+    ]
+  },
+  "fixture_cleanup": {
+    "cleanup_edit_id": 85,
+    "removed_test_contexts": [
+      "O03c18305560e4a7e",
+      "Ob3c83abd5cc9eb44"
+    ],
+    "removed_test_widgets": [
+      "1ffeab9d359a4d3c9334575105feaa47",
+      "31cbe3580eaf4bfea31adb2358c4a2c8",
+      "b1f0efffc49141108d47520ab4b4f6c5"
+    ],
+    "remaining_overrides": [],
+    "remaining_widget_ids": [
+      "2b5b9d2adc8243589a523fd1d7c7725d",
+      "38ad5529db6b499ea121c1a6f2c28778",
+      "948a5ff3f3214103853dbe696317d878",
+      "b8e3f9a1971f45268f5a2c5a4ecf11e4",
+      "def8bf1b8cc044c497cea33f0319e73e"
+    ],
+    "orders_recomputed": 75,
+    "final_cases": 1682,
+    "stage": "direction",
+    "note": "Removed only P4 test-created context/widgets, then recomputed current orders. This is not an exact restoration of the older saved pre-test plan."
+  }
+}

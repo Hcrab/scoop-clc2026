@@ -41,6 +41,23 @@ The supplied cohort_cards are the backbone of this report. Each Q-cohort ID cite
 measured card with effect, interval and purchasing implications. CUSUM findings are early
 warnings. Use these leads to choose what deserves closer investigation. Supplied cards do not
 consume your query allowance. Compare related groups and districts where useful.
+The cohort effect is an estimated sustained change after baseline comparison and shrinkage.
+Label it as an estimate. Raw recent deviation comes from query_group's recent.deviation_pct.
+Keep each fulfillment statistic attached to its exact queried product intersection.
+Every card's peak_capacity is the SAME whole-warehouse projection with all adjustments already
+combined. Its pallet_change is the footprint of purchased cases, not a simultaneous peak change.
+Explain the supplied fits_physical_capacity and physical_capacity_excess_pallets directly;
+the ordering algorithm computes capacity, and category footprints do not recompute that peak.
+Inherited_peak_pallets comes from existing stock and in-transit commitments before new purchases.
+When it exceeds the limit, reducing this week's new purchases cannot erase that inherited excess.
+Weather is already in the forecast: a residual change alone does not establish a seasonal cause.
+The order list owns final quantities. In the report's action section, state which groups to
+increase, reduce or hold and why. Use a card's computed case_change when a quantity is useful;
+the per-product orders already include uncertainty, stock, lead times and shared capacity.
+A cohort mean effect or a subgroup's observed deviation is not an instruction to multiply its
+purchase quantities by that percentage. Preserve catalog product names and formats.
+Supplier calendars and lead times are inputs. Treat inherited storage pressure as context for
+the planner rather than inventing a supplier rescheduling or dispatch plan.
 Inspect operational records (promotions, fulfillment, arrivals) to distinguish explanations.
 For an actionable pattern, preview purchasing implications with the existing algorithms.
 You may use at most 12 additional queries. Prefer 2-3 well-investigated questions over a sweep.
@@ -54,8 +71,12 @@ proposed next actions. Cite evidence IDs (finding IDs, Q-cohort IDs or tool Q ID
 Each numerical claim must match its cited evidence. Distinguish observations from hypotheses.
 Keep internal IDs, model terminology, factors and detailed arithmetic in claims/evidence, not
 in the plain-text report or questions. Explain demand assumptions in everyday language.
-Demand means store replenishment requests, not observed consumer purchases. The baseline
-already adjusts for forecast weather; explain residuals using additional evidence. Treat plausible
+Demand means store replenishment requests, not observed consumer purchases.
+Treat requested units as the exogenous demand input: they already include unfulfilled requests.
+A shipment shortfall does not censor that request series and does not establish retail stockouts,
+hidden consumer demand or a future rebound. Use fulfillment to explain the service consequence.
+Use numerals for quantities and percentages so the reader can compare them with the charts.
+The baseline already adjusts for forecast weather; explain residuals using additional evidence. Treat plausible
 causes as interpretations and ask for missing local context when it affects the recommendation.
 Use contributor counts carefully: lists may be capped. A preview estimates orders and capacity.
 Preview factors replace demand assumptions relative to the forecast, not current buying
@@ -95,7 +116,8 @@ def finding_evidence(session,plan):
 def _context(session,plan):
     findings=list(session.scalars(select(Finding).where(Finding.plan_id==plan.id).order_by(Finding.id)))
     return {'week_start':str(plan.week_start),'goal':plan.goal,'stage':plan.stage,
-            'cohort_cards':[{**q,'result':{k:v for k,v in q['result'].items() if k!='method'}} for q in program_evidence(plan)],
+            'cohort_cards':[{**q,'result':{**{k:v for k,v in q['result'].items() if k not in {'method','sku_factors'}},
+                **({'order_rows':[{k:v for k,v in row.items() if k in {'sku','name','before_cases','cases','case_change'}} for row in q['result']['sku_factors']]} if 'sku_factors' in q['result'] else {})}} for q in program_evidence(plan)],
             'mechanical_findings':[{'id':f.id,'name':(f.evidence or {}).get('display',f.tag_id),
                 'districts':(f.evidence or {}).get('districts',[]),'actual_share':f.share_now,
                 'expected_share':f.share_before,'classification':f.classification,
@@ -145,21 +167,30 @@ def offline_report(plan,queries=None,*,grounding_errors=None,usage=None):
     if usage is not None:result['usage']=usage
     return result
 
-def investigate(session,plan,wire=None):
+def investigate(session,plan,wire=None,*,prior_queries=None):
     from . import exploration_tools
     from ..api.service import clean
     context=_context(session,plan)
     contents=[{'role':'user','parts':[{'text':json.dumps(context,ensure_ascii=False)+'\nInvestigate this week and prepare the report.'}]}]
     declarations=exploration_tools.declarations()+[{'name':'finish_weekly_review','description':'Submit the evidence-based weekly report, AI-authored visual presentation (title, HTML fragment, CSS), linked source claims and follow-ups. Use host-rendered chart figure specs.','parametersJsonSchema':Report.model_json_schema()}]
-    queries=[];seen=set();usage={'input_tokens':0,'output_tokens':0}
+    queries=[q for q in (prior_queries or []) if q['name'] in exploration_tools.TOOLS and 'error' not in q['result']]
+    if queries:
+        contents[0]['parts'].append({'text':'Read-only evidence already collected for this week. Finish the report from these sources and the supplied cards.\n'+json.dumps([
+            {**q,'result':authoring_evidence(q['result'])} for q in queries if q['name']!='catalog_groups'],ensure_ascii=False)})
+    seen={json.dumps([q['name'],q['args']],sort_keys=True) for q in queries}
+    usage={'input_tokens':0,'output_tokens':0}
     supplied=program_evidence(plan)
     repair_errors=None
     wire=wire or gemini._wire
     for round_no in range(MAX_ROUNDS+1):
         if round_no==MAX_ROUNDS and repair_errors is None:break
+        finishing=bool(prior_queries) or round_no>=MAX_ROUNDS-1 or repair_errors is not None or len(queries)>=MAX_QUERIES
         payload={'systemInstruction':{'parts':[{'text':SYSTEM}]},'contents':contents,
-                 'tools':[{'functionDeclarations':declarations}],
+                 'tools':[{'functionDeclarations':declarations[-1:] if finishing else declarations}],
                  'generationConfig':{'temperature':.2,'maxOutputTokens':MAX_OUTPUT_TOKENS,'thinkingConfig':{'thinkingLevel':'LOW'}}}
+        if finishing:
+            payload['toolConfig']={'functionCallingConfig':{'mode':'ANY','allowedFunctionNames':['finish_weekly_review']}}
+            payload['generationConfig']['thinkingConfig']['thinkingLevel']='MEDIUM'
         try:data=wire(payload)
         except gemini.ProviderUnavailable as exc:
             if repair_errors is not None:return offline_report(plan,queries,grounding_errors=repair_errors,usage=usage)
@@ -172,6 +203,9 @@ def investigate(session,plan,wire=None):
         calls=[p['functionCall'] for p in content.get('parts',[]) if 'functionCall' in p]
         if not calls:
             if repair_errors is not None:return offline_report(plan,queries,grounding_errors=repair_errors,usage=usage)
+            if (data.get('candidates') or [{}])[0].get('finishReason')=='MAX_TOKENS':
+                return {'status':'failed','report':'','queries':queries+supplied,'usage':usage,
+                        'model':settings.gemini_model,'error':'The report response reached its output limit. Retry to continue from the saved evidence.'}
             contents.append({'role':'user','parts':[{'text':'Use the exploration tools, then finish_weekly_review. Prose alone is not a saved report.'}]})
             continue
         contents.append(content) # Preserve provider thought signatures in this request only.
@@ -300,7 +334,7 @@ def run(session,plan):
     else:
         if not _LOCK.acquire(blocking=False):return {'status':'running','report':'','queries':[]}
         try:
-            try:result=upgrade(session,plan) if legacy else investigate(session,plan)
+            try:result=upgrade(session,plan) if legacy else investigate(session,plan,prior_queries=existing.get('queries') if existing.get('status') in {'failed','offline'} else None)
             except gemini.ProviderUnavailable as exc:
                 result={'status':'failed','report':'','queries':[],'model':settings.gemini_model,'error':'The assistant could not complete this review ('+str(exc)+').'}
         finally:_LOCK.release()

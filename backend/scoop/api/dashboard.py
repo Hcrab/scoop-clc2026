@@ -35,8 +35,8 @@ class Layout(BaseModel):
     ids: list[str]
 
 
-def _plan(session, pid):
-    return service.plan_for(session, pid)
+def _plan(session, pid, mutable=False):
+    return service.plan_for(session, pid, service.STAGES if mutable else None)
 
 
 def _widget(session, plan, wid):
@@ -48,7 +48,13 @@ def _widget(session, plan, wid):
 
 def _result(session, plan, before, key, source='ui'):
     result = record_edit(session, plan, before, key, source)
-    return service.clean({**result, **dashboard.view(session, plan)})
+    visible = {k: value for k, value in result.items() if k not in {'before', 'after'}}
+    for side in ('before', 'after'):
+        snapshot = result[side]
+        visible[side] = {'dashboard_order': (snapshot['summary'] or {}).get('dashboard_order', []),
+                         'widgets': [{'id': w['id'], 'title': w['title'], 'scope': w['scope'], 'status': w['status']}
+                                     for w in snapshot['watches'] if isinstance(w['scope'], dict) and 'metric' in w['scope']]}
+    return service.clean({**visible, **dashboard.view(session, plan)})
 
 
 def add(session, plan, spec, source='ui'):
@@ -105,25 +111,25 @@ def get_dashboard(pid: str):
 @router.post('/dashboard')
 def add_dashboard(pid: str, spec: WidgetSpec):
     with service.session_scope() as session:
-        return add(session, _plan(session, pid), spec.model_dump())
+        return add(session, _plan(session, pid, True), spec.model_dump())
 
 
 @router.put('/dashboard/{wid}')
 def update_dashboard(pid: str, wid: str, spec: WidgetSpec):
     with service.session_scope() as session:
-        return update(session, _plan(session, pid), wid, spec.model_dump())
+        return update(session, _plan(session, pid, True), wid, spec.model_dump())
 
 
 @router.delete('/dashboard/{wid}')
 def remove_dashboard(pid: str, wid: str):
     with service.session_scope() as session:
-        return remove(session, _plan(session, pid), wid)
+        return remove(session, _plan(session, pid, True), wid)
 
 
 @router.put('/dashboard-layout')
 def update_layout(pid: str, data: Layout):
     with service.session_scope() as session:
-        return layout(session, _plan(session, pid), data.ids)
+        return layout(session, _plan(session, pid, True), data.ids)
 
 
 @router.post('/dashboard-preview')

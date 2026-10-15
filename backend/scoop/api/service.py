@@ -37,6 +37,7 @@ def clean(value):
 def row(obj):
     return clean({c.name: getattr(obj, c.name) for c in obj.__table__.columns})
 
+
 def decision_history(session,pid):
     from ..ai.tools import _visible_edit
     edits=query(session,'''WITH snapshots AS MATERIALIZED (
@@ -49,6 +50,14 @@ def decision_history(session,pid):
               'service_level',v->'before'->'service_level','overrides',v->'before'->'overrides','orders',v->'before'->'orders'),
             'after',jsonb_build_object('stage',v->'after'->'stage','goal',v->'after'->'goal',
               'service_level',v->'after'->'service_level','overrides',v->'after'->'overrides','orders',v->'after'->'orders'))
+        WHEN key LIKE 'dashboard_%' THEN
+          (v - 'before' - 'after') || jsonb_build_object(
+            'before',jsonb_build_object('dashboard_order',v->'before'->'summary'->'dashboard_order',
+              'widgets',(SELECT jsonb_agg(jsonb_build_object('id',w->>'id','title',w->>'title','scope',w->'scope','status',w->>'status'))
+                         FROM jsonb_array_elements(v->'before'->'watches') w WHERE w->'scope' ? 'metric')),
+            'after',jsonb_build_object('dashboard_order',v->'after'->'summary'->'dashboard_order',
+              'widgets',(SELECT jsonb_agg(jsonb_build_object('id',w->>'id','title',w->>'title','scope',w->'scope','status',w->>'status'))
+                         FROM jsonb_array_elements(v->'after'->'watches') w WHERE w->'scope' ? 'metric')))
         ELSE v END AS value FROM snapshots ORDER BY id''',pid=pid)
     return [{**edit,'value':_visible_edit(edit['value']) if edit['key'] in {'set_override','bulk_edit_orders','goal_edit'} else edit['value']} for edit in edits]
 
@@ -86,9 +95,7 @@ def recompute(s, p):
     from ..planning import plan_cohort_cards
     p.summary={**p.summary,'cohort_cards':plan_cohort_cards(p.week_start,orders,p.goal,p.service_level)
                if orders.attrs.get('cohort_model',{}).get('leaves') else []}
-    from .. import workflow
-    refresh_watches(s,p)
-    workflow.invalidate_review(p)
+    # Recomputing orders must leave the planner's chosen dashboard untouched.
 
 def catalog(s):
     suppliers = {x.id: x for x in s.scalars(select(Supplier))}
@@ -107,9 +114,8 @@ def plan_metrics(s, cutoff):
     return result
 
 def refresh_watches(s,p):
-    from .. import workflow
-    workflow.initialize_plan(s,p)
-    workflow.refresh_generated(s,p)
+    # Legacy callers may reach this function, but generated watches are retired.
+    return None
 
 def evaluation_data():
     path = settings.reports_dir / 'evaluation.json'
@@ -170,7 +176,7 @@ def watch_view(s, w, cutoff, projection=None, data=None):
 
 def projection_for(s,p,orders=None):
     from .. import workflow
-    approved=workflow.state(p).get('approved_projection')
+    approved=(p.summary or {}).get('approved_capacity') or workflow.state(p).get('approved_projection')
     if p.stage in {'execute','closed'}: return approved
     from ..planning import confirmation_capacity
     if orders is None:
@@ -195,11 +201,9 @@ def plan_series(p,tag,districts,start,cutoff,model_version=None):
 @router.get('/plans/{pid}')
 def get_plan(pid:str):
     from ..discussion import view as discussion_view
-    from .. import workflow
-    from .watches import WatchData,recap
+    from .. import dashboard
     with session_scope() as s:
         p=plan_for(s,pid); cutoff=min(today(),p.week_start+timedelta(days=7))
-        workflow.initialize_plan(s,p)
         findings=[]
         for f in objects(s,Finding,pid):
             item=row(f)
@@ -219,20 +223,8 @@ def get_plan(pid:str):
             item['options']={'options':[{'id':o.get('id',o.get('value')),'label':o.get('label',o.get('value'))} for o in options.get('options',[])],'recommended':options.get('recommended','unsure')}; questions.append(item)
         orders=query(s,'SELECT ps.*, p.name,p.brand,p.units_per_case,p.moq_cases,s.name AS supplier_name FROM purchase_suggestions ps JOIN products p USING(sku) JOIN suppliers s ON s.id=p.supplier_id WHERE ps.plan_id=:pid ORDER BY ps.order_date,p.name',pid=pid)
         for order in orders: order['effective_cases']=order['final_cases'] if order['final_cases'] is not None else max(0,order['suggested_cases']-order['capacity_cut_cases'])
-        watches=[w for w in objects(s,WatchItem,pid) if w.status=='active']
-        projection=projection_for(s,p,orders) if any(w.scope.get('mode')=='projected' for w in watches) else None
-        data=WatchData(s,cutoff,lambda tag,districts,start,end:plan_series(p,tag,districts,start,end))
-        views=[watch_view(s,w,cutoff,projection,data) for w in watches]
-        review={**workflow.review_state(s,p),'items':views}
-        approved=workflow.state(p).get('approved_review')
-        if p.stage=='execute' and approved is not None:
-            # A midweek watch edit belongs to Execute. The approved Direction
-            # record must keep the exact titles, assumptions and scopes approved.
-            frozen=[WatchItem(**snapshot) for snapshot in approved.get('items',[])]
-            review={'confirmed':True,'confirmed_at':approved.get('confirmed_at'),
-                    'items':[data.view(w,p,workflow.state(p).get('approved_projection')) for w in frozen]}
         from ..ai.weekly import display_view
-        return clean({'raw_trends':(p.summary or {}).get('raw_trends'),'review':display_view(p),'discussion':discussion_view(s,p),'plan':row(p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'watch':views,'watch_review':review,'recap':recap(s,p,today(),cached_series),'decisions':decision_history(s,pid),'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
+        return clean({'raw_trends':(p.summary or {}).get('raw_trends'),'review':display_view(p),'discussion':discussion_view(s,p),'plan':row(p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'dashboard':dashboard.view(s,p),'decisions':decision_history(s,pid),'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
 
 class NewPlan(BaseModel): week_start: date
 @router.post('/plans')
@@ -246,8 +238,6 @@ def create_plan(body:NewPlan):
         from ..planning import build_plan
         try:
             pid=build_plan(week)
-            from .. import workflow
-            with session_scope() as s: workflow.initialize_plan(s,s.get(Plan,pid))
             from ..ai.weekly import prepare
             prepare(pid)
             return {'id':pid}
@@ -327,20 +317,73 @@ def edit_goal(pid:str,body:GoalEdit):
 def advance(pid:str):
     with session_scope() as s:
         p=plan_for(s,pid,['discover','direction'])
+        if p.stage == 'direction':
+            raise HTTPException(409, 'Review and approve the order list to start execution.')
         next_stage=STAGES[STAGES.index(p.stage)+1]
         decision(s,p,'stage_approved',{'from':p.stage,'to':next_stage})
-        if next_stage=='execute':
-            refresh_watches(s,p)
-            from .. import workflow
-            projection=projection_for(s,p)
-            if workflow.confirm_review(s,p,projection):
-                decision(s,p,'watch_review',{'confirmed':True,'selection':workflow.state(p)['review']['selection'],'combined_with_strategy':True})
-            workflow.freeze_approval(s,p,projection)
-            p.locked_at=datetime.now()
         p.stage=next_stage
         return {'stage':next_stage}
 
 class Confirm(BaseModel): cases:int=Field(ge=0,strict=True)
+
+
+@router.get('/plans/{pid}/order-summary')
+def order_summary(pid: str):
+    from ..cohort_context import load_overrides
+    from ..planning import confirmation_capacity
+    with session_scope() as s:
+        p = plan_for(s, pid)
+        orders = objects(s, PurchaseSuggestion, pid)
+        remaining = {o.sku for o in orders}
+        groups = []
+        for card in (p.summary or {}).get('cohort_cards', []):
+            skus = [sku for sku in card['skus'] if sku in remaining]
+            if skus:
+                groups.append({'id':card['id'], 'name':card['name'], 'skus':skus})
+                remaining.difference_update(skus)
+        families = s.execute(select(ProductTag.sku, Tag.id, Tag.name).join(Tag, Tag.id == ProductTag.tag_id)
+                             .where(Tag.dimension_id == 'family').order_by(Tag.name, ProductTag.sku)).all()
+        grouped = {}
+        for sku, identifier, name in families:
+            if sku in remaining:
+                grouped.setdefault(identifier, {'id':identifier, 'name':name, 'skus':[]})['skus'].append(sku)
+                remaining.remove(sku)
+        groups.extend(grouped.values())
+        if remaining: groups.append({'id':'other', 'name':'Other products', 'skus':sorted(remaining)})
+        cases = {o.sku:o.final_cases if o.final_cases is not None else max(0,o.suggested_cases-o.capacity_cut_cases) for o in orders}
+        projection = confirmation_capacity(p.week_start, cases)
+        return clean({'groups':groups, 'capacity':projection,
+                      'edited_skus':sorted({x['value']['sku'] for x in load_overrides(s,p.week_start)
+                                            if x['type']=='cases' and x['value']['sku'] in cases})})
+
+
+@router.post('/plans/{pid}/approve-orders')
+def approve_orders(pid: str):
+    """Approve the reviewed case list atomically; no supplier transmission."""
+    from ..planning import confirmation_capacity
+    with session_scope() as s:
+        p = plan_for(s, pid, ['direction','execute'])
+        orders = objects(s, PurchaseSuggestion, pid)
+        cases = {o.sku:o.final_cases if o.final_cases is not None else max(0,o.suggested_cases-o.capacity_cut_cases) for o in orders}
+        products = {x.sku:x for x in s.scalars(select(Product))}
+        if p.stage == 'execute' and all(o.status == 'confirmed' for o in orders):
+            return {'stage':'execute', 'capacity':clean((p.summary or {}).get('approved_capacity'))}
+        for sku, amount in cases.items():
+            if 0 < amount < products[sku].moq_cases:
+                raise HTTPException(422, f'{products[sku].name}: minimum {products[sku].moq_cases} cases, or zero')
+        projection = confirmation_capacity(p.week_start, cases)
+        if not projection['feasible']:
+            raise HTTPException(409, f"Orders add {projection['incremental_overcapacity_pallets']:.2f} pallets above the available arrival capacity. Reduce quantities before approval.")
+        for order in orders:
+            order.final_cases = cases[order.sku]
+            order.status = 'confirmed'
+        p.summary = {**(p.summary or {}), 'approved_capacity':clean(projection)}
+        p.stage = 'execute'
+        p.locked_at = datetime.now()
+        decision(s,p,'orders_approved',{'cases':cases,'capacity':projection,'supplier_transmission':False})
+        return {'stage':'execute', 'capacity':clean(projection)}
+
+
 @router.post('/plans/{pid}/orders/{sku}/confirm')
 def confirm(pid:str,sku:str,body:Confirm):
     with session_scope() as s:
@@ -422,10 +465,8 @@ def add_watch(s,p,body,origin='ui'):
     workflow.mark_watch_edit(p,existing if existing else s.get(WatchItem,wid))
     workflow.invalidate_review(p)
     decision(s,p,'watch_added',{'id':wid,**body.model_dump()},origin);return wid
-@router.post('/plans/{pid}/watch')
 def new_watch(pid:str,body:WatchEdit):
     with session_scope() as s: return {'id':add_watch(s,plan_for(s,pid,STAGES),body)}
-@router.delete('/plans/{pid}/watch/{wid}')
 def archive_watch(pid:str,wid:str):
     from .. import workflow
     with session_scope() as s:
@@ -436,7 +477,6 @@ def archive_watch(pid:str,wid:str):
             w.status='archived';workflow.mark_watch_edit(p,w,archived=True);workflow.invalidate_review(p);decision(s,p,'watch_archived',{'id':wid})
     return {'ok':True}
 
-@router.put('/plans/{pid}/watch/{wid}')
 def edit_watch(pid:str,wid:str,body:WatchPatch):
     from .. import workflow
     with session_scope() as s:
@@ -457,7 +497,6 @@ def edit_watch(pid:str,wid:str,body:WatchPatch):
     return {'ok':True}
 
 class WatchReview(BaseModel): confirmed:Literal[True]
-@router.post('/plans/{pid}/watch-review')
 def review_watches(pid:str,body:WatchReview):
     from .. import workflow
     with session_scope() as s:
@@ -496,7 +535,7 @@ def chat(pid:str,body:ChatEdit):
 
 
 class PlayRequest(BaseModel):
-    days: Literal[7, 14, 21] = 7
+    pass
 
 @router.post('/plans/{pid}/play')
 def play(pid: str, body: PlayRequest):
@@ -505,6 +544,5 @@ def play(pid: str, body: PlayRequest):
     with session_scope() as s:
         p = plan_for(s, pid)
         week = p.week_start
-    if week + timedelta(days=body.days - 1) > MAX_DAY: raise HTTPException(422, 'Not enough simulated days after this week to play that long.')
-    try: return clean(simulate(pid, week, body.days))
+    try: return clean(simulate(pid, week))
     except Exception as exc: raise HTTPException(503, f'Play failed: {type(exc).__name__}: {exc}') from exc

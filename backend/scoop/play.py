@@ -24,6 +24,7 @@ import numpy as np
 import pandas as pd
 
 from .db import read_sql
+from .api.service import MAX_DAY
 
 BASELINE_BUFFER = 1.25
 HOT_DAY_C = 33.0
@@ -47,12 +48,8 @@ def _top(series: pd.Series, names: dict[str, str], n: int = 3) -> list[dict]:
     return [{"sku": k, "name": names.get(k, k), "units": int(round(v))} for k, v in s.items()]
 
 
-def simulate(pid: str, week_start: date, days: int = 7) -> dict:
+def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
     orders_week = _week_orders(pid)
-    key = hashlib.sha256(json.dumps([pid, days, orders_week[["sku", "cases"]].values.tolist()], default=str).encode()).hexdigest()
-    if key in _CACHE:
-        return _CACHE[key]
-
     prod = read_sql(
         """SELECT p.sku, p.name, p.brand, p.price_hkd, p.cost_hkd, p.units_per_case, p.cases_per_pallet, p.moq_cases,
                   s.lead_time_days, s.order_weekday, s.review_days
@@ -60,13 +57,27 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
     ).set_index("sku")
     skus = list(prod.index)
     names = prod.name.to_dict()
+    ordered = orders_week.loc[orders_week.cases > 0, "sku"]
+    horizon = max(7, max((int(prod.loc[s, "lead_time_days"]) + 7 for s in ordered if s in prod.index), default=7))
+    days = min(days if days is not None else horizon, 21, (MAX_DAY - week_start).days + 1)
+    if days < 1:
+        raise ValueError("Plan week falls after the demo calendar")
     start, end = week_start, week_start + timedelta(days=days - 1)
+    context = read_sql("SELECT summary, goal, service_level FROM plans WHERE id = :p", p=pid)
+    settings = read_sql("SELECT value FROM settings WHERE key = 'cohort_overrides'")
+    plan_summary = context.summary.iloc[0] if not context.empty else {}
+    if isinstance(plan_summary, str):
+        plan_summary = json.loads(plan_summary)
+    cards = (plan_summary or {}).get("cohort_cards", [])
+    goal = context.goal.iloc[0] if not context.empty else "margin"
+    service_level = context.service_level.iloc[0] if not context.empty else None
     raw = read_sql(
         "SELECT date, sku, SUM(ordered_units) AS u FROM store_orders WHERE date BETWEEN :a AND :b GROUP BY date, sku",
         a=start - timedelta(days=28), b=end,
     )
     raw["date"] = pd.to_datetime(raw.date).dt.date
-    demand = raw.pivot(index="date", columns="sku", values="u").reindex(columns=skus).fillna(0.0)
+    all_dates = [start - timedelta(days=28) + timedelta(days=i) for i in range(days + 28)]
+    demand = raw.pivot(index="date", columns="sku", values="u").reindex(index=all_dates, columns=skus).fillna(0.0)
     inv0 = read_sql("SELECT sku, on_hand_units FROM node_inventory WHERE date = :d", d=start - timedelta(days=1)).set_index("sku").on_hand_units
     open_po = read_sql(
         """SELECT po.sku, po.cases * p.units_per_case AS units, po.received_date, po.expected_date FROM purchase_orders po JOIN products p USING (sku)
@@ -77,8 +88,29 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
     weather["date"] = pd.to_datetime(weather.date).dt.date
     tmax = dict(zip(weather.date, weather.tmax))
     capacity = float(read_sql("SELECT capacity_pallets FROM nodes WHERE id = 'DC1'").capacity_pallets.iloc[0])
+    # Use only expectations issued before the plan. Missing day/SKU evidence stays unknown.
+    forecast_run = read_sql(
+        "SELECT id, trained_through FROM model_runs WHERE trained_through < :d ORDER BY trained_through DESC, created_at DESC LIMIT 1",
+        d=start,
+    )
+    expectations = (read_sql(
+        """SELECT date, sku, SUM(p50) AS expected_units FROM daily_expectations
+           WHERE run_id = :r AND date BETWEEN :a AND :b GROUP BY date, sku
+           HAVING COUNT(DISTINCT store_id) = (SELECT COUNT(*) FROM stores)""",
+        r=forecast_run.id.iloc[0], a=start, b=end,
+    ) if not forecast_run.empty else pd.DataFrame(columns=["date", "sku", "expected_units"]))
+    if not expectations.empty:
+        expectations["date"] = pd.to_datetime(expectations.date).dt.date
     upp = (prod.units_per_case * prod.cases_per_pallet).astype(float)
     margin = (prod.price_hkd - prod.cost_hkd).astype(float)
+    # All inputs that can change a replay are read before consulting the cache.
+    inputs = [pid, start, days, orders_week.to_dict("records"), prod.reset_index().to_dict("records"),
+              context.to_dict("records"), settings.to_dict("records"), raw.to_dict("records"),
+              inv0.to_dict(), open_po.to_dict("records"), weather.to_dict("records"), capacity,
+              forecast_run.to_dict("records"), expectations.to_dict("records")]
+    key = hashlib.sha256(json.dumps(inputs, sort_keys=True, default=str).encode()).hexdigest()
+    if key in _CACHE:
+        return _CACHE[key]
 
     def initial():
         arrivals: dict[date, pd.Series] = {}
@@ -98,7 +130,7 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
         own_arrivals: dict[date, pd.Series] = {}
         cohort_result = None
         cohort_week = None
-        daily, per_sku = [], {"on_hand": [], "shipped": [], "lost": [], "arrived": []}
+        daily, per_sku = [], {"on_hand": [], "shipped": [], "lost": [], "arrived": [], "placed_cases": [], "pre_ship": []}
         d = start
         while d <= end:
             arrived = pd.Series(0.0, index=skus)
@@ -135,7 +167,8 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
                         pass
                 pos = pd.DataFrame({"sku": skus, "on_hand_units": on_hand.round().astype(int).to_numpy(), "on_order": pipeline.round().astype(int).to_numpy()})
                 plan = suggest_orders(d, [], position=pos, only_due=True, pending_arrivals=arrivals,
-                                      cohort_result=cohort_result).set_index("sku")
+                                      cohort_result=cohort_result, goal=goal,
+                                      service_level=service_level).set_index("sku")
                 for s in due:
                     placed[s] = int(plan.loc[s, "final_cases"]) if s in plan.index else 0
             elif policy == "baseline":
@@ -164,6 +197,8 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
             per_sku["shipped"].append(ship.round(1).tolist())
             per_sku["lost"].append(lost.round(1).tolist())
             per_sku["arrived"].append(arrived.round(1).tolist())
+            per_sku["placed_cases"].append(placed.tolist())
+            per_sku["pre_ship"].append((on_hand + ship).round(1).tolist())
             d += timedelta(days=1)
         runs[policy] = {"daily": daily, "per_sku": per_sku, "orders_after": {k.isoformat(): v[v > 0].round().to_dict() for k, v in own_arrivals.items() if k > end}}
 
@@ -173,35 +208,66 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
     lost_s = np.array(runs["scoop"]["per_sku"]["lost"])
     lost_b = np.array(runs["baseline"]["per_sku"]["lost"])
     arrived_s = np.array(runs["scoop"]["per_sku"]["arrived"])
+    arrived_b = np.array(runs["baseline"]["per_sku"]["arrived"])
+    card_by_sku = {s: [card["id"] for card in cards if s in card.get("skus", []) and card.get("id")]
+                   for s in skus}
+
+    def event_links(policy: str, selected: list[str], through: int) -> dict:
+        placed = runs[policy]["per_sku"]["placed_cases"]
+        return {
+            "card_ids": sorted({cid for s in selected for cid in card_by_sku[s]}),
+            "order_dates": sorted({dates[k] for k in range(through + 1) for s in selected
+                                   if placed[k][skus.index(s)] > 0}),
+        }
+
     for i, day in enumerate(dates):
         dt = date.fromisoformat(day)
+        placed = runs["scoop"]["per_sku"]["placed_cases"][i]
+        for j, cases in enumerate(placed):
+            if cases:
+                sku = skus[j]
+                events.append({"date": day, "kind": "order", "tone": "neutral", "sku": sku,
+                               "order_date": day, "cases": cases, "card_ids": card_by_sku[sku],
+                               "text": (f"Ordered {cases:,} cases of {names[sku]} under this plan." if i < 7 else
+                                        f"Automatically ordered {cases:,} cases of {names[sku]} for the next week.")})
         t = tmax.get(dt)
         if t is not None and t >= HOT_DAY_C:
             dem_today = runs["scoop"]["daily"][i]["demand"]
             avg = float(demand.loc[start - timedelta(days=28): start - timedelta(days=1)].sum(axis=1).mean())
             events.append({"date": day, "kind": "weather", "tone": "neutral",
-                           "text": f"{t:.1f}°C. Stores ordered {dem_today:,.0f} units, {dem_today / avg - 1:+.0%} on the four weeks before."})
+                           "text": (f"{t:.1f}°C. Stores ordered {dem_today:,.0f} units, "
+                                    f"{dem_today / avg - 1:+.0%} on the four weeks before." if avg else
+                                    f"{t:.1f}°C. Stores ordered {dem_today:,.0f} units today.")})
         week_arrivals = [s for s in skus if arrived_s[i, skus.index(s)] > 0 and week_cases[s] > 0 and week_dates[s] is not None
                          and not pd.isna(week_dates[s]) and week_dates[s] + timedelta(days=int(prod.loc[s, "lead_time_days"])) == dt]
         if week_arrivals:
             cases = int(sum(week_cases[s] for s in week_arrivals))
+            arrival_ix = [skus.index(s) for s in week_arrivals]
+            difference = float((arrived_s[i, arrival_ix] - arrived_b[i, arrival_ix]).sum())
+            compared = (f" {abs(difference):,.0f} {'more' if difference > 0 else 'fewer'} units arrived than under the rule."
+                        if difference else "")
             events.append({"date": day, "kind": "arrival", "tone": "good",
-                           "text": f"This week's orders arrived: {cases:,} cases across {len(week_arrivals)} products.",
-                           "skus": [names[s] for s in week_arrivals[:4]]})
+                           "text": f"This week's orders arrived: {cases:,} cases across {len(week_arrivals)} products.{compared}",
+                           "skus": week_arrivals, "order_dates": sorted({week_dates[s].isoformat() for s in week_arrivals}),
+                           "card_ids": sorted({cid for s in week_arrivals for cid in card_by_sku[s]})})
         prev_s = lost_s[i - 1] if i else np.zeros(len(skus))
-        prev_b = lost_b[i - 1] if i else np.zeros(len(skus))
         new_s = pd.Series(np.where((lost_s[i] > 0) & (prev_s == 0), lost_s[i], 0), index=skus)
-        new_b = pd.Series(np.where((lost_b[i] > 0) & (prev_b == 0), lost_b[i], 0), index=skus)
         if new_s.sum() > 0:
             top = _top(new_s, names)
+            selected = [x["sku"] for x in top]
+            rule_short = float(lost_b[i, [skus.index(x["sku"]) for x in top]].sum())
             events.append({"date": day, "kind": "stockout", "tone": "bad", "policy": "scoop",
-                           "text": f"Ran out: {', '.join(x['name'] for x in top)} ({int(new_s.sum()):,} units short).", "skus": top})
+                           "text": f"Ran out: {', '.join(x['name'] for x in top)} ({sum(x['units'] for x in top):,} units short; {rule_short:,.0f} under the rule for these products).", "skus": top,
+                           **event_links("scoop", selected, i),
+                           "rule_order_dates": event_links("baseline", selected, i)["order_dates"]})
         saved = pd.Series(np.where((lost_b[i] > 0) & (lost_s[i] == 0), lost_b[i], 0), index=skus)
         if saved.sum() > 0:
             top = _top(saved, names)
+            selected = [x["sku"] for x in top]
             events.append({"date": day, "kind": "kept", "tone": "good",
-                           "text": f"Still in stock with Scoop, out with the moving-average rule: {', '.join(x['name'] for x in top)} ({int(saved.sum()):,} units kept).",
-                           "skus": top})
+                           "text": f"Still in stock with Scoop, out with the moving-average rule: {', '.join(x['name'] for x in top)} ({sum(x['units'] for x in top):,} units kept).",
+                           "skus": top, **event_links("scoop", selected, i),
+                           "rule_order_dates": event_links("baseline", selected, i)["order_dates"]})
         if runs["scoop"]["daily"][i]["pallets_pre_ship"] > NEAR_FULL * capacity:
             events.append({"date": day, "kind": "capacity", "tone": "warn",
                            "text": f"Cold store at {runs['scoop']['daily'][i]['pallets_pre_ship']:.0f} of {capacity:.0f} pallets after deliveries."})
@@ -209,22 +275,58 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
         if note["findings"]:
             events.append({"date": note["date"], "kind": "scan", "tone": "neutral",
                            "text": "Weekly early warnings: " + "; ".join(note["findings"]) + "."})
-    events.sort(key=lambda e: (e["date"], ["weather", "scan", "arrival", "kept", "stockout", "capacity"].index(e["kind"])))
+    events.sort(key=lambda e: (e["date"], ["weather", "scan", "order", "arrival", "kept", "stockout", "capacity"].index(e["kind"])))
 
-    def summary(policy: str) -> dict:
+    first_week_cases = {
+        policy: np.array(runs[policy]["per_sku"]["placed_cases"][:7], dtype=float).sum(axis=0)
+        for policy in runs
+    }
+    card_skus = {s for card in cards for s in card.get("skus", [])}
+    affected_skus = [s for i, s in enumerate(skus)
+                     if abs(first_week_cases["scoop"][i] - first_week_cases["baseline"][i]) >= 1 or s in card_skus]
+
+    def summary(policy: str, subset: list[str] | None = None) -> dict:
         rows = runs[policy]["daily"]
-        dem = sum(r["demand"] for r in rows)
+        if subset is None:
+            dem = sum(r["demand"] for r in rows)
+            shipped = sum(r["shipped"] for r in rows)
+            lost = sum(r["lost"] for r in rows)
+            lost_margin = sum(r["lost_margin"] for r in rows)
+            pallets = [r["pallets"] for r in rows]
+            pre_ship = [r["pallets_pre_ship"] for r in rows]
+            ending = rows[-1]["on_hand"]
+            ordered = sum(r["ordered_cases"] for r in rows)
+            sku_days = int((np.array(runs[policy]["per_sku"]["lost"]) > 0).sum())
+        else:
+            ix = [skus.index(s) for s in subset]
+            sku_run = runs[policy]["per_sku"]
+            dem = float(demand.loc[start:end, subset].to_numpy().sum())
+            shipped = float(np.array(sku_run["shipped"])[:, ix].sum())
+            lost = float(np.array(sku_run["lost"])[:, ix].sum())
+            lost_margin = float((np.array(sku_run["lost"])[:, ix] * margin.loc[subset].to_numpy()).sum())
+            pallets = (np.array(sku_run["on_hand"])[:, ix] / upp.loc[subset].to_numpy()).sum(axis=1).tolist()
+            pre_ship = (np.array(sku_run["pre_ship"])[:, ix] / upp.loc[subset].to_numpy()).sum(axis=1).tolist()
+            ending = float(np.array(sku_run["on_hand"])[-1, ix].sum())
+            ordered = int(np.array(sku_run["placed_cases"])[:, ix].sum())
+            sku_days = int((np.array(sku_run["lost"])[:, ix] > 0).sum())
         return {
-            "fill_rate": sum(r["shipped"] for r in rows) / dem if dem else 1.0,
-            "lost_units": sum(r["lost"] for r in rows),
-            "lost_margin": sum(r["lost_margin"] for r in rows),
-            "avg_pallets": float(np.mean([r["pallets"] for r in rows])),
-            "peak_pallets": float(max(r["pallets_pre_ship"] for r in rows)),
-            "days_over_capacity": int(sum(r["pallets_pre_ship"] > capacity for r in rows)),
-            "stockout_sku_days": int((np.array(runs[policy]["per_sku"]["lost"]) > 0).sum()),
-            "ending_on_hand": rows[-1]["on_hand"],
-            "ordered_cases": int(sum(r["ordered_cases"] for r in rows)),
+            "fill_rate": shipped / dem if dem else 1.0,
+            "lost_units": lost,
+            "lost_margin": lost_margin,
+            "avg_pallets": float(np.mean(pallets)),
+            "peak_pallets": float(max(pre_ship)),
+            "days_over_capacity": int(sum(x > capacity for x in pre_ship)),
+            "stockout_sku_days": sku_days,
+            "ending_on_hand": ending,
+            "ordered_cases": int(ordered),
         }
+
+    affected_summary = {policy: summary(policy, affected_skus) for policy in runs}
+    affected_comparison = {
+        "units_saved": affected_summary["baseline"]["lost_units"] - affected_summary["scoop"]["lost_units"],
+        "pallet_difference": affected_summary["scoop"]["avg_pallets"] - affected_summary["baseline"]["avg_pallets"],
+        "stockout_days_avoided": affected_summary["baseline"]["stockout_sku_days"] - affected_summary["scoop"]["stockout_sku_days"],
+    }
 
     result = {
         "plan_id": pid, "start": start.isoformat(), "end": end.isoformat(), "days": days, "capacity_pallets": capacity,
@@ -233,11 +335,19 @@ def simulate(pid: str, week_start: date, days: int = 7) -> dict:
         "demand": demand.loc[start:end].round(1).values.tolist(),
         "runs": runs, "events": events,
         "summary": {"scoop": summary("scoop"), "baseline": summary("baseline")},
+        "affected_skus": affected_skus, "affected_summary": affected_summary,
+        "affected_comparison": affected_comparison,
         "notes": {
             "baseline": "Moving-average rule: order up to 28-day average demand x (lead time + review days) x 1.25.",
             "lead_time": "New orders arrive after the supplier's mean lead time; orders placed late in the week may land after the played period.",
             "autopilot": "After the first week, Scoop refits cohort effects and places future orders automatically." if days > 7 else None,
         },
     }
+    if not expectations.empty:
+        forecast = expectations.pivot(index="date", columns="sku", values="expected_units")
+        expected_grid = forecast.reindex(index=[date.fromisoformat(d) for d in dates], columns=skus).astype(object)
+        result["expected"] = expected_grid.where(expected_grid.notna(), None).values.tolist()
+        result["expected_source"] = {"run_id": forecast_run.id.iloc[0],
+                                     "trained_through": str(forecast_run.trained_through.iloc[0])}
     _CACHE[key] = result
     return result

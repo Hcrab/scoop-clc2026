@@ -5,7 +5,8 @@ export const interactionStyles = `
 .chart svg{display:block;width:100%;height:auto}.chart svg text{font:var(--report-label-size,13px) system-ui,sans-serif;fill:#617566}
 .chart .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:var(--report-label-size,13px)}.chart .legend i{display:inline-block;width:16px;height:2px;margin-right:8px;vertical-align:middle}
 .chart .chart-summary{font-size:var(--report-label-size,13px);color:#617566}.chart-empty{font-size:var(--report-body-size,15px);color:#617566}
-figure[data-chart]{margin:16px 0}figure[data-chart] figcaption{font-weight:600;margin-bottom:8px}
+figure[data-chart]{margin:16px 0;height:auto!important;max-height:none!important;min-height:0}figure[data-chart] figcaption{font-weight:600;margin-bottom:8px}
+.report-range button{border:1px solid #dde5d8;border-radius:7px;background:white;color:#476b56;padding:5px 11px;font-size:var(--report-label-size,13px);min-height:32px}.report-range button[aria-pressed=true]{background:#e5eee3;color:#254f3e}
 
 [data-trend-id],[data-evidence-id]{cursor:pointer;text-decoration:none}
 .report-card-expanded{grid-column:1/-1!important;flex-basis:100%!important;width:100%!important;max-width:none!important}
