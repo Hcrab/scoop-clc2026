@@ -1,0 +1,5 @@
+rg -n 'Purchases|No purchases due|Orders due|export function Execution|function Purchase\\(' frontend/src --glob *.tsx
+No matches (exit 1).
+
+git diff --check
+No whitespace errors (exit 0).

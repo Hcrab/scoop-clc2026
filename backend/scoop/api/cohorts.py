@@ -266,7 +266,7 @@ def undo_context(session, plan, edit_id):
         session.flush()
         return {'edit_id': edit.id, 'undone': True, 'before': after, 'after': before, 'affected_orders': []}
     # Read-time model/card refreshes and conversation do not edit the plan.
-    derived = {'discussion', 'cohort_model', 'cohort_cards', 'weekly_review'}
+    derived = {'discussion', 'cohort_model', 'cohort_cards', 'weekly_review', 'flow'}
     current_summary={k:v for k,v in (current['summary'] or {}).items() if k not in derived}
     after_summary={k:v for k,v in (after['summary'] or {}).items() if k not in derived}
     if {**current,'summary':current_summary} != {**after,'summary':after_summary}:
@@ -285,6 +285,8 @@ def undo_context(session, plan, edit_id):
     plan.goal = before['goal']
     plan.service_level = before['service_level']
     plan.locked_at = datetime.fromisoformat(before['locked_at']) if before['locked_at'] else None
+    from .flow import invalidate
+    invalidate(session, plan)
     edit.value = {**value,'undone_at':datetime.now().isoformat()}
     return {'edit_id':edit.id,'undone':True,'before':after,'after':before,
             'affected_orders':[{'sku':x['sku'],'before':x['after'],'after':x['before'],

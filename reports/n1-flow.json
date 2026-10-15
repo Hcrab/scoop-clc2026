@@ -1,0 +1,92 @@
+{
+  "plan": "P20260720",
+  "mocked_responses": false,
+  "screenshots": [
+    "docs/screenshots/n1-01-report.png",
+    "docs/screenshots/n1-02-orders.png",
+    "docs/screenshots/n1-03-watch.png",
+    "docs/screenshots/n1-04-play.png",
+    "docs/screenshots/n1-05-results.png"
+  ],
+  "errors": [],
+  "simulation_requests": [],
+  "initial_simulation": {
+    "status": "ready",
+    "order_hash": "8f36f79c413ace96949941835efb9a1c39b2f76466f6fd771f9eb2a08652ee73",
+    "queued_at": "2026-10-15T17:23:03.831054",
+    "started_at": "2026-10-15T17:23:03.910601",
+    "completed_at": "2026-10-15T17:23:41.192694",
+    "elapsed_seconds": 37.20300000000134
+  },
+  "approval_clicked_at": "2026-10-15T09:39:56.961Z",
+  "approval_finished_at": "2026-10-15T09:39:57.137Z",
+  "widget_edits": [
+    109,
+    110,
+    111
+  ],
+  "pre_play": {
+    "status": "ready",
+    "order_hash": "8f36f79c413ace96949941835efb9a1c39b2f76466f6fd771f9eb2a08652ee73",
+    "queued_at": "2026-10-15T17:23:03.831054",
+    "started_at": "2026-10-15T17:23:03.910601",
+    "completed_at": "2026-10-15T17:23:41.192694",
+    "elapsed_seconds": 37.20300000000134
+  },
+  "play_entered_at": "2026-10-15T09:40:06.999Z",
+  "result": {
+    "days": 16,
+    "summary": {
+      "scoop": {
+        "fill_rate": 0.9368622833200975,
+        "lost_units": 11528,
+        "lost_margin": 60737.38,
+        "avg_pallets": 36.640171440972225,
+        "peak_pallets": 49.95499999999999,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 69,
+        "ending_on_hand": 58653,
+        "ordered_cases": 7616
+      },
+      "baseline": {
+        "fill_rate": 0.9441849001834762,
+        "lost_units": 10191,
+        "lost_margin": 53735.369999999995,
+        "avg_pallets": 44.616924913194445,
+        "peak_pallets": 65.40333333333334,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 61,
+        "ending_on_hand": 72220,
+        "ordered_cases": 7572
+      }
+    },
+    "comparison": {
+      "units_saved": -1337,
+      "pallet_difference": -7.976753472222214,
+      "stockout_days_avoided": -8
+    }
+  },
+  "order_quantities_unchanged": true,
+  "order_edit": {
+    "edit_id": 112,
+    "old_hash": "8f36f79c413ace96949941835efb9a1c39b2f76466f6fd771f9eb2a08652ee73",
+    "new_hash": "6d011f2fd2f6ea4259d0d9aab00dc000720ea8a02ee5917964a648d9cfcc6bb2",
+    "flow": {
+      "step": "orders",
+      "max_step": "orders",
+      "order_hash": "6d011f2fd2f6ea4259d0d9aab00dc000720ea8a02ee5917964a648d9cfcc6bb2",
+      "notice": "Orders changed. Review the updated list."
+    },
+    "simulation": {
+      "status": "running",
+      "order_hash": "6d011f2fd2f6ea4259d0d9aab00dc000720ea8a02ee5917964a648d9cfcc6bb2",
+      "queued_at": "2026-10-15T17:40:49.244336",
+      "started_at": "2026-10-15T17:40:49.488285",
+      "completed_at": null,
+      "elapsed_seconds": null
+    },
+    "exact_undo": true
+  },
+  "accepted": true,
+  "widget_exact_undo": true
+}

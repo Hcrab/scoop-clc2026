@@ -104,8 +104,8 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
     upp = (prod.units_per_case * prod.cases_per_pallet).astype(float)
     margin = (prod.price_hkd - prod.cost_hkd).astype(float)
     # All inputs that can change a replay are read before consulting the cache.
-    inputs = [pid, start, days, orders_week.to_dict("records"), prod.reset_index().to_dict("records"),
-              context.to_dict("records"), settings.to_dict("records"), raw.to_dict("records"),
+    inputs = [pid, start, days, orders_week[["sku", "order_date", "cases"]].to_dict("records"), prod.reset_index().to_dict("records"),
+              goal, service_level, cards, settings.to_dict("records"), raw.to_dict("records"),
               inv0.to_dict(), open_po.to_dict("records"), weather.to_dict("records"), capacity,
               forecast_run.to_dict("records"), expectations.to_dict("records")]
     key = hashlib.sha256(json.dumps(inputs, sort_keys=True, default=str).encode()).hexdigest()
@@ -130,7 +130,7 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
         own_arrivals: dict[date, pd.Series] = {}
         cohort_result = None
         cohort_week = None
-        daily, per_sku = [], {"on_hand": [], "shipped": [], "lost": [], "arrived": [], "placed_cases": [], "pre_ship": []}
+        daily, per_sku = [], {"on_hand": [], "shipped": [], "lost": [], "demand": [], "arrived": [], "placed_cases": [], "pre_ship": []}
         d = start
         while d <= end:
             arrived = pd.Series(0.0, index=skus)
@@ -168,7 +168,11 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
                 pos = pd.DataFrame({"sku": skus, "on_hand_units": on_hand.round().astype(int).to_numpy(), "on_order": pipeline.round().astype(int).to_numpy()})
                 plan = suggest_orders(d, [], position=pos, only_due=True, pending_arrivals=arrivals,
                                       cohort_result=cohort_result, goal=goal,
-                                      service_level=service_level).set_index("sku")
+                                      service_level=service_level)
+                # The fitted tree is already retained above. Avoid copying its large
+                # metadata into every temporary Series used to read case quantities.
+                plan.attrs.clear()
+                plan = plan.set_index("sku")
                 for s in due:
                     placed[s] = int(plan.loc[s, "final_cases"]) if s in plan.index else 0
             elif policy == "baseline":
@@ -196,6 +200,7 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
             per_sku["on_hand"].append(on_hand.round(1).tolist())
             per_sku["shipped"].append(ship.round(1).tolist())
             per_sku["lost"].append(lost.round(1).tolist())
+            per_sku["demand"].append(dem.round(1).tolist())
             per_sku["arrived"].append(arrived.round(1).tolist())
             per_sku["placed_cases"].append(placed.tolist())
             per_sku["pre_ship"].append((on_hand + ship).round(1).tolist())

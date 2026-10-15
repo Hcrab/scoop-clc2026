@@ -96,6 +96,7 @@ def test_policies_share_opening_transit_and_daily_demand(played_week):
             assert run["on_hand"][0][i] + run["shipped"][0][i] - run["arrived"][0][i] == pytest.approx(OPENING[sku])
         for day, demand in enumerate(result["demand"]):
             for i in range(len(SKUS)):
+                assert run["demand"][day][i] == pytest.approx(demand[i])
                 assert run["shipped"][day][i] + run["lost"][day][i] == pytest.approx(demand[i])
 
     # Historical POs have both a recorded receipt and a pending expected date.

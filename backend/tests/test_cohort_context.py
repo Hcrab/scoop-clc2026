@@ -89,6 +89,11 @@ def test_context_api_passes_saved_definition_into_recompute_and_returns_diff(api
     data = response.json()
     assert data['affected_orders'][0]['before'] == 3
     assert data['affected_orders'][0]['after'] == 2
+    from scoop.api.flow import state as flow_state
+    with scope() as session:
+        draft_flow = flow_state(session, session.get(Plan, 'TESTAPI'))
+    assert draft_flow['step'] == draft_flow['max_step'] == 'report'
+    assert draft_flow['notice'] is None
     assert seen[0][0]['tag_path'] == [{'id':'tag:a','included':True}]
     with scope() as session:
         session.add(Plan(id='NEXT',week_start=date(2026,7,13),stage='discover',goal='margin',created_at=datetime.now(),summary={}))

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { api, date, n } from './api';
 import { EditReceipt, type PlanEdit } from './EditReceipt';
 import type { Detail, Order } from './types';
+import { Icon } from './ui';
 import './actionList.css';
 
 type Group = {id:string;name:string;skus:string[]};
@@ -19,6 +20,7 @@ export function ActionList({detail,path,onChanged,onApproved,disabled=false}:{de
   async function approve(){if(disabled||busy)return;setBusy(true);setError('');try{await api(`${path}/approve-orders`,'POST',{});onApproved()}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
   const capacity=summary?.capacity;
   return <section className="action-list" aria-label="Order list">
+    <div className="section-heading"><div><h2>Orders</h2></div><a className="button ghost" href={`/api${path}/orders.csv`} download><Icon name="download" size={16}/>Export orders</a></div>
     <div className="action-capacity">
       <div><span>Peak cold-store occupancy</span><strong>{capacity?`${n(capacity.projected_peak_pallets,1)} / ${n(capacity.capacity_pallets)} pallets`:'Calculating…'}</strong></div>
       {capacity&&<progress aria-label="Peak capacity used" max={capacity.capacity_pallets} value={Math.min(capacity.projected_peak_pallets,capacity.capacity_pallets)}/>}

@@ -80,6 +80,8 @@ def objects(s, cls, pid):
     return s.scalars(select(cls).where(cls.plan_id == pid).order_by(*cls.__table__.primary_key.columns)).all()
 
 def recompute(s, p):
+    from .flow import invalidate
+    invalidate(s, p)
     from ..planning import suggest_orders, reason_text
     directions = [row(d) for d in objects(s, DirectionItem, p.id)]
     from ..cohort_context import load_overrides
@@ -224,7 +226,8 @@ def get_plan(pid:str):
         orders=query(s,'SELECT ps.*, p.name,p.brand,p.units_per_case,p.moq_cases,s.name AS supplier_name FROM purchase_suggestions ps JOIN products p USING(sku) JOIN suppliers s ON s.id=p.supplier_id WHERE ps.plan_id=:pid ORDER BY ps.order_date,p.name',pid=pid)
         for order in orders: order['effective_cases']=order['final_cases'] if order['final_cases'] is not None else max(0,order['suggested_cases']-order['capacity_cut_cases'])
         from ..ai.weekly import display_view
-        return clean({'raw_trends':(p.summary or {}).get('raw_trends'),'review':display_view(p),'discussion':discussion_view(s,p),'plan':row(p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'dashboard':dashboard.view(s,p),'decisions':decision_history(s,pid),'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
+        from .flow import state as flow_state
+        return clean({'raw_trends':(p.summary or {}).get('raw_trends'),'review':display_view(p),'discussion':discussion_view(s,p),'plan':row(p),'flow':flow_state(s,p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'dashboard':dashboard.view(s,p),'decisions':decision_history(s,pid),'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
 
 class NewPlan(BaseModel): week_start: date
 @router.post('/plans')
@@ -322,6 +325,8 @@ def advance(pid:str):
         next_stage=STAGES[STAGES.index(p.stage)+1]
         decision(s,p,'stage_approved',{'from':p.stage,'to':next_stage})
         p.stage=next_stage
+        from .flow import save
+        save(p, 'orders', 'orders')
         return {'stage':next_stage}
 
 class Confirm(BaseModel): cases:int=Field(ge=0,strict=True)
@@ -367,6 +372,10 @@ def approve_orders(pid: str):
         cases = {o.sku:o.final_cases if o.final_cases is not None else max(0,o.suggested_cases-o.capacity_cut_cases) for o in orders}
         products = {x.sku:x for x in s.scalars(select(Product))}
         if p.stage == 'execute' and all(o.status == 'confirmed' for o in orders):
+            from ..db import schedule_simulation_after_commit
+            from .flow import save
+            save(p, 'watch', 'watch')
+            schedule_simulation_after_commit(s, pid)
             return {'stage':'execute', 'capacity':clean((p.summary or {}).get('approved_capacity'))}
         for sku, amount in cases.items():
             if 0 < amount < products[sku].moq_cases:
@@ -380,6 +389,10 @@ def approve_orders(pid: str):
         p.summary = {**(p.summary or {}), 'approved_capacity':clean(projection)}
         p.stage = 'execute'
         p.locked_at = datetime.now()
+        from ..db import schedule_simulation_after_commit
+        from .flow import save
+        save(p, 'watch', 'watch')
+        schedule_simulation_after_commit(s, pid)
         decision(s,p,'orders_approved',{'cases':cases,'capacity':projection,'supplier_transmission':False})
         return {'stage':'execute', 'capacity':clean(projection)}
 
@@ -402,6 +415,8 @@ def confirm(pid:str,sku:str,body:Confirm):
             except Exception as exc: raise HTTPException(503,f'Capacity calculation failed: {type(exc).__name__}: {exc}') from exc
             if not capacity_result['feasible']: raise HTTPException(409,f"Order exceeds cold-store capacity on its dated arrival path: projected peak {capacity_result['projected_peak_pallets']:.2f} pallets, capacity {capacity_result['capacity_pallets']:.2f}, new excess {capacity_result['incremental_overcapacity_pallets']:.2f}. Reduce cases or skip.")
         order.final_cases=body.cases;order.status='confirmed'
+        from .flow import invalidate
+        invalidate(s, p)
         if body.cases:
             supplier=s.get(Supplier,product.supplier_id)
             s.add(PurchaseOrder(id='SC'+uuid4().hex[:28],sku=sku,supplier_id=product.supplier_id,order_date=order.order_date,expected_date=order.order_date+timedelta(days=supplier.lead_time_days),received_date=None,cases=body.cases,source='scoop'))
@@ -539,10 +554,11 @@ class PlayRequest(BaseModel):
 
 @router.post('/plans/{pid}/play')
 def play(pid: str, body: PlayRequest):
-    """Run the warehouse forward from the plan's Monday: this plan's orders vs the moving-average rule."""
-    from ..play import simulate
+    """Legacy entry: return only the already prepared replay."""
+    from ..simulation_jobs import status
     with session_scope() as s:
         p = plan_for(s, pid)
-        week = p.week_start
-    try: return clean(simulate(pid, week))
-    except Exception as exc: raise HTTPException(503, f'Play failed: {type(exc).__name__}: {exc}') from exc
+        current = status(s, p)
+        if current['status'] != 'ready':
+            raise HTTPException(409, 'Replay is still preparing.')
+        return current['result']
