@@ -9,7 +9,7 @@
 | M2 Demo start state | Accepted | `b564792` | Capacity 66 pallets; projected peak 61.3046 = 92.8857%. Source requests, stock, policy settings and ledger retained. |
 | M3 Report layout and language | Accepted | `f176128` | 76 tests + real preview/Apply/Undo/action-link/scroll flow; Gemini report regenerated; screenshots reviewed. |
 | M4 Play widget values | Accepted | `26ea098` | 27 backend + 4 frontend tests; real 00:50 capture shows 3 / 4 units and separate partial points; full-day close verified. |
-| M5 Walkthrough and docs | Accepted | This phase | 287 backend tests; clean-reset walkthrough and empty-key browser pass; seven captures reviewed; timing, docs and final state verified. |
+| M5 Walkthrough and docs | Accepted | `a26fbb7` | 287 backend tests; clean-reset walkthrough and empty-key browser pass; seven captures reviewed; timing, docs and final state verified. |
 
 Branch `claude/scoop-prototype`; starting revision `43b44fae4c70806137e276cfc4479ae5d955abee`. Night 2 is archived in [reports/night2.md](reports/night2.md). The user explicitly requested fast Reset before supplying the Night 3 handoff; finish and push it before M1. Work proceeds M1→M5 in order, with evidence for every check and a push after each accepted phase. No multi-seed work, deployment, slide deck, rebase or force-push.
 
