@@ -1,0 +1,18 @@
+{
+  "clone_commit": "1e67a6026b0f13397196181b7d83162b3281e3da",
+  "runtime_tracked_diff": [],
+  "independent_database": "scoop_clean_p7_20261015",
+  "venv_created_fresh": true,
+  "source_or_model_cache_copied": false,
+  "python": "3.12.14",
+  "postgresql": "17.11",
+  "node": "24.19.0",
+  "pnpm": "11.25.0",
+  "frontend_frozen_install": {
+    "command": "pnpm --dir frontend install --frozen-lockfile",
+    "actual_console_result": "Packages: +72; reused 72, downloaded 0, added 72; Done in 1.5s using pnpm v11.25.0"
+  },
+  "empty_key_test": "Real ASGI startup, frontend/API requests, scripted mutation + exact Undo, and Edge browser; no TCP listener, no fabricated responses",
+  "provider_calls": 0,
+  "test_harness_note": "Only the new browser test was copied to the clone; smoke script ran externally with the clean checkout Python/PYTHONPATH. Runtime source stayed at the cloned commit."
+}

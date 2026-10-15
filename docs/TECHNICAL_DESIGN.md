@@ -6,40 +6,45 @@
 |---|---|
 | Repository | [Hcrab/scoop-clc2026](https://github.com/Hcrab/scoop-clc2026) |
 | Branch | `claude/scoop-prototype` |
-| Data | Deterministic synthetic ice-cream distribution world, seed 42 |
+| Data | Deterministic synthetic ice-cream distribution world; public demo seed 93, 20 July 2026 |
 | Team | ID, roster and individual contributions to be confirmed by the team before submission |
 
 
-This document follows the subject coverage of the local CLC2026 shortlisting technical-document example and rules v1.6 (2 October 2026). It is a development document, not a declaration that all submission conditions have been met. In particular, repository publication and team declarations remain owner decisions.
+This development document describes the implemented system and its measured results. Team identifiers and individual contribution declarations remain for the team to complete.
 
 ## 1. Problem and proposed solution
 
-Cold storage is scarce. A warehouse planner has to replenish familiar products while distinguishing weather-driven demand from persistent changes in preference. A sales increase can also be a promotion, a single large order or a shift in the mix of stores. Treating each increase as permanent can tie up space; ignoring it can cause shortages.
+Cold storage is scarce. A warehouse planner has to replenish familiar products while distinguishing weather-driven demand from persistent changes in preference. A replenishment-request increase can also be a promotion, a single large order or a shift in the mix of stores. Treating each increase as permanent can tie up space; ignoring it can cause shortages.
 
-Scoop connects a weekly evidence review to concrete case quantities. The planner sees attribute-level signals, checks explanations, records a purchasing direction, then receives recommendations constrained by supplier calendars, case packs, stock, pipeline and warehouse capacity. A persistent assistant explains the evidence and performs bounded, auditable actions. The core output is a reviewed replenishment plan and watch list.
+Scoop connects a weekly evidence review to concrete case quantities. Cohort effects feed recommendations constrained by supplier calendars, case packs, stock, pipeline and warehouse capacity. The planner supplies optional context and reviews the resulting orders. An assistant explains evidence and makes explicitly requested, undoable changes. The core output is a reviewed replenishment plan and a shared monitoring dashboard.
 
-The prototype represents one DC, 20 stores, four districts, eight suppliers and 60 existing SKUs. All product, customer, order and weather records are synthetic. Its commercial hypotheses require validation on authorised operational data.
+The default prototype represents one DC, 20 stores, four districts and 75 SKUs. All product, customer, order and weather records are synthetic. Its commercial hypotheses require validation on authorised operational data. Other seeds remain internal evaluation fixtures.
 
 ## 2. Architecture and data flow
 
 ```mermaid
 flowchart LR
     S[Synthetic catalog, orders, stock and issued weather] --> D[(PostgreSQL)]
-    D --> F[LightGBM demand forecasts]
-    D --> C[Weather-adjusted share CUSUM]
-    C --> I[Evidence investigator and shift-share]
-    F --> R[Calendar-aware replenishment and capacity heuristic]
-    I --> P[Weekly plan and human decisions]
-    P --> R
+    D --> F[Monthly LightGBM mean and quantiles]
+    F --> B[Forward-error backtest and ratio calibration]
+    F --> C[Weather-adjusted share CUSUM]
+    C --> I[Evidence, shift-share, exploratory scan]
+    F --> T[SKU x district cohort tree and shrinkage]
+    T --> O[Human context overrides]
+    B --> R[Order-up-to and dated capacity greedy]
+    O --> R
+    I --> P[Grounded weekly report]
+    T --> P
+    U --> O
     R --> A[FastAPI]
     P --> A
-    A <--> U[React planner and bounded assistant]
+    A <--> U[React planner, canonical widgets, bounded assistant]
     U --> W[Purchase confirmation and watches]
     W --> D
-    D --> E[Offline baseline evaluation and policy replay]
+    D --> E[Two-policy Play replay and offline evaluation]
 ```
 
-The generation command creates relational source tables. Model runs use time-bounded features; reusable artifacts are cached locally and excluded from version control. Planning combines detector evidence and inventory forecasts, then persists findings, hypotheses, questions, directions and purchase suggestions. The HTTP API returns joined, typed JSON to the UI. Mutations persist choices and decision records. Offline evaluation reads the same source data with explicit training, calibration and replay intervals.
+The generation command creates relational source tables. Model runs use time-bounded features; reusable artifacts are cached locally and excluded from version control. Planning persists cohort effects/cards, early warnings and purchase suggestions. Overrides and dashboard layout are saved alongside decision receipts; the historical ORM table named WatchItem stores the canonical widgets. The report reads calculations and can explore evidence; its text does not directly control orders. The HTTP API returns typed JSON to the UI. Offline evaluation uses explicit training, calibration and replay intervals.
 
 ## 3. Data model
 
@@ -51,39 +56,94 @@ The generation command creates relational source tables. Model runs use time-bou
 | Decision workflow | Plan, Finding, Hypothesis, Question, Decision, DirectionItem, PurchaseSuggestion, WatchItem, ChatMessage | Human interpretation, recommendations, approvals and context |
 | Evaluation only | GroundTruthEvent | Planted scenarios for scoring; not investigator inputs |
 
-The generated world spans June 2024 to August 2026 and contains 986,400 store-SKU-day rows. The seed fixture defaults to 13 July 2026; the delivered workspace also contains a completed 20 July walkthrough and a fresh 27 July plan. The visible demonstration clock is the authoritative as-of date. Reading future rows is permitted only in the offline scorer, never as future actual inputs to a current planning recommendation.
+The generated world spans June 2024 to August 2026. Seed 93 has 75 SKUs and 1,233,000 store-SKU-day order rows. The public demo opens 20 July 2026; Settings can select another supported week. The visible demonstration clock is the authoritative as-of date. Reading future rows is permitted in the offline scorer and Play replay, never as future actual inputs to a current planning recommendation.
 
-## 4. Technical approach
+## 4. Algorithms and decision flow
 
-### Demand and uncertainty
+The visible flow is **Report & direction → Orders → Watch & play**. Cohort cards expose cases, expected value, pallet footprint and whole-warehouse peak. Optional context and the stock-versus-space service control recompute orders and produce Undo receipts. Orders are grouped and paginated; approval opens execution. Canonical widgets have server-saved layout and appear unchanged in Play. The discussion dock is optional; there is no finding-classification or watch-approval gate.
 
-LightGBM models use product/store attributes, calendar features, promotion information and weather available at forecast time. Replenishment needs a demand distribution over a SKU-specific protection interval, not simply a next-day point forecast. The protection interval includes waiting until the ordering weekday, supplier lead time and review interval. Aggregate uncertainty is empirically calibrated; see `docs/ALGORITHM_NOTES.md` for the exact implemented windows and approximations.
+### 4.1. Demand forecast
 
-### Preference monitoring
+A Poisson-mean LightGBM model and 0.1/0.9 quantile models use catalog, calendar, promotion and issued-weather features. Monthly versions train through the preceding month; detection and purchasing use the same version. The Poisson mean supplies the central level displayed as p50; it is not a separately trained median quantile. This gives an ordinary-demand counterfactual and protection-period mean.
 
-The detector compares observed attribute share with expected share after conditioning on ordinary drivers. A model frozen within each month avoids immediately absorbing a gradual preference change. Detection and procurement share that monthly version; training ends before the month starts, and CUSUM resets at the boundary. The preceding version’s forward errors calibrate the next version, a transfer approximation whose weak coverage is reported below. Saved findings retain their original chart version, including legacy fixed-baseline plans. CUSUM accumulates departures; bootstrap calibration and multiple-testing rules limit alerts. A statistically interesting group can still reflect promotion, weather or store mix. Shift-share separates descriptive volume, mix and interaction terms.
+Code: `backend/scoop/algorithms/forecast.py`, `backend/scoop/algorithms/runs.py`.
 
-### Evidence and human judgement
+### 4.2. Rolling backtest and baselines
 
-The investigator uses scoped database evidence to rank explanations. Users can classify a finding as persistent, one-off, a data issue, weather-related or uncertain. That judgement changes the direction of relevant purchasing decisions. Persistent and weak evidence are handled differently: an uncertain signal can remain on a watch list without becoming an automatic inventory increase.
+For a past issue date and SKU, `r = actual protection demand / max(forecast, 1)`. The next month's distribution uses the preceding model's genuinely forward ratios, clipped to `[0.3, 3]`. Evaluation also compares a 28-day moving average and same-weekday daily forecast, and a 28-day protection baseline. Forward transfer avoids calibration on a model's own training outcomes but assumes errors remain comparable.
 
-### Purchasing
+Code: `backend/scoop/algorithms/forecast.py`, `backend/scoop/algorithms/runs.py`, `backend/scoop/evaluate.py`.
 
-The order-up-to calculation subtracts current stock and pipeline, rounds positive orders to full cases and applies SKU minimum quantities. The chosen margin, fill-rate or sales objective affects recommendation logic. Warehouse space is allocated with a conservative greedy heuristic and SKU-specific pallet footprints. The implementation does not claim global optimality or a guarantee that a requested service parameter equals the observed fill rate.
+### 4.3. Weather-adjusted CUSUM
 
-### Application and assistant
+For attribute group and district, `z = (actual share - expected share - calibration bias) / calibration SD`, `S+ = max(0, S+ + z - 0.25)`, `S- = max(0, S- - z - 0.25)`. The expectation incorporates ordinary weather and promotions. Seven-day block bootstrap paths choose a threshold for approximate in-control `ARL0 = 90` days; bootstrap-tail p-values also pass Benjamini–Hochberg at `q = 0.10`. Correlation and repeated looks prevent an exact ARL/FDR guarantee.
 
-The UI provides Plans, Stores, Catalog and evaluation views. The weekly flow is Discover, Direction, then Execute & watch. A fixed right-hand chat area keeps context visible. FastAPI validates mutations and phase transitions; order confirmation is synthetic and idempotent. The built frontend can be served by the API for a single-origin local demo.
+Code: `backend/scoop/algorithms/cusum.py`, `backend/scoop/algorithms/runs.py`.
 
-The local delivery uses Gemini 3.8 Flash when an existing backend GEMINI_API_KEY is available. It receives bounded synthetic plan context and can call only validated domain tools for evidence, scenarios and explicitly requested edits. Questions and hypotheticals remain read-only; stage approval and purchase confirmation stay in the UI. Actual operation progress is streamed, and a final result appears only after the transaction commits. A bounded SQLite usage ledger enforces call/cost allowances without recording credentials. An explicitly labelled deterministic fallback remains available when the provider is absent or unavailable. The repository default needs no key. See docs/ASSISTANT.md for configuration, boundaries and failure behaviour.
+### 4.4. Shift-share explanation
 
-Five baseline watches, decision-derived watches and user additions are reviewed before execution. Approval freezes the selected watch assumptions and occupancy projection. Later watch edits remain separate from that approval; the following week carries assumptions forward and displays a past-only recap. Warehouse stock remains shared, so district shortage watches use order fulfilment rather than inventing district stock allocations.
+With total requests `T` and group share `s`, `Δ(Ts) = (T1-T0)s0 + T0(s1-s0) + (T1-T0)(s1-s0)`. The volume, mix and interaction terms describe the change; they do not prove customers switched products.
+
+Code: `backend/scoop/algorithms/shiftshare.py`, `backend/scoop/ai/investigator.py`.
+
+### 4.5. Cohort tree
+
+Each eligible SKU × district compares recent 14 days with the previous 56 eligible days: `y = log((Ar+.5)/(Er+.5)) - log((Ab+.5)/(Eb+.5))`, `v = phi(1/(Ar+.5)+1/(Ab+.5))`. Promotion days are excluded; requests are capped per store/SKU at the eligible-history 99th percentile. Candidate splits come from existing catalog groups and districts, need at least three distinct SKUs on each side, and stop at depth three. The maximum inverse-variance gain is tested against 199 max-gain permutations at fixed `p < 0.05`.
+
+Code: `backend/scoop/algorithms/cohort_model.py`.
+
+### 4.6. Corrected permutation units
+
+A product-tag permutation moves an entire SKU's district `y,v` vector among SKUs with the same district support. A district candidate permutes districts within each SKU. Both values move together. This better preserves correlated forecast error than shuffling individual rows; exchangeability remains an assumption.
+
+Code: `backend/scoop/algorithms/cohort_model.py`.
+
+### 4.7. Empirical Bayes and partial alignment
+
+DerSimonian–Laird between-leaf variance `tau_b` yields leaf data weight `tau_b/(tau_b+V)` and posterior mean `weight × raw`. Within-leaf effects shrink toward the leaf. SKU log effects weight districts by recent expected demand; variance retains shared-leaf covariance along with individual conditional variance. `f50 = exp(m)` and `f10/f90 = exp(m ± 1.2816 sqrt(s2))`. Current-model rescoring of 70-day history retains historical issued weather and can absorb an older change after retraining.
+
+Code: `backend/scoop/algorithms/cohort_model.py`.
+
+### 4.8. Override priors and controls
+
+`one_off` zeroes selected log effects; `ends_on` uses `1 + fraction × (exp(m)-1)` over arrival-to-review dates; `cap` truncates the log effect at `log(1+pct)`; `expect` uses a shared normal cohort prior with SD 0.30/0.15/0.07 for low/medium/high strength. A direct `cases` override edits a SKU order. Saved tag-path membership and optional districts define scope independently of changing leaf IDs.
+
+Code: `backend/scoop/algorithms/cohort_overrides.py`, `backend/scoop/cohort_context.py`.
+
+### 4.9. Order-up-to and critical ratio
+
+Calendar-aware protection includes wait until supplier order day, lead time and review. For the default margin objective, shortage cost `Cu = price-cost`; excess cost `Co = 0.25 × cost`; `CR = clip(Cu/(Cu+Co), 0.5, 0.98)`. An explicit service parameter replaces that ratio with the same clipping bounds. The CR demand quantile gives target `S`; buy `ceil(max(0, S-on_hand-on_order)/units_per_case)` with MOQ when positive. Empirical demand ratios mix with lognormal factor error by deterministic quadrature and are re-centred at the empirical median.
+
+Code: `backend/scoop/algorithms/forecast.py`, `backend/scoop/algorithms/replenish.py`, `backend/scoop/planning.py`.
+
+### 4.10. Arrival-dated capacity greedy
+
+Occupancy is projected on each arrival date with each SKU's own units per pallet. While added orders exceed `max(physical capacity, inherited no-new-order occupancy)` on any date, remove the eligible last case with the lowest approximate marginal value per pallet, or an MOQ block. Inherited POs can still leave the store above physical capacity; this is not a global optimum.
+
+Code: `backend/scoop/algorithms/replenish.py`, `backend/scoop/planning.py`.
+
+### 4.11. Canonical widgets
+
+Server validates `{title, scope, metric, threshold}`. Scope is warehouse/cohort/tag/brand/SKU; metric is on-hand, lost units, demand, fill rate, days cover, pallets, or requested versus expected. Historical requested/shipped/stock and saved expectations feed persisted, reorderable charts and source tables; edits are undoable.
+
+Code: `backend/scoop/dashboard.py`, `backend/scoop/api/dashboard.py`, `frontend/src/Dashboard.tsx`.
+
+### 4.12. Two-policy Play
+
+Both sides begin with the same closing stock, historical POs in transit and future synthetic requests. Scoop week one uses saved cases or post-cut suggestions; later weeks refit cohorts and order automatically. The rule orders toward `1.25 × mean(last 28 days) × (lead+review)`, then rounds to cases/MOQ. New orders arrive after lead time. Daily shipped units are `min(on_hand, requests)` and lost units are unmet requests. Charts use the latest saved expectation issued before the plan. Later automatic orders call the ordinary as-of-day forecast and cohort path, including the monthly version change when reached.
+
+Code: `backend/scoop/play.py`, `frontend/src/Play.tsx`.
+
+
+The read-only exploratory scanner separately tests one-to-three-tag intersections across district scopes with a seven-lag Bartlett–Newey–West variance and Benjamini–Yekutieli adjustment. It is an approximate screen, not a cohort tree split or a newly calibrated CUSUM discovery (`backend/scoop/algorithms/trend_scan.py`).
+
+The AI report uses bounded read-only tools, cited evidence IDs, numeric-claim checks, one repair attempt and an offline fallback (`backend/scoop/ai/weekly.py`, `backend/scoop/ai/grounding.py`). The model authors constrained prose and HTML/CSS; host code renders data charts from saved series, not model-authored SVG (`backend/scoop/ai/report_design.py`, `frontend/src/reportCharts.ts`). The default P6 report received a disclosed human editorial correction after the real Gemini generation. Chat uses `gemini-3.8-flash` when configured, validated tool calls and a deterministic fallback (`backend/scoop/ai/gemini.py`, `backend/scoop/ai/chat.py`).
 
 ## 5. Setup, test and demonstration
 
 See `README.md` for the exact installation and run commands and `docs/DEMO.md` for a guided demonstration. Reproducibility requires PostgreSQL, the pinned Python environment, and the frontend lockfile. Synthetic loading replaces tables in the configured database and is a first-run/reset operation, not a normal startup step.
 
-The demo supports weekly plans from June through August 2026. Inspect the weekly report, open a finding's chart and explanation, answer the interpretation questions, approve directions and the objective, inspect the case-level order rationale, confirm one synthetic order, and add a scoped watch. Reload the page to verify persisted decisions. Stores and Catalog provide traceable source context.
+The demo supports weekly plans from June through August 2026. Inspect the report and cohort evidence, optionally add context, review grouped orders, approve them, add a widget and play the order through. Discussion questions do not block progression. Reload to verify saved state. Stores and Catalog provide source context.
 
 ## 6. Validation and limitations
 
@@ -91,7 +151,7 @@ The evaluation includes forecast errors against simple baselines, planted-event 
 
 The no-trend counterfactual keeps the same catalog, weather and known promotions while removing preference drift, exceptional promotion uplift and bulk orders. It is reproducible for a seed, but changed Poisson intensities mean draws do not remain exactly paired after the first change; it is a detector diagnostic, not a causal estimator.
 
-The monthly seed-42 run reports these outcomes:
+The earlier seed-42 algorithm evaluation reports these outcomes; it is not the seed-93 default Play:
 
 | Measure | Scoop | Comparison / context |
 |---|---|---|
@@ -105,13 +165,34 @@ The monthly seed-42 run reports these outcomes:
 
 The full policy uses less average inventory but provides slightly lower service than the historical x1.25 policy; its pre-shipment peak is also higher (58.2 versus 57.4 pallets). This is a trade-off, not a universal win. Forecast aggregation performs worse than the moving-average protection baseline, and interval undercoverage is material, especially in July. Investigator labels agree with 8 of 12 matched findings; four unmatched findings are retained. Exploratory weak candidates have 18 confirmations in 36 complete followups, with eight right-censored candidates; the different-scope random comparator is not a formal superiority test.
 
-A real Gemini walkthrough on the separate 20 July plan explained the focused Water-based finding, recorded an explicit persistent interpretation and calculated a read-only 35°C scenario. With that plan state, a July 27-August 2 override changes proposed cases from 1,025 to 1,246 (+221); numbers depend on the current plan decisions. Live model prose initially overstated causal certainty and exposed unnecessary technical wording, so the assistant brief was tightened. Provider answers still require human review; successful tool validation does not prove every generated sentence is correct.
+A prior seed-42 Gemini walkthrough explained a Water-based finding and calculated a read-only 35°C scenario. Its quantities depended on that older plan state. Provider answers still require human review; successful tool validation does not prove every generated sentence is correct.
 
-The central test run passed 68 Python tests and the TypeScript/Vite production build. Tests include monthly cutoffs and reset state, future-data perturbation, persisted choices, provider outage handling, budget limits, historical chart provenance, streamed transaction rollback and watch approval/carryover. Existing 6 July and 13 July plans were preserved, and a separate 20 July plan completed the new browser walkthrough. Its 26-case confirmation and scoped watch carry into the 27 July recap and fresh Discover plan. Responsive checks at 390, 768 and 1280 requested viewport widths found no horizontal overflow; the watch editor also passed keyboard focus and Escape checks.
+At P6 acceptance, the backend suite passed 231 tests, the TypeScript/Vite production build passed, and the seed-93 default browser demo passed. P7 then repeated installation, fresh data load, uncached monthly model training and frontend build from a clean clone against a new database. With provider configured as Gemini and the key empty, actual ASGI startup, the card-list report, a scripted widget change, exact Undo and Orders progression passed with zero provider calls. A separate Edge test passed in21.2seconds over the real ASGI/stdio transport (`reports/p7-clean-runtime.txt`, `reports/p7-empty-key-smoke.json`, `reports/p7-empty-key-browser.json`). No standalone empty-key TCP service is claimed. The central acceptance ledger is `docs/overnight-report.md`.
 
 Application validation covers phase guards, persisted choices, invalid input, idempotent confirmations and as-of views. Frontend compilation and a browser walkthrough provide separate evidence of the usable interaction. A successful build alone is not treated as proof that every flow works.
 
-Important limits are synthetic realism, monthly reset detection delays, transferred calibration undercoverage, heuristic capacity allocation, fallible live-model prose, no real supplier integration and no automatic stock simulation following user confirmations. Deployment authentication, tenancy and production operations are outside this local demonstration.
+The P6 seed-93 default Play covers 20 July–4 August (16 days), with no active context overrides. The physical capacity is 71 pallets. The synthetic history rule peaks at 65.4033 pallets over this selected window, or 92.12% of capacity. Full generated July–August history has a separate 77.8620-pallet peak, above that capacity; it is not the selected Play window. The default Play loses 11,528 units with Scoop versus 10,191 with the rule, while averaging 36.6402 versus 44.6169 pallets. A 27 July seven-day rerun loses 1,344 units on each side and averages 53.8392 versus 55.2196 pallets. These are observed trade-offs, not a universal savings claim (`reports/p6-play-final.json`, `reports/p6-capacity-correction.json`).
+
+The default first cohort card is the actual broad 25-SKU Water-based leaf, not an isolated strawberry card. In the 27 July planted-group check, the corrected fixed permutation test gave the candidate strawberry split `p = 0.1005025126`, above the fixed 0.05 criterion; across two null seeds and 34 weeks there were 4 root splits against an acceptance limit of at most 3. Both P1 criteria remain **blocked** under the explicit no-tuning exception. No statistical threshold, prior, variance, forecast input or buffer was changed to force a pass (`reports/cohort-seed93-block-evaluation.json`, `reports/cohort-null-block-evaluation.json`).
+
+### Simplifications
+
+| Choice | Practical consequence |
+|---|---|
+| Synthetic demand, weather, catalog and POs | Reproducible mechanics do not establish sponsor demand or commercial impact. |
+| Only existing tag/district splits, at least three SKUs per child, depth three | The production tree is conditional and constrained, not an exhaustive search of all intersections. |
+| SKU observation → tree → shrinkage → forecast factor → cases | A visible signal does not bypass inventory, supplier calendar, MOQ, uncertainty or capacity. |
+| Preceding-month forward errors transferred to a new model | Avoids scoring on training outcomes but can under-cover if forecast errors change across months. |
+| Empirical ratios mixed with lognormal factor error | The distribution is an approximation; forecast error correlations are not fully modelled. |
+| Dated greedy capacity removal | Results need not be globally optimal; inherited arrivals may already exceed physical capacity. |
+| Exogenous requests and shared DC stock in Play | Both sides face the same requests; there is no district stock ledger or stock-to-demand feedback. |
+| Cohort level projection | The latest effect is held over the planning window, without trend extrapolation. |
+
+### Limitations
+
+Monthly reset can delay detection. CUSUM's ARL and BH gate are approximate under correlated attributes and repeated daily testing. The SKU-block and within-SKU permutations retain relevant error structure but still depend on exchangeability that has not been established for all real forecast errors. The older rolling protection forecast WAPE (10.85%) trails its 28-day average baseline (10.04%), and nominal 80% intervals covered only 64.49% of 780 forward windows; correlation and transferred calibration remain material concerns (`docs/ALGORITHM_NOTES.md`).
+
+An `expect` override is a planner prior, not new observed sales. The cap uses exact marginal truncated-normal moments but omits cross-district covariance after nonlinear truncation. Sparse or interrupted source rows are excluded from the cohort fit. The accepted default AI report needed a human editorial pass; numeric grounding cannot guarantee correct causal prose. Synthetic order confirmation does not rewrite historical warehouse stock. No real supplier integration, deployment authentication, tenancy or production operations are included.
 
 ## 7. AI, data and third-party disclosure
 
@@ -121,6 +202,4 @@ The runtime data is generated by `scoop.synth.generate`; no sponsor transaction 
 
 ## 8. Team and submission readiness
 
-The team must supply its confirmed Team ID, team name, roster, role and specific contribution for each registered member. It must also review AI disclosures, applicable licences and the release contents. The current private branch is not yet the publicly accessible repository required by the competition's shortlisting submission rules.
-
-Before submission, export a reviewed presentation of at most 20 PDF pages and this technical document in PDF, using the competition's Team-ID filename pattern. Verify links and confirm that the publicly accessible release is the intended submitted version. These are publication steps for the owner; this prototype build does not submit anything to the organisers.
+The team can add its confirmed Team ID, name, roster and specific member contributions when preparing its submission. This delivery consists of the implementation branch, application and documentation; it does not submit material to the organisers.

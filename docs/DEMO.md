@@ -1,54 +1,33 @@
 # Demonstration guide
 
-Allow approximately five minutes after the first model build. This is a local, synthetic demonstration. Seed clock: **13 July 2026**. The delivered walkthrough also contains a completed **20 July 2026** plan and a fresh **27 July 2026** plan; check the date displayed in the app.
+This walkthrough uses the public synthetic seed 93, with **75 products**, **20 stores**, one distribution centre, eight suppliers and a **71-pallet** cold store. A fresh setup opens the week of **20 July 2026**. Allow several minutes for first-plan preparation. The app does not place real supplier orders.
 
-## 1. Orient the planner
+## 1. Report & direction
 
-Open the app and select the current week. The report should identify its as-of date. Explain that the DC supplies 20 stores with 60 existing products. The user's job is to choose how much to replenish under a warehouse capacity limit.
+Open the 20 July plan. The first cohort card is the broad **Water-based** group, not a separate strawberry-only first card. Inspect its evidence and the report's own source links. The report may separately discuss strawberry demand, but that editorial observation is not a claimed isolated detector split. Expand a card to see actual and expected trends and its query evidence. Charts are drawn by the app from saved data.
 
-## 2. Review evidence
+Open the assistant from the top-right entry to discuss its numbered questions. With Gemini configured, the weekly report includes the agent's additional saved queries and an authored explanation. With an empty key, expect a minimal card list and a scripted assistant with a small command vocabulary. Offline operation does not reproduce autonomous investigation.
 
-Choose a finding from the card grid. Compare observed and expected share, the district scope, competing hypotheses and the shift-share explanation. A promotion or concentrated orders should not automatically become a persistent purchasing increase. A weak result can remain uncertain and be watched.
+Use a card's context controls to try a one-off change, end date, posterior cap or expectation prior. Check the recomputed factor and case effect, then use the edit receipt's **Undo** if this was only a demonstration. Context changes are optional; they can be made in later stages and return the plan to the appropriate decision view. Adjust **Fewer stockouts ⟷ Less space**. The preference changes the calculation; it is not a guaranteed measured fill rate. Select **Review orders** when ready.
 
-Use the assistant to ask why a finding was raised. Its answer must agree with the visible report. The delivered session uses Gemini through bounded evidence tools. The assistant details show whether a response was live or an offline fallback. It cannot run arbitrary SQL or approve purchases. Do not claim it independently verified causation.
+## 2. Orders
 
-Try “What if next week is 35 C?” in the discussion. Scoop recomputes the forecast and feasible case quantities without applying the scenario. On the 20 July walkthrough after the Water-based persistent interpretation, the observed result was 1,025 to 1,246 cases (+221). Treat this as a recorded example; current quantities depend on saved decisions. Use “Watch HK Island fruit stockouts” to add a scoped fill-rate watch.
+Inspect the grouped order list and its capacity summary. Open a product's order evidence for the supplier order and arrival dates, protection days, forecast range, available and incoming stock, case size, minimum order and any capacity cut. Edit a final case quantity, inspect Before/After and Undo, then approve the orders. There is no separate watch approval step.
 
-## 3. Record a decision
+For a concrete arrival, the unmodified default has **IC006 / Strawberry Burst Bar: 45 cases ordered 20 July, four-day lead, arriving 24 July**. The replay receives its 1,800 units on day 5. This is a synthetic plan calculation, not a real inbound delivery.
 
-Open Plan discussion from the top-right assistant icon. Its badge counts unresolved questions. The assistant opens with its observations followed by numbered business questions; type a response below. Discuss the evidence and record interpretations when useful. Select Continue to move to Direction.
+## 3. Watch & play
 
-For a new plan, the weekly report combines mechanical findings with the assistant's additional tool queries. On an existing plan, select Explore this week to prepare that report. Expand Exploration details to inspect selected groups, dates, results and the model used. Crosscurrents in Settings is a separate synthetic experiment with hidden intersection effects; discovery must be judged from the saved queries and report, not inferred from the presence of a report. The offline answer key is unavailable to the assistant.
+Open **Dashboard** and add a widget for a measure, scope and optional alert threshold. Check its source data, move it to a new position, reload to see the server-saved order, and remove or Undo it. The same canonical widget definitions appear during Play.
 
-Inspect the resulting `more`, `less`, `hold` or `clear` choices. Change the percentage to buy more or less, or its district scope where appropriate, choose the planning objective, and review the approval summary and watch selection. Baseline watches cover service, shortages, excess cover, projected space and late suppliers.
+Open **Purchases** to confirm one synthetic line or export CSV. Confirmed demo purchases are local records and do not rewrite historical stock. Open **Play** and run the proposed orders against the moving-average rule. Its default horizon is the longest positive ordered supplier lead plus seven days, limited to 21 days and the available calendar. On this default plan it covers **20 July through 4 August (16 days)**. The replay shows both policies on the same widgets, decision-linked events, and then three affected-product outcome numbers: units saved, average pallet difference and stockout product-days avoided. Expand the full comparison for affected products and the whole warehouse.
 
-After approval, earlier-stage changes should be blocked. This makes the difference between exploring a plan and approving it visible.
+The unmodified 20 July run is adverse to the plan on lost units: **11,528** versus **10,191** for the rule. Average pallets are **36.6402** versus **44.6169**; peak pallets are **49.9550** versus **65.4033**. The rule's peak is 92.1% of the 71-pallet capacity in this selected window. Do not describe this as an overall policy win or as a measured real-world saving.
 
-## 4. Inspect a purchase recommendation
+## 4. Quiet week and reset
 
-In Execute & watch, inspect one SKU's supplier ordering date, protection interval, forecast range, stock position and final number of cases. Explain any capacity cut and the minimum order quantity. Confirm one synthetic purchase order and export the order CSV.
+In sidebar **Settings**, choose **22 June 2026** and apply. Its production cohort fit has **zero cards**, although four CUSUM early warnings can still appear. Return to 20 July. Settings reset clears planning progress for the current simulation, including context overrides, while retaining synthetic source data and provider allowance. Reloading the app alone preserves saved plans. The `python -m scoop.synth.load` command is for first setup or an intentional full data replacement.
 
-The confirmed line becomes read-only. The API regression test also repeats the identical confirmation and verifies that only one purchase order exists. This does not transmit an order to a supplier or rewrite historical stock snapshots.
+## Evidence to cite
 
-## 5. Watch the assumption
-
-Add a fill-rate, days-cover, capacity, delay or tag-share watch with an explicit scope and assumption. Reload the app and verify that the decision, order status, conversation and watch remain present. Browse the relevant store and catalog items for source context. Prepare the following week to see carried assumptions and the previous-week recap. Prior approval snapshots remain unchanged when a later watch is edited.
-
-## 6. Show the evidence and boundaries
-
-Open evaluation results. State the exact synthetic period and baseline, and report both inventory and service outcomes. Use `docs/ALGORITHM_NOTES.md` to explain false alarms, misses and modelling approximations. A requested service level is not a measured service guarantee.
-
-## Reset and repeat
-
-Open Settings in the sidebar. Choose a simulation scenario and week, then apply it. Existing plans in that simulation are reused. Switching between simulation worlds preserves each world's progress, with separate source data and model caches.
-
-Reset in Settings clears planning progress for the current simulation and prepares a fresh week. Its confirmation explains the affected records. Other simulations and the assistant allowance are retained. The generator command in the installation instructions is a first-setup operation, not the normal repeat-demo workflow.
-
-## Saved walkthrough in the local delivery
-
-- The original simulation's clock is July 27. Its newest plan starts in Discover; its questions reflect the saved review and conversation.
-- July 20 remains available in Plan history at Execute & watch. It uses a 96% service preference and a Water-based +10% direction limited to Kowloon.
-- Dragon Fruit Smoothie Cup was recommended at 25 cases and manually confirmed at 26. Its detail panel and saved real-model answer distinguish those quantities.
-- The Fruit/HK Island watch was edited during Execute. Its approved Direction copy retains the original wording; the current version carries to July 27.
-- July 27's prior-week recap shows one confirmed purchase and 26 cases, using observations through July 26. It does not claim the demonstration purchase caused the observed service result.
-- Local launchers accept either live or offline assistant health; provider choice does not make an already-running server appear unavailable.
+The measured default and quiet weeks, arrival timing and policy comparison are recorded in [the work ledger](overnight-report.md) and `reports/p6-play-final.json` / `reports/p6-week-evaluation.json`. The corrected P1 null-world test has 4 root splits in 34 weeks, exceeding the maximum of 3. The default week also does not isolate the planted strawberry four as the first card. No statistical threshold or other algorithm parameter was tuned to make those checks pass. This synthetic demonstration does not establish retail savings.

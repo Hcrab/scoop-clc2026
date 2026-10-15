@@ -1,0 +1,27 @@
+{
+  "checkout": "C:\\Users\\ping\\Documents\\Codex\\2026-10-14\\new-chat\\work\\scoop-clean-p7-20261015",
+  "configured_provider": "gemini",
+  "key_empty": true,
+  "transport": "Real FastAPI TestClient ASGI startup, no separate TCP listener",
+  "health": {
+    "status": "ok",
+    "synthetic": true,
+    "provider": "scripted",
+    "label": "Demo assistant",
+    "live": false,
+    "available": true
+  },
+  "frontend_status": 200,
+  "seed": 93,
+  "week": "2026-07-20",
+  "products": 75,
+  "order_rows": 75,
+  "cohort_cards": 5,
+  "report": "minimal offline card list",
+  "scripted_widget_edit_and_exact_undo": true,
+  "orders_review": {
+    "stage": "direction"
+  },
+  "provider_calls_before": 0,
+  "provider_calls_after": 0
+}

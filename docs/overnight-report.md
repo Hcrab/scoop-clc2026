@@ -4,7 +4,7 @@
 
 The user's latest acceptance checklist supersedes the earlier permission to move on whenever a phase blocks. A phase now advances only after all checks pass, except a failure that can only be corrected by forbidden tuning, recorded as **❌ BLOCKED** with evidence. The authorized SKU-block/district-within-SKU permutation correction is being evaluated first. The authorized world-capacity correction is reserved for P6. The newly attached tuning-phase handoff has not been read; it is for after feature freeze.
 
-P1 was evaluated under the explicit no-tuning exception. P2 was accepted and pushed as `d21fbe8`; P3 was accepted and pushed as `281b372`; P4 was accepted and pushed as `de758c4`; P5 was accepted and pushed as `f59f735` (remote SHAs verified). P6 is accepted under the same explicit no-tuning exception for the isolated strawberry first-card criterion. Earlier checkpoint statements below are historical evidence, not acceptance of these new gates.
+P1 was evaluated under the explicit no-tuning exception. P2 was accepted and pushed as `d21fbe8`; P3 was accepted and pushed as `281b372`; P4 was accepted and pushed as `de758c4`; P5 was accepted and pushed as `f59f735`; P6 was accepted and pushed as `1e67a60` (remote SHAs verified). P6 retains the same explicit no-tuning exception for the isolated strawberry first-card criterion. P7 is in progress. Earlier checkpoint statements below are historical evidence, not acceptance of these new gates.
 
 The original 15 October 10:00 Asia/Shanghai deadline was missed. At 11:20, P3 was the latest accepted phase and P4 still lacked integrated browser evidence. The user subsequently explicitly authorized continuing until told to stop. Work continues under the same phase gates and $20 API allowance; the missed deadline is not counted as completion or an acceptance exception.
 
@@ -124,14 +124,14 @@ Default report review: the first real3.8Flash report was numerically accepted bu
 
 Usage at P6 acceptance:126calls, estimated/reserved **$13.798571/$20**. The local call-count ceiling was raised120→200 to permit the already authorized $20 allowance; the dollar limit, all existing usage and unknown-outcome reservations were retained.
 
-### P7 — Docs: NOT YET STARTED UNDER NEW GATE
-- ❌ Clean-clone README commands/output: pending.
-- ❌ Technical architecture/algorithm sections/Simplifications/Limitations/disclosure: update and audit pending.
-- ❌ App starts and works with empty GEMINI_API_KEY: pending.
+### P7 — Docs: ACCEPTED
+- ✅ Clean-clone README recipe: fresh clone of`1e67a60` in sibling`scoop-clean-p7-20261015`, new venv and independent database`scoop_clean_p7_20261015`; no source-world/model cache copied. Pinned pip install, `pip check` (No broken requirements found), frozen frontend install (+72packages) and53-module build passed. `python -m scoop.synth.load`:1,233,000rows,6.6seconds,71pallets. `python -m scoop.prepare_demo`:trained all five April–August monthly models from zero and printed`Demo ready: P20260720 seed 93 week 2026-07-20`. Runtime tracked diff in the clone is empty. Evidence: `reports/p7-clean-runtime.txt`, `p7-clean-build.txt`, `p7-clean-environment.json`. Verified environment:Python3.12.14/PostgreSQL17.11/Node24.19.0/pnpm11.25.0. The final documentation follows this tested recipe; only the new browser harness was copied into the clone, not runtime source or caches.
+- ✅ Technical documentation: `docs/TECHNICAL_DESIGN.md` has the Mermaid architecture,12individual algorithm sections with actual formulas/code paths, Simplifications, Limitations and AI disclosure. `docs/THIRD_PARTY.md` uses checked installed licence metadata (`reports/p7-dependency-metadata.json`) plus PostgreSQL's official licence page. README/DEMO/ASSISTANT reflect the current three-stage flow,75SKUs,20Julydefault,quiet22June,optionalcontext/Undo,canonicalwidgets and actual adverse Play outcomes. Central review removed retired classification/watch-approval descriptions and corrected the old12/17count to the fixed4/34result.
+- ✅ Empty-key application: clone configured with provider=gemini and a genuinely empty key. `scripts/smoke-empty-key.py` uses the clone's Python/PYTHONPATH and actual FastAPI TestClient startup: `/health` returnsscripted/live=false, builtfrontend200,75products/75orders/5cohortcards, minimal report, scripted widget creation, exact dashboardUndo and progression toOrders all pass; provider call count stays0. `frontend/e2e/empty-key-startup.spec.ts` in the clone → **1passed in21.2s**, with real app responses overstdio, no fabricated responses or separateTCP listener. `reports/p7-empty-key-smoke.json`, `p7-empty-key-browser.json`, `p7-empty-key-browser.txt`; `docs/screenshots/p7-empty-key-report.png` inspected. This is ASGI app startup and browser functionality, not a claim of a separately launched empty-key TCP service. The screenshot is after the smoke's actual Orders progression, with Report selected for inspection.
 
 ### P8 — Walkthrough: NOT YET STARTED UNDER NEW GATE
 - ❌ `frontend/e2e/walkthrough.spec.ts` passes end to end: pending.
-- ❌ Every step screenshot in `docs/screenshots/`: only renderer fixture exists so far, not full walkthrough.
+- ❌ Every walkthrough step screenshot in `docs/screenshots/`: earlier phase screenshots exist; the dedicated P8 sequence is pending.
 - ❌ Complete acceptance ledger and overnight report: current ledger explicitly records incomplete checks; final evidence pending.
 
 ## Authoritative scope

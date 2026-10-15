@@ -1,45 +1,29 @@
-# Plan discussion
+# Assistant and report
 
-The live assistant uses Gemini to interpret a question and choose from a small set of validated planning tools. Forecasting, quantity calculations, scope checks and database changes remain in Python. The offline assistant uses the same mutation tools for its supported commands.
+Scoop's live assistant uses **Gemini `gemini-3.8-flash`** to choose validated evidence and planning tools. Forecasts, cohort fitting, order quantities, dashboard persistence and Play remain application calculations. The model writes an explanation; the app draws charts from saved numeric series. It does not accept model-supplied SVG chart code.
 
-## Local configuration
+## Configuration
 
-Set `SCOOP_LLM_PROVIDER=gemini` in the ignored local `.env`. Supply `GEMINI_API_KEY` in the server process environment. The key is used only in the HTTPS `x-goog-api-key` request header to Google's Gemini endpoint; it is not returned to the browser, included in URLs, or written to the usage ledger. `scripted` remains the portable default in `.env.example`.
+The portable `.env.example` selects `SCOOP_LLM_PROVIDER=scripted`, leaves `GEMINI_API_KEY` empty, and sets a US$3 estimated allowance with 120 calls. For live assistance, set `SCOOP_LLM_PROVIDER=gemini` in the ignored local `.env`, provide `GEMINI_API_KEY` in the server process environment, and restart the API. The key is used in the HTTPS `x-goog-api-key` header; it is not returned to the browser, placed in a URL or written to the usage ledger. `SCOOP_GEMINI_MODEL` selects another compatible model without changing the frontend. The local acceptance run's US$20/200-call allowance is not the portable default.
 
-The selected model is `gemini-3.8-flash`, as requested on 15 October 2026. The implementation uses REST function declarations and preserves opaque thought signatures within the tool loop. A model can be changed through `SCOOP_GEMINI_MODEL` without changing frontend code. Live browser acceptance is recorded in `overnight-report.md`.
+`python -m scoop.prepare_demo` builds the default 20 July plan without a provider call. `python -m scoop.prepare_demo --report` explicitly requests report preparation and may consume allowance when Gemini is configured. The UI can also prepare or retry a weekly review. Opening an already saved report or chat does not repeat its investigation.
 
-## Data and actions
+## What the live agent sees and can do
 
-Each request receives the active synthetic plan, compact category/product catalogs, a saved query index, and up to eight recent messages from that same plan and stage. It can inspect a finding, a purchase recommendation or a scoped historical measure, and run a temperature scenario. It writes requested context overrides, final-case batch edits, and dashboard widgets through the same APIs as the UI. Every edit has a before/after receipt and Undo. There is no SQL, shell, browser, arbitrary URL, credential-reading, stage-approval or purchase-confirmation tool.
+The weekly investigation starts from the mechanical scan and saved cohort cards, then can inspect catalog groups, intersections and parent comparisons, operational records and procurement consequences. It saves chosen queries and results, evidence IDs, report claims, questions, model version and usage. The report presents significant and secondary observations with source links; new distinct observations have their own blocks. It may draw a reasonable inference, but an exploratory query is not part of the calibrated detector family and does not prove causation.
 
-Both provider instructions and server-side intent checks keep informational questions and hypotheticals read-only. The server validates tool arguments, plan ownership, product/district scope and the current stage. A calculation scenario never changes saved directions or orders. Ambiguous or unsupported actions should be clarified rather than guessed.
+The conversation receives the active synthetic plan, compact catalogs, saved query index and recent messages from that plan and stage. It can answer questions, inspect a cohort or order, run a read-only temperature scenario, and apply **explicitly requested** context, objective, case-quantity or dashboard-widget edits. Context rules are optional and recompute derived orders and cards. Edits have Before/After receipts and Undo. The assistant can use the canonical widget tools, so a widget added in chat uses the same server layout as a UI widget and appears in Play.
 
-The browser streams actual progress labels for context loading, provider requests and tool execution. These labels describe observable operations; they are not hidden model reasoning. The final success response is sent only after the transaction commits. Tool results and the provider used are saved with the assistant message under expandable response details.
+There is no arbitrary SQL, shell, browser, URL fetch, credential-reading, stage-approval or purchase-confirmation tool. The server checks tool arguments, plan ownership, scope and stage; informational questions and hypotheticals are read-only. The user controls progression from **Report & direction → Orders → Watch & play**. Open discussion topics can remain open when the user continues.
 
-## Weekly exploration and conversation
+The assistant uses actual tool totals for affected case counts. Progress labels report observable context, provider and tool steps, not hidden reasoning. A success reply follows the database commit. Response details retain tool results and provider identity for review.
 
-After a new plan's mechanical scan, the live agent chooses additional read-only queries before submitting an integrated weekly report with an AI-authored title, HTML/CSS, charts and interactive evidence. Existing plans offer Explore this week. Completed reports are reused; GET requests and opening the conversation do not spend provider calls. A failed or offline review leaves the mechanical plan available and supports retry.
+## Offline behavior and limits
 
-The agent can list catalog groups, query intersections and parent comparisons, inspect operational records, and preview procurement consequences using the existing algorithms. The agent chooses query arguments and follow-ups from returned evidence. The saved review includes query arguments/results, evidence IDs, claims, questions, model version and usage. Query IDs referenced by claims must exist. This is exploratory investigation, not an extension of the calibrated mechanical FDR family or proof of causation.
+With an empty key or unavailable provider, the app still offers mechanical cohort cards, a **minimal card-list report**, and a scripted assistant for supported commands. It does not perform autonomous Gemini exploration or produce the same authored report. If a provider fails after an edit tool has already run, the app reports the recorded result rather than running the edit again through the fallback. Failed transactions do not emit success.
 
-The conversation opens with observations and specific numbered business questions, followed by normal text input. The report and query evidence are available to subsequent chat turns. Questions that require local knowledge or a purchasing choice remain explicit; a numerical result alone is not human authorization to change an order.
+The default allowance is 120 provider calls and an estimated US$3 lifetime budget for the local demo. A ledger under ignored `data/cache/` reserves allowance before requests and stores digests and aggregate token counts, not prompts or keys. Unknown transport outcomes retain reservations. The estimates are not billing statements.
 
-The assistant maintains question state in the plan, exposed as `discussion.items` and `discussion.open_count`. A completed review replaces untouched mechanical prompts with its actual questions. During conversation, the assistant can add a relevant follow-up, resolve a question after addressing it, or reopen it. The top-right assistant badge reads this saved state.
+The assistant remains a probabilistic writer. Numeric claims should be checked against cited data and edit receipts. Absence of a recorded promotion does not prove a preference shift; a cohort association does not prove causation; forecasted warehouse space and requested service are not guaranteed outcomes. The unmodified 20 July synthetic Play loses 11,528 units under the plan versus 10,191 under the moving-average rule. The P1 null-world and planted-subgroup acceptance checks remain blocked without tuning; see [the work ledger](overnight-report.md) and [algorithm notes](ALGORITHM_NOTES.md).
 
-Agenda updates are advisory metadata. They do not approve stages, classify a finding, change a buying direction or confirm a purchase. Those business actions keep their own validated tools and explicit intent rules. An explicit finding interpretation also resolves its related discussion topic. Merely continuing to another stage leaves open topics open and preserves unanswered question records.
-
-The human controls Continue. Discussion progress is kept independently of the stage transition; it is not an approval prerequisite.
-
-## Failure behavior and allowance
-
-The default allowance is 120 provider calls and a conservative estimated US$3 total across this local demo's lifetime. Chat uses up to four calls; weekly exploration uses up to seven rounds and twelve additional queries. A SQLite ledger under ignored `data/cache/` reserves allowance atomically before each request, including that request's actual output cap. It stores digests and aggregate token counts including thinking, but no prompt text or key. Unknown transport outcomes retain reservations. Gemini 4 estimates use conservative US$4/20 per million input/output tokens (the documented post-introductory rates); other models retain the previous US$1.50/7.50 estimate. These estimates are not a billing statement.
-
-If the provider cannot start, the response explicitly identifies the offline demo fallback. If an explanation fails after a tool has already run, the assistant summarizes those recorded tool results and does not rerun the mutation through the fallback. Invalid stages/scopes roll back; a failed database transaction never emits a success event. A single local live request runs at a time to avoid accidental parallel actions and uncontrolled spend.
-
-## Interpretation limits
-
-The assistant is still a probabilistic writer. Its numeric answers must come from context or tools; tool evidence is available for review. Absence of a recorded promotion does not prove a preference shift, a mix decomposition does not identify customers who switched, and observed warehouse space is not a guarantee about future arrivals. Historical service measurements are separate from forecasts and cannot prove the effect of a confirmed demo order. These limits are explicit in the prompt and real-response review; they are not a claim that hallucination is impossible.
-
-Provider documentation: [Function calling](https://ai.google.dev/gemini-api/docs/function-calling), [generateContent REST API](https://ai.google.dev/api/generate-content).
-
-The weekly report uses saved cohort cards as its backbone, with CUSUM early warnings and additional queries chosen by the agent. Cards remain available without AI. Distinct new observations receive their own illustrated report blocks; layout guidance remains advisory, with no sentence-style gate. Generated HTML runs in an isolated report frame with source links to saved evidence. See AI_REPORTS.md.
+Provider references: [Gemini function calling](https://ai.google.dev/gemini-api/docs/function-calling) and [generateContent REST API](https://ai.google.dev/api/generate-content).

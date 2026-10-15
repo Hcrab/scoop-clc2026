@@ -1,0 +1,12 @@
+{
+  "transport": "Real FastAPI TestClient over stdio; no fabricated responses or TCP listener",
+  "key_empty": true,
+  "provider": "scripted",
+  "week": "2026-07-20",
+  "products": 75,
+  "cohort_cards": 5,
+  "report_articles": 5,
+  "model_svg": 0,
+  "order_rows": 75,
+  "screenshot": "docs/screenshots/p7-empty-key-report.png"
+}
