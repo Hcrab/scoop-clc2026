@@ -37,8 +37,12 @@ helps explain and order these findings; it does not make a pronounced subgroup a
 Choose this grouping afresh from the evidence, even when a saved narrative used a different order.
 Let the evidence determine the number and kinds of observations; neither section has quotas.
 1. Main observations: clear departures from expectation, illustrated in aligned cards.
-   Each card has a plain group name, small scope/date context, one main comparison and a compact
-   chart. A short paragraph explains what the pattern means or the best explanation worth testing.
+   Each card has a plain group name, small scope/date context, one key number and a compact
+   chart. When a fitted effect is supplied, make that estimated effect the one prominent
+   data-report-key. Show the recent 14-day requested-versus-forecast deviation and observed
+   fill rate, where available, as small muted context with one decimal place. A query-only
+   observation without a fitted effect uses its own appropriate measured comparison as the key;
+   do not invent a fit. A short paragraph explains what the pattern means or the best explanation worth testing.
    Finish the section with one overall conclusion that advances the reasoning rather than repeating
    the numbers. Avoid putting a KPI strip, a full comparison chart and a prose section all about
    the same facts. One observation has one home.
@@ -49,10 +53,11 @@ Let the evidence determine the number and kinds of observations; neither section
 2. Secondary observations: less pronounced changes, meaningful stability and tentative leads.
    Include a useful chart and explain their implication or what to watch next.
    Relevant questions about local events can sit here in one concise conversation prompt.
-3. Action recommendations: a clean aligned list of Increase / Reduce / Hold with the actual group
-   names and a brief rationale or next action. If groups overlap, identify which products the action
-   targets rather than giving contradictory instructions. Put a material capacity constraint here
-   once, alongside what to do about it. Recommendations are clear proposals, not approved purchases.
+3. Action recommendations: end the report with only a short list of supplied native action rows.
+   Each row already shows the computed Increase / Reduce / Hold direction, illustration, group
+   and magnitude; it links to the full explanation in the direction sidebar. These rows are
+   the complete action summary. Put analysis in the observation sections and leave purchasing
+   quantities and all capacity commentary to the sidebar.
 Merge or omit material when evidence warrants. Meaningful stable comparisons belong in the story;
 do not manufacture a stable category merely because no alarm fired.
 
@@ -64,18 +69,14 @@ calibration details and query arithmetic belong behind the query button. Keep th
 concise for conversation; it isn't a second visible report. Do not show plan-goal or stage badges.
 Keep the report economical while giving each distinct relevant observation enough space to be understood.
 Treat source claims as evidence to synthesize, not sentences to copy. A card normally needs one
-headline deviation and an actual/expected graphic; omit extra share statistics and contributor lists
+key estimated effect, when supplied, and an actual/expected graphic; omit extra share statistics and contributor lists
 unless they change its explanation. One primary query button per card is enough; related sources
 remain available in the evidence index. There is no need for alarm dates in each card subtitle.
 For example, summarize a broad pattern and explain whether unmet store requests make it a
-replenishment priority. The supporting numbers stay in evidence. For an action row, describe
-the measured adjustment to the forecast and the products it affects, rather than a buying-factor
-coefficient, forecast arithmetic, SKU codes or a promised fill rate. Clarify overlapping groups.
-Action rows should add the proposed response, not replay the observations. Capacity needs one useful
-comparison and an operational response, not a recap of every baseline, preview and allocation number.
-Keep action rows consistent with the computed product orders. An overlapping subgroup already
-covered by another action need not get a second row; "hold at baseline" applies only when its
-computed order change is zero.
+replenishment priority. The supporting numbers stay in evidence. Use the supplied native rows
+for actions; their direction and magnitude come from the ordering algorithm. Avoid a second
+buying table, repeated observations, quantities or a warehouse-capacity paragraph here.
+An overlapping subgroup already covered by another action need not get a second row.
 Describe an exploratory signal in business terms, such as "Check whether the local uplift continues
 next week"; do not refer to internal significance gates in the visible narrative.
 Use observed replenishment requests, not claimed consumer sales. Name the comparison: deviation
@@ -96,22 +97,21 @@ VISUAL DIRECTION
 Warm off-white background, white cards, dark green text, muted green / coral / violet accents.
 Use restrained typography, generous but purposeful spacing, equal-width cards and aligned metrics.
 Let card widths and column counts follow the content and available space, stacking on a narrow screen.
-Use a real grid for action rows, never variable-width text columns that drift out of alignment.
+Arrange native action rows in a compact list that can wrap within the available width.
 Place each supplied purchasing adjustment with <figure data-card="cohort" data-id="leaf-0"></figure>,
-using the actual id of a supplied cohort card. The host draws its cases, pallets and other values.
-The native card already contains its group name, effect and purchasing adjustment; surrounding
-copy should explain the proposed response rather than repeat that heading or its numbers.
-Arrange the native figures as a simple list or CSS grid. Keep them out of tables. In particular,
-an "Operational focus" cell must not repeat cases or pallets already supplied by a native card.
-Use Q-cohort-<id> as the associated evidence source. Do not author a second adjustment table
-or repeat card quantities in prose. You may still use tables for other analytical data.
+using the actual id of a supplied cohort card. The host renders a compact clickable row from
+the algorithm's direction and magnitude, with the illustration and group name. The click focuses
+the corresponding right-hand detail card. Do not author labels or magnitudes around these figures;
+do not repeat the rows in a table or prose. Use Q-cohort-<id> as the associated evidence source.
+You may still use tables for other analytical data.
 Use a host-rendered line chart figure for quantities. The host labels values and units.
 Don't decorate all text
 with dotted underlines. Query IDs should not be displayed as prominent badges.
 
 CARD INTERACTION CONTRACT (host supplies the JavaScript)
-Wrap each observation in an element with data-report-card. Mark its compact metric/chart block with
-data-report-summary. Put a small accessible expand icon button at the top right, data-trend-id="Q2",
+Wrap each observation in an element with data-report-card. Mark its single key metric with
+data-report-key and its compact metric/chart block with data-report-summary. Put a small accessible
+expand icon button at the top right, data-trend-id="Q2",
 using relevant Q evidence. The host expands that same card into a daily actual vs
 expected line chart and available time ranges. It only draws prior-year data when supplied. Never
 invent dates, time-series points or a last-year curve. Specify a chart as
@@ -132,7 +132,7 @@ SKELETON EXAMPLE (layout reference only; substitute real evidence and write your
  <article data-report-card class="observation">
   <header class="card-top"><div><small>All districts</small><h3>Group name</h3></div>
    <button data-trend-id="Q2" aria-label="Expand trend">↗</button></header>
-  <div data-report-summary><figure data-chart="line" data-evidence-id="Q2" data-series="actual,expected"></figure></div>
+  <div data-report-summary><strong data-report-key><!-- supported estimated effect or query measure --></strong><figure data-chart="line" data-evidence-id="Q2" data-series="actual,expected"></figure></div>
   <p><!-- Meaning or explanation, not the same numbers again --></p>
   <footer><button data-evidence-id="Q2" aria-label="View query">⌕</button></footer>
  </article></div><p class="conclusion"><!-- Integrated conclusion --></p></section>

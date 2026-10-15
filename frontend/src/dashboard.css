@@ -9,6 +9,8 @@
 .dashboard-widget h3{font-size:var(--type-label);line-height:1.35;margin:0 0 3px;color:var(--ink)}
 .dashboard-warning{font-size:var(--type-label);color:#a94f40;background:#fff1ed;border-radius:99px;padding:3px 8px}
 .dashboard-value{display:block;font-size:var(--type-key);line-height:1.2;font-variant-numeric:tabular-nums;margin:12px 0;color:var(--ink)}
+.dashboard-value strong{font:inherit;font-weight:700}
+.dashboard-value small{display:block;margin-top:4px;font-size:var(--type-label);font-weight:400}
 .dashboard-current-state{display:block;margin-top:-7px;margin-bottom:9px}
 .dashboard-current-state.warning{color:#a94f40}
 .dashboard-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:8px}

@@ -9,7 +9,7 @@ from sqlalchemy import select, delete
 
 from . import service
 from ..cohort_context import load_overrides, put_override, save_overrides
-from ..models import PurchaseSuggestion, Store, Product, WatchItem, Decision, StoreOrder
+from ..models import PurchaseSuggestion, Store, Product, WatchItem, Decision, StoreOrder, DirectionItem
 
 router = APIRouter(prefix='/api')
 
@@ -42,6 +42,41 @@ class OrderChange(BaseModel):
 class BulkOrderRequest(BaseModel):
     filter: OrderFilter = Field(default_factory=OrderFilter)
     change: OrderChange
+
+
+class DirectionPreviewRequest(BaseModel):
+    service_level: float | None = Field(default=None, ge=.50, le=.98, allow_inf_nan=False)
+
+
+def direction_preview(session, plan, service_level):
+    """Calculate a proposed service target from the saved contextual cohort fit."""
+    from ..algorithms.replenish import critical_ratio
+    from ..planning import suggest_orders
+
+    directions = [service.row(d) for d in service.objects(session, DirectionItem, plan.id)]
+    saved_model = (plan.summary or {}).get('cohort_model') or None
+    orders = suggest_orders(plan.week_start, directions, service_level=service_level,
+                            goal=plan.goal, cohort_result=saved_model, overrides=[])
+    default_level = {'fill_rate': .97, 'sales': .98}.get(plan.goal)
+    products = session.scalars(select(Product)).all()
+    automatic = (sum(critical_ratio(p.price_hkd, p.cost_hkd, default_level)
+                     for p in products) / len(products)) if products else 0.
+    capacity = float(orders.attrs['capacity_pallets'])
+    inherited = float(orders.attrs['inherited_peak_pallets'])
+    projected = float(orders.projected_pallets.max())
+    return {'service_level': service_level, 'auto_service_level': automatic,
+            'cases': int(orders.final_cases.sum()),
+            'projected_peak_pallets': projected, 'capacity_pallets': capacity,
+            'inherited_peak_pallets': inherited,
+            'inherited_excess_pallets': max(0., inherited-capacity),
+            'incremental_excess_pallets': max(0., projected-max(inherited, capacity))}
+
+
+@router.post('/plans/{pid}/direction-preview')
+def preview_direction(pid: str, body: DirectionPreviewRequest):
+    with service.session_scope() as session:
+        plan = service.plan_for(session, pid)
+        return service.clean(direction_preview(session, plan, body.service_level))
 
 
 def order_snapshot(session, plan):

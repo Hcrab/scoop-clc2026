@@ -48,3 +48,37 @@
 .discover-with-cohorts>.original-findings .signal-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr))}.original-findings .signal-choice:last-child:nth-child(odd){grid-column:auto}
 .cohort-numbers>.product-icon{margin-left:auto}
 .cohort-heading{display:flex;align-items:center;gap:12px;min-width:0}.cohort-heading>.product-icon{flex:none}.cohort-path{display:flex;gap:5px;margin:12px 0 0!important;overflow-x:auto;white-space:nowrap}.cohort-path span{border-radius:999px;background:#eef3ea;color:#476653;padding:3px 8px;font-size:var(--type-label)}.cohort-path span+span:before{content:'›';margin-right:7px;color:#8ca18e}.cohort-how{margin:12px 0;border-top:1px solid #dce6dc;padding-top:10px}.cohort-how>summary{font-size:var(--type-label)}
+
+/* The report owns the available height; its two columns keep separate scroll positions. */
+.report-view .workspace{height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+.report-view .workspace>.topbar{flex:none}
+.report-view .workspace>main{flex:1;min-height:0;width:100%;max-width:1540px;margin:0 auto;display:flex;flex-direction:column;overflow:hidden}
+.report-view .page-heading,.report-view .plan-toolbar,.report-view .stage-tabs,.report-view .inline-refresh,.report-view .flow-notice{flex:none}
+.report-view .discover-with-cohorts{flex:1;min-height:0;min-width:0;overflow:hidden;align-items:stretch;padding-bottom:16px}
+.report-view .discover-with-cohorts>.report-column,.report-view .discover-with-cohorts>.cohort-panel{min-width:0;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#cbdacb transparent}
+.report-view .discover-with-cohorts>.report-column{padding-right:8px}
+.report-view .discover-with-cohorts>.cohort-panel{padding-right:8px}
+.report-view .page-footer{display:none}
+.discover-with-cohorts .report-column>.original-findings{border-top:1px solid var(--line);padding-top:20px;margin-top:24px}
+.discover-with-cohorts .report-column>.original-findings .signal-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr))}
+.cohort-service{padding-bottom:20px;margin-bottom:22px}
+.cohort-service-heading,.cohort-service-ends,.cohort-preview-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cohort-service-heading{margin-bottom:10px}
+.cohort-service-heading label{margin:0;color:#284f3d;font-size:var(--type-body);font-weight:600}
+.cohort-service-heading strong{font-size:var(--type-body);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cohort-service-heading strong span{font-size:var(--type-label);color:#607563;font-weight:500}
+.cohort-service>input[type=range]{display:block;width:100%;padding:0;margin:5px 0 4px;accent-color:#205a4e;cursor:pointer}
+.cohort-service-ends{font-size:var(--type-label);color:#607563}
+.cohort-reset{display:block;margin:10px 0 0;color:#285447;font-size:var(--type-label);text-decoration:underline;text-underline-offset:3px}
+.cohort-preview-row{align-items:flex-start;flex-wrap:wrap;margin-top:15px}
+.cohort-preview-row p{flex:1 1 245px;color:#284f3d;font-size:var(--type-label);font-weight:550;font-variant-numeric:tabular-nums}
+.cohort-preview-row .button{flex:none}
+.cohort-excess{margin-top:10px;color:#936119;background:#fcf3df;padding:9px 11px;border-radius:6px;font-size:var(--type-label)}
+.cohort-panel .cohort-key{font-size:var(--type-body)!important;white-space:normal;line-height:1.4}
+.cohort-capacity.over{color:#936119;font-weight:600}
+.cohort-card{scroll-margin:12px;transition:background-color .25s,box-shadow .25s}
+.cohort-card:focus-visible{outline:3px solid #75ad98;outline-offset:-3px}
+.cohort-card.is-highlighted{background:#eef6e9;box-shadow:0 0 0 8px #eef6e9}
+@media(max-width:1050px){.report-view .workspace{height:auto;min-height:100dvh;overflow:visible}.report-view .workspace>main{display:block;overflow:visible}.report-view .discover-with-cohorts{overflow:visible;padding-bottom:0}.report-view .discover-with-cohorts>.report-column,.report-view .discover-with-cohorts>.cohort-panel{overflow:visible;padding-right:0}.report-view .page-footer{display:flex}}
+@media(min-width:1051px){.with-dock.report-view .workspace{height:auto;min-height:100dvh;overflow:visible}.with-dock.report-view .workspace>main{display:block;overflow:visible}.with-dock.report-view .discover-with-cohorts{grid-template-columns:1fr;overflow:visible;padding-bottom:0}.with-dock.report-view .discover-with-cohorts>.report-column,.with-dock.report-view .discover-with-cohorts>.cohort-panel{overflow:visible;padding-right:0}.with-dock.report-view .page-footer{display:flex}}
+@media(prefers-reduced-motion:reduce){.cohort-card{transition:none}}

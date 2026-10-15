@@ -27,9 +27,9 @@ export function Recap({detail}:{detail:Detail}) {
 }
 export function Discovery({detail,readonly,pending,onDiscuss,selectedFinding,onSelectFinding,onReview,onDiscussEvidence,onOpenEvidence,revision,onChanged}:{detail:Detail;readonly:boolean;pending:boolean;tagName:(id:string)=>string;onDiscuss:(id:string)=>void;onReview?:()=>Promise<boolean>;onDiscussEvidence?:(id:string)=>void;onOpenEvidence:(id:string)=>void;selectedFinding?:string;onSelectFinding?:(id:string)=>void;revision:number;onChanged:()=>void}) {
  return <section className="discovery discover-with-cohorts">
- <div><WeeklyReviewSection key={detail.plan.id} detail={detail} readonly={readonly} pending={pending} onReview={onReview} onDiscuss={onDiscuss} onSelectFinding={onSelectFinding} onDiscussEvidence={onDiscussEvidence} onOpenEvidence={onOpenEvidence}/></div>
+ <div className="report-column"><WeeklyReviewSection key={detail.plan.id} detail={detail} readonly={readonly} pending={pending} onReview={onReview} onDiscuss={onDiscuss} onSelectFinding={onSelectFinding} onDiscussEvidence={onDiscussEvidence} onOpenEvidence={onOpenEvidence}/>
+ {(detail.findings.length>0||!!detail.cohort_observations?.length)&&<details className="original-findings"><summary>All observations · {(detail.cohort_observations?.length||0)+detail.findings.length}</summary><MechanicalFindings detail={detail} pending={pending} onDiscuss={onDiscuss} selectedFinding={selectedFinding} onSelectFinding={onSelectFinding}/></details>}</div>
  <CohortCards key={detail.plan.id} detail={detail} revision={revision} onChanged={onChanged}/>
- {(detail.findings.length>0||!!detail.cohort_observations?.length)&&<details className="original-findings"><summary>All observations · {(detail.cohort_observations?.length||0)+detail.findings.length}</summary><MechanicalFindings detail={detail} pending={pending} onDiscuss={onDiscuss} selectedFinding={selectedFinding} onSelectFinding={onSelectFinding}/></details>}
  </section>;
 }
 function MechanicalFindings({detail,pending,onDiscuss,selectedFinding,onSelectFinding}:{detail:Detail;pending:boolean;onDiscuss:(id:string)=>void;selectedFinding?:string;onSelectFinding?:(id:string)=>void}) {

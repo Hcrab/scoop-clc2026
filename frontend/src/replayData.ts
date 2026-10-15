@@ -18,7 +18,8 @@ const expectedFor=(result:DashboardPlay, policy:Policy, indexes:number[], day:nu
 export function widgetPoint(result:DashboardPlay, widget:DashboardWidget, policy:Policy, products:Product[], day:number, minute:number|null):{value:number|null;expected?:number|null} {
   const run=result.runs[policy], indexes=indexesFor(result,widget);
   const intraday=result.intraday;
-  const live=minute!==null&&!!intraday;
+  // 23:50 is the replay's closing tick: display the settled daily arrays there and in Results.
+  const live=minute!==null&&minute<1430&&!!intraday;
   const slot=live?Math.min(144,Math.max(0,Math.floor(minute/10))):144;
   const demandFactor=live?intraday.demand_cdf[slot]:1;
   const dispatchFactor=live?intraday.dispatch_cdf[slot]:1;
@@ -31,13 +32,18 @@ export function widgetPoint(result:DashboardPlay, widget:DashboardWidget, policy
   },0):sum(run.per_sku.on_hand[day],indexes);
   const lost=live?indexes.reduce((total,i)=>{
     const opening=day===0?intraday.opening_on_hand[i]:run.per_sku.on_hand[day-1]?.[i]||0;
-    const receipt=(minute as number)>=intraday.arrival_minutes[day]?.[i]?(run.per_sku.arrived[day]?.[i]||0):0;
-    return total+Math.min(run.per_sku.lost[day]?.[i]||0,Math.max(0,(result.demand[day]?.[i]||0)*demandFactor-opening-receipt));
+    const finalLoss=run.per_sku.lost[day]?.[i]||0;
+    let greatest=0;
+    for(let at=0;at<=slot;at++){
+      const receipt=intraday.minutes[at]>=intraday.arrival_minutes[day]?.[i]?(run.per_sku.arrived[day]?.[i]||0):0;
+      greatest=Math.max(greatest,Math.min(finalLoss,Math.max(0,(result.demand[day]?.[i]||0)*intraday.demand_cdf[at]-opening-receipt)));
+    }
+    return total+greatest;
   },0):sum(run.per_sku.lost[day],indexes);
   if(widget.metric==='on_hand')return {value:stock};
   if(widget.metric==='lost_units')return {value:lost};
   if(widget.metric==='demand')return {value:demand};
-  if(widget.metric==='fill_rate')return {value:demand?shipped/demand:null};
+  if(widget.metric==='fill_rate')return {value:live&&(minute as number)<1080?null:demand?shipped/demand:null};
   if(widget.metric==='pallets')return {value:palletsFor(result,products,day,minute,policy,indexes)};
   if(widget.metric==='days_cover'){
     const history=(widget.recent_demand||[]).filter(point=>point.date<result.dates[0]).map(point=>point.value);
@@ -50,37 +56,12 @@ export function widgetPoint(result:DashboardPlay, widget:DashboardWidget, policy
   return {value:demand,expected:expectedFor(result,policy,indexes,day,demandFactor)};
 }
 
-// The current daily chart point takes the finished hour from the backend's hourly series.
-export function widgetHourPoint(result:DashboardPlay, widget:DashboardWidget, policy:Policy, products:Product[], day:number, hour:number):{value:number|null;expected?:number|null} {
-  if(hour===0)return widgetPoint(result,widget,policy,products,day,0);
-  const indexes=indexesFor(result,widget);
-  const run=result.runs[policy], grid=run.hourly;
-  const at=day*24+hour-1;
-  const accumulated=(key:'demand'|'shipped'|'lost')=>{
-    let total=0;
-    for(let h=0;h<hour;h++)total+=sum(grid[key][day*24+h],indexes);
-    return total;
-  };
-  const stock=sum(grid.on_hand[at],indexes);
-  const demand=accumulated('demand');
-  if(widget.metric==='on_hand')return {value:stock};
-  if(widget.metric==='lost_units')return {value:accumulated('lost')};
-  if(widget.metric==='demand')return {value:demand};
-  if(widget.metric==='fill_rate')return {value:demand?accumulated('shipped')/demand:null};
-  if(widget.metric==='pallets'){
-    const footprints=new Map(products.map(p=>[p.sku,p.units_per_case*p.cases_per_pallet]));
-    return {value:indexes.reduce((total,i)=>total+(grid.on_hand[at]?.[i]||0)/(footprints.get(result.skus[i])||Infinity),0)};
-  }
-  if(widget.metric==='days_cover')return widgetPoint(result,widget,policy,products,day,hour*60);
-  return {value:demand,expected:expectedFor(result,policy,indexes,day,result.intraday.demand_cdf[hour*6])};
-}
-
 export function palletsFor(result:DashboardPlay, products:Product[], day:number, minute:number|null, policy:Policy='scoop', only?:number[]):number {
   const footprints=new Map(products.map(p=>[p.sku,p.units_per_case*p.cases_per_pallet]));
   const indexes=only||result.skus.map((_,i)=>i);
   const run=result.runs[policy];
   const intraday=result.intraday;
-  const live=minute!==null&&!!intraday;
+  const live=minute!==null&&minute<1430&&!!intraday;
   const factor=live?intraday.dispatch_cdf[Math.min(144,Math.max(0,Math.floor(minute/10)))]:1;
   return indexes.reduce((total,i)=>{
     const units=live?(day===0?intraday.opening_on_hand[i]:run.per_sku.on_hand[day-1]?.[i]||0)+((minute as number)>=intraday.arrival_minutes[day]?.[i]?(run.per_sku.arrived[day]?.[i]||0):0)-(run.per_sku.shipped[day]?.[i]||0)*factor:run.per_sku.on_hand[day]?.[i]||0;

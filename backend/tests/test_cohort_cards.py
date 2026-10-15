@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 from types import SimpleNamespace
-from scoop.cohort_cards import build_cards, build_observations, cohort_name
+from scoop.cohort_cards import build_cards, build_observations, cohort_name, magnitude_word
 from test_api_state import api
 
 
@@ -29,6 +29,40 @@ def test_district_cards_share_value_instead_of_duplicating_it():
     assert sum(c['case_change'] for c in split)==combined['case_change']
     assert sum(c['pallet_change'] for c in split)==pytest.approx(combined['pallet_change'])
     assert sorted(c['case_change'] for c in split)==[3,7]
+    assert all(c['action']=='increase' and c['magnitude']=='moderately' for c in split)
+
+
+@pytest.mark.parametrize('effect,word', [
+    (-31, 'sharply'), (-30, 'moderately'), (-10, 'moderately'),
+    (-9.99, 'slightly'), (0, 'slightly'), (9.99, 'slightly'),
+    (10, 'moderately'), (30, 'moderately'), (30.01, 'sharply'),
+])
+def test_magnitude_boundaries_are_symmetric(effect, word):
+    assert magnitude_word(effect) == word
+
+
+@pytest.mark.parametrize('actual,baseline,expected', [
+    (2, 5, 'reduce'), (5, 5, 'hold'), (8, 5, 'increase'),
+])
+def test_action_follows_computed_case_change(actual, baseline, expected):
+    leaf = {'id': 'fruit', 'districts': ['Kowloon'],
+            'tag_path': [{'id': 'family:fruit', 'included': True}],
+            'skus': ['A'], 'split_p_values': [.01],
+            'posterior_mean': .2, 'interval_80': [.1, .3]}
+    fit = {'leaves': [leaf], 'units': [{'sku': 'A', 'leaf_id': 'fruit',
+                                      'expected_recent': 1}],
+           'sku_factors': {'A': {}}, 'method': {}}
+    rows = {'sku': 'A', 'demand_p10': 8, 'demand_p50': 10,
+            'demand_p90': 12, 'inventory_position': 0, 'projected_pallets': 1}
+    orders = pd.DataFrame([{**rows, 'final_cases': actual}])
+    orders.attrs.update(capacity_pallets=10)
+    plain = pd.DataFrame([{**rows, 'final_cases': baseline}])
+    products = pd.DataFrame([{'sku': 'A', 'units_per_case': 10,
+                              'cases_per_pallet': 10, 'price_hkd': 10,
+                              'cost_hkd': 5}])
+    card = build_cards(fit, orders, plain, products, {}, {'A': 'A'})[0]
+    assert card['case_change'] == actual-baseline
+    assert card['action'] == expected
 
 
 def test_positive_parent_exclusions_name_other_without_inventing_format():

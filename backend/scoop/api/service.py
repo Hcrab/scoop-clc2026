@@ -192,7 +192,7 @@ def projection_for(s,p,orders=None):
     if orders is None:
         orders=[row(o) for o in objects(s,PurchaseSuggestion,p.id)]
     cases={o['sku']:o.get('effective_cases',o['final_cases'] if o['final_cases'] is not None else max(0,o['suggested_cases']-o['capacity_cut_cases'])) for o in orders}
-    return clean(confirmation_capacity(p.week_start,cases))
+    return clean(confirmation_capacity(p.week_start,cases,{o['sku']:o['adjustment'] for o in orders}))
 
 def cached_series(tag, districts, start, cutoff, model_version=None):
     """Keep saved evidence attached to the model that produced it."""
@@ -264,7 +264,12 @@ def weekly_review(pid:str):
     from ..ai.weekly import run
     with session_scope() as s:
         p=plan_for(s,pid)
-        return clean(run(s,p))
+        result=run(s,p)
+        if result.get('status')=='complete':
+            from ..demo_reset import capture_initial_plan
+            s.flush()
+            capture_initial_plan(week_start=p.week_start,complete=True,connection=s.connection())
+        return clean(result)
 
 def record_interpretation(s,p,q,answer,source='question'):
     if q.stage!=p.stage: raise HTTPException(409,'Question stage is read-only')
@@ -367,7 +372,7 @@ def order_summary(pid: str):
         groups.extend(grouped.values())
         if remaining: groups.append({'id':'other', 'name':'Other products', 'skus':sorted(remaining)})
         cases = {o.sku:o.final_cases if o.final_cases is not None else max(0,o.suggested_cases-o.capacity_cut_cases) for o in orders}
-        projection = confirmation_capacity(p.week_start, cases)
+        projection = confirmation_capacity(p.week_start, cases, {o.sku:o.adjustment for o in orders})
         return clean({'groups':groups, 'capacity':projection,
                       'edited_skus':sorted({x['value']['sku'] for x in load_overrides(s,p.week_start)
                                             if x['type']=='cases' and x['value']['sku'] in cases})})
@@ -391,7 +396,7 @@ def approve_orders(pid: str):
         for sku, amount in cases.items():
             if 0 < amount < products[sku].moq_cases:
                 raise HTTPException(422, f'{products[sku].name}: minimum {products[sku].moq_cases} cases, or zero')
-        projection = confirmation_capacity(p.week_start, cases)
+        projection = confirmation_capacity(p.week_start, cases, {o.sku:o.adjustment for o in orders})
         if not projection['feasible']:
             raise HTTPException(409, f"Orders add {projection['incremental_overcapacity_pallets']:.2f} pallets above the available arrival capacity. Reduce quantities before approval.")
         for order in orders:

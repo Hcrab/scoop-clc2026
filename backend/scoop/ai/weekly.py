@@ -46,20 +46,21 @@ Label it as an estimate. Raw recent deviation comes from query_group's recent.de
 Keep each fulfillment statistic attached to its exact queried product intersection.
 Every card's peak_capacity is the SAME whole-warehouse projection with all adjustments already
 combined. Its pallet_change is the footprint of purchased cases, not a simultaneous peak change.
-Explain the supplied fits_physical_capacity and physical_capacity_excess_pallets directly;
-the ordering algorithm computes capacity, and category footprints do not recompute that peak.
+Use fits_physical_capacity and physical_capacity_excess_pallets to understand the proposed orders;
+the right-hand direction column presents that capacity context. Category footprints do not recompute the peak.
 Inherited_peak_pallets comes from existing stock and in-transit commitments before new purchases.
 When it exceeds the limit, reducing this week's new purchases cannot erase that inherited excess.
 Weather is already in the forecast: a residual change alone does not establish a seasonal cause.
 The order list owns final quantities. In the report's action section, state which groups to
 increase, reduce or hold and why. Show each proposed adjustment once through its native
 <figure data-card="cohort" data-id="leaf-0"></figure>, using the supplied card's actual id;
-cite that card with Q-cohort-<id>. The host presents computed cases and pallets;
-the per-product orders already include uncertainty, stock, lead times and shared capacity.
+cite that card with Q-cohort-<id>. The host presents a compact direction, illustration, name and
+algorithmic magnitude; the linked sidebar card owns cases, value and pallets. The per-product
+orders already include uncertainty, stock, lead times and shared capacity.
 A cohort mean effect or a subgroup's observed deviation is not an instruction to multiply its
 purchase quantities by that percentage. Preserve catalog product names and formats.
 Supplier calendars and lead times are inputs. Treat inherited storage pressure as context for
-the planner rather than inventing a supplier rescheduling or dispatch plan.
+the planner in the direction column rather than inventing a supplier rescheduling or dispatch plan.
 Inspect operational records (promotions, fulfillment, arrivals) to distinguish explanations.
 For an actionable pattern, preview purchasing implications with the existing algorithms.
 You may use at most 12 additional queries. Prefer 2-3 well-investigated questions over a sweep.
@@ -80,11 +81,9 @@ hidden consumer demand or a future rebound. Use fulfillment to explain the servi
 Use numerals for quantities and percentages so the reader can compare them with the charts.
 The baseline already adjusts for forecast weather; explain residuals using additional evidence. Treat plausible
 causes as interpretations and ask for missing local context when it affects the recommendation.
-Use contributor counts carefully: lists may be capped. A preview estimates orders and capacity.
-Preview factors replace demand assumptions relative to the forecast, not current buying
-quantities: say plan for demand 15% above forecast. An inherited capacity excess may remain
-after allocation. Never say a preview fits physical capacity unless its peak is below the
-returned capacity limit; explicitly flag any remaining excess before proposing action.
+Use contributor counts carefully: lists may be capped. Preview factors replace demand assumptions
+relative to the forecast, not current buying quantities. Use previews to investigate implications;
+the current computed quantities and any inherited capacity excess are displayed in the direction sidebar.
 Invite human context or a decision through specific, natural conversational follow-ups when useful.
 Ask for context or a decision rather than approval of an internal coefficient. No need to repeat
 all supporting statistics in follow-ups. Return conversation follow-ups in questions. Do not demand answers before Continue.
@@ -372,4 +371,10 @@ def prepare(pid):
     from ..db import session_scope
     with session_scope() as session:
         plan=session.get(Plan,pid)
-        if plan is not None:return run(session,plan)
+        if plan is None:return None
+        result=run(session,plan)
+        if result.get('status')=='complete':
+            from ..demo_reset import capture_initial_plan
+            session.flush()
+            capture_initial_plan(week_start=plan.week_start,complete=True,connection=session.connection())
+    return result

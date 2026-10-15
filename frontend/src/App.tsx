@@ -86,7 +86,7 @@ export default function App() {
   }
   const currentPlan = boot?.plans.find(p => p.week_start === monday(boot.today));
   const currentIndex = detail ? steps.indexOf(flowFor(detail).max_step) : 0;
-  return <div className={`app ${page === 'plans' && dock && detail ? 'with-dock' : ''}`}>
+  return <div className={`app ${page === 'plans' && dock && detail ? 'with-dock' : ''} ${page === 'plans' && step === 'report' && detail?.plan.id===planId ? 'report-view' : ''}`}>
     <aside className="sidebar"><a className="wordmark" href="#" onClick={e => { e.preventDefault(); if(!busy)setPage('plans'); }}><span className="logo"><Icon name="cone" size={27}/></span>scoop<span className="wordmark-dot">.</span></a><div className="workspace-label">Planning</div>
       <nav aria-label="Main navigation">{['plans', 'stores', 'catalog', 'evaluation', 'settings'].map(v => <button key={v} className={`nav-item ${page === v ? 'active' : ''}`} disabled={busy} onClick={() => {if(v!==page)setReplay(current=>({...current,running:false}));setPage(v)}}><Icon name={v}/>{v[0].toUpperCase() + v.slice(1)}{v === 'plans' && boot && <span className="nav-count">{boot.plans.length}</span>}</button>)}</nav>
       <div className="sidebar-note"><span className="status-dot"/> Cold store<p>{boot?.node.name || 'Warehouse planning'}</p></div>

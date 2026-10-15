@@ -14,7 +14,7 @@ from sqlalchemy.dialects.postgresql import insert
 from .db import engine, session_scope
 from .models import Plan, PurchaseSuggestion, Setting, SimulationRun
 
-LOGIC_VERSION = 'matched-space-play-v4'
+LOGIC_VERSION = 'same-cold-store-play-v7'
 _executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix='scoop-simulation')
 _dispatch_lock = Lock()
 _dispatched: set[tuple[str, str]] = set()
@@ -119,7 +119,8 @@ def status(session, plan: Plan) -> dict:
 
 def _run(plan_id: str, key: str) -> None:
     from .demo_gate import gate
-    with gate.activity():
+    # Reset may discard this derived result; it never restores planning state.
+    with gate.activity(read_only=True):
         _run_active(plan_id, key)
 
 
@@ -139,9 +140,9 @@ def _run_active(plan_id: str, key: str) -> None:
             run.started_at = datetime.now()
             week = plan.week_start
         started = monotonic()
-        from .play_comparison import prepare
+        from .play import simulate
         from .api.service import clean
-        result = clean(prepare(plan_id, week))
+        result = clean(simulate(plan_id, week))
         elapsed = monotonic() - started
         with session_scope() as session:
             run = session.get(SimulationRun, (plan_id, key))

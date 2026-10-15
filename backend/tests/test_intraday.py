@@ -5,8 +5,8 @@ from datetime import date
 
 import pytest
 
-from scoop import play
-from scoop.config import SUPPLIER_WINDOWS
+from scoop import intraday, play
+from scoop.config import DAYTIME_REQUEST_WEIGHTS, DEMAND_HOURLY_WEIGHTS, SUPPLIER_WINDOWS
 from test_play import played_week
 
 
@@ -43,7 +43,16 @@ def test_profile_arrivals_and_events_are_timed_and_stable(played_week):
     assert profile['demand_cdf'][-1] == profile['dispatch_cdf'][-1] == 1
     for key in ('demand_cdf', 'dispatch_cdf'):
         assert all(0 <= a <= b <= 1 for a, b in zip(profile[key], profile[key][1:]))
-    assert all(value == 0 for value in profile['demand_cdf'][:61])
+    assert len(DAYTIME_REQUEST_WEIGHTS) == len(DEMAND_HOURLY_WEIGHTS) == 24
+    assert all(weight > 0 for weight in DEMAND_HOURLY_WEIGHTS[:22])
+    assert DEMAND_HOURLY_WEIGHTS[22:] == (0, 0)
+    assert sum(DEMAND_HOURLY_WEIGHTS) == pytest.approx(1)
+    assert all(new == pytest.approx(.9 * old + (.1 / 22 if hour < 22 else 0))
+               for hour, (old, new) in enumerate(zip(DAYTIME_REQUEST_WEIGHTS, DEMAND_HOURLY_WEIGHTS)))
+    assert profile['demand_cdf'][22 * 6] == 1
+    assert all(dispatch <= requested for dispatch, requested in zip(
+        profile['dispatch_cdf'], profile['demand_cdf']))
+    assert 0 < profile['demand_cdf'][5] < profile['demand_cdf'][60]
     for day, receipts in enumerate(profile['arrival_minutes']):
         for j, supplier in enumerate(('SUP01', 'SUP02')):
             lo, hi = SUPPLIER_WINDOWS[supplier]
@@ -54,7 +63,10 @@ def test_profile_arrivals_and_events_are_timed_and_stable(played_week):
         assert event['at'] == f"{event['date']}T{event['time']}:00"
         assert event['id']
         if event['kind'] == 'arrival':
-            assert event['minute'] == profile['arrival_minutes'][result['dates'].index(event['date'])][result['skus'].index(event['sku'])]
+            day = result['dates'].index(event['date'])
+            j = result['skus'].index(event['sku'])
+            assert event['minute'] == profile['arrival_minutes'][day][j]
+            assert event['units'] == result['runs'][event['policy']]['per_sku']['arrived'][day][j]
     assert result['events'] == sorted(result['events'], key=lambda item: (item['at'], item['id']))
     before = copy.deepcopy([(e['id'], e['at']) for e in result['events']])
     play._CACHE.clear()
@@ -63,6 +75,32 @@ def test_profile_arrivals_and_events_are_timed_and_stable(played_week):
     for policy in ('scoop', 'baseline'):
         assert result['runs'][policy]['daily'] == replay['runs'][policy]['daily']
         assert result['runs'][policy]['per_sku'] == replay['runs'][policy]['per_sku']
+
+
+def test_morning_receipt_cannot_erase_earlier_cumulative_loss():
+    receipt = 10 * 60
+    curve = intraday.cumulative_loss(100, 0, 98, receipt, 2)
+    before = receipt // 10 - 1
+    assert curve[before] == 2  # Early requests can exceed the final daily loss.
+    assert curve[before + 1] == 2  # The morning receipt cannot undo them.
+    assert all(0 <= a <= b <= 2 for a, b in zip(curve, curve[1:]))
+    assert curve[-1] == 2
+
+
+def test_enrich_preserves_daily_physical_results_and_summary(played_week):
+    result = copy.deepcopy(played_week)
+    physical = copy.deepcopy({
+        'summary': result['summary'],
+        'events': result['events'],
+        'runs': {policy: {key: run[key] for key in ('daily', 'per_sku')}
+                 for policy, run in result['runs'].items()},
+    })
+    intraday.enrich(result, ['SUP01', 'SUP02'])
+    assert result['summary'] == physical['summary']
+    assert result['events'] == physical['events']
+    for policy, run in result['runs'].items():
+        for key in ('daily', 'per_sku'):
+            assert run[key] == physical['runs'][policy][key]
 
 
 def test_stockout_events_use_first_strict_exceedance(played_week):
@@ -75,6 +113,9 @@ def test_stockout_events_use_first_strict_exceedance(played_week):
         day = result['dates'].index(event['date'])
         j = result['skus'].index(event['sku'])
         per = result['runs'][policy]['per_sku']
+        assert per['lost'][day][j] > 0
+        if event['kind'] == 'kept':
+            assert result['runs']['scoop']['per_sku']['lost'][day][j] == 0
         opening = profile['opening_on_hand'][j] if day == 0 else per['on_hand'][day - 1][j]
         arrival = per['arrived'][day][j]
         receipt = profile['arrival_minutes'][day][j]

@@ -426,15 +426,17 @@ def plan_cohort_cards(as_of, orders, goal='margin', service_level=None):
     return build_cards(result, orders, baseline, artifacts().static.products, catalog, names)
 
 
-def confirmation_capacity(as_of: date, cases: dict[str, int]) -> dict:
+def confirmation_capacity(as_of: date, cases: dict[str, int], factors: dict[str, float] | None = None) -> dict:
     """Check a proposed case map on the same dated occupancy path as suggestions."""
     art = artifacts()
     skus = list(art.static.products.sku)
     model = art.run_for(as_of).model
-    cohort_result = cohort_model.fit(SimpleNamespace(week_start=as_of))
-    cohort_result = contextual_effects(as_of, art.static, cohort_result)
-    adjustment = pd.Series({sku: float(cohort_result["sku_factors"].get(sku, {}).get("f50", 1.0))
-                            for sku in skus})
+    if factors is None:
+        cohort_result = cohort_model.fit(SimpleNamespace(week_start=as_of))
+        cohort_result = contextual_effects(as_of, art.static, cohort_result)
+        factors = {sku: float(cohort_result["sku_factors"].get(sku, {}).get("f50", 1.0)) for sku in skus}
+    # A saved plan already includes context in each order's adjustment.
+    adjustment = pd.Series({sku: float(factors.get(sku, 1.0)) for sku in skus})
     baseline, mask = capacity_projection(as_of, inventory_position(as_of), art.static,
         model, adjustment)
     prod = art.static.products.set_index("sku")
@@ -559,6 +561,9 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
             ))
         from .dashboard import seed_defaults
         seed_defaults(s,s.get(Plan,pid))
+        from .demo_reset import capture_initial_plan
+        s.flush()
+        capture_initial_plan(week_start=week_start,connection=s.connection())
     return pid
 
 

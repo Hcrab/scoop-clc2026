@@ -54,9 +54,12 @@ export function GeneratedReport({presentation,detail,pending,onDiscuss,onSelectF
         else if(queries.some((q,i)=>(q.id||`Q${i+1}`)===data.id)){if(onDiscussEvidence)onDiscussEvidence(data.id);else onDiscuss('')}
       }
       if (data.type==='evidence' && typeof data.id==='string' && sources.some(source=>source.id===data.id)) onOpenEvidence(data.id);
+      if (data.type==='direction' && typeof data.id==='string' && detail.cohort_cards?.some(card=>card.id===data.id)) {
+        window.dispatchEvent(new CustomEvent('scoop:focus-cohort',{detail:{id:data.id}}));
+      }
     }
     window.addEventListener('message',receive);return()=>window.removeEventListener('message',receive);
-  }, [channel, detail.findings, queries, pending, onDiscuss, onSelectFinding, onDiscussEvidence, onOpenEvidence]);
+  }, [channel, detail.findings, detail.cohort_cards, queries, pending, onDiscuss, onSelectFinding, onDiscussEvidence, onOpenEvidence]);
   return <article className="generated-report"><header className="generated-report-heading"><p>{detail.metadata?.facts_through?`Facts through ${fullDate(detail.metadata.facts_through)}`:fullDate(detail.plan.week_start)}</p><h2>{presentation.title}</h2></header>
     <iframe ref={frame} title={presentation.title || 'Weekly report'} className="generated-report-frame" sandbox="allow-scripts" referrerPolicy="no-referrer" srcDoc={document} style={{height}}/>
     <details className="report-evidence-index"><summary>Report evidence</summary><div>{sources.map(source=><button key={source.id} className="text-button" onClick={()=>onOpenEvidence(source.id)}>{source.title} · Open</button>)}</div>{detail.review?.created_at&&<small>Prepared {fullDate(detail.review.created_at)}</small>}</details>
