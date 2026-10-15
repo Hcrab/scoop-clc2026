@@ -1,0 +1,20 @@
+{
+  "mocked_responses": false,
+  "errors": [],
+  "reset_api_ms": [
+    174,
+    85,
+    94
+  ],
+  "click_to_response_ms": 221,
+  "ready_ui_ms": 1404,
+  "restored": {
+    "orders": 75,
+    "widgets": 5,
+    "report_identical": true,
+    "cards_identical": true,
+    "flow": "report",
+    "decisions": 0,
+    "messages": 0
+  }
+}

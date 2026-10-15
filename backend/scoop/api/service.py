@@ -264,7 +264,12 @@ def weekly_review(pid:str):
     from ..ai.weekly import run
     with session_scope() as s:
         p=plan_for(s,pid)
-        return clean(run(s,p))
+        result=run(s,p)
+        if result.get('status')=='complete':
+            from ..demo_reset import capture_initial_plan
+            s.flush()
+            capture_initial_plan(week_start=p.week_start,complete=True,connection=s.connection())
+        return clean(result)
 
 def record_interpretation(s,p,q,answer,source='question'):
     if q.stage!=p.stage: raise HTTPException(409,'Question stage is read-only')

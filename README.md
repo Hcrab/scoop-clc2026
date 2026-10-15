@@ -64,7 +64,7 @@ With an empty key, the app remains usable: the report is a minimal evidence card
 4. **Play:** watch the prepared order replay advance automatically at fixed 2× through a ten-minute clock, about two seconds per simulated day. Pause, Resume and Replay are available. The final frame waits for **See results**.
 5. **Results:** compare short units, stockout product-days, lost margin and space use with the unchanged moving-average rule. The matched-average-space comparison and the actual approved-order outcome remain visible, alongside final widget states.
 
-Settings changes the demo week and resets planning progress for the current simulation. The quiet 22 June week has no cohort cards, although it can have early CUSUM warnings. See the [demonstration guide](docs/DEMO.md) for a presenter sequence.
+Settings changes the demo week and resets planning progress for the current simulation. Reset restores the prepared week's original orders, report and default widgets, clearing manual edits and conversations while retaining source data and provider allowance. New weeks are prepared once; repeated resets reuse their saved initial state. The quiet 22 June week has no cohort cards, although it can have early CUSUM warnings. See the [demonstration guide](docs/DEMO.md) for a presenter sequence.
 
 ## Verification and limits
 

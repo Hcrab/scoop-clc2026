@@ -1,0 +1,21 @@
+{
+  "source_order_rows": [
+    1233000,
+    6523011,
+    6484384
+  ],
+  "source_unchanged": true,
+  "usage": {
+    "calls": 160,
+    "estimated_usd": 16.897085,
+    "input_tokens": 5926455,
+    "output_tokens": 343832,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "provider_calls_during_reset_verification": 0,
+  "stage": "discover",
+  "flow": "report",
+  "overrides": null,
+  "simulation_rows": 0
+}

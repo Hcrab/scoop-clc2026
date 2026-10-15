@@ -30,6 +30,6 @@ The matched comparison selects by measured average-pallet distance within a 2% t
 
 ## Quiet week and reset
 
-In sidebar **Settings**, choose **22 June 2026**. It has no cohort cards, though early CUSUM warnings may appear. Return to 27 July for the designed example. Settings reset clears planning progress for the current simulation while retaining synthetic source data and provider allowance. Reloading the app alone preserves saved progress. `python -m scoop.synth.load` intentionally replaces demo tables in the configured database.
+In sidebar **Settings**, choose **22 June 2026**. It has no cohort cards, though early CUSUM warnings may appear. Return to 27 July for the designed example. Reset restores the prepared week's initial report, orders and default widgets and clears manual planning progress and conversations. It retains synthetic source data and provider allowance. Reloading the app alone preserves saved progress. `python -m scoop.synth.load` intentionally replaces demo tables in the configured database.
 
 The [system design](TECHNICAL_DESIGN.md) explains the model, replay and limits. This is one illustrative synthetic world, not a multi-seed evaluation. The archived 20 July and seed-42 measurements remain in that document for historical context.

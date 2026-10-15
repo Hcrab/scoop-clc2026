@@ -1,0 +1,16 @@
+{
+  "allowance": "night3",
+  "started_at": "2026-10-15T15:01:23.378888+00:00",
+  "new_allowance_usd": 10,
+  "lifetime_at_start": {
+    "calls": 160,
+    "estimated_usd": 16.897085,
+    "input_tokens": 5926455,
+    "output_tokens": 343832,
+    "limit_usd": 20.0,
+    "call_limit": 200
+  },
+  "cumulative_cap_usd": 26.897085,
+  "cumulative_call_cap": 280,
+  "history_and_reservations_preserved": true
+}

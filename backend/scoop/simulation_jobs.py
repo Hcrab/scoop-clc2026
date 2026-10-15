@@ -119,7 +119,8 @@ def status(session, plan: Plan) -> dict:
 
 def _run(plan_id: str, key: str) -> None:
     from .demo_gate import gate
-    with gate.activity():
+    # Reset may discard this derived result; it never restores planning state.
+    with gate.activity(read_only=True):
         _run_active(plan_id, key)
 
 

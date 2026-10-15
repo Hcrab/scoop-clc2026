@@ -559,6 +559,9 @@ def build_plan(week_start: date, *, stage: str = "discover", accept_defaults: bo
             ))
         from .dashboard import seed_defaults
         seed_defaults(s,s.get(Plan,pid))
+        from .demo_reset import capture_initial_plan
+        s.flush()
+        capture_initial_plan(week_start=week_start,connection=s.connection())
     return pid
 
 

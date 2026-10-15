@@ -6,7 +6,7 @@ from sqlalchemy import text,select
 from sqlalchemy.orm import Session
 from .db import engine
 from .models import Base,Plan
-from .demo_gate import gate
+from .demo_gate import gate,DemoBusy
 from .demo_config import DEMO_SEED, DEMO_WEEK, DEMO_SCENARIO
 
 WEEKS=[(date(2026,6,1)+timedelta(weeks=i)).isoformat() for i in range(14)]
@@ -72,6 +72,14 @@ class WorldManager:
         if planning_only:
             c.execute(text(f"DELETE FROM {quoted(self.active)}.purchase_orders WHERE source='scoop'"))
             c.execute(text(f"DELETE FROM {quoted(self.active)}.settings WHERE key='cohort_overrides'"))
+    def clear_plan(self,c,plan_id):
+        schema=quoted(self.active)
+        c.execute(text(f'DELETE FROM {schema}.hypotheses WHERE finding_id IN '
+                       f'(SELECT id FROM {schema}.findings WHERE plan_id=:id)'),{'id':plan_id})
+        for name in ('simulation_runs','findings','questions','decisions','direction_items',
+                     'purchase_suggestions','watch_items','chat_messages'):
+            c.execute(text(f'DELETE FROM {schema}.{quoted(name)} WHERE plan_id=:id'),{'id':plan_id})
+        c.execute(text(f'DELETE FROM {schema}.plans WHERE id=:id'),{'id':plan_id})
     def restore(self,c,schema):
         self.clear(c)
         for table in self.tables:
@@ -102,7 +110,7 @@ class WorldManager:
             with raw.cursor() as cursor:
                 with cursor.copy(f"COPY {quoted(self.active)}.{quoted(table.name)} ({columns}) FROM STDIN WITH (FORMAT csv, NULL '\\N')") as copy: copy.write(buffer.getvalue())
         self.put(c,'seed',seed)
-    def build(self,week):
+    def build(self,week,*,report=True):
         if self.builder: return self.builder(week)
         from .planning import build_plan
         from .db import session_scope
@@ -110,16 +118,67 @@ class WorldManager:
             old=s.scalar(select(Plan).where(Plan.week_start==week))
             if old: return old.id
         pid=build_plan(week)
-        from .ai.weekly import prepare
-        prepare(pid)
+        if report:
+            from .ai.weekly import prepare
+            prepare(pid)
         return pid
     def choose(self,scenario_id,week_start,reset=False):
         scenario=next((s for s in SCENARIOS if s['id']==scenario_id),None)
         if not scenario or week_start not in scenario['weeks']: raise ValueError('Select a listed simulation and Monday.')
         seed=scenario['seed'];week=date.fromisoformat(week_start)
-        with self.gate.replacement():
+        fast_reset=False
+        if reset:
+            from .demo_reset import template_key
+            with self.engine.connect() as c:
+                fast_reset=int(self.setting(c,'seed',str(DEMO_SEED)))==seed and bool(c.execute(
+                    text(f'SELECT 1 FROM {quoted(self.active)}.settings WHERE key=:key'),
+                    {'key':template_key(seed,week)}).scalar())
+        with self.gate.replacement(planning_only=fast_reset):
+            previous=self.active_seed()
+            if fast_reset and previous!=seed:raise DemoBusy('The selected simulation changed. Please try again.')
+            if previous==seed:
+                from .demo_reset import load_initial_plan,restore_initial_plan
+                try:
+                    with self.engine.begin() as c:
+                        initial=load_initial_plan(c,self.active,seed,week)
+                        existing=c.execute(text(f'SELECT id FROM {quoted(self.active)}.plans WHERE week_start=:week'),
+                                           {'week':week}).scalar()
+                        if reset and initial is not None:
+                            self.clear(c,planning_only=True)
+                            restore_initial_plan(c,self.active,initial)
+                        elif not reset and not existing and initial is not None:
+                            restore_initial_plan(c,self.active,initial)
+                        if initial is not None or (existing and not reset):
+                            self.put(c,'seed',seed);self.put(c,'today',week_start);self.put(c,'demo_scenario',scenario_id)
+                            return dict(id='P'+week.strftime('%Y%m%d'),today=week_start,scenario_id=scenario_id)
+                except Exception as exc:
+                    raise WorldPreparationError('The simulation could not be restored. Your previous progress is unchanged.') from exc
+                if not reset or not existing:
+                    try:
+                        with self.engine.begin() as c:
+                            old_today=self.setting(c,'today',DEMO_WEEK)
+                            old_scenario=self.setting(c,'demo_scenario',scenario_id)
+                            self.put(c,'today',week_start);self.put(c,'demo_scenario',scenario_id)
+                        pid=self.build(week,report=not reset)
+                        from .demo_reset import capture_initial_plan
+                        capture_initial_plan(self.engine,self.active,seed=seed,week_start=week)
+                        with self.engine.begin() as c:
+                            if reset:
+                                initial=load_initial_plan(c,self.active,seed,week)
+                                if initial is None:raise RuntimeError('Initial planning state was not prepared')
+                                self.clear(c,planning_only=True)
+                                restore_initial_plan(c,self.active,initial)
+                            self.put(c,'today',week_start);self.put(c,'demo_scenario',scenario_id)
+                        return dict(id=pid,today=week_start,scenario_id=scenario_id)
+                    except Exception as exc:
+                        with self.engine.begin() as c:
+                            self.clear_plan(c,'P'+week.strftime('%Y%m%d'))
+                            from .demo_reset import template_key
+                            c.execute(text(f'DELETE FROM {quoted(self.active)}.settings WHERE key=:key'),{'key':template_key(seed,week)})
+                            self.put(c,'today',old_today);self.put(c,'demo_scenario',old_scenario)
+                        raise WorldPreparationError('The selected week could not be prepared. Your previous progress is unchanged.') from exc
             try:
-                previous=self.active_seed();previous_schema=self.schema(previous)
+                previous_schema=self.schema(previous)
                 # This backup includes existing user plans before any switch/reset.
                 with self.engine.begin() as c: self.snapshot(c,previous_schema)
             except Exception as exc: raise WorldPreparationError('Your simulation has not been changed. Its backup could not be prepared; please try again.') from exc
@@ -133,7 +192,9 @@ class WorldManager:
                         self.clear(c,planning_only=True)
                     self.put(c,'seed',seed);self.put(c,'today',week_start);self.put(c,'demo_scenario',scenario_id)
                 self.invalidate()
-                pid=self.build(week)
+                pid=self.build(week,report=not reset)
+                from .demo_reset import capture_initial_plan
+                capture_initial_plan(self.engine,self.active,seed=seed,week_start=week)
                 with self.engine.begin() as c: self.snapshot(c,self.schema(seed))
             except Exception as exc:
                 try:

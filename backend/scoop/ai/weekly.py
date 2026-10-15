@@ -372,4 +372,10 @@ def prepare(pid):
     from ..db import session_scope
     with session_scope() as session:
         plan=session.get(Plan,pid)
-        if plan is not None:return run(session,plan)
+        if plan is None:return None
+        result=run(session,plan)
+        if result.get('status')=='complete':
+            from ..demo_reset import capture_initial_plan
+            session.flush()
+            capture_initial_plan(week_start=plan.week_start,complete=True,connection=session.connection())
+    return result
