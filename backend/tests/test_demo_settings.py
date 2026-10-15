@@ -95,6 +95,22 @@ def test_reset_scope_and_other_world_survives(world):
     c.post('/api/demo-settings/select',json={'scenario_id':'august-seed73','week_start':'2026-08-03'})
     with Session(engine) as s: assert s.get(Plan,'P20260803').stage=='execute'
 
+
+def test_public_demo_default_and_reset_removes_context_but_keeps_budget(world):
+    from scoop.demo_config import DEMO_SEED, DEMO_WEEK, DEMO_SCENARIO, QUIET_WEEK
+    from scoop.demo_worlds import SCENARIOS
+    manager,engine,c,_,_=world
+    demo=next(s for s in SCENARIOS if s['seed']==DEMO_SEED)
+    assert demo['id']==DEMO_SCENARIO and demo['default_week']==DEMO_WEEK
+    assert QUIET_WEEK in demo['weeks']
+    with engine.begin() as connection:
+        manager.put(connection,'cohort_overrides','[{"type":"one_off"}]')
+    response=c.post('/api/demo-settings/reset',json={'scenario_id':'july-context','week_start':'2026-07-13'})
+    assert response.status_code==200
+    with Session(engine) as session:
+        assert session.get(Setting,'cohort_overrides') is None
+        assert session.get(Setting,'provider_budget_marker').value=='retain'
+
 def test_failures_restore_previous_world_transactionally(world):
     manager,engine,c,fail,invalidations=world
     for body in [{'scenario_id':'missing','week_start':'2026-07-13'},{'scenario_id':'july-context','week_start':'2026-07-14'}]: assert c.post('/api/demo-settings/select',json=body).status_code==422

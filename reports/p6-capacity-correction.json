@@ -1,0 +1,34 @@
+{
+  "seed": 93,
+  "previous_clock": "2026-07-27",
+  "source_before": {
+    "order_rows": 1233000,
+    "requested_units": 6579500,
+    "shipped_units": 6527659,
+    "inventory_units": 48330622,
+    "history_pos": 8797
+  },
+  "plans": [
+    {
+      "id": "P20260720",
+      "before_cases": 2348,
+      "after_cases": 2348
+    },
+    {
+      "id": "P20260727",
+      "before_cases": 1682,
+      "after_cases": 1682
+    }
+  ],
+  "capacity_before": 68,
+  "capacity_after": 71,
+  "default_week": "2026-07-20",
+  "quiet_week": "2026-06-22",
+  "source_after": {
+    "order_rows": 1233000,
+    "requested_units": 6579500,
+    "shipped_units": 6527659,
+    "inventory_units": 48330622,
+    "history_pos": 8797
+  }
+}

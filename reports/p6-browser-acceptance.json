@@ -1,0 +1,12 @@
+{
+  "mocked_responses": false,
+  "extra_llm_calls": false,
+  "default_week": "2026-07-20",
+  "capacity": 71,
+  "quiet_week": "2026-06-22",
+  "quiet_cards": 0,
+  "restored_cards": 5,
+  "first_card": "Water-based (25 SKUs; not isolated strawberry)",
+  "world_switcher_removed": true,
+  "errors": []
+}

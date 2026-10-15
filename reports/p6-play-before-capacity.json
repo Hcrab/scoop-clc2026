@@ -1,0 +1,36 @@
+{
+  "stage": "before_capacity_correction",
+  "week": "2026-07-20",
+  "capacity_pallets": 68.0,
+  "days": 16,
+  "summary": {
+    "scoop": {
+      "fill_rate": 0.9368622833200975,
+      "lost_units": 11528.0,
+      "lost_margin": 60737.38,
+      "avg_pallets": 36.640171440972225,
+      "peak_pallets": 49.95499999999999,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 69,
+      "ending_on_hand": 58653.0,
+      "ordered_cases": 7616
+    },
+    "baseline": {
+      "fill_rate": 0.9441849001834762,
+      "lost_units": 10191.0,
+      "lost_margin": 53735.369999999995,
+      "avg_pallets": 44.616924913194445,
+      "peak_pallets": 65.40333333333334,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 61,
+      "ending_on_hand": 72220.0,
+      "ordered_cases": 7572
+    }
+  },
+  "affected_comparison": {
+    "units_saved": -1337.0,
+    "pallet_difference": -7.976753472222214,
+    "stockout_days_avoided": -8
+  },
+  "history_rule_peak_fraction": 0.9618137254901962
+}

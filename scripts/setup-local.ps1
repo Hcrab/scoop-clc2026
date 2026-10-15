@@ -38,7 +38,10 @@ try {
     $env:DATABASE_URL = $url
     Invoke-Python $venvPython @('-m', 'pip', 'check')
     Invoke-Python $venvPython @('-c', 'import fastapi, uvicorn, sqlalchemy, psycopg, pydantic, dotenv, numpy, pandas, scipy, lightgbm; from scoop.db import engine; from sqlalchemy import text; connection = engine.connect(); print("Connected:", connection.execute(text("SELECT current_database(), version()")).one()); connection.close()')
-    if ($LoadData) { Invoke-Python $venvPython @('-m', 'scoop.synth.load') }
+    if ($LoadData) {
+        Invoke-Python $venvPython @('-m', 'scoop.synth.load')
+        Invoke-Python $venvPython @('-m', 'scoop.prepare_demo')
+    }
 } finally {
     $env:PYTHONPATH = $oldPythonPath
     $env:DATABASE_URL = $oldDatabaseUrl

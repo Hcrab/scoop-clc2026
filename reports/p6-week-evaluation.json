@@ -1,0 +1,1368 @@
+{
+  "seed": 93,
+  "read_only": true,
+  "capacity_before": 68,
+  "history_rule_summer2026": {
+    "peak": {
+      "date": "2026-08-20",
+      "pre_ship_pallets": 77.86201388888887,
+      "closing_pallets": 71.16541666666667
+    },
+    "top_five": [
+      {
+        "date": "2026-08-20",
+        "pre_ship_pallets": 77.86201388888887,
+        "closing_pallets": 71.16541666666667
+      },
+      {
+        "date": "2026-08-22",
+        "pre_ship_pallets": 75.22579861111112,
+        "closing_pallets": 65.06739583333334
+      },
+      {
+        "date": "2026-08-21",
+        "pre_ship_pallets": 74.19041666666669,
+        "closing_pallets": 65.51746527777777
+      },
+      {
+        "date": "2026-08-27",
+        "pre_ship_pallets": 72.3979513888889,
+        "closing_pallets": 64.75618055555557
+      },
+      {
+        "date": "2026-08-19",
+        "pre_ship_pallets": 72.31326388888888,
+        "closing_pallets": 67.69534722222222
+      }
+    ]
+  },
+  "weeks": [
+    {
+      "week": "2026-07-13",
+      "case_total": 2614,
+      "model": "M202607-v1-s93",
+      "root_test": {
+        "path": [],
+        "candidate_count": 44,
+        "gain": 188.22367326403426,
+        "split_tag": "feature:choc_coated",
+        "p_value": 0.0,
+        "permutations": 199
+      },
+      "cards": [
+        {
+          "id": "Cd98806262731",
+          "name": "Not Choc Coated · HK Island, NT East, NT West",
+          "skus": [
+            "IC001",
+            "IC002",
+            "IC003",
+            "IC004",
+            "IC005",
+            "IC006",
+            "IC007",
+            "IC008",
+            "IC009",
+            "IC010",
+            "IC011",
+            "IC012",
+            "IC013",
+            "IC014",
+            "IC015",
+            "IC016",
+            "IC020",
+            "IC021",
+            "IC023",
+            "IC026",
+            "IC027",
+            "IC028",
+            "IC029",
+            "IC031",
+            "IC032",
+            "IC034",
+            "IC035",
+            "IC036",
+            "IC037",
+            "IC038",
+            "IC039",
+            "IC040",
+            "IC041",
+            "IC042",
+            "IC043",
+            "IC044",
+            "IC045",
+            "IC047",
+            "IC048",
+            "IC049",
+            "IC050",
+            "IC051",
+            "IC053",
+            "IC054",
+            "IC055",
+            "IC056",
+            "IC057",
+            "IC058",
+            "IC059",
+            "IC060",
+            "IC061",
+            "IC062",
+            "IC063",
+            "IC064",
+            "IC065",
+            "IC066",
+            "IC067",
+            "IC068",
+            "IC069",
+            "IC070",
+            "IC071",
+            "IC072",
+            "IC073",
+            "IC074",
+            "IC075"
+          ],
+          "effect_pct": 2.1125435283347977,
+          "interval_pct": [
+            1.4289925419193346,
+            2.8007011064093112
+          ],
+          "case_change": 170,
+          "pallet_change": 2.8961739764581758,
+          "expected_lost_margin_avoided": 13183.61474647268,
+          "tag_path": [
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            },
+            {
+              "id": "district:Kowloon",
+              "included": false
+            }
+          ]
+        },
+        {
+          "id": "Cf0b171d7e869",
+          "name": "Water-based · Not Choc Coated · Kowloon",
+          "skus": [
+            "IC001",
+            "IC002",
+            "IC003",
+            "IC004",
+            "IC005",
+            "IC006",
+            "IC007",
+            "IC008",
+            "IC009",
+            "IC011",
+            "IC014",
+            "IC015",
+            "IC051",
+            "IC055",
+            "IC059",
+            "IC060",
+            "IC061",
+            "IC062",
+            "IC063",
+            "IC064",
+            "IC065",
+            "IC066",
+            "IC070",
+            "IC071",
+            "IC072"
+          ],
+          "effect_pct": 19.553768415445365,
+          "interval_pct": [
+            17.621211766548438,
+            21.51807762959055
+          ],
+          "case_change": 41,
+          "pallet_change": 0.6944160688218436,
+          "expected_lost_margin_avoided": 3587.6617657272272,
+          "tag_path": [
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            },
+            {
+              "id": "district:Kowloon",
+              "included": true
+            },
+            {
+              "id": "band:dairy:0",
+              "included": true
+            }
+          ]
+        },
+        {
+          "id": "Cdcbe25763240",
+          "name": "Choc Coated",
+          "skus": [
+            "IC017",
+            "IC018",
+            "IC019",
+            "IC022",
+            "IC024",
+            "IC025",
+            "IC030",
+            "IC033",
+            "IC046",
+            "IC052"
+          ],
+          "effect_pct": -12.655112741824528,
+          "interval_pct": [
+            -13.977481830546731,
+            -11.312415719858574
+          ],
+          "case_change": -114,
+          "pallet_change": -2.2183333333333333,
+          "expected_lost_margin_avoided": -843.3016491484609,
+          "tag_path": [
+            {
+              "id": "feature:choc_coated",
+              "included": true
+            }
+          ]
+        }
+      ],
+      "leaves": [
+        {
+          "id": "Cdcbe25763240",
+          "tag_path": [
+            {
+              "id": "feature:choc_coated",
+              "included": true
+            }
+          ],
+          "skus": [
+            "IC017",
+            "IC018",
+            "IC019",
+            "IC022",
+            "IC024",
+            "IC025",
+            "IC030",
+            "IC033",
+            "IC046",
+            "IC052"
+          ]
+        },
+        {
+          "id": "Cf0b171d7e869",
+          "tag_path": [
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            },
+            {
+              "id": "district:Kowloon",
+              "included": true
+            },
+            {
+              "id": "band:dairy:0",
+              "included": true
+            }
+          ],
+          "skus": [
+            "IC001",
+            "IC002",
+            "IC003",
+            "IC004",
+            "IC005",
+            "IC006",
+            "IC007",
+            "IC008",
+            "IC009",
+            "IC011",
+            "IC014",
+            "IC015",
+            "IC051",
+            "IC055",
+            "IC059",
+            "IC060",
+            "IC061",
+            "IC062",
+            "IC063",
+            "IC064",
+            "IC065",
+            "IC066",
+            "IC070",
+            "IC071",
+            "IC072"
+          ]
+        },
+        {
+          "id": "Cfc940e84f03c",
+          "tag_path": [
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            },
+            {
+              "id": "district:Kowloon",
+              "included": true
+            },
+            {
+              "id": "band:dairy:0",
+              "included": false
+            }
+          ],
+          "skus": [
+            "IC010",
+            "IC012",
+            "IC013",
+            "IC016",
+            "IC020",
+            "IC021",
+            "IC023",
+            "IC026",
+            "IC027",
+            "IC028",
+            "IC029",
+            "IC031",
+            "IC032",
+            "IC034",
+            "IC035",
+            "IC036",
+            "IC037",
+            "IC038",
+            "IC039",
+            "IC040",
+            "IC041",
+            "IC042",
+            "IC043",
+            "IC044",
+            "IC045",
+            "IC047",
+            "IC048",
+            "IC049",
+            "IC050",
+            "IC053",
+            "IC054",
+            "IC056",
+            "IC057",
+            "IC058",
+            "IC067",
+            "IC068",
+            "IC069",
+            "IC073",
+            "IC074",
+            "IC075"
+          ]
+        },
+        {
+          "id": "Cd98806262731",
+          "tag_path": [
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            },
+            {
+              "id": "district:Kowloon",
+              "included": false
+            }
+          ],
+          "skus": [
+            "IC001",
+            "IC002",
+            "IC003",
+            "IC004",
+            "IC005",
+            "IC006",
+            "IC007",
+            "IC008",
+            "IC009",
+            "IC010",
+            "IC011",
+            "IC012",
+            "IC013",
+            "IC014",
+            "IC015",
+            "IC016",
+            "IC020",
+            "IC021",
+            "IC023",
+            "IC026",
+            "IC027",
+            "IC028",
+            "IC029",
+            "IC031",
+            "IC032",
+            "IC034",
+            "IC035",
+            "IC036",
+            "IC037",
+            "IC038",
+            "IC039",
+            "IC040",
+            "IC041",
+            "IC042",
+            "IC043",
+            "IC044",
+            "IC045",
+            "IC047",
+            "IC048",
+            "IC049",
+            "IC050",
+            "IC051",
+            "IC053",
+            "IC054",
+            "IC055",
+            "IC056",
+            "IC057",
+            "IC058",
+            "IC059",
+            "IC060",
+            "IC061",
+            "IC062",
+            "IC063",
+            "IC064",
+            "IC065",
+            "IC066",
+            "IC067",
+            "IC068",
+            "IC069",
+            "IC070",
+            "IC071",
+            "IC072",
+            "IC073",
+            "IC074",
+            "IC075"
+          ]
+        }
+      ],
+      "planted_sku_factors": {
+        "IC006": {
+          "f10": 1.0896435231722554,
+          "f50": 1.125462168894017,
+          "f90": 1.162458241319152,
+          "m": 0.11819376808894991,
+          "s2": 0.0006368836850850163
+        },
+        "IC061": {
+          "f10": 1.0597427071931194,
+          "f50": 1.0967138819458513,
+          "f90": 1.1349748676624325,
+          "m": 0.09231832862846287,
+          "s2": 0.000715954078338741
+        },
+        "IC062": {
+          "f10": 1.1084726576569004,
+          "f50": 1.1390015648799847,
+          "f90": 1.1703712814543845,
+          "m": 0.1301520583710237,
+          "s2": 0.00044940872574928846
+        },
+        "IC063": {
+          "f10": 1.1379561823838598,
+          "f50": 1.1710777904149172,
+          "f90": 1.205163443402666,
+          "m": 0.1579245131648489,
+          "s2": 0.0005011604079889567
+        }
+      }
+    },
+    {
+      "week": "2026-07-20",
+      "case_total": 2348,
+      "model": "M202607-v1-s93",
+      "root_test": {
+        "path": [],
+        "candidate_count": 44,
+        "gain": 1063.1941842174117,
+        "split_tag": "band:dairy:0",
+        "p_value": 0.005025125628140704,
+        "permutations": 199
+      },
+      "cards": [
+        {
+          "id": "C1548dfa641a2",
+          "name": "Water-based",
+          "skus": [
+            "IC001",
+            "IC002",
+            "IC003",
+            "IC004",
+            "IC005",
+            "IC006",
+            "IC007",
+            "IC008",
+            "IC009",
+            "IC011",
+            "IC014",
+            "IC015",
+            "IC051",
+            "IC055",
+            "IC059",
+            "IC060",
+            "IC061",
+            "IC062",
+            "IC063",
+            "IC064",
+            "IC065",
+            "IC066",
+            "IC070",
+            "IC071",
+            "IC072"
+          ],
+          "effect_pct": 34.68809733790225,
+          "interval_pct": [
+            33.68303498596917,
+            35.700715998916586
+          ],
+          "case_change": 599,
+          "pallet_change": 10.07,
+          "expected_lost_margin_avoided": 81392.84204945365,
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": true
+            }
+          ]
+        },
+        {
+          "id": "C6f4af776c73a",
+          "name": "Not Water-based · Mid calorie / 100 ml · Not Choc Coated",
+          "skus": [
+            "IC010",
+            "IC012",
+            "IC013",
+            "IC016",
+            "IC023",
+            "IC026",
+            "IC028",
+            "IC029",
+            "IC035",
+            "IC036",
+            "IC037",
+            "IC038",
+            "IC039",
+            "IC040",
+            "IC041",
+            "IC042",
+            "IC043",
+            "IC044",
+            "IC053",
+            "IC054",
+            "IC056",
+            "IC057",
+            "IC067",
+            "IC068"
+          ],
+          "effect_pct": 10.106763445308536,
+          "interval_pct": [
+            9.072673875472887,
+            11.150656948617604
+          ],
+          "case_change": 164,
+          "pallet_change": 3.020000000000001,
+          "expected_lost_margin_avoided": 15241.867433859812,
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            },
+            {
+              "id": "band:kcal_100ml:1",
+              "included": true
+            }
+          ]
+        },
+        {
+          "id": "Cee474106a8b3",
+          "name": "Not Water-based · Not Mid calorie / 100 ml · Not Choc Coated",
+          "skus": [
+            "IC020",
+            "IC021",
+            "IC027",
+            "IC031",
+            "IC032",
+            "IC034",
+            "IC045",
+            "IC047",
+            "IC048",
+            "IC049",
+            "IC050",
+            "IC058",
+            "IC069",
+            "IC073",
+            "IC074",
+            "IC075"
+          ],
+          "effect_pct": 3.7083131616461666,
+          "interval_pct": [
+            2.374006604951275,
+            5.0600105975913845
+          ],
+          "case_change": 43,
+          "pallet_change": 0.6958333333333334,
+          "expected_lost_margin_avoided": 2745.903000909078,
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            },
+            {
+              "id": "band:kcal_100ml:1",
+              "included": false
+            }
+          ]
+        },
+        {
+          "id": "Ca693b9f78ee2",
+          "name": "Higher price / 100 ml · Not Water-based · Choc Coated",
+          "skus": [
+            "IC019",
+            "IC025",
+            "IC052"
+          ],
+          "effect_pct": -3.3657269261033775,
+          "interval_pct": [
+            -5.816032648736123,
+            -0.8516736432093986
+          ],
+          "case_change": -6,
+          "pallet_change": -0.1,
+          "expected_lost_margin_avoided": -212.75554311720163,
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": true
+            },
+            {
+              "id": "band:price_100ml:2",
+              "included": true
+            }
+          ]
+        },
+        {
+          "id": "Cf3b066880cd4",
+          "name": "Not Higher price / 100 ml · Not Water-based · Choc Coated",
+          "skus": [
+            "IC017",
+            "IC018",
+            "IC022",
+            "IC024",
+            "IC030",
+            "IC033",
+            "IC046"
+          ],
+          "effect_pct": -11.710353169246378,
+          "interval_pct": [
+            -13.31566757188352,
+            -10.075309814916023
+          ],
+          "case_change": -68,
+          "pallet_change": -1.4083333333333332,
+          "expected_lost_margin_avoided": -476.0428324800422,
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": true
+            },
+            {
+              "id": "band:price_100ml:2",
+              "included": false
+            }
+          ]
+        }
+      ],
+      "leaves": [
+        {
+          "id": "C1548dfa641a2",
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": true
+            }
+          ],
+          "skus": [
+            "IC001",
+            "IC002",
+            "IC003",
+            "IC004",
+            "IC005",
+            "IC006",
+            "IC007",
+            "IC008",
+            "IC009",
+            "IC011",
+            "IC014",
+            "IC015",
+            "IC051",
+            "IC055",
+            "IC059",
+            "IC060",
+            "IC061",
+            "IC062",
+            "IC063",
+            "IC064",
+            "IC065",
+            "IC066",
+            "IC070",
+            "IC071",
+            "IC072"
+          ]
+        },
+        {
+          "id": "Ca693b9f78ee2",
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": true
+            },
+            {
+              "id": "band:price_100ml:2",
+              "included": true
+            }
+          ],
+          "skus": [
+            "IC019",
+            "IC025",
+            "IC052"
+          ]
+        },
+        {
+          "id": "Cf3b066880cd4",
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": true
+            },
+            {
+              "id": "band:price_100ml:2",
+              "included": false
+            }
+          ],
+          "skus": [
+            "IC017",
+            "IC018",
+            "IC022",
+            "IC024",
+            "IC030",
+            "IC033",
+            "IC046"
+          ]
+        },
+        {
+          "id": "C6f4af776c73a",
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            },
+            {
+              "id": "band:kcal_100ml:1",
+              "included": true
+            }
+          ],
+          "skus": [
+            "IC010",
+            "IC012",
+            "IC013",
+            "IC016",
+            "IC023",
+            "IC026",
+            "IC028",
+            "IC029",
+            "IC035",
+            "IC036",
+            "IC037",
+            "IC038",
+            "IC039",
+            "IC040",
+            "IC041",
+            "IC042",
+            "IC043",
+            "IC044",
+            "IC053",
+            "IC054",
+            "IC056",
+            "IC057",
+            "IC067",
+            "IC068"
+          ]
+        },
+        {
+          "id": "Cee474106a8b3",
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            },
+            {
+              "id": "band:kcal_100ml:1",
+              "included": false
+            }
+          ],
+          "skus": [
+            "IC020",
+            "IC021",
+            "IC027",
+            "IC031",
+            "IC032",
+            "IC034",
+            "IC045",
+            "IC047",
+            "IC048",
+            "IC049",
+            "IC050",
+            "IC058",
+            "IC069",
+            "IC073",
+            "IC074",
+            "IC075"
+          ]
+        }
+      ],
+      "planted_sku_factors": {
+        "IC006": {
+          "f10": 1.8248995377684825,
+          "f50": 1.8945306029551892,
+          "f90": 1.9668185186362328,
+          "m": 0.6389711049249314,
+          "s2": 0.0008537087778338732
+        },
+        "IC061": {
+          "f10": 1.8244261209174397,
+          "f50": 1.9036926956129328,
+          "f90": 1.9864031970270348,
+          "m": 0.6437955239799392,
+          "s2": 0.0011012517179669974
+        },
+        "IC062": {
+          "f10": 1.7536708591303638,
+          "f50": 1.7999899554017624,
+          "f90": 1.8475324617949798,
+          "m": 0.5877810845541946,
+          "s2": 0.0004137827612918797
+        },
+        "IC063": {
+          "f10": 1.8551790001236086,
+          "f50": 1.9153101173275768,
+          "f90": 1.9773902385122695,
+          "m": 0.6498795506847801,
+          "s2": 0.0006194864356505803
+        }
+      }
+    },
+    {
+      "week": "2026-07-27",
+      "case_total": 1682,
+      "model": "M202607-v1-s93",
+      "root_test": {
+        "path": [],
+        "candidate_count": 44,
+        "gain": 643.4820175192829,
+        "split_tag": "band:dairy:0",
+        "p_value": 0.0,
+        "permutations": 199
+      },
+      "cards": [
+        {
+          "id": "C1548dfa641a2",
+          "name": "Water-based",
+          "skus": [
+            "IC001",
+            "IC002",
+            "IC003",
+            "IC004",
+            "IC005",
+            "IC006",
+            "IC007",
+            "IC008",
+            "IC009",
+            "IC011",
+            "IC014",
+            "IC015",
+            "IC051",
+            "IC055",
+            "IC059",
+            "IC060",
+            "IC061",
+            "IC062",
+            "IC063",
+            "IC064",
+            "IC065",
+            "IC066",
+            "IC070",
+            "IC071",
+            "IC072"
+          ],
+          "effect_pct": 29.35207976630081,
+          "interval_pct": [
+            28.236396457271074,
+            30.47746975206536
+          ],
+          "case_change": 622,
+          "pallet_change": 10.64333333333333,
+          "expected_lost_margin_avoided": 83544.6047915671,
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": true
+            }
+          ]
+        },
+        {
+          "id": "C14958972908b",
+          "name": "Not Water-based · Not Choc Coated",
+          "skus": [
+            "IC010",
+            "IC012",
+            "IC013",
+            "IC016",
+            "IC020",
+            "IC021",
+            "IC023",
+            "IC026",
+            "IC027",
+            "IC028",
+            "IC029",
+            "IC031",
+            "IC032",
+            "IC034",
+            "IC035",
+            "IC036",
+            "IC037",
+            "IC038",
+            "IC039",
+            "IC040",
+            "IC041",
+            "IC042",
+            "IC043",
+            "IC044",
+            "IC045",
+            "IC047",
+            "IC048",
+            "IC049",
+            "IC050",
+            "IC053",
+            "IC054",
+            "IC056",
+            "IC057",
+            "IC058",
+            "IC067",
+            "IC068",
+            "IC069",
+            "IC073",
+            "IC074",
+            "IC075"
+          ],
+          "effect_pct": 7.547403801696051,
+          "interval_pct": [
+            6.7396577701023945,
+            8.361262403492626
+          ],
+          "case_change": 210,
+          "pallet_change": 3.6541666666666663,
+          "expected_lost_margin_avoided": 17722.20778949257,
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            }
+          ]
+        },
+        {
+          "id": "Cd4835997b328",
+          "name": "Lower price / 100 ml · Not Water-based · Choc Coated",
+          "skus": [
+            "IC018",
+            "IC022",
+            "IC024",
+            "IC033"
+          ],
+          "effect_pct": -14.69356694737019,
+          "interval_pct": [
+            -16.876363366728377,
+            -12.45345108914549
+          ],
+          "case_change": -46,
+          "pallet_change": -1.0550000000000002,
+          "expected_lost_margin_avoided": -143.30268291956145,
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": true
+            },
+            {
+              "id": "band:price_100ml:0",
+              "included": true
+            }
+          ]
+        },
+        {
+          "id": "C76a24f44caf9",
+          "name": "Not Lower price / 100 ml · Not Water-based · Choc Coated",
+          "skus": [
+            "IC017",
+            "IC019",
+            "IC025",
+            "IC030",
+            "IC046",
+            "IC052"
+          ],
+          "effect_pct": -7.973748690521728,
+          "interval_pct": [
+            -9.827586636488087,
+            -6.081798033564144
+          ],
+          "case_change": -38,
+          "pallet_change": -0.6333333333333333,
+          "expected_lost_margin_avoided": -573.8922382730865,
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": true
+            },
+            {
+              "id": "band:price_100ml:0",
+              "included": false
+            }
+          ]
+        }
+      ],
+      "leaves": [
+        {
+          "id": "C1548dfa641a2",
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": true
+            }
+          ],
+          "skus": [
+            "IC001",
+            "IC002",
+            "IC003",
+            "IC004",
+            "IC005",
+            "IC006",
+            "IC007",
+            "IC008",
+            "IC009",
+            "IC011",
+            "IC014",
+            "IC015",
+            "IC051",
+            "IC055",
+            "IC059",
+            "IC060",
+            "IC061",
+            "IC062",
+            "IC063",
+            "IC064",
+            "IC065",
+            "IC066",
+            "IC070",
+            "IC071",
+            "IC072"
+          ]
+        },
+        {
+          "id": "Cd4835997b328",
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": true
+            },
+            {
+              "id": "band:price_100ml:0",
+              "included": true
+            }
+          ],
+          "skus": [
+            "IC018",
+            "IC022",
+            "IC024",
+            "IC033"
+          ]
+        },
+        {
+          "id": "C76a24f44caf9",
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": true
+            },
+            {
+              "id": "band:price_100ml:0",
+              "included": false
+            }
+          ],
+          "skus": [
+            "IC017",
+            "IC019",
+            "IC025",
+            "IC030",
+            "IC046",
+            "IC052"
+          ]
+        },
+        {
+          "id": "C14958972908b",
+          "tag_path": [
+            {
+              "id": "band:dairy:0",
+              "included": false
+            },
+            {
+              "id": "feature:choc_coated",
+              "included": false
+            }
+          ],
+          "skus": [
+            "IC010",
+            "IC012",
+            "IC013",
+            "IC016",
+            "IC020",
+            "IC021",
+            "IC023",
+            "IC026",
+            "IC027",
+            "IC028",
+            "IC029",
+            "IC031",
+            "IC032",
+            "IC034",
+            "IC035",
+            "IC036",
+            "IC037",
+            "IC038",
+            "IC039",
+            "IC040",
+            "IC041",
+            "IC042",
+            "IC043",
+            "IC044",
+            "IC045",
+            "IC047",
+            "IC048",
+            "IC049",
+            "IC050",
+            "IC053",
+            "IC054",
+            "IC056",
+            "IC057",
+            "IC058",
+            "IC067",
+            "IC068",
+            "IC069",
+            "IC073",
+            "IC074",
+            "IC075"
+          ]
+        }
+      ],
+      "planted_sku_factors": {
+        "IC006": {
+          "f10": 1.7091086714148935,
+          "f50": 1.8083763236773442,
+          "f90": 1.9134095933932134,
+          "m": 0.5924293839379551,
+          "s2": 0.0019406028271706762
+        },
+        "IC061": {
+          "f10": 1.7766921710688368,
+          "f50": 1.8806506214109004,
+          "f90": 1.9906919259319305,
+          "m": 0.6316177921902061,
+          "s2": 0.0019686896701739533
+        },
+        "IC062": {
+          "f10": 1.7456716723761252,
+          "f50": 1.834631635591087,
+          "f90": 1.92812502578458,
+          "m": 0.6068437178077593,
+          "s2": 0.0015041229577464812
+        },
+        "IC063": {
+          "f10": 1.6703194470756115,
+          "f50": 1.7728044009104453,
+          "f90": 1.8815774727342762,
+          "m": 0.5725627000307683,
+          "s2": 0.0021588702188675177
+        }
+      }
+    },
+    {
+      "week": "2026-06-22",
+      "case_total": 1765,
+      "model": "M202606-v1-s93",
+      "root_test": {
+        "path": [],
+        "candidate_count": 44,
+        "gain": 11.52715752427672,
+        "split_tag": "feature:choc_coated",
+        "p_value": 0.44221105527638194,
+        "permutations": 199
+      },
+      "cards": [],
+      "leaves": [
+        {
+          "id": "Ce3b0c44298fc",
+          "tag_path": [],
+          "skus": [
+            "IC001",
+            "IC002",
+            "IC003",
+            "IC004",
+            "IC005",
+            "IC006",
+            "IC007",
+            "IC008",
+            "IC009",
+            "IC010",
+            "IC011",
+            "IC012",
+            "IC013",
+            "IC014",
+            "IC015",
+            "IC016",
+            "IC017",
+            "IC018",
+            "IC019",
+            "IC020",
+            "IC021",
+            "IC022",
+            "IC023",
+            "IC024",
+            "IC025",
+            "IC026",
+            "IC027",
+            "IC028",
+            "IC029",
+            "IC030",
+            "IC031",
+            "IC032",
+            "IC033",
+            "IC034",
+            "IC035",
+            "IC036",
+            "IC037",
+            "IC038",
+            "IC039",
+            "IC040",
+            "IC041",
+            "IC042",
+            "IC043",
+            "IC044",
+            "IC045",
+            "IC046",
+            "IC047",
+            "IC048",
+            "IC049",
+            "IC050",
+            "IC051",
+            "IC052",
+            "IC053",
+            "IC054",
+            "IC055",
+            "IC056",
+            "IC057",
+            "IC058",
+            "IC059",
+            "IC060",
+            "IC061",
+            "IC062",
+            "IC063",
+            "IC064",
+            "IC065",
+            "IC066",
+            "IC067",
+            "IC068",
+            "IC069",
+            "IC070",
+            "IC071",
+            "IC072",
+            "IC073",
+            "IC074",
+            "IC075"
+          ]
+        }
+      ],
+      "planted_sku_factors": {
+        "IC006": {
+          "f10": 0.9738916982310457,
+          "f50": 0.9986089893704381,
+          "f90": 1.0239536033244505,
+          "m": -0.0013919789829450772,
+          "s2": 0.0003824440245862326
+        },
+        "IC061": {
+          "f10": 0.9682907985058284,
+          "f50": 0.9935273271066448,
+          "f90": 1.0194215944537164,
+          "m": -0.006493711473583669,
+          "s2": 0.00040303675522680173
+        },
+        "IC062": {
+          "f10": 0.9778128603459277,
+          "f50": 0.9998396926196312,
+          "f90": 1.0223627152787242,
+          "m": -0.00016032023097024319,
+          "s2": 0.0003021308090687884
+        },
+        "IC063": {
+          "f10": 0.9909782916316405,
+          "f50": 1.0149121762661706,
+          "f90": 1.0394241066949792,
+          "m": 0.014802082904036321,
+          "s2": 0.0003467433762345889
+        }
+      }
+    }
+  ]
+}

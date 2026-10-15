@@ -80,6 +80,12 @@ Describe an exploratory signal in business terms, such as "Check whether the loc
 next week"; do not refer to internal significance gates in the visible narrative.
 Use observed replenishment requests, not claimed consumer sales. Name the comparison: deviation
 from forecast is different from change since last week. Separate alarm dates from review windows.
+The forecast already contains weather. Interpret departures from that expectation using additional
+operational evidence or a specific question for the planner, rather than attributing the residual
+to temperature again. An estimated service benefit is a projection, not a promise of no shortages.
+Keep a group's scope faithful to its definition: examples from a heterogeneous leaf do not make
+the entire leaf one product format. Different groups with different effects deserve separate
+illustrated observations, even when they are small. Label a positive buying change as an increase.
 Use a consistent, familiar price basis in the report. Prefer the catalog's per-item price tier
 when describing purchasing groups; introduce price per volume only when that distinction explains
 something useful. Overlapping price definitions should not give the same products confusing labels.
