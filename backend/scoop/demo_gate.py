@@ -2,6 +2,7 @@
 from contextlib import contextmanager
 from threading import Condition,get_ident
 from contextvars import ContextVar
+import re
 import time
 
 class DemoBusy(RuntimeError): pass
@@ -61,7 +62,8 @@ class DemoGateMiddleware:
         path=scope.get('path','')
         if path in {'/api/demo-settings/select','/api/demo-settings/reset'}: return await self.app(scope,receive,send)
         try:
-            with self.gate.activity(http=True,read_only=scope.get('method') in {'GET','HEAD','OPTIONS'}):
+            preview_read = scope.get('method') == 'POST' and re.fullmatch(r'/api/plans/[^/]+/direction-preview', path) is not None
+            with self.gate.activity(http=True,read_only=scope.get('method') in {'GET','HEAD','OPTIONS'} or preview_read):
                 # Reports are from the seed42 experiment, never relabelled as seed73.
                 if self.manager and path=='/api/evaluation' and self.manager.active_seed()!=42:
                     return await JSONResponse({'status':'pending','seed':self.manager.active_seed()})(scope,receive,send)

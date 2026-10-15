@@ -1,0 +1,58 @@
+[
+  {
+    "service_level": null,
+    "elapsed_ms": 3779,
+    "result": {
+      "service_level": null,
+      "auto_service_level": 0.9676735337206769,
+      "cases": 2195,
+      "projected_peak_pallets": 61.304556505468874,
+      "capacity_pallets": 66.0,
+      "inherited_peak_pallets": 61.304556505468874,
+      "inherited_excess_pallets": 0.0,
+      "incremental_excess_pallets": 0.0
+    }
+  },
+  {
+    "service_level": 0.5,
+    "elapsed_ms": 182,
+    "result": {
+      "service_level": 0.5,
+      "auto_service_level": 0.9676735337206769,
+      "cases": 1660,
+      "projected_peak_pallets": 61.304556505468874,
+      "capacity_pallets": 66.0,
+      "inherited_peak_pallets": 61.304556505468874,
+      "inherited_excess_pallets": 0.0,
+      "incremental_excess_pallets": 0.0
+    }
+  },
+  {
+    "service_level": 0.98,
+    "elapsed_ms": 253,
+    "result": {
+      "service_level": 0.98,
+      "auto_service_level": 0.9676735337206769,
+      "cases": 2255,
+      "projected_peak_pallets": 61.304556505468874,
+      "capacity_pallets": 66.0,
+      "inherited_peak_pallets": 61.304556505468874,
+      "inherited_excess_pallets": 0.0,
+      "incremental_excess_pallets": 0.0
+    }
+  },
+  {
+    "service_level": null,
+    "elapsed_ms": 292,
+    "result": {
+      "service_level": null,
+      "auto_service_level": 0.9676735337206769,
+      "cases": 2195,
+      "projected_peak_pallets": 61.304556505468874,
+      "capacity_pallets": 66.0,
+      "inherited_peak_pallets": 61.304556505468874,
+      "inherited_excess_pallets": 0.0,
+      "incremental_excess_pallets": 0.0
+    }
+  }
+]

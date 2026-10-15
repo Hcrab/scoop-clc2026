@@ -1,0 +1,23 @@
+{
+  "status": "complete",
+  "model": "gemini-3.8-flash",
+  "elapsed_seconds": 81.35899999999674,
+  "before": {
+    "calls": 160,
+    "estimated_usd": 16.897085,
+    "input_tokens": 5926455,
+    "output_tokens": 343832,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "after": {
+    "calls": 168,
+    "estimated_usd": 17.366918,
+    "input_tokens": 6198272,
+    "output_tokens": 352113,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "night3_new_spend_usd": 0.469833
+}
+{"title": "Water-based strawberry bars surge +38.2% while chocolate-coated lines ease -4.6%", "error": null, "grounding_failure": null}

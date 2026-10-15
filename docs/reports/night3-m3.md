@@ -1,0 +1,25 @@
+# M3 — report and direction
+
+The report and the direction panel now have separate jobs. The report gives illustrated observations and short linked action rows. The panel shows the demand assumption, order consequences, capacity and reversible context edits. On desktop they scroll independently beneath the fixed plan header and stepper; at 900px they stack without horizontal overflow.
+
+## Acceptance
+
+- ✅ Direction, actions and scrolling screenshots: `docs/screenshots/m3-direction.png`, `m3-actions.png`, `m3-scrolled-left.png`, plus `m3-narrow-direction.png`. All personally inspected. The direction header, endpoint slider labels and consequence line align; the report shows one prominent fitted effect and muted one-decimal context. Actions contain only direction, illustration, cohort name and algorithmic magnitude. The scrolled-left capture leaves the right panel and stepper in place; the narrow capture stacks the columns and keeps the full controls readable. The final captures contain neither the stale preview's “updating” state nor the old report's capacity paragraph.
+- ✅ Magnitude bands: `test_cohort_cards.py` covers both signs and exact boundaries 10/30: absolute effect below 10 → slightly, 10–30 inclusive → moderately, above 30 → sharply. Card action comes from computed case-change sign; Hold displays keep watching. Tests for preview read-only behavior, Apply correspondence, context reuse, goal defaults and exact read-only endpoint classification also pass. **63 tests passed** across direction preview, cohort cards/planning, weekly review and Reset; **13 grounding tests passed** separately. Outputs: `reports/m3-tests.txt`, `m3-grounding-tests.txt`.
+- ✅ Removed UI text: `reports/m3-ui-text-check.txt` records `rg -n -F` over frontend source and both generated presentation artifacts: no Stock and space, either arrow form of Fewer stockouts / Less space, or Warehouse storage notice.
+- ✅ Real browser: `night3-m3.spec.ts` **1 passed (35.4s)** on the final build, `reports/m3-browser.txt`, `m3-browser.json`. No mocked responses or page errors. Dragging to 50% previews **1,660 cases**; auto previews **2,195**; 98% previews **2,255**. Saved quantities stay unchanged until Apply. Applied quantities and projected peak match preview, Undo restores exact quantities and null service level, Reset to auto works, and action click highlights the correct card. Left-scroll and narrow-layout checks pass.
+- ✅ Final production build: `reports/m3-build.txt`. Reset restores the final refined report with its exact presentation hash and all 75 initial order lines; source remains 1,233,000 rows / 6,523,011 requested / 6,484,384 shipped (`reports/m3-final-state.json`).
+
+## Implementation and measured behavior
+
+`POST /plans/{pid}/direction-preview` reuses the current stored contextual model with no second override application, and runs only ordering/capacity calculations. It does not change orders, service level, decisions, flow or the replay. Apply uses the ordinary goal endpoint. Preview requests are debounced 150ms and stale responses ignored; Apply waits for the matching result. The automatic label is the arithmetic mean of the products' automatic critical ratios (**96.76735%, displayed 96.8%**); automatic ordering still uses each product's own ratio. No service defaults or algorithm thresholds changed.
+
+First preview after process/model loading took **3,779ms**; the next three took **182 / 253 / 292ms** (`reports/m3-preview-timing.json`). The projected peak remains **61.3046 / 66 pallets** across these settings because inherited stock and inbound deliveries determine that peak; differing new quantities arrive later. Excess is shown once in amber in the panel, distinguishing inherited excess from additional purchases; the fixture test checks that decomposition.
+
+Native action figures now render compact rows from the supplied card's `action` and `magnitude`. Their validated report-channel message selects and highlights a right-hand card. Trend expansion and query access remain available. The host no longer appends a mechanical query-summary paragraph to every evidence button. Observation keys and secondary metric context use the existing type tokens, without imposing wording or observation-count checks on AI prose.
+
+## Gemini
+
+Fresh investigation with **gemini-3.8-flash** used **8 calls / $0.469833**. One visual-authoring pass over the saved evidence used **1 call / $0.061290**, yielding the final compact action section. Final presentation and authoring metadata: `reports/m3-report-refinement.json`; fresh investigation: `reports/m3-gemini.json`. The paid refinement was explicitly persisted and its SHA verified through the API (`m3-refinement-persisted.json`), then restored successfully by Reset. The first cache-only attempt made no provider call.
+
+Lifetime ledger is **169 calls / $17.428208**, preserving historical rows. Night 3 new usage is **$0.531123 of $10**; approximately **$9.468877** remains. Browser tests and template restoration added no provider calls.

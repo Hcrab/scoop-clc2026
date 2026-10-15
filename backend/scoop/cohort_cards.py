@@ -4,6 +4,11 @@ import numpy as np
 from scipy.stats import norm
 
 
+def magnitude_word(effect_pct):
+    magnitude = abs(effect_pct)
+    return 'slightly' if magnitude < 10 else 'moderately' if magnitude <= 30 else 'sharply'
+
+
 def cohort_name(leaf, groups):
     """Name the included scope; exclusions only qualify a positive parent."""
     priority = {'price_hkd':0, 'price_100ml':0, 'flavour':1, 'dairy':2, 'format':2}
@@ -96,14 +101,18 @@ def build_cards(result, orders, baseline, products, groups, names):
         excess = {s:sum(u.get('recent_A',0)-u.get('recent_E',0) for u in units if u['sku']==s) for s in skus}
         representative = min(skus, key=lambda s:(-excess[s], names.get(s,s))) if skus else None
         override_ids = [o['id'] for o in result.get('applied_overrides',[]) if any(u['sku'] in skus for u in o.get('matched_units',[])) or o.get('sku') in skus]
+        case_change = round(delta_cases)
+        effect_pct = float(np.expm1(leaf['posterior_mean'])*100)
         cards.append({'id':leaf['id'],'name':title or ', '.join(leaf['districts']),
                       'tag_path':leaf['tag_path'],'districts':leaf['districts'],'skus':skus,
-                      'effect_pct':float(np.expm1(leaf['posterior_mean'])*100),
+                      'effect_pct':effect_pct,
+                      'action':'increase' if case_change > 0 else 'reduce' if case_change < 0 else 'hold',
+                      'magnitude':magnitude_word(effect_pct),
                       'effect_basis':'Estimated sustained change in requested/forecast ratio from baseline to recent, after shrinkage; not the raw recent requested-minus-forecast percentage.',
                       'interval_pct':[float(np.expm1(low)*100),float(np.expm1(high)*100)],
                       'interval_coverage_pct':80.,'daily':leaf.get('daily',[]),'series_scope':leaf.get('series_scope',''),
                       'drilldown':_drilldown(leaf, groups),
-                      'sku_factors':per_sku,'case_change':round(delta_cases),
+                      'sku_factors':per_sku,'case_change':case_change,
                       'expected_lost_margin_avoided':float(saved_margin),'pallet_change':delta_pallets,
                       'pallet_change_basis':'Footprint of the change in total purchased cases; not a change in simultaneous warehouse peak occupancy.',
                       'peak_capacity':float(orders.projected_pallets.max()),

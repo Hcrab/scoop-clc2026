@@ -1,0 +1,38 @@
+{
+  "source_checksum": {
+    "rows": 1233000,
+    "ordered": 6523011,
+    "shipped": 6484384
+  },
+  "stage": "discover",
+  "flow": "report",
+  "orders": 75,
+  "cards": [
+    {
+      "id": "C831a53fca012",
+      "effect_pct": 38.15519709134121,
+      "action": "increase",
+      "magnitude": "sharply",
+      "case_change": 132
+    },
+    {
+      "id": "C6b627a31b52c",
+      "effect_pct": -4.621811830557659,
+      "action": "reduce",
+      "magnitude": "slightly",
+      "case_change": -37
+    }
+  ],
+  "final_title": "Value water-based strawberry surges +38.2% while chocolate-coated softens -4.6%",
+  "presentation_sha256": "ccd0196766d77b700d83dd45837ce74839814d2f346d8cd8bc318baa24a540cb",
+  "final_refinement_restored_by_reset": true,
+  "ledger": {
+    "calls": 169,
+    "estimated_usd": 17.428208,
+    "input_tokens": 6224482,
+    "output_tokens": 355043,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "night3_new_spend_usd": 0.531123
+}

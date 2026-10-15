@@ -1,0 +1,2 @@
+rg -n -F -e "Stock and space" -e "Fewer stockouts ↔ Less space" -e "Fewer stockouts ⟷ Less space" -e "Warehouse storage notice" frontend/src reports/m3-gemini.json reports/m3-report-refinement.json
+No matches (exit 1).

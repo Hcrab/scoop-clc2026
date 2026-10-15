@@ -6,14 +6,16 @@
 |---|---|---|---|
 | Requested pre-step: fast Reset | Accepted | `425ab1f` | Reset API 174 / 85 / 94 ms; usable report after 1.404 s; 47 focused backend tests and the real Settings flow pass. |
 | M1 Same cold store | Accepted | `517d776` | 25 tests + real Results capture; both peaks 57.9866 / 60; 404 units avoided, 14 extra product-days, HK$6,764.94 extra lost margin. Five-SKU diagnosis and fixes recorded. |
-| M2 Demo start state | Accepted | See phase commit | Capacity 66 pallets; projected peak 61.3046 = 92.8857%. Source requests, stock, policy settings and ledger retained. |
-| M3 Report layout and language | Not started | — | Direction preview, action rows, native metrics and independent columns. |
+| M2 Demo start state | Accepted | `b564792` | Capacity 66 pallets; projected peak 61.3046 = 92.8857%. Source requests, stock, policy settings and ledger retained. |
+| M3 Report layout and language | Accepted | See phase commit | 76 tests + real preview/Apply/Undo/action-link/scroll flow; Gemini report regenerated; screenshots reviewed. |
 | M4 Play widget values | Not started | — | Today-so-far values and partial daily curves without a midnight zero drop. |
 | M5 Walkthrough and docs | Not started | — | Refresh the five-step captures and document the delivered comparison. |
 
 Branch `claude/scoop-prototype`; starting revision `43b44fae4c70806137e276cfc4479ae5d955abee`. Night 2 is archived in [reports/night2.md](reports/night2.md). The user explicitly requested fast Reset before supplying the Night 3 handoff; finish and push it before M1. Work proceeds M1→M5 in order, with evidence for every check and a push after each accepted phase. No multi-seed work, deployment, slide deck, rebase or force-push.
 
 Tonight's new Gemini allowance is **$10**, starting after **160 historical calls / $16.897085 estimated or reserved**. The full ledger is retained. The cumulative enforcement cap is **$26.897085**; a new 120-call allowance gives a cumulative call cap of 280. This does not grant $26.90 of new usage. Receipt: `reports/night3-budget-start.json`. Reuse the stored report until M3 is complete, then regenerate it with `gemini-3.8-flash`. Ordinary tests use the scripted provider.
+
+After M3: **169 lifetime calls / $17.428208**, hence **$0.531123 new Night 3 usage**, approximately **$9.468877** of tonight's allowance remaining. The final regenerated report is persisted and included in the clean Reset template.
 
 ## Requested pre-step — fast Reset
 
@@ -39,9 +41,9 @@ Local runtime repair: PostgreSQL accepted TCP but could not complete new session
 
 ## M3 — Report text and layout
 
-- ❌ Pending — Screenshots show the new direction/slider block, card language, left action summary and independently scrolled left column.
-- ❌ Pending — Magnitude-word bands are tested: below 10% slightly, 10–30% moderately, above 30% sharply.
-- ❌ Pending — Removed UI strings have no matches: Stock and space; Fewer stockouts ↔ Less space; Warehouse storage notice.
+- ✅ Screenshots — `docs/screenshots/m3-direction.png`, `m3-actions.png`, `m3-scrolled-left.png`, `m3-narrow-direction.png`, all personally inspected. Final real browser test **1 passed (35.4s)** (`reports/m3-browser.txt/json`): previews change cases without writes; Apply matches preview; Undo restores exact orders; linked actions highlight the card; desktop scrolls independently and narrow layout stacks. Final report uses one estimated-effect key and muted one-decimal context, with no capacity paragraph in its action list. [Details](reports/night3-m3.md).
+- ✅ Magnitudes and integration — **63 + 13 = 76 tests passed**, `reports/m3-tests.txt`, `m3-grounding-tests.txt`; exact ±10/±30 boundaries covered in `test_cohort_cards.py`. Production build passes (`m3-build.txt`). Native words are algorithm output. No model/policy tuning.
+- ✅ UI text — `reports/m3-ui-text-check.txt`: `rg -n -F` has no matches for any prohibited string, including both arrow variants. Gemini fresh report + one visual pass total **9 calls / $0.531123**. Final API and Reset presentation hashes agree (`m3-final-state.json`); source requests and ledger history retained.
 
 ## M4 — Play widget values
 

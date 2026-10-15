@@ -1,0 +1,50 @@
+{
+  "mocked_responses": false,
+  "errors": [],
+  "screenshots": [
+    "docs/screenshots/m3-direction.png",
+    "docs/screenshots/m3-scrolled-left.png",
+    "docs/screenshots/m3-actions.png",
+    "docs/screenshots/m3-narrow-direction.png"
+  ],
+  "previews": [
+    {
+      "service_level": 0.5,
+      "auto_service_level": 0.9676735337206769,
+      "cases": 1660,
+      "projected_peak_pallets": 61.304556505468874,
+      "capacity_pallets": 66,
+      "inherited_peak_pallets": 61.304556505468874,
+      "inherited_excess_pallets": 0,
+      "incremental_excess_pallets": 0
+    },
+    {
+      "service_level": null,
+      "auto_service_level": 0.9676735337206769,
+      "cases": 2195,
+      "projected_peak_pallets": 61.304556505468874,
+      "capacity_pallets": 66,
+      "inherited_peak_pallets": 61.304556505468874,
+      "inherited_excess_pallets": 0,
+      "incremental_excess_pallets": 0
+    },
+    {
+      "service_level": 0.98,
+      "auto_service_level": 0.9676735337206769,
+      "cases": 2255,
+      "projected_peak_pallets": 61.304556505468874,
+      "capacity_pallets": 66,
+      "inherited_peak_pallets": 61.304556505468874,
+      "inherited_excess_pallets": 0,
+      "incremental_excess_pallets": 0
+    }
+  ],
+  "independent_scroll": {
+    "left_scroll_top": 2480,
+    "right_scroll_top": 0,
+    "header_y": 221.1875
+  },
+  "preview_matches_apply": true,
+  "undo_restores_exact_orders": true,
+  "focused_card": "C831a53fca012"
+}
