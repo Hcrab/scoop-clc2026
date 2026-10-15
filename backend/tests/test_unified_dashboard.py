@@ -5,12 +5,109 @@ from sqlalchemy import select
 
 from test_api_state import api
 from scoop.models import (DailyExpectation, Decision, ModelRun, NodeInventory,
-                          Plan, Product, ProductTag, Store, StoreOrder, WatchItem)
+                          Plan, Product, ProductTag, PurchaseSuggestion, Store, StoreOrder, WatchItem)
 
 
 def widget(title, kind='sku', key='IC001', metric='demand'):
     return {'title': title, 'scope': {'kind': kind, 'key': key},
             'metric': metric, 'threshold': None}
+
+
+def add_product(session, sku, name, brand='Fixture'):
+    session.add(Product(sku=sku, name=name, brand=brand, format='stick',
+                        size_ml=100, units_per_case=10, cases_per_pallet=10,
+                        price_hkd=20, cost_hkd=10, supplier_id='SUP', moq_cases=3,
+                        launch_date=date(2023, 1, 1), status='active', description='Fixture'))
+
+
+def test_representative_product_reuses_cohort_card_and_saved_scope_excess(api):
+    client, scope, _, _ = api
+    with scope() as session:
+        add_product(session, 'IC002', 'Apricot')
+        add_product(session, 'IC003', 'Banana')
+        plan = session.get(Plan, 'TESTAPI')
+        plan.summary = {'cohort_cards': [
+            {'id': 'fruit', 'name': 'Fruit', 'skus': ['IC001', 'IC002'],
+             'representative_sku': 'IC002'},
+            {'id': 'stale', 'name': 'Stale', 'skus': ['IC001', 'IC002'],
+             'representative_sku': 'IC003'}],
+            'cohort_model': {'units': [
+                {'leaf_id': 'fruit', 'sku': 'IC001', 'recent_A': 30, 'recent_E': 10},
+                {'leaf_id': 'fruit', 'sku': 'IC002', 'recent_A': 11, 'recent_E': 10},
+                {'leaf_id': 'other', 'sku': 'IC002', 'recent_A': 14, 'recent_E': 10},
+                {'leaf_id': 'other', 'sku': 'IC003', 'recent_A': 40, 'recent_E': 10}]}}
+    cohort = client.post('/api/plans/TESTAPI/dashboard-preview',
+                         json=widget('Card fruit', 'cohort', 'fruit')).json()
+    assert cohort['skus'] == ['IC001', 'IC002']
+    assert cohort['representative_sku'] == 'IC002'
+    stale = client.post('/api/plans/TESTAPI/dashboard-preview',
+                        json=widget('Stale fruit', 'cohort', 'stale')).json()
+    assert stale['representative_sku'] == 'IC001'
+    warehouse = client.post('/api/plans/TESTAPI/dashboard-preview',
+                            json=widget('Warehouse', 'warehouse', '')).json()
+    assert warehouse['representative_sku'] == 'IC003'
+    assert client.post('/api/plans/TESTAPI/dashboard-preview',
+                       json=widget('Single', 'sku', 'IC001')).json()['representative_sku'] == 'IC001'
+
+
+def test_representative_product_ties_by_name_then_sku_and_falls_back_without_units(api):
+    client, scope, _, _ = api
+    with scope() as session:
+        add_product(session, 'IC002', 'Alpha')
+        add_product(session, 'IC003', 'Alpha')
+        plan = session.get(Plan, 'TESTAPI')
+        plan.summary = {'cohort_model': {'units': [
+            {'leaf_id': 'one', 'sku': 'IC001', 'recent_A': 20, 'recent_E': 10},
+            {'leaf_id': 'two', 'sku': 'IC002', 'recent_A': 13, 'recent_E': 10},
+            {'leaf_id': 'three', 'sku': 'IC002', 'recent_A': 17, 'recent_E': 10},
+            {'leaf_id': 'four', 'sku': 'IC003', 'recent_A': 20, 'recent_E': 10}]}}
+    tied = client.post('/api/plans/TESTAPI/dashboard-preview',
+                       json=widget('Tied', 'brand', 'Fixture')).json()
+    assert tied['representative_sku'] == 'IC002'
+    with scope() as session:
+        plan = session.get(Plan, 'TESTAPI')
+        plan.summary = {'cohort_model': {'units': []}}
+    fallback = client.post('/api/plans/TESTAPI/dashboard-preview',
+                           json=widget('No model units', 'brand', 'Fixture')).json()
+    assert fallback['representative_sku'] == 'IC002'
+
+
+def test_widget_lifecycle_selects_illustration_without_replanning(api, monkeypatch):
+    from scoop.algorithms import cohort_model
+    client, scope, _, planning = api
+    with scope() as session:
+        add_product(session, 'IC002', 'Apricot')
+        plan = session.get(Plan, 'TESTAPI')
+        plan.summary = {'cohort_model': {'units': [
+            {'leaf_id': 'one', 'sku': 'IC002', 'recent_A': 20, 'recent_E': 10}]}}
+        original_goal = plan.goal
+        original_model = plan.summary['cohort_model']
+        original_orders = [(row.sku, row.suggested_cases) for row in
+                           session.scalars(select(PurchaseSuggestion).where(PurchaseSuggestion.plan_id == plan.id))]
+    def unexpected(*args, **kwargs):
+        raise AssertionError('widget lifecycle must use saved evidence')
+    monkeypatch.setattr(planning, 'suggest_orders', unexpected)
+    monkeypatch.setattr(cohort_model, 'fit', unexpected)
+    preview = client.post('/api/plans/TESTAPI/dashboard-preview',
+                          json=widget('Brand preview', 'brand', 'Fixture'))
+    assert preview.status_code == 200, preview.text
+    created = client.post('/api/plans/TESTAPI/dashboard',
+                          json=widget('Brand demand', 'brand', 'Fixture'))
+    assert created.status_code == 200, created.text
+    wid = created.json()['widgets'][0]['id']
+    assert created.json()['widgets'][0]['representative_sku'] == 'IC002'
+    changed = client.put(f'/api/plans/TESTAPI/dashboard/{wid}',
+                         json=widget('Brand stock', 'brand', 'Fixture', 'on_hand'))
+    assert changed.status_code == 200, changed.text
+    assert changed.json()['widgets'][0]['representative_sku'] == 'IC002'
+    assert client.get('/api/plans/TESTAPI/dashboard').json()['widgets'][0]['representative_sku'] == 'IC002'
+    assert client.get('/api/plans/TESTAPI').json()['dashboard']['widgets'][0]['representative_sku'] == 'IC002'
+    with scope() as session:
+        plan = session.get(Plan, 'TESTAPI')
+        assert plan.goal == original_goal
+        assert plan.summary['cohort_model'] == original_model
+        assert [(row.sku, row.suggested_cases) for row in
+                session.scalars(select(PurchaseSuggestion).where(PurchaseSuggestion.plan_id == plan.id))] == original_orders
 
 
 def test_cohort_scope_uses_skus_across_all_stores_and_missing_facts_are_unknown(api):

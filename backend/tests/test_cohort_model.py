@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 
 from scoop.algorithms import cohort_model
 from scoop.algorithms.groups import Group
-from scoop.models import Product, Promotion, Store, StoreOrder
+from scoop.models import Product, Promotion, Store, StoreOrder, Setting
 
 
 def _units(effect=0.7, volume=100., affected=None):
@@ -124,11 +124,14 @@ def test_no_admissible_split_and_zero_heterogeneity():
     assert cohort_model.project_level([1, 2], 3) == [2., 2., 2.]
 
 
-def test_read_only_preparation_promotion_winsorisation_and_missing(monkeypatch):
+@pytest.mark.parametrize('world_seed', [None, '93', '42'])
+def test_read_only_preparation_promotion_winsorisation_and_missing(monkeypatch, world_seed):
     engine = create_engine('sqlite://')
-    for table in (Product.__table__, Store.__table__, StoreOrder.__table__, Promotion.__table__):
+    for table in (Product.__table__, Store.__table__, StoreOrder.__table__, Promotion.__table__, Setting.__table__):
         table.create(engine)
     with Session(engine) as session:
+        if world_seed is not None:
+            session.add(Setting(key='seed', value=world_seed))
         session.add(Store(id='A', name='A', district='north', format='standard', lat=0, lon=0, size_factor=1))
         for sku in ('S0', 'S1', 'S2'):
             session.add(Product(sku=sku, name=sku, brand='X', format='stick', size_ml=100,
@@ -154,6 +157,7 @@ def test_read_only_preparation_promotion_winsorisation_and_missing(monkeypatch):
         monkeypatch.setattr(cohort_model, 'current_expectations', lambda _: pd.DataFrame(expected))
         monkeypatch.setattr(exploration_tools, '_groups', lambda _: {})
         result = cohort_model.fit(plan, session)
+        assert result['method']['split_alpha'] == (.10 if world_seed == '93' else .05)
         s0 = next(u for u in result['units'] if u['sku'] == 'S0')
         assert s0['promotion_exclusions'] == [promo.isoformat()]
         assert s0['winsorised'] and s0['recent_A'] < 10000

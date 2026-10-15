@@ -17,7 +17,7 @@ SCENARIOS=[
     dict(id='new-season',name='New season',description='Explore a new simulated season of store orders and weekly purchasing decisions.',seed=92,default_week='2026-07-27',weeks=WEEKS),
     dict(id=DEMO_SCENARIO,name='Demo warehouse',description='Synthetic warehouse data.',seed=DEMO_SEED,default_week=DEMO_WEEK,weeks=WEEKS),
 ]
-PLANNING={'plans','findings','hypotheses','questions','decisions','direction_items','purchase_suggestions','watch_items','chat_messages'}
+PLANNING={'plans','simulation_runs','findings','hypotheses','questions','decisions','direction_items','purchase_suggestions','watch_items','chat_messages'}
 SOURCE_FIELDS={'stores':'stores','nodes':'nodes','suppliers':'suppliers','products':'products','product_nutrition':'nutrition','tag_dimensions':'tag_dimensions','tags':'tags','product_tags':'product_tags','weather_daily':'weather','weather_forecasts':'forecasts','promotions':'promotions','store_orders':'store_orders','node_inventory':'node_inventory','purchase_orders':'purchase_orders','ground_truth_events':'events'}
 
 def quoted(value):
@@ -74,7 +74,11 @@ class WorldManager:
             c.execute(text(f"DELETE FROM {quoted(self.active)}.settings WHERE key='cohort_overrides'"))
     def restore(self,c,schema):
         self.clear(c)
-        for table in self.tables: c.execute(text(f'INSERT INTO {quoted(self.active)}.{quoted(table.name)} SELECT * FROM {quoted(schema)}.{quoted(table.name)}'))
+        for table in self.tables:
+            if table.name=='simulation_runs' and c.execute(text('SELECT to_regclass(:name)'),
+                    {'name':schema+'.simulation_runs'}).scalar() is None:
+                continue  # Snapshots saved before this cache table existed have no runs.
+            c.execute(text(f'INSERT INTO {quoted(self.active)}.{quoted(table.name)} SELECT * FROM {quoted(schema)}.{quoted(table.name)}'))
         for table,column in [('decisions','id'),('chat_messages','id')]:
             target=self.active+'.'+table
             sequence=c.execute(text('SELECT pg_get_serial_sequence(:table,:column)'),{'table':target,'column':column}).scalar()

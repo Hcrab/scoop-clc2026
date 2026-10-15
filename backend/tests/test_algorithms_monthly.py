@@ -32,7 +32,7 @@ def test_monthly_version_cutoffs_and_immutable_historical_selection(monkeypatch)
     assert len(loaded)==3
     meta=runs.model_metadata(date(2026,7,13))
     assert meta['calibration_end']=='2026-06-30'
-    assert meta['calibration_source_version']=='M202606-v1-s42'
+    assert meta['calibration_source_version']=='M202606-v2-s42'
 
 
 def test_monitoring_resets_at_each_model_boundary(monkeypatch,tmp_path):
@@ -57,7 +57,7 @@ def test_monitoring_resets_at_each_model_boundary(monkeypatch,tmp_path):
     assert series.loc['2026-07-01','s_up']==1.75
     assert series.loc['2026-08-01','s_up']==1.75
     assert monitored.series_for(date(2026,7,1),through=date(2026,6,30)).empty
-    assert monitored.calibration_frames['M202607-v1-s42'].date.max()==pd.Timestamp('2026-06-30')
+    assert monitored.calibration_frames['M202607-v2-s42'].date.max()==pd.Timestamp('2026-06-30')
 
 
 def test_old_multiplier_retires_after_training_and_future_evidence_is_rejected():

@@ -31,11 +31,18 @@ def _session_scope() -> Iterator[Session]:
     try:
         yield session
         session.commit()
+        for plan_id in session.info.get('simulation_after_commit', set()):
+            from .simulation_jobs import enqueue
+            enqueue(plan_id, retry=True)
     except Exception:
         session.rollback()
         raise
     finally:
         session.close()
+
+
+def schedule_simulation_after_commit(session: Session, plan_id: str) -> None:
+    session.info.setdefault('simulation_after_commit', set()).add(plan_id)
 
 
 def copy_frame(df: pd.DataFrame, table: str) -> None:

@@ -18,10 +18,10 @@ def played_week(monkeypatch):
     play._CACHE.clear()
     products = pd.DataFrame(
         [
-            {"sku": "A", "name": "A", "brand": "Test", "price_hkd": 4.0,
+            {"sku": "A", "name": "A", "brand": "Test", "supplier_id": "SUP01", "price_hkd": 4.0,
              "cost_hkd": 2.0, "units_per_case": 10, "cases_per_pallet": 10,
              "moq_cases": 1, "lead_time_days": 3, "order_weekday": 0, "review_days": 7},
-            {"sku": "B", "name": "B", "brand": "Test", "price_hkd": 3.0,
+            {"sku": "B", "name": "B", "brand": "Test", "supplier_id": "SUP02", "price_hkd": 3.0,
              "cost_hkd": 1.0, "units_per_case": 5, "cases_per_pallet": 10,
              "moq_cases": 1, "lead_time_days": 3, "order_weekday": 1, "review_days": 7},
         ]
@@ -96,6 +96,7 @@ def test_policies_share_opening_transit_and_daily_demand(played_week):
             assert run["on_hand"][0][i] + run["shipped"][0][i] - run["arrived"][0][i] == pytest.approx(OPENING[sku])
         for day, demand in enumerate(result["demand"]):
             for i in range(len(SKUS)):
+                assert run["demand"][day][i] == pytest.approx(demand[i])
                 assert run["shipped"][day][i] + run["lost"][day][i] == pytest.approx(demand[i])
 
     # Historical POs have both a recorded receipt and a pending expected date.
@@ -268,6 +269,23 @@ def test_cache_invalidates_order_date_and_context(played_week, monkeypatch):
     assert resized['capacity_pallets'] == 90.
 
 
+def test_counterfactual_service_and_quantities_have_separate_cache_entries(played_week):
+    baseline = played_week['runs']['baseline']
+    a = play.simulate('test-plan', START, days=7, _service_level=.6,
+                      _first_week_cases={'A': 2, 'B': 2}, _baseline_run=baseline)
+    assert a['runs']['baseline'] is baseline
+    assert play.simulate('test-plan', START, days=7, _service_level=.6,
+                         _first_week_cases={'A': 2, 'B': 2}, _baseline_run=baseline) is a
+    different_cases = play.simulate('test-plan', START, days=7, _service_level=.6,
+                                    _first_week_cases={'A': 3, 'B': 2}, _baseline_run=baseline)
+    different_service = play.simulate('test-plan', START, days=7, _service_level=.7,
+                                      _first_week_cases={'A': 2, 'B': 2}, _baseline_run=baseline)
+    assert different_cases is not a
+    assert different_service is not a
+    assert different_cases['runs']['scoop']['per_sku']['placed_cases'][0][0] == 3
+    assert played_week['runs']['scoop']['per_sku']['placed_cases'][0][0] == 1
+
+
 def test_empty_affected_set_has_zero_quantities(played_week, monkeypatch):
     original_read = play.read_sql
 
@@ -335,10 +353,11 @@ def test_events_reference_orders_and_match_arrival_quantities(played_week):
     assert {(event['date'], event['sku'], event['cases']) for event in orders} == {
         (START.isoformat(), 'A', 1), ((START + timedelta(days=1)).isoformat(), 'B', 2)}
     arrivals = [event for event in result['events'] if event['kind'] == 'arrival']
-    assert {event['date']: event['skus'] for event in arrivals} == {
-        (START + timedelta(days=3)).isoformat(): ['A'],
-        (START + timedelta(days=4)).isoformat(): ['B']}
-    assert all(event['order_dates'] and event['card_ids'] == [] for event in arrivals)
+    assert {(event['date'], event['sku'], event['cases']) for event in arrivals if event['cases']} == {
+        ((START + timedelta(days=3)).isoformat(), 'A', 1),
+        ((START + timedelta(days=4)).isoformat(), 'B', 2)}
+    assert any(event['date'] == START.isoformat() and event['sku'] == 'B' for event in arrivals)
+    assert all(event['order_dates'] and event['card_ids'] == [] for event in arrivals if event['cases'])
     for event in result['events']:
         if event['kind'] in {'stockout', 'kept'}:
             assert 'order_dates' in event and 'rule_order_dates' in event and 'card_ids' in event

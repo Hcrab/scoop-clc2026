@@ -178,6 +178,25 @@ def _demand(facts, day, skus, field=0):
     return sum(row[field] for row in rows) if rows and all(row is not None for row in rows) else None
 
 
+def representative_sku(plan, spec, skus, products):
+    """Choose an illustration from saved plan evidence without recalculating it."""
+    if spec['scope']['kind'] == 'sku':
+        return skus[0]
+    summary = plan.summary or {}
+    if spec['scope']['kind'] == 'cohort':
+        card = next((card for card in summary.get('cohort_cards', [])
+                     if card['id'] == spec['scope']['key']), None)
+        if card and card.get('representative_sku') in skus:
+            return card['representative_sku']
+    excess = {}
+    for unit in summary.get('cohort_model', {}).get('units', []):
+        sku = unit['sku']
+        if sku in skus:
+            excess[sku] = excess.get(sku, 0) + unit.get('recent_A', 0) - unit.get('recent_E', 0)
+    candidates = excess if excess else skus
+    return min(candidates, key=lambda sku: (-excess.get(sku, 0), products[sku].name, sku)) if candidates else None
+
+
 def evaluate(session, plan, spec, widget_id='preview', facts=None):
     spec = canonical(spec)
     skus = resolve(session, plan, spec)
@@ -214,7 +233,9 @@ def evaluate(session, plan, spec, widget_id='preview', facts=None):
                'value': _demand(facts, end - timedelta(days=i), skus)} for i in range(7, 0, -1)]
     latest = series[-1]['value']
     latest_state = 'unknown' if latest is None else 'warning' if threshold and ((latest < threshold['value']) if threshold['operator'] == 'lt' else (latest > threshold['value'])) else 'normal'
-    return {'id': widget_id, **spec, 'skus': skus, 'unit': UNITS[spec['metric']],
+    return {'id': widget_id, **spec, 'skus': skus,
+            'representative_sku': representative_sku(plan, spec, skus, facts['products']),
+            'unit': UNITS[spec['metric']],
             'series': series, 'recent_demand': recent, 'value': latest, 'state': latest_state}
 
 

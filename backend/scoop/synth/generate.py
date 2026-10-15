@@ -215,7 +215,7 @@ def build_catalog(rng: np.random.Generator, *, seed: int | None = None):
 # --------------------------------------------------------------------------- weather
 
 
-def build_weather(rng: np.random.Generator, days: list[date]):
+def build_weather(rng: np.random.Generator, days: list[date], *, heatwave=None):
     n = len(days)
     doy = np.array([d.timetuple().tm_yday for d in days])
     clim = 24.0 + 6.0 * np.sin(2 * np.pi * (doy - 110) / 365.25)
@@ -223,7 +223,7 @@ def build_weather(rng: np.random.Generator, days: list[date]):
     for i in range(1, n):
         anomaly[i] = 0.7 * anomaly[i - 1] + rng.normal(0, 1.3)
     tmax = np.minimum(clim + anomaly, 33.8)
-    for d, t in HEATWAVE.items():
+    for d, t in (HEATWAVE if heatwave is None else heatwave).items():
         tmax[days.index(d)] = t
     wet_prob = 0.22 + 0.25 * (np.sin(2 * np.pi * (doy - 100) / 365.25) > 0)
     rain = np.where(rng.random(n) < wet_prob, rng.exponential(11.0, n), 0.0)
@@ -429,8 +429,14 @@ def generate(seed: int = 42) -> World:
     rng = np.random.default_rng(seed)
     days = _dates()
     stores, suppliers, products, nutrition, tag_dimensions, tags, product_tags = build_catalog(rng, seed=seed)
-    weather, forecasts, _ = build_weather(rng, days)
-    orders, promotions, events = build_demand(rng, days, stores, products, product_tags, weather)
+    if seed == 93:
+        from .compound_demo import HEATWAVE as demo_heatwave
+        weather, forecasts, _ = build_weather(rng, days, heatwave=demo_heatwave)
+        orders, promotions, events = build_demand(rng, days, stores, products, product_tags, weather,
+                                                 planted=False)
+    else:
+        weather, forecasts, _ = build_weather(rng, days)
+        orders, promotions, events = build_demand(rng, days, stores, products, product_tags, weather)
     if seed == 91:
         from .challenge import inject
         events = pd.concat([events, inject(orders, days, stores, products)], ignore_index=True)
@@ -438,8 +444,10 @@ def generate(seed: int = 42) -> World:
         from .combination_challenge import inject
         events = pd.concat([events, inject(orders, days, stores, products, nutrition, product_tags)], ignore_index=True)
     if seed == 93:
-        from .strawberry_challenge import inject
-        events = pd.concat([events, inject(orders, days, stores, products, product_tags)], ignore_index=True)
+        from .compound_demo import inject
+        # Baseline demand has none of the older planted drifts or bulk orders.
+        # Keep its real promotions, but replace their obsolete private answer key.
+        events = inject(orders, days, stores, products, product_tags)
     shipped, inventory, purchase_orders = simulate_dc(rng, days, stores, products, suppliers, orders)
 
     n_d, n_s, n_i = orders.shape

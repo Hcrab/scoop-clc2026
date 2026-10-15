@@ -74,6 +74,8 @@ td { color: #344e3e; }
 .play-widget .chart-summary { display: block; }
 .play-comparison details ul { max-height: 192px; overflow: auto; padding: 8px 8px 8px 32px; }
 .play-comparison details { margin-top: 16px; }
+.stage-tabs button { min-width: 0; justify-content: center; }
+.stage-tabs .step-number { width: 25px; height: 25px; }
 
 @media (max-width: 1100px) {
   .stage-tabs .stage-lock { display: none; }
@@ -89,6 +91,8 @@ td { color: #344e3e; }
   .nav-item { justify-content: flex-start; gap: 8px; padding: 12px 8px; }
 }
 @media (max-width: 760px) {
+  .stage-tabs { overflow-x: auto; }
+  .stage-tabs button { flex: 0 0 auto; min-width: 112px; }
   .network-intro .district-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .wordmark { width: 42px; overflow: hidden; justify-content: flex-start; gap: 20px; }
   .wordmark .logo { flex: none; }

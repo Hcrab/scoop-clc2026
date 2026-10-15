@@ -262,7 +262,7 @@ def _operations(session,plan,args):
                                  'mean_delay_days':float(np.mean([(p.received_date-p.expected_date).days for p in received])) if received else None,
                                  'items':[{'sku':p.sku,'supplier_id':p.supplier_id,'expected_date':p.expected_date.isoformat(),
                                            'received_date':p.received_date.isoformat(),'delay_days':(p.received_date-p.expected_date).days} for p in received[:20]]},
-            'known_open_arrivals':{'count':len(open_orders),'items':[{'sku':p.sku,'supplier_id':p.supplier_id,'ordered_date':p.order_date.isoformat(),
+            'known_open_arrivals':{'count':len(open_orders),'total_cases':sum(p.cases for p in open_orders),'items':[{'sku':p.sku,'supplier_id':p.supplier_id,'ordered_date':p.order_date.isoformat(),
                                    'expected_date':p.expected_date.isoformat(),'cases':p.cases,'overdue_at_cutoff':p.expected_date<cutoff} for p in open_orders[:20]]},
             'warehouse_scope':'Supplier receipts and expected arrivals cover shared warehouse products; they are not district-specific stock.',
             'applied':False}

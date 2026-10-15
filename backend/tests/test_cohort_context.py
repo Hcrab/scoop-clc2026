@@ -23,7 +23,9 @@ def test_card_endpoint_and_offline_report_use_the_same_saved_plan_result(api,mon
     assert shown['cards']==[card]
     assert shown['method']=={'model_version':'saved-model'}
     assert report['queries'][0]['result']==shown['cards'][0]
-    assert '+7 cases' in report['presentation']['html']
+    assert '<figure data-card="cohort" data-id="leaf-1"></figure>' in report['presentation']['html']
+    assert report['queries'][0]['result']['case_change']==7
+    assert '+7 cases' not in report['presentation']['html']
 
 
 def test_history_serves_visible_diff_and_keeps_complete_undo_snapshot(api):
@@ -89,6 +91,11 @@ def test_context_api_passes_saved_definition_into_recompute_and_returns_diff(api
     data = response.json()
     assert data['affected_orders'][0]['before'] == 3
     assert data['affected_orders'][0]['after'] == 2
+    from scoop.api.flow import state as flow_state
+    with scope() as session:
+        draft_flow = flow_state(session, session.get(Plan, 'TESTAPI'))
+    assert draft_flow['step'] == draft_flow['max_step'] == 'report'
+    assert draft_flow['notice'] is None
     assert seen[0][0]['tag_path'] == [{'id':'tag:a','included':True}]
     with scope() as session:
         session.add(Plan(id='NEXT',week_start=date(2026,7,13),stage='discover',goal='margin',created_at=datetime.now(),summary={}))

@@ -257,6 +257,19 @@ class Plan(Base):
     summary: Mapped[dict] = mapped_column(JSON, default=dict)
 
 
+class SimulationRun(Base):
+    __tablename__ = "simulation_runs"
+    plan_id: Mapped[str] = mapped_column(ForeignKey("plans.id"), primary_key=True)
+    order_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    status: Mapped[str] = mapped_column(String(16))
+    queued_at: Mapped[datetime] = mapped_column(DateTime)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    elapsed_seconds: Mapped[float | None] = mapped_column(Float, nullable=True)
+    error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    result: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+
+
 class Finding(Base):
     __tablename__ = "findings"
     id: Mapped[str] = mapped_column(String(40), primary_key=True)

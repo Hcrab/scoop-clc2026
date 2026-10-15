@@ -28,3 +28,18 @@ class Settings:
 
 
 settings = Settings()
+
+
+# Presentation-only intraday profile. The physical simulation still settles daily.
+INTRADAY_STEP_MINUTES = 10
+DEMAND_HOURLY_WEIGHTS = (0.0,) * 10 + (
+    .04, .06, .08, .10, .14, .16, .14, .10, .07, .05, .04, .02,
+) + (0.0,) * 2
+DISPATCH_HOURLY_WEIGHTS = (0.0,) * 18 + (.15, .30, .35, .20) + (0.0,) * 2
+ORDER_CUTOFF_MINUTE = 14 * 60
+SUPPLIER_WINDOWS = {
+    'SUP01': (360, 480), 'SUP02': (390, 540), 'SUP03': (420, 540),
+    'SUP04': (360, 600), 'SUP05': (420, 600), 'SUP06': (360, 540),
+    'SUP07': (360, 600), 'SUP08': (420, 600),
+}
+DEFAULT_SUPPLIER_WINDOW = (360, 600)
