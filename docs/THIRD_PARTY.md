@@ -2,6 +2,8 @@
 
 ## Material AI assistance
 
+Product illustrations in `frontend/public/products/` are AI-generated for this project with ChatGPT image generation (OpenAI), one request per SKU using a common original style reference. They are fictional catalog illustrations, without third-party packaging, branding or logos. Prompt and output records: `reports/n4-image-generation.json`.
+
 | Tool | Material contribution | Review responsibility |
 |---|---|---|
 | Anthropic Claude | Product discussion, original architecture, synthetic generator, schema and analytical code recovered from the interrupted session | Team reviews assumptions and code |

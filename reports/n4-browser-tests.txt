@@ -1,0 +1,11 @@
+
+Running 3 tests using 1 worker
+
+
+
+(node:50724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/3] e2e\n4-illustrations.spec.ts:8:1 › N4 every catalog SKU renders an image and tag SVG at 32, 48 and 96 pixels
+[2/3] e2e\n4-illustrations.spec.ts:36:1 › N4 illustrations load across report, Orders, Play widgets and timed events
+[3/3] e2e\n4-illustrations.spec.ts:92:1 › N4 missing product images expose the actual SVG fallback in app and report
+  3 passed (40.2s)

@@ -46,3 +46,4 @@
 .discover-with-cohorts>.original-findings{grid-column:1/-1;min-width:0;border-top:1px solid var(--line);padding-top:20px;margin-top:4px}
 
 .discover-with-cohorts>.original-findings .signal-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr))}.original-findings .signal-choice:last-child:nth-child(odd){grid-column:auto}
+.cohort-numbers>.product-icon{margin-left:auto}

@@ -1,0 +1,3 @@
+.product-icon{position:relative;display:inline-block;flex:none;overflow:hidden;border-radius:16%;vertical-align:middle;background:#f7f4e9}
+.product-icon-fallback,.product-icon img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
+.product-icon img{color:transparent}

@@ -7,15 +7,15 @@
 | N1 Five-step flow | Accepted | `1a7b2ada3401` | Five screens; persisted replay; widget edits do not simulate. Cold preparation 37.203 s; accepted browser flow reused it. |
 | N2 Hours and minutes | Accepted | `0311c5bf532a` | 129,600 balances checked; 31 correctly timed shortages; 31.212 s replay versus 30.931 s expected. |
 | N3 UI polish | Accepted | `59c62e8e8bbf` | Native adjustments; 40-group evidence modal; 13 observations / membership filters; aligned round-tick widgets and Results. |
-| N4 Product illustrations | Not started | — | 75 individual illustrations and a reviewed contact sheet. |
+| N4 Product illustrations | Accepted | Pending commit | 75 reviewed illustrations; 225 icon renders; all required screens; exact orders/widgets preserved. |
 | N5 Compound demo scenario | Not started | — | Single illustrative world; only the explicitly authorized small algorithm changes. |
 | N6 Walkthrough and docs | Not started | — | Final five-step walkthrough and documentation. |
 
-Starting revision: `e12d5977f85b8564618109f6eb4585eeaeed3d55`, branch `claude/scoop-prototype`. Night 1 is archived in [reports/night1.md](reports/night1.md). N1 is accepted and pushed as implementation 1a7b2ada3401 with ledger revision 2526180c1b5e; remote SHA verified. N2 is accepted and pushed as implementation 0311c5b with ledger revision 803f215a6c71; remote SHA verified. N3 is accepted; N4–N6 have not begun.
+Starting revision: `e12d5977f85b8564618109f6eb4585eeaeed3d55`, branch `claude/scoop-prototype`. Night 1 is archived in [reports/night1.md](reports/night1.md). N1 is accepted and pushed as implementation 1a7b2ada3401 with ledger revision 2526180c1b5e; remote SHA verified. N2 is accepted and pushed as implementation 0311c5b with ledger revision 803f215a6c71; remote SHA verified. N3 is accepted and pushed as implementation 59c62e8 with ledger revision a97c01565f21; remote SHA verified. N4 is accepted; N5–N6 have not begun.
 
 Key numbers at the start of this run: Gemini ledger **138 calls, $14.671322 estimated/reserved of the existing $20 total**; remaining **$5.328678**. The ledger and reservations are retained. Tests use the scripted provider unless a live call is specifically under review. Source world: seed 93, current date 20 July 2026, 75 products, plan `P20260720`, 5 widgets. User edits made after Night 1 are preserved; the ignored baseline snapshot is `.codex/backups/night2-baseline.json`.
 
-Open acceptance questions: N3 evidence and report presentation; N4 consistency across 75 images; N5 whether the designed compound cohort is isolated and wins at matched average pallets. These are work to verify, not claims of completion.
+Open acceptance questions: N5 whether the designed compound cohort is isolated and wins at matched average pallets; N6 the final walkthrough and documentation. Current Gemini ledger remains 140 calls / $14.842303 estimated and reserved of $20 ($5.157697 remaining); N4 made no Gemini calls.
 
 ## Rules and scope
 
@@ -75,9 +75,19 @@ Central browser diagnosis distinguished a tall-iframe input problem from disclos
 
 ## N4 — Product illustrations
 
-- ❌ Pending — Contact sheet of all 75 individually generated illustrations; inspect consistent style and regenerate exceptions.
-- ❌ Pending — Screenshots: illustrations in Orders, a cohort card, a Play widget and an event.
-- ❌ Pending — Test: every product renders an image or composed SVG fallback.
+- ✅ Contact sheet — `docs/screenshots/n4-contact-sheet.png` contains all **75** individually generated illustrations. I inspected every row side by side for silhouette, flavour, scale, badge, shading and style. One rejected white-chocolate shell was brown; IC025 was regenerated with an ivory shell. **76 built-in ChatGPT image-generation requests**, one image each, use the same original IC006 reference for all subsequent products. Final prompt, original path, reference, size and checksum per product: `reports/n4-image-generation.json`. All assets are **256 × 256 WebP**, maximum **9,122 bytes**, total **398,670 bytes**, under `frontend/public/products/`. `scripts/build-product-illustrations.py --contact-sheet` formats existing generated originals; it does not synthesize illustrations. Checks: `reports/n4-static-checks.txt`.
+- ✅ Required browser screens — `pnpm --dir frontend exec playwright test n4-illustrations.spec.ts --reporter=line` → **3 passed (40.2 s)**. `n4-01-report-cohort.png` and `n4-02-native-card.png` show the program card and AI report's trusted native figure; `n4-03-orders.png` shows images left of product names; `n4-04-play-widget-event.png` / `n4-05-event.png` show Play widgets and **20 Jul 14:00** product events at a **14:10** pause. All five captures are in `docs/screenshots/` and were visually inspected. The test also fetched all 75 real image URLs, checked their byte limit, and verified **exact orders and all five widgets unchanged**. Record: `reports/n4-browser.json`; command output: `reports/n4-browser-tests.txt`. No mocked API responses or page errors.
+- ✅ Every product renders — the same browser spec renders **75 × 3 = 225** actual ProductIcon instances at 32 / 48 / 96 px, finds **63** distinct tag-composed SVGs and checks a new unknown-SKU fallback (`reports/n4-icon-coverage.json`). Stick, cup, tub, cone, sandwich, multipack and mochi silhouettes use fixed flavour colours, two-tone flavours and coating/pieces/filling/crunch details. An actual failed-image browser test confirms SVG fallback in React and the opaque report; it waits for the image lifecycle before checking the hidden failed image (`reports/n4-fallback.json`). Backend focused dashboard tests → **12 passed in 9.62 s**, covering saved cohort consistency, largest excess, name/SKU ties and read-only widget create/edit/read without replanning (`reports/n4-backend-tests.txt`).
+- ✅ Disclosure and integration — TECHNICAL_DESIGN has the required exact OpenAI product-illustration disclosure; THIRD_PARTY identifies images as AI-generated for this project. Source grep has no font-size outside type tokens. Production frontend build passes (**62 modules**); `git diff --check` passes. Model-authored SVG/src are still removed before trusted native icon injection; iframe images are restricted to this host's `/products/` path. Forecasts, world data, report authoring and simulation inputs are unchanged.
+
+Cohort illustrations use the saved SKU with the most recent excess units, with product-name tie breaking; matching widgets reuse that exact choice. Other product scopes choose from saved evidence. Whole-warehouse metrics keep their global identity without a repeated strawberry picture. Central visual review kept a 48px header minimum so Watch's first three key numbers remain aligned at **528.078 px** in the accepted browser run. No new slogans, explanatory banners or navigation were added.
+
+| Screenshot | Three-second purpose / next action | Focal group | Disposable explanation | Number provenance | Slide readability |
+|---|---|---|---|---|---|
+| Report / cohort — n4-01 | Weekly changes and Review orders remain visible. | First water-based observation. | No image-related copy added. | Evidence and products stays adjacent. | Photo is recognizable without competing with cases or chart. |
+| Native adjustment — n4-02 | Increase / case change is immediate. | +599 cases, with one product badge. | No repeated quantity table. | Open evidence remains visible. | 96px illustration and key quantity fit without collision. |
+| Orders — n4-03 | Review cases, capacity and Approve orders. | Sticky capacity/approval bar. | Row details remain collapsed. | Order evidence per row. | 48px images, names and columns align with readable spacing. |
+| Play widgets / event — n4-04 and n4-05 | Clock, Pause/Resume and current stock are clear. | Two cohort widgets and the timed event feed. | Global metrics have no arbitrary product badge. | Source data and actual timed product text remain visible. | 48px widget and 32px event images fit the two-column layout. |
 
 ## N5 — Illustrative compound-trend scenario
 

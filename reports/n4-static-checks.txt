@@ -1,0 +1,10 @@
+Font sizes outside type tokens:
+['rg', '--pcre2', '-n', 'font-size\\s*:\\s*+(?!var\\(--type-)\\S[^;}]*', 'frontend/src', '--glob', '*.css', '--glob', '*.ts', '--glob', '*.tsx', '--max-columns', '160', '--max-columns-preview']
+(no matches)
+rg exit: 1
+Disclosure:
+docs/THIRD_PARTY.md:5:Product illustrations in `frontend/public/products/` are AI-generated for this project with ChatGPT image generation (OpenAI), one request per SKU using a common original style reference. They are fictional catalog illustrations, without third-party packaging, branding or logos. Prompt and output records: `reports/n4-image-generation.json`.
+docs/TECHNICAL_DESIGN.md:201:Product illustrations generated with ChatGPT image generation (OpenAI). Each of the 75 catalog illustrations is generated in its own request using one common style reference, resized to 256 pixels and stored locally as WebP. The tag-composed SVG remains underneath as the fallback. The per-product prompts and asset checksums are recorded in `reports/n4-image-generation.json`.
+
+Asset dimensions, bytes and provenance:
+{"images": 75, "requests": 76, "dimensions": "256 x 256", "max_bytes": 9122, "total_bytes": 398670, "shared_original_reference": true, "revised_skus": ["IC025"]}

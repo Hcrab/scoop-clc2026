@@ -1,0 +1,20 @@
+{
+  "failed_requests": [
+    "http://127.0.0.1:8009/products/IC062.webp",
+    "http://127.0.0.1:8009/products/IC010.webp",
+    "http://127.0.0.1:8009/products/IC062.webp",
+    "http://127.0.0.1:8009/products/IC010.webp",
+    "http://127.0.0.1:8009/products/IC033.webp",
+    "http://127.0.0.1:8009/products/IC052.webp",
+    "http://127.0.0.1:8009/products/IC062.webp",
+    "http://127.0.0.1:8009/products/IC010.webp",
+    "http://127.0.0.1:8009/products/IC052.webp",
+    "http://127.0.0.1:8009/products/IC033.webp"
+  ],
+  "image": {
+    "complete": true,
+    "width": 0,
+    "hidden": true,
+    "display": "none"
+  }
+}

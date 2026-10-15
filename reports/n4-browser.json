@@ -1,0 +1,339 @@
+{
+  "mocked_responses": false,
+  "screenshots": [
+    "docs/screenshots/n4-01-report-cohort.png",
+    "docs/screenshots/n4-02-native-card.png",
+    "docs/screenshots/n4-03-orders.png",
+    "docs/screenshots/n4-04-play-widget-event.png",
+    "docs/screenshots/n4-05-event.png"
+  ],
+  "errors": [],
+  "cohort_representatives": [
+    {
+      "id": "C1548dfa641a2",
+      "sku": "IC062"
+    },
+    {
+      "id": "C6f4af776c73a",
+      "sku": "IC010"
+    },
+    {
+      "id": "Ca693b9f78ee2",
+      "sku": "IC052"
+    },
+    {
+      "id": "Cf3b066880cd4",
+      "sku": "IC033"
+    }
+  ],
+  "widget_key_tops": [
+    528.078125,
+    528.078125,
+    528.078125
+  ],
+  "timed_event": "20 JUL · 14:00\n\nOrdered 18 cases of Strawberry Reserve Cream Bar under this plan.",
+  "play_minute": "850",
+  "assets": [
+    {
+      "sku": "IC001",
+      "bytes": 4826
+    },
+    {
+      "sku": "IC002",
+      "bytes": 4040
+    },
+    {
+      "sku": "IC003",
+      "bytes": 5394
+    },
+    {
+      "sku": "IC004",
+      "bytes": 5526
+    },
+    {
+      "sku": "IC005",
+      "bytes": 4188
+    },
+    {
+      "sku": "IC006",
+      "bytes": 4658
+    },
+    {
+      "sku": "IC007",
+      "bytes": 6478
+    },
+    {
+      "sku": "IC008",
+      "bytes": 6350
+    },
+    {
+      "sku": "IC009",
+      "bytes": 3132
+    },
+    {
+      "sku": "IC010",
+      "bytes": 5698
+    },
+    {
+      "sku": "IC011",
+      "bytes": 5120
+    },
+    {
+      "sku": "IC012",
+      "bytes": 6866
+    },
+    {
+      "sku": "IC013",
+      "bytes": 6886
+    },
+    {
+      "sku": "IC014",
+      "bytes": 5034
+    },
+    {
+      "sku": "IC015",
+      "bytes": 4684
+    },
+    {
+      "sku": "IC016",
+      "bytes": 5698
+    },
+    {
+      "sku": "IC017",
+      "bytes": 6688
+    },
+    {
+      "sku": "IC018",
+      "bytes": 6822
+    },
+    {
+      "sku": "IC019",
+      "bytes": 6888
+    },
+    {
+      "sku": "IC020",
+      "bytes": 5862
+    },
+    {
+      "sku": "IC021",
+      "bytes": 7754
+    },
+    {
+      "sku": "IC022",
+      "bytes": 8208
+    },
+    {
+      "sku": "IC023",
+      "bytes": 6598
+    },
+    {
+      "sku": "IC024",
+      "bytes": 7322
+    },
+    {
+      "sku": "IC025",
+      "bytes": 5670
+    },
+    {
+      "sku": "IC026",
+      "bytes": 5718
+    },
+    {
+      "sku": "IC027",
+      "bytes": 3996
+    },
+    {
+      "sku": "IC028",
+      "bytes": 5172
+    },
+    {
+      "sku": "IC029",
+      "bytes": 2700
+    },
+    {
+      "sku": "IC030",
+      "bytes": 5810
+    },
+    {
+      "sku": "IC031",
+      "bytes": 5646
+    },
+    {
+      "sku": "IC032",
+      "bytes": 7276
+    },
+    {
+      "sku": "IC033",
+      "bytes": 6926
+    },
+    {
+      "sku": "IC034",
+      "bytes": 2990
+    },
+    {
+      "sku": "IC035",
+      "bytes": 5814
+    },
+    {
+      "sku": "IC036",
+      "bytes": 2980
+    },
+    {
+      "sku": "IC037",
+      "bytes": 5452
+    },
+    {
+      "sku": "IC038",
+      "bytes": 4414
+    },
+    {
+      "sku": "IC039",
+      "bytes": 6842
+    },
+    {
+      "sku": "IC040",
+      "bytes": 6926
+    },
+    {
+      "sku": "IC041",
+      "bytes": 5432
+    },
+    {
+      "sku": "IC042",
+      "bytes": 4830
+    },
+    {
+      "sku": "IC043",
+      "bytes": 3930
+    },
+    {
+      "sku": "IC044",
+      "bytes": 6000
+    },
+    {
+      "sku": "IC045",
+      "bytes": 4816
+    },
+    {
+      "sku": "IC046",
+      "bytes": 6150
+    },
+    {
+      "sku": "IC047",
+      "bytes": 6408
+    },
+    {
+      "sku": "IC048",
+      "bytes": 4974
+    },
+    {
+      "sku": "IC049",
+      "bytes": 5890
+    },
+    {
+      "sku": "IC050",
+      "bytes": 4658
+    },
+    {
+      "sku": "IC051",
+      "bytes": 3642
+    },
+    {
+      "sku": "IC052",
+      "bytes": 5584
+    },
+    {
+      "sku": "IC053",
+      "bytes": 4742
+    },
+    {
+      "sku": "IC054",
+      "bytes": 4850
+    },
+    {
+      "sku": "IC055",
+      "bytes": 4884
+    },
+    {
+      "sku": "IC056",
+      "bytes": 9122
+    },
+    {
+      "sku": "IC057",
+      "bytes": 4110
+    },
+    {
+      "sku": "IC058",
+      "bytes": 6004
+    },
+    {
+      "sku": "IC059",
+      "bytes": 4658
+    },
+    {
+      "sku": "IC060",
+      "bytes": 5104
+    },
+    {
+      "sku": "IC061",
+      "bytes": 4778
+    },
+    {
+      "sku": "IC062",
+      "bytes": 5102
+    },
+    {
+      "sku": "IC063",
+      "bytes": 4720
+    },
+    {
+      "sku": "IC064",
+      "bytes": 6300
+    },
+    {
+      "sku": "IC065",
+      "bytes": 4932
+    },
+    {
+      "sku": "IC066",
+      "bytes": 5092
+    },
+    {
+      "sku": "IC067",
+      "bytes": 3838
+    },
+    {
+      "sku": "IC068",
+      "bytes": 4056
+    },
+    {
+      "sku": "IC069",
+      "bytes": 3996
+    },
+    {
+      "sku": "IC070",
+      "bytes": 4824
+    },
+    {
+      "sku": "IC071",
+      "bytes": 4026
+    },
+    {
+      "sku": "IC072",
+      "bytes": 4290
+    },
+    {
+      "sku": "IC073",
+      "bytes": 3816
+    },
+    {
+      "sku": "IC074",
+      "bytes": 3844
+    },
+    {
+      "sku": "IC075",
+      "bytes": 4216
+    }
+  ],
+  "accepted": true
+}

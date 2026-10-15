@@ -3,6 +3,7 @@ import { api, date, n } from './api';
 import { EditReceipt, type PlanEdit } from './EditReceipt';
 import type { Detail, Order } from './types';
 import { Icon } from './ui';
+import { ProductIcon } from './ProductIcon';
 import './actionList.css';
 
 type Group = {id:string;name:string;skus:string[]};
@@ -47,5 +48,5 @@ function OrderRow({order,edited,busy,save}:{order:Order;edited:boolean;busy:bool
   const [value,setValue]=useState(String(order.final_cases));
   useEffect(()=>setValue(String(order.final_cases)),[order.final_cases]);
   async function commit(){if(value!==''&&Number(value)!==order.final_cases)await save(order.sku,Number(value));else if(value==='')setValue(String(order.final_cases))}
-  return <tr className={edited?'action-edited':''}><th scope="row"><strong>{order.name}</strong><small>{order.sku}{edited?' · Edited':''}</small><details><summary>Order evidence</summary><p>{order.reason}</p><span>Demand factor {n(order.adjustment,2)} · {order.units_per_case} units/case</span></details></th><td>{date(order.order_date)}</td><td>{n(order.demand_p50)}<small>{n(order.demand_p10)}–{n(order.demand_p90)}</small></td><td>{n(order.inventory_position)}</td><td><input aria-label={`Cases for ${order.name}`} type="number" min="0" step="1" value={value} disabled={busy} onChange={e=>setValue(e.target.value)} onBlur={commit} onKeyDown={e=>{if(e.key==='Enter')e.currentTarget.blur()}}/></td></tr>;
+  return <tr className={edited?'action-edited':''}><th scope="row"><div className="action-product"><ProductIcon sku={order.sku} size={48} decorative/><div><strong>{order.name}</strong><small>{order.sku}{edited?' · Edited':''}</small></div></div><details><summary>Order evidence</summary><p>{order.reason}</p><span>Demand factor {n(order.adjustment,2)} · {order.units_per_case} units/case</span></details></th><td>{date(order.order_date)}</td><td>{n(order.demand_p50)}<small>{n(order.demand_p10)}–{n(order.demand_p90)}</small></td><td>{n(order.inventory_position)}</td><td><input aria-label={`Cases for ${order.name}`} type="number" min="0" step="1" value={value} disabled={busy} onChange={e=>setValue(e.target.value)} onBlur={commit} onKeyDown={e=>{if(e.key==='Enter')e.currentTarget.blur()}}/></td></tr>;
 }

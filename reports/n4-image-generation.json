@@ -1,0 +1,1359 @@
+{
+  "tool": "ChatGPT built-in image generation (OpenAI)",
+  "mode": "one image per request",
+  "master_reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+  "prompt_template": "Flat vector illustration of a single <format> ice cream, <flavour> flavour, <feature details>. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo.",
+  "items": [
+    {
+      "sku": "IC001",
+      "name": "Mango Splash Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "mango"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, mango flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Mango Splash Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-5ab033a5-9f2f-437b-9a41-5dc84ef45546.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC001.webp",
+      "bytes": 4826,
+      "sha256": "e1ed3ba5950dc6344a07d5e1791219968360ee80eb1c0437b100b2c4ddb366e9"
+    },
+    {
+      "sku": "IC002",
+      "name": "Lychee Frost Bar",
+      "format": "stick",
+      "flavours": [
+        "lychee"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, lychee flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Lychee Frost Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-efafcf09-88d0-4447-9065-622c808be2f4.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC002.webp",
+      "bytes": 4040,
+      "sha256": "f5a92bb419ce2e79b02aa452b121fce3f494eac45d378020c753962b1e10ec18"
+    },
+    {
+      "sku": "IC003",
+      "name": "Watermelon Chill Bar",
+      "format": "stick",
+      "flavours": [
+        "watermelon"
+      ],
+      "features": [],
+      "dairy": 0,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, watermelon flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Watermelon Chill Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-7d299558-a847-409f-921c-0d4a64980f47.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC003.webp",
+      "bytes": 5394,
+      "sha256": "1a04e8467f49e9b20179c89215c9a96b2e9cd8bad60f039d8e7d1b655897da35"
+    },
+    {
+      "sku": "IC004",
+      "name": "Passion Fruit Sorbet Cup",
+      "format": "cup",
+      "flavours": [
+        "passion_fruit"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, passion fruit flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Passion Fruit Sorbet Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-cb488f24-97bd-4fc8-87c3-ec96b7ae05f9.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC004.webp",
+      "bytes": 5526,
+      "sha256": "97c7f6589176a101267c5b28f888db85572c052d9c58e10c3be8170e721c722c"
+    },
+    {
+      "sku": "IC005",
+      "name": "Yuzu Lemon Sorbet Cup",
+      "format": "cup",
+      "flavours": [
+        "citrus"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, citrus flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Yuzu Lemon Sorbet Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-1550c016-d107-462b-be24-c1614bb7c3b6.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC005.webp",
+      "bytes": 4188,
+      "sha256": "3dfcfd05055f79f30c2fb2e609ee596b44cff0e5004fbccfa6237b864c309006"
+    },
+    {
+      "sku": "IC006",
+      "name": "Strawberry Burst Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [
+        "fruit_pieces"
+      ],
+      "dairy": 0.25,
+      "prompt": "Use case: stylized-concept. Asset type: small ice cream product illustration for a logistics planning app. Create one square illustration of a single Strawberry Burst Bar: a strawberry-flavoured ice cream on a wooden stick, with a few small strawberry fruit pieces embedded in it. Flat vector illustration, soft pastel palette, centred three-quarter view, emoji style, inside a round pastel strawberry-pink badge. The round badge is part of the design, on a plain warm-white square background. Clean simple shapes that remain readable at 32 pixels; very subtle shading, no thick outlines. Product occupies about 70% of the badge. No text, no packaging, no logo, no decorative extra objects. This is the master style reference for a set of 75 matching product icons.",
+      "source": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "reference": null,
+      "status": "saved",
+      "asset": "frontend/public/products/IC006.webp",
+      "bytes": 4658,
+      "sha256": "cf79e791b3ae0fa3027b73bdc302cb2f4341584654fc24f2f395c4a2712d52cd"
+    },
+    {
+      "sku": "IC007",
+      "name": "Mixed Berry Ice Pop 6-Pack",
+      "format": "multipack",
+      "flavours": [
+        "berry"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single small group of unwrapped miniature ice creams representing a multipack, berry flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Mixed Berry Ice Pop 6-Pack. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-56d0cd14-7f06-4c6f-8f4e-6c37ad8b833d.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC007.webp",
+      "bytes": 6478,
+      "sha256": "1b637a5a17ce1f23e22b9f9dea376e48de6b67b77c18d6c722955b2a5c51cfd6"
+    },
+    {
+      "sku": "IC008",
+      "name": "Tropical Ice Pop 6-Pack",
+      "format": "multipack",
+      "flavours": [
+        "mango",
+        "pineapple"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single small group of unwrapped miniature ice creams representing a multipack, mango and pineapple flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Tropical Ice Pop 6-Pack. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-206466ef-0bf0-4eb5-95cf-3ce602cd009a.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC008.webp",
+      "bytes": 6350,
+      "sha256": "f55c8800e7c70255f5c4801c18fbc0f92206c1049dcfa232c614d49193c6d00d"
+    },
+    {
+      "sku": "IC009",
+      "name": "Coconut Water Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "coconut"
+      ],
+      "features": [],
+      "dairy": 0.15,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, coconut flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Coconut Water Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-6e9e1311-385c-46f0-bb7d-7d0a8b6ad0b9.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC009.webp",
+      "bytes": 3132,
+      "sha256": "fedde9b07ccba234f7d6d09bc9aa20cefc067d3c985d5fe006fb06c167592d65"
+    },
+    {
+      "sku": "IC010",
+      "name": "Mango Sticky Rice Bar",
+      "format": "stick",
+      "flavours": [
+        "coconut",
+        "mango"
+      ],
+      "features": [
+        "filled"
+      ],
+      "dairy": 0.45,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, coconut and mango flavour, a small visible filled centre. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Mango Sticky Rice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-81cef26c-0e23-4b23-bde1-5d42c8a4ab25.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC010.webp",
+      "bytes": 5698,
+      "sha256": "b7d4633acdddc90cbf34406809432258f975199bb5c6cc865c86a31a33104e2c"
+    },
+    {
+      "sku": "IC011",
+      "name": "Peach Oolong Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "peach",
+        "tea"
+      ],
+      "features": [],
+      "dairy": 0.1,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, peach and tea flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Peach Oolong Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-00e34676-0d02-4bd8-9f05-3d5ec6de16e7.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC011.webp",
+      "bytes": 5120,
+      "sha256": "bc77eaf35e5d77ad29256f121c6e656f6302e7225eb9ed317752a1af8f32b589"
+    },
+    {
+      "sku": "IC012",
+      "name": "Pineapple Bun Ice Cream Sandwich",
+      "format": "sandwich",
+      "flavours": [
+        "butter",
+        "pineapple"
+      ],
+      "features": [
+        "crunchy"
+      ],
+      "dairy": 0.7,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream sandwich, butter and pineapple flavour, small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Pineapple Bun Ice Cream Sandwich. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-8d747bb5-b5b8-499c-98d5-6ec8c9f14ae5.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC012.webp",
+      "bytes": 6866,
+      "sha256": "1c3c25da758311b4183d378f5cfd43d47ce0b362d8527b0c6b8370a389a1ea19"
+    },
+    {
+      "sku": "IC013",
+      "name": "Raspberry Ripple Tub",
+      "format": "tub",
+      "flavours": [
+        "raspberry",
+        "vanilla"
+      ],
+      "features": [],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a wide plain open tub, raspberry and vanilla flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Raspberry Ripple Tub. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-2325ba87-360a-452a-a226-05d8aedeb17a.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC013.webp",
+      "bytes": 6886,
+      "sha256": "47162bbae3847375e832c40a59beb6b92a14f422b14c985d7b9e2757602535c9"
+    },
+    {
+      "sku": "IC014",
+      "name": "Green Apple Sorbet Tub",
+      "format": "tub",
+      "flavours": [
+        "apple"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a wide plain open tub, apple flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Green Apple Sorbet Tub. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-7c4bac17-6401-4edc-a223-667efae7d38d.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC014.webp",
+      "bytes": 5034,
+      "sha256": "252360cb21e62cd92b8e1c5ab1ec1c1b1e5a43cb6e7cfc2cdf755430035762e8"
+    },
+    {
+      "sku": "IC015",
+      "name": "Guava Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "guava"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, guava flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Guava Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-8720b916-8081-4bb2-b393-055148d5b8f2.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC015.webp",
+      "bytes": 4684,
+      "sha256": "70692d3116773c31c0f586cbdc8dc4fd699fd1c378137ffd6a2c2f69eae792bb"
+    },
+    {
+      "sku": "IC016",
+      "name": "Dragon Fruit Smoothie Cup",
+      "format": "cup",
+      "flavours": [
+        "dragon_fruit"
+      ],
+      "features": [
+        "fruit_pieces"
+      ],
+      "dairy": 0.35,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, dragon fruit flavour, small visible fruit pieces embedded in the ice cream. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Dragon Fruit Smoothie Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-03daafb9-18dd-40e9-bbb7-c6bcb4872bfa.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC016.webp",
+      "bytes": 5698,
+      "sha256": "63885277c4b5525a1c3a5f9980874a875bb0e83f5866869834d237d8bbc63651"
+    },
+    {
+      "sku": "IC017",
+      "name": "Classic Choc Crunch Bar",
+      "format": "stick",
+      "flavours": [
+        "chocolate"
+      ],
+      "features": [
+        "choc_coated",
+        "crunchy"
+      ],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, chocolate flavour, a chocolate coating and small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Classic Choc Crunch Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-054f8281-4d7c-4642-b8c3-be2e0adca64d.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC017.webp",
+      "bytes": 6688,
+      "sha256": "23455d78f3a54a7be385f48e311b96ae939dc65ea00a6f6913e838918c7fa353"
+    },
+    {
+      "sku": "IC018",
+      "name": "Double Choc Cone",
+      "format": "cone",
+      "flavours": [
+        "chocolate"
+      ],
+      "features": [
+        "choc_coated",
+        "crunchy"
+      ],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single waffle cone ice cream, chocolate flavour, a chocolate coating and small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Double Choc Cone. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-11dae696-f0e8-4b59-910c-50f0ce01ba21.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC018.webp",
+      "bytes": 6822,
+      "sha256": "e0f182df932d8c4905f935997ad8a8f07a96937ab20b4715288f593e919676ec"
+    },
+    {
+      "sku": "IC019",
+      "name": "Almond Choc Coated Bar",
+      "format": "stick",
+      "flavours": [
+        "almond",
+        "chocolate"
+      ],
+      "features": [
+        "choc_coated",
+        "crunchy"
+      ],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, almond and chocolate flavour, a chocolate coating and small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Almond Choc Coated Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-563fd24d-4625-4549-b056-d076e5c9208c.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC019.webp",
+      "bytes": 6888,
+      "sha256": "4a53742d23b5dd194989eecac437eb4bfbfc14f3b9a6dad89b7c0afe06fc9304"
+    },
+    {
+      "sku": "IC020",
+      "name": "Dark Choc Truffle Cup",
+      "format": "cup",
+      "flavours": [
+        "dark_chocolate"
+      ],
+      "features": [],
+      "dairy": 0.9,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, dark chocolate flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Dark Choc Truffle Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-e37d27dd-3522-41f7-a271-352db54059f6.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC020.webp",
+      "bytes": 5862,
+      "sha256": "74172c227a8b1f1d512dfe5e064907e14ef5fb86bd414e8468ecaf265c95329a"
+    },
+    {
+      "sku": "IC021",
+      "name": "Choc Fudge Tub",
+      "format": "tub",
+      "flavours": [
+        "chocolate"
+      ],
+      "features": [],
+      "dairy": 0.9,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a wide plain open tub, chocolate flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Choc Fudge Tub. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-13d36f44-9e5d-4ca6-a7d9-06920d719e72.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC021.webp",
+      "bytes": 7754,
+      "sha256": "38692a66105d6fe62f8d4e1e07081aec0ec31d4b7744ca21f40b787c6b384305"
+    },
+    {
+      "sku": "IC022",
+      "name": "Mini Choc Bites 8-Pack",
+      "format": "multipack",
+      "flavours": [
+        "chocolate",
+        "vanilla"
+      ],
+      "features": [
+        "choc_coated"
+      ],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single small group of unwrapped miniature ice creams representing a multipack, chocolate and vanilla flavour, a chocolate coating, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Mini Choc Bites 8-Pack. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-afbab54a-7745-4e9e-ab8e-e250a8499c91.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC022.webp",
+      "bytes": 8208,
+      "sha256": "777c4fea495addd3b37271069dd91714db67c3d77b18c7019f89e5df5497f3c2"
+    },
+    {
+      "sku": "IC023",
+      "name": "Cookies and Cream Sandwich",
+      "format": "sandwich",
+      "flavours": [
+        "cookies",
+        "vanilla"
+      ],
+      "features": [
+        "crunchy"
+      ],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream sandwich, cookies and vanilla flavour, small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Cookies and Cream Sandwich. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-0678f0b7-a554-42cc-8d8d-c2043eac1ceb.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC023.webp",
+      "bytes": 6598,
+      "sha256": "f5060f52e1038ba1e66c31087a426e02569d7d46e9d9cf7d2ddc30acb92cbee1"
+    },
+    {
+      "sku": "IC024",
+      "name": "Choc Hazelnut Cone",
+      "format": "cone",
+      "flavours": [
+        "chocolate",
+        "hazelnut"
+      ],
+      "features": [
+        "choc_coated",
+        "crunchy"
+      ],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single waffle cone ice cream, chocolate and hazelnut flavour, a chocolate coating and small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Choc Hazelnut Cone. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-790da687-8b5f-46ee-aaf1-953dd22d51a5.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC024.webp",
+      "bytes": 7322,
+      "sha256": "a7d773fb44001c9bd1131f6021c606825d53d64c7c50e63b13a05b6822868b59"
+    },
+    {
+      "sku": "IC025",
+      "name": "White Choc Raspberry Bar",
+      "format": "stick",
+      "flavours": [
+        "raspberry",
+        "white_chocolate"
+      ],
+      "features": [
+        "choc_coated"
+      ],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching catalog product icon. Input image: master style reference only. Flat vector illustration of a single ice cream bar on a wooden stick, white chocolate and raspberry flavour, with an IVORY WHITE CHOCOLATE coating over a pale creamy raspberry-pink centre. The outer shell is smooth ivory white, like white chocolate, with a few raspberry-pink swirls, and a small corner reveals the pink centre. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel raspberry-pink badge. No text, no packaging, no logo. Plain warm-white square outside the badge. Keep the original reference's clean shapes, subtle highlights and product scale. This product is White Choc Raspberry Bar: the coating must be ivory white, not brown or dark chocolate; no brown pieces.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-c886c954-d98e-4df8-982d-548e79170b85.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC025.webp",
+      "bytes": 5670,
+      "sha256": "6af9109012e09293de40c17fd03ca061d6d24f31f2e299002ec4460ae01410d3",
+      "rejected_versions": [
+        {
+          "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-212fe8f5-8666-44ee-812a-a5aff48f7feb.png",
+          "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, raspberry and white chocolate flavour, a chocolate coating, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: White Choc Raspberry Bar. No writing anywhere.",
+          "reason": "White chocolate shell was incorrectly brown"
+        }
+      ]
+    },
+    {
+      "sku": "IC026",
+      "name": "Choc Mint Cup",
+      "format": "cup",
+      "flavours": [
+        "chocolate",
+        "mint"
+      ],
+      "features": [],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, chocolate and mint flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Choc Mint Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-37e6e13d-f516-4e99-89ae-eeb4c2a9384b.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC026.webp",
+      "bytes": 5718,
+      "sha256": "92dc92a03b1a159e95d6dd4827a0247c9303780a6e748e71fdb2df64012f8ba4"
+    },
+    {
+      "sku": "IC027",
+      "name": "Vanilla Bean Tub",
+      "format": "tub",
+      "flavours": [
+        "vanilla"
+      ],
+      "features": [],
+      "dairy": 0.9,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a wide plain open tub, vanilla flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Vanilla Bean Tub. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-6f027b12-0e2d-4a6a-89ca-6cd39a64b3a4.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC027.webp",
+      "bytes": 3996,
+      "sha256": "979c2a0f800afa76179f037be38aa1dadff05bb5e66f4dc31854128ded0f16ea"
+    },
+    {
+      "sku": "IC028",
+      "name": "Vanilla Classic Cone",
+      "format": "cone",
+      "flavours": [
+        "vanilla"
+      ],
+      "features": [
+        "crunchy"
+      ],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single waffle cone ice cream, vanilla flavour, small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Vanilla Classic Cone. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-76f63a50-e7c0-4116-a763-06bc53a67f6d.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC028.webp",
+      "bytes": 5172,
+      "sha256": "ed6895d0986e4c439ae4562a26d75b1ffb11fa0cfa4b689d551a0b0dc893f7e3"
+    },
+    {
+      "sku": "IC029",
+      "name": "Milk Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "milk"
+      ],
+      "features": [],
+      "dairy": 0.7,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, milk flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Milk Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-55b554e7-fcf4-4d6e-b2fd-bd5d3c511a7f.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC029.webp",
+      "bytes": 2700,
+      "sha256": "adbb32fb2bfc48d223bb1bf931dff6afc7ad445e47e549244658f9c9b7cc7393"
+    },
+    {
+      "sku": "IC030",
+      "name": "Vanilla Choc Dip Bar",
+      "format": "stick",
+      "flavours": [
+        "chocolate",
+        "vanilla"
+      ],
+      "features": [
+        "choc_coated"
+      ],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, chocolate and vanilla flavour, a chocolate coating, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Vanilla Choc Dip Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-73844e06-a401-4156-8274-a3ba1bacb05e.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC030.webp",
+      "bytes": 5810,
+      "sha256": "7e7fd7ba26de776dda7456deee08b1cb6705322050a1762f41d1c8c1b58cda63"
+    },
+    {
+      "sku": "IC031",
+      "name": "Salted Caramel Cup",
+      "format": "cup",
+      "flavours": [
+        "caramel"
+      ],
+      "features": [],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, caramel flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Salted Caramel Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-84348539-247d-45b4-883e-d5b6bde1f10c.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC031.webp",
+      "bytes": 5646,
+      "sha256": "b9890bf3117d5ef45c1799e855b37c7fb587900b77ddfdc91c4a6c54d6560f25"
+    },
+    {
+      "sku": "IC032",
+      "name": "Caramel Swirl Tub",
+      "format": "tub",
+      "flavours": [
+        "caramel",
+        "vanilla"
+      ],
+      "features": [],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a wide plain open tub, caramel and vanilla flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Caramel Swirl Tub. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-97ee0074-604c-41c4-aaf1-c9c5da50d1f2.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC032.webp",
+      "bytes": 7276,
+      "sha256": "f1f5dc264e30bd12f1951f4ee1f78b25f7e25bf79462890476156f643fde550f"
+    },
+    {
+      "sku": "IC033",
+      "name": "Toffee Crunch Cone",
+      "format": "cone",
+      "flavours": [
+        "toffee"
+      ],
+      "features": [
+        "choc_coated",
+        "crunchy"
+      ],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single waffle cone ice cream, toffee flavour, a chocolate coating and small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Toffee Crunch Cone. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-9f27059f-626d-407f-ac43-6e7b9b367621.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC033.webp",
+      "bytes": 6926,
+      "sha256": "eb4d297eba920ea1a534620cd59d1811a98df52967fdcb25627396bf90ddbb05"
+    },
+    {
+      "sku": "IC034",
+      "name": "Hokkaido Milk Soft Cup",
+      "format": "cup",
+      "flavours": [
+        "milk"
+      ],
+      "features": [],
+      "dairy": 0.95,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, milk flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Hokkaido Milk Soft Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-7598b8d9-0f33-438d-88ac-4c5a9463314c.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC034.webp",
+      "bytes": 2990,
+      "sha256": "e51fdb6d95df4bfaea51d8f3265e220ed5dc2b9317ba03e9fa8241289f92bfed"
+    },
+    {
+      "sku": "IC035",
+      "name": "Vanilla Sandwich",
+      "format": "sandwich",
+      "flavours": [
+        "vanilla"
+      ],
+      "features": [],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream sandwich, vanilla flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Vanilla Sandwich. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-185b7a03-5c0a-4927-b8f2-4d357dd7873a.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC035.webp",
+      "bytes": 5814,
+      "sha256": "3a27616e026c52d7e8353e14081ff70895cb64d8e4f116a0541e14f2f11989b0"
+    },
+    {
+      "sku": "IC036",
+      "name": "Light Vanilla Bar",
+      "format": "stick",
+      "flavours": [
+        "vanilla"
+      ],
+      "features": [],
+      "dairy": 0.6,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, vanilla flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Light Vanilla Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-72f9585c-5a3d-46b3-b6db-c3fb70620dd7.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC036.webp",
+      "bytes": 2980,
+      "sha256": "748f016261704c164511d8c2138440d48b57c7bd2530f4506225d0bd9d8eac57"
+    },
+    {
+      "sku": "IC037",
+      "name": "Matcha Red Bean Bar",
+      "format": "stick",
+      "flavours": [
+        "matcha",
+        "red_bean"
+      ],
+      "features": [],
+      "dairy": 0.6,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, matcha and red bean flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Matcha Red Bean Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-963d253b-5aaa-47a6-8384-eb2e43fba78b.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC037.webp",
+      "bytes": 5452,
+      "sha256": "570b9378fa1b280e154c03c96a47d5155119ecff17abaf8e9422389bc7202d08"
+    },
+    {
+      "sku": "IC038",
+      "name": "Uji Matcha Cup",
+      "format": "cup",
+      "flavours": [
+        "matcha"
+      ],
+      "features": [],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, matcha flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Uji Matcha Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-759166cf-d808-4fe4-8450-69433a002aaa.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC038.webp",
+      "bytes": 4414,
+      "sha256": "d4b4a5515936173c541eb563049a8f168d38bc3007215a3aefefd91f90d0364c"
+    },
+    {
+      "sku": "IC039",
+      "name": "Black Sesame Mochi 6-Pack",
+      "format": "mochi",
+      "flavours": [
+        "black_sesame"
+      ],
+      "features": [
+        "filled"
+      ],
+      "dairy": 0.7,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single small group of round unwrapped mochi ice cream dumplings, black sesame flavour, a small visible filled centre, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Black Sesame Mochi 6-Pack. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-5114e0e9-4959-46c5-9061-071e5b78ff76.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC039.webp",
+      "bytes": 6842,
+      "sha256": "5916370c1254c29b0a11f3ada3aa1b32b7cb5bf9a65217903d6848dd9dc9ba6f"
+    },
+    {
+      "sku": "IC040",
+      "name": "Mango Mochi 6-Pack",
+      "format": "mochi",
+      "flavours": [
+        "mango"
+      ],
+      "features": [
+        "filled"
+      ],
+      "dairy": 0.6,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single small group of round unwrapped mochi ice cream dumplings, mango flavour, a small visible filled centre, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Mango Mochi 6-Pack. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-af5db184-6351-4be9-9e88-a2a531dc394f.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC040.webp",
+      "bytes": 6926,
+      "sha256": "38339a55366b6c3b942e6e9404746bdcabff9dbc69042da426ac742c3e002c5f"
+    },
+    {
+      "sku": "IC041",
+      "name": "Red Bean Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "red_bean"
+      ],
+      "features": [],
+      "dairy": 0.35,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, red bean flavour, smooth surface with no added pieces. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Red Bean Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-898e2836-4aec-4182-a9a2-a531f085f7b8.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC041.webp",
+      "bytes": 5432,
+      "sha256": "c8f4732885edb0499c492cc807909cf177a91283efd7a0aa05cbd386a80cb568"
+    },
+    {
+      "sku": "IC042",
+      "name": "Taro Milk Cup",
+      "format": "cup",
+      "flavours": [
+        "taro"
+      ],
+      "features": [],
+      "dairy": 0.75,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, taro flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Taro Milk Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-ea1d0346-91c3-441d-8436-9ae8a2a72bbb.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC042.webp",
+      "bytes": 4830,
+      "sha256": "a1b8c9216766bddc75b49f4b4e42a986951a2e8993df817061138000d27aa7cd"
+    },
+    {
+      "sku": "IC043",
+      "name": "Milk Tea Bar",
+      "format": "stick",
+      "flavours": [
+        "milk_tea"
+      ],
+      "features": [],
+      "dairy": 0.65,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, milk tea flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Milk Tea Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-74cd718f-8488-426c-ac39-8833b8cc0d72.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC043.webp",
+      "bytes": 3930,
+      "sha256": "dd315e366e8a1b37def0a6a9e3361291778b732ad6d278a32493703bf094acb1"
+    },
+    {
+      "sku": "IC044",
+      "name": "Hojicha Cone",
+      "format": "cone",
+      "flavours": [
+        "hojicha"
+      ],
+      "features": [
+        "crunchy"
+      ],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single waffle cone ice cream, hojicha flavour, small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Hojicha Cone. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-31a2c1af-1c0b-4669-b5a9-6aa36e6b0b67.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC044.webp",
+      "bytes": 6000,
+      "sha256": "2925a30a5a1cf3f09a35f83edf77eab723efcf0a28b8fa7495881f2571287e65"
+    },
+    {
+      "sku": "IC045",
+      "name": "Durian Cream Cup",
+      "format": "cup",
+      "flavours": [
+        "durian"
+      ],
+      "features": [],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, durian flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Durian Cream Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-74c6df8f-2f33-4d83-8801-d238a1ca102d.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC045.webp",
+      "bytes": 4816,
+      "sha256": "ca1e97b41bebdb1d98e2fd288bf2d23eb1602f7d6e50f9d7c06e863cf0ec20b9"
+    },
+    {
+      "sku": "IC046",
+      "name": "Coffee Crunch Bar",
+      "format": "stick",
+      "flavours": [
+        "coffee"
+      ],
+      "features": [
+        "choc_coated",
+        "crunchy"
+      ],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, coffee flavour, a chocolate coating and small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Coffee Crunch Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-e23cfd4d-8020-439f-b804-26ea2c4d6310.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC046.webp",
+      "bytes": 6150,
+      "sha256": "9a96a726c4ee5e9eccfe5c5b3f526c7bf24001d553ee95abc0d1307848ea1347"
+    },
+    {
+      "sku": "IC047",
+      "name": "Espresso Gelato Cup",
+      "format": "cup",
+      "flavours": [
+        "coffee"
+      ],
+      "features": [],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, coffee flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Espresso Gelato Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-f26c234a-0cb8-49a6-8dc0-c25b6e8333ed.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC047.webp",
+      "bytes": 6408,
+      "sha256": "723d995c7b77ba03ccd5341a9559751d26159bf15f699b302c219e27a999ce2b"
+    },
+    {
+      "sku": "IC048",
+      "name": "Pistachio Gelato Tub",
+      "format": "tub",
+      "flavours": [
+        "pistachio"
+      ],
+      "features": [],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a wide plain open tub, pistachio flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Pistachio Gelato Tub. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-a19884c8-3fb2-4a86-bab5-4c35c0b2b2b4.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC048.webp",
+      "bytes": 4974,
+      "sha256": "3d408e38d573c1e88fec1f81c79e304b200c9cb1e7d8dece3d214c4af67b3a38"
+    },
+    {
+      "sku": "IC049",
+      "name": "Peanut Butter Cone",
+      "format": "cone",
+      "flavours": [
+        "peanut"
+      ],
+      "features": [
+        "crunchy"
+      ],
+      "dairy": 0.8,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single waffle cone ice cream, peanut flavour, small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Peanut Butter Cone. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-ca49127f-9c19-4349-8fb5-2bc94ce47629.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC049.webp",
+      "bytes": 5890,
+      "sha256": "f4863e26d54c99d13724e663e977fec08db31c7436012ef1db59b559bd6ddfb8"
+    },
+    {
+      "sku": "IC050",
+      "name": "Macadamia Cup",
+      "format": "cup",
+      "flavours": [
+        "macadamia"
+      ],
+      "features": [],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, macadamia flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Macadamia Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-83185935-084f-41fb-bcda-6e96575927d0.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC050.webp",
+      "bytes": 4658,
+      "sha256": "95949e709bf0369fb9538b63c53e2dae67562b2e95587f066212cadfce2544bb"
+    },
+    {
+      "sku": "IC051",
+      "name": "Oat Milk Vanilla Tub",
+      "format": "tub",
+      "flavours": [
+        "vanilla"
+      ],
+      "features": [],
+      "dairy": 0.2,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a wide plain open tub, vanilla flavour, smooth surface with no added pieces. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Oat Milk Vanilla Tub. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-2366ab23-540b-45c2-be7b-3458529e8c74.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC051.webp",
+      "bytes": 3642,
+      "sha256": "6c304d266a7a9335b3b7aaf1980b991ece96e903e6089605d49210a1ba2ab8dd"
+    },
+    {
+      "sku": "IC052",
+      "name": "Zero Sugar Choc Bar",
+      "format": "stick",
+      "flavours": [
+        "chocolate"
+      ],
+      "features": [
+        "choc_coated"
+      ],
+      "dairy": 0.7,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, chocolate flavour, a chocolate coating, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Zero Sugar Choc Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-9cbd8353-ed1d-4746-b417-2714ded02d59.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC052.webp",
+      "bytes": 5584,
+      "sha256": "749f47e88a532c30fa6c095fb662a96eaf7265334bbadbec25ae65c5bb7ae182"
+    },
+    {
+      "sku": "IC053",
+      "name": "Protein Berry Cup",
+      "format": "cup",
+      "flavours": [
+        "berry"
+      ],
+      "features": [],
+      "dairy": 0.6,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a small plain open cup, berry flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Protein Berry Cup. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-12401034-c52a-4770-884f-9bc4dd6488bb.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC053.webp",
+      "bytes": 4742,
+      "sha256": "affb13fdce94e1b67a13a5b41d79a38b976e3540bedd223e0f147bf1bfa0d1a1"
+    },
+    {
+      "sku": "IC054",
+      "name": "Light Mango Yogurt Bar",
+      "format": "stick",
+      "flavours": [
+        "mango",
+        "yogurt"
+      ],
+      "features": [],
+      "dairy": 0.5,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, mango and yogurt flavour, smooth surface with no added pieces. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Light Mango Yogurt Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-647c27bb-fd8d-41f0-ba1b-b1c52513fd46.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC054.webp",
+      "bytes": 4850,
+      "sha256": "a819eadef55e51cc01e1d2be02bffe8405d11fd33f3956307bf573c389b0b924"
+    },
+    {
+      "sku": "IC055",
+      "name": "Kids Rainbow Pop",
+      "format": "stick",
+      "flavours": [
+        "mixed_fruit"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, mixed fruit flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Kids Rainbow Pop. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-a704bd0a-1f71-429b-9ec8-c78572a05ec8.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC055.webp",
+      "bytes": 4884,
+      "sha256": "e75dc6c217516cdf32ac23c5fd73f8662f12f6f698f84b7baf7d3d59b56a15d6"
+    },
+    {
+      "sku": "IC056",
+      "name": "Kids Choc Cone 4-Pack",
+      "format": "multipack",
+      "flavours": [
+        "chocolate"
+      ],
+      "features": [
+        "crunchy"
+      ],
+      "dairy": 0.75,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single small group of unwrapped miniature ice creams representing a multipack, chocolate flavour, small crunchy pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Kids Choc Cone 4-Pack. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-ff33c17b-e880-4eea-9f3b-10df901885b3.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC056.webp",
+      "bytes": 9122,
+      "sha256": "7020d1da81d2508a3e50dc6a3cf5b9392e76f21e6637319bc2eeaefad80777e0"
+    },
+    {
+      "sku": "IC057",
+      "name": "Mini Milk 10-Pack",
+      "format": "multipack",
+      "flavours": [
+        "milk"
+      ],
+      "features": [],
+      "dairy": 0.65,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single small group of unwrapped miniature ice creams representing a multipack, milk flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Mini Milk 10-Pack. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-e3ce36be-273f-45c0-a2f7-4826e099899a.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC057.webp",
+      "bytes": 4110,
+      "sha256": "73fe3d6ee03d7a717401c19cf482b8111aff2d5f8160529cc246e95d8317bc04"
+    },
+    {
+      "sku": "IC058",
+      "name": "Family Neapolitan Tub",
+      "format": "tub",
+      "flavours": [
+        "chocolate",
+        "strawberry",
+        "vanilla"
+      ],
+      "features": [],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream in a wide plain open tub, chocolate and strawberry and vanilla flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Family Neapolitan Tub. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-582be0d3-7757-4d4e-88c1-f2ddcf0b190c.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC058.webp",
+      "bytes": 6004,
+      "sha256": "9da88f834f3ce2a509d88a37270935d35fb56588e7d8448066a97805934a4d7e"
+    },
+    {
+      "sku": "IC059",
+      "name": "Lemon Tea Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "lemon",
+        "tea"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, lemon and tea flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering. Show both flavour colours clearly in the product. Catalog identity for context only: Lemon Tea Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-deff1016-678f-4e04-82de-248a716047d7.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC059.webp",
+      "bytes": 4658,
+      "sha256": "a78c9e2ec3e75edb834b29d67edacf20160ec3096818ab73566589986141f985"
+    },
+    {
+      "sku": "IC060",
+      "name": "Grapefruit Sorbet Bar",
+      "format": "stick",
+      "flavours": [
+        "citrus"
+      ],
+      "features": [],
+      "dairy": 0,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, citrus flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Grapefruit Sorbet Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-340c340f-a8d9-4cb3-87b1-857366c38c95.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC060.webp",
+      "bytes": 5104,
+      "sha256": "c339892c7cac935280866e4636465edb658883bcebf234f8a4eb833b9090a16c"
+    },
+    {
+      "sku": "IC061",
+      "name": "Strawberry Spring Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Spring Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-a83305f0-810f-4922-a608-0c65a362095c.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC061.webp",
+      "bytes": 4778,
+      "sha256": "36b651a1aa9bb863505d654a2f25412ba742a9be7829ee44fc4fb69a1245a096"
+    },
+    {
+      "sku": "IC062",
+      "name": "Strawberry Orchard Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Orchard Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-03415a74-29a9-4155-9747-b74062a916e1.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC062.webp",
+      "bytes": 5102,
+      "sha256": "297795d996cc4c9395698ab08672d9bf8b9819804844c633e7ea1d84720e90ed"
+    },
+    {
+      "sku": "IC063",
+      "name": "Strawberry Breeze Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0.1,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Breeze Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-c75d75a6-724b-4f35-ad36-b12baf1d0fb9.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC063.webp",
+      "bytes": 4720,
+      "sha256": "47928028242b521836364dc74ae4a48570900a5e22dbce10879ba330a6db6cf4"
+    },
+    {
+      "sku": "IC064",
+      "name": "Strawberry Puree Sorbet Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [
+        "fruit_pieces"
+      ],
+      "dairy": 0,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, small visible fruit pieces embedded in the ice cream, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Puree Sorbet Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-4808d947-2288-45fb-bc23-4a0a7cfccec1.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC064.webp",
+      "bytes": 6300,
+      "sha256": "93f2704496d83f636674840019eece6da9449043a6bcbdc18d6dd9f9ac7cddc2"
+    },
+    {
+      "sku": "IC065",
+      "name": "Strawberry Garden Sorbet Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Garden Sorbet Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-fd7457ce-866b-4ffe-909c-071a1bbdd394.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC065.webp",
+      "bytes": 4932,
+      "sha256": "8d81ea943aecc9e01c133a251e5d8901813f64667b72b308aeec08d19337f421"
+    },
+    {
+      "sku": "IC066",
+      "name": "Strawberry Coastal Sorbet Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0.1,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Coastal Sorbet Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-dc32a25b-e496-4578-ae9c-6addfd92939a.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC066.webp",
+      "bytes": 5092,
+      "sha256": "1e23dc9f5d3902b84c8cacacb2d01e9b4f7eb4797c39eed24d94aee973d2d330"
+    },
+    {
+      "sku": "IC067",
+      "name": "Strawberry Milk Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Milk Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-7e42e1ab-daef-4496-88f2-ed8f47a5167f.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC067.webp",
+      "bytes": 3838,
+      "sha256": "955f2465e13f035a6c971820f3d513ef4b5f77e523c14d17148c24c16e2c97ed"
+    },
+    {
+      "sku": "IC068",
+      "name": "Strawberry Cream Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0.9,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Cream Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-9aaa7ef0-023d-4348-8a19-09f3cc65adb8.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC068.webp",
+      "bytes": 4056,
+      "sha256": "3c0260f4328bec362451c47268cbb322646450a9e96d4fee6c6c7a6c70c82d23"
+    },
+    {
+      "sku": "IC069",
+      "name": "Strawberry Dairy Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0.95,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Dairy Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-2258606a-4603-420d-8e77-7ddb430429b4.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC069.webp",
+      "bytes": 3996,
+      "sha256": "cdcc4c5a9e46863a375b45e34c0c2e1f4dfd887110263ccc6315344c02cadfd0"
+    },
+    {
+      "sku": "IC070",
+      "name": "Peach Spring Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "peach"
+      ],
+      "features": [],
+      "dairy": 0,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, peach flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Peach Spring Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-860aa29c-8829-480a-a55a-04ef96d5c56c.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC070.webp",
+      "bytes": 4824,
+      "sha256": "9d7d395a505e0027217aff9baf61e945bf30b10d6391e8e2c4e3f0a65d09c02b"
+    },
+    {
+      "sku": "IC071",
+      "name": "Apple Orchard Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "apple"
+      ],
+      "features": [],
+      "dairy": 0.05,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, apple flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Apple Orchard Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-a28a73be-8487-40d4-93a3-494264b0e64d.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC071.webp",
+      "bytes": 4026,
+      "sha256": "f92731ae87688587780c9067df62d3c17e882574f21354de5a947099dbec041c"
+    },
+    {
+      "sku": "IC072",
+      "name": "Pineapple Breeze Ice Bar",
+      "format": "stick",
+      "flavours": [
+        "pineapple"
+      ],
+      "features": [],
+      "dairy": 0.1,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, pineapple flavour, smooth surface with no added pieces, a fruit water-ice texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Pineapple Breeze Ice Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-c097669b-4051-4679-a919-08f550e2bc4a.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC072.webp",
+      "bytes": 4290,
+      "sha256": "e0fa524f4e1e803cfc85427f49ac9e5d0e7e3d6c8cda8ac73bbd5ee597515f62"
+    },
+    {
+      "sku": "IC073",
+      "name": "Strawberry Velvet Cream Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0.85,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Velvet Cream Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-de73d2e1-9f3a-4e33-9784-6d638de3e995.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC073.webp",
+      "bytes": 3816,
+      "sha256": "4e1a4a042fd07b618b6fb24d0b074a6d176d150eff148714eed620686e13b42a"
+    },
+    {
+      "sku": "IC074",
+      "name": "Strawberry Meadow Cream Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0.9,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Meadow Cream Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-09f61431-fe19-4b5b-982f-5c6e6ef374b9.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC074.webp",
+      "bytes": 3844,
+      "sha256": "7ff01722833266998c2b68bfc20e4028742386259be9a924cf04548b7330df36"
+    },
+    {
+      "sku": "IC075",
+      "name": "Strawberry Reserve Cream Bar",
+      "format": "stick",
+      "flavours": [
+        "strawberry"
+      ],
+      "features": [],
+      "dairy": 0.95,
+      "prompt": "Use case: stylized-concept. Asset type: matching small product icon for an ice cream catalog. Input image: master style reference only; replace the product with the one described here. Flat vector illustration of a single ice cream bar on a wooden stick, strawberry flavour, smooth surface with no added pieces, a creamy ice cream texture. Same style as the reference: soft pastel palette, centred, three-quarter view, emoji style, inside a round pastel badge. No text, no packaging, no logo. Badge colour = the product's main flavour colour. Plain warm-white square outside the badge, matching the reference. Keep the reference's simple clean shapes, subtle highlights, large centered product scale and light rendering.  Catalog identity for context only: Strawberry Reserve Cream Bar. No writing anywhere.",
+      "source": "C:\\Users\\ping\\.codex\\generated_images\\01a1363e-562c-7c72-85ce-7ea34f3bcb4a\\exec-9486a3e8-f305-4086-ab05-1e285a5c66f0.png",
+      "reference": "C:/Users/ping/.codex/generated_images/01a1363e-562c-7c72-85ce-7ea34f3bcb4a/exec-91aced20-5011-4d82-b35c-3195111afca2.png",
+      "status": "saved",
+      "asset": "frontend/public/products/IC075.webp",
+      "bytes": 4216,
+      "sha256": "e169bccf6736c8c99ac240e20cd1c9ff600bb6e1794278126d62a4bc7b8acd10"
+    }
+  ],
+  "requests": 76
+}

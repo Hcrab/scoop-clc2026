@@ -4,6 +4,7 @@ import { Dashboard, type DashboardPlay } from './Dashboard';
 import { Chart } from './ui';
 import { palletsFor } from './replayData';
 import type { Detail, Product } from './types';
+import { ProductIcon } from './ProductIcon';
 
 type Policy = 'scoop'|'baseline';
 type Summary = {fill_rate:number;lost_units:number;lost_margin:number;avg_pallets:number;peak_pallets:number;days_over_capacity:number;stockout_sku_days:number;ending_on_hand:number;ordered_cases:number};
@@ -56,7 +57,7 @@ export function PlayWeek({detail,products,path,replay,setReplay,revision=0,onSee
   const used=result&&day>=0?palletsFor(result,products,day,minute):0;
   const usage=result?used/result.capacity_pallets:0;
   const names=useMemo(()=>new Map(products.map(product=>[product.sku,product.name])),[products]);
-  const feed=useMemo(()=>events.map(event=><div key={event.id} className={`play-event ${event.tone}`}><span>{date(event.date)} · {event.time}</span><p>{event.sku&&!event.text.toLowerCase().includes((names.get(event.sku)||'').toLowerCase())?<><strong>{names.get(event.sku)||event.sku}</strong> · </>:null}{event.text}</p></div>),[events,names]);
+  const feed=useMemo(()=>events.map(event=><div key={event.id} className={`play-event ${event.tone}`}>{event.sku&&<ProductIcon sku={event.sku} size={32} decorative/>}<div><span>{date(event.date)} · {event.time}</span><p>{event.sku&&!event.text.toLowerCase().includes((names.get(event.sku)||'').toLowerCase())?<><strong>{names.get(event.sku)||event.sku}</strong> · </>:null}{event.text}</p></div></div>),[events,names]);
   const update=(patch:Partial<ReplayState>)=>setReplay(current=>({...current,...patch}));
   return <section className="play"><div className="play-bar"><div className="play-clock" data-day={today||''} data-minute={today?minute:''}><span>{today?`Day ${day+1} of ${result!.days} · 2×`:'Preparing…'}</span><strong>{today?`${date(today)} ${hhmm}`:`Week of ${fullDate(detail.plan.week_start)}`}</strong></div>{ready&&<div className={`play-capacity ${usage>1?'over-limit':''}`} aria-label={`Cold store ${used.toFixed(1)} of ${result.capacity_pallets.toFixed(1)} pallets`}><div className="play-capacity-line"><span>Cold store</span><strong>{used.toFixed(1)} <small>/ {result.capacity_pallets.toFixed(1)} pallets</small></strong></div><div className="play-capacity-track"><div style={{width:`${Math.min(100,Math.max(0,usage*100))}%`}}/></div></div>}{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,minute:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
     <div className="play-body"><div><Dashboard detail={detail} products={products} path={path} result={result} day={day} minute={minute} readonly revision={revision}/></div><aside className="play-events" aria-live="polite"><h3>What happened</h3>{events.length?feed:<p className="muted">{result?'Nothing notable yet.':'Preparing the week…'}</p>}</aside></div>

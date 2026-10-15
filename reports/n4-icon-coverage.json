@@ -1,0 +1,11 @@
+{
+  "skus": 75,
+  "sizes": [
+    32,
+    48,
+    96
+  ],
+  "rendered": 225,
+  "tag_svg_variants": 63,
+  "unknown_sku_fallback": true
+}

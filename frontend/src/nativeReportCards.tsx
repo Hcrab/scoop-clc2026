@@ -1,5 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { CohortCard } from './types';
+import { ProductIcon } from './ProductIcon';
 
 const signed = (value:number, digits=0) => `${value>0?'+':''}${value.toLocaleString('en-HK',{maximumFractionDigits:digits,minimumFractionDigits:digits})}`;
 
@@ -13,6 +14,6 @@ export function nativeCohortMarkup(card:CohortCard) {
       <p className="native-cohort-impact">{signed(card.pallet_change,1)} pallets · HK${Math.round(Math.abs(card.expected_lost_margin_avoided)).toLocaleString('en-HK')} {card.expected_lost_margin_avoided<0?'extra margin lost':'lost margin avoided'}</p>
       <button type="button" data-evidence-id={evidenceId}>Open evidence</button>
     </div>
-    <span className="native-cohort-image" aria-hidden="true"/>
+    {card.representative_sku&&<ProductIcon sku={card.representative_sku} size={96} decorative absoluteUrl/>}
   </div>);
 }
