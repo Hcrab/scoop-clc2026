@@ -5,7 +5,7 @@
 | Phase | Status | Commit | Evidence / open issue |
 |---|---|---|---|
 | Requested pre-step: fast Reset | Accepted | `425ab1f` | Reset API 174 / 85 / 94 ms; usable report after 1.404 s; 47 focused backend tests and the real Settings flow pass. |
-| M1 Same cold store | Accepted | See phase commit | 25 tests + real Results capture; both peaks 57.9866 / 60; 404 units avoided, 14 extra product-days, HK$6,764.94 extra lost margin. Five-SKU diagnosis and fixes recorded. |
+| M1 Same cold store | Accepted | `517d776` | 25 tests + real Results capture; both peaks 57.9866 / 60; 404 units avoided, 14 extra product-days, HK$6,764.94 extra lost margin. Five-SKU diagnosis and fixes recorded. |
 | M2 Demo start state | Not started | — | Default projected peak at 90–95% of physical capacity. |
 | M3 Report layout and language | Not started | — | Direction preview, action rows, native metrics and independent columns. |
 | M4 Play widget values | Not started | — | Today-so-far values and partial daily curves without a midnight zero drop. |
