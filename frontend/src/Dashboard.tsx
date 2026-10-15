@@ -3,10 +3,12 @@ import { api, date, n, pct } from './api';
 import { EditReceipt, type PlanEdit } from './EditReceipt';
 import type { DashboardData, DashboardMetric, DashboardScope, DashboardSpec, DashboardWidget, Detail, Product } from './types';
 import { Chart, Icon, Modal } from './ui';
+import { widgetHourPoint, widgetPoint } from './replayData';
 import './dashboard.css';
 
-export type PlayRun = {daily:{pallets_pre_ship:number;pallets:number}[];per_sku:{on_hand:number[][];shipped:number[][];lost:number[][];arrived:number[][]};expected?:(number|null)[][]};
-export type DashboardPlay = {dates:string[];skus:string[];demand:number[][];expected?:(number|null)[][];runs:{scoop:PlayRun;baseline:PlayRun};capacity_pallets:number};
+export type HourlyRun = {on_hand:number[][];on_hand_delta:number[][];demand:number[][];shipped:number[][];lost:number[][];arrived:number[][]};
+export type PlayRun = {daily:{pallets_pre_ship:number;pallets:number}[];per_sku:{on_hand:number[][];shipped:number[][];lost:number[][];arrived:number[][]};hourly:HourlyRun;expected?:(number|null)[][]};
+export type DashboardPlay = {dates:string[];skus:string[];demand:number[][];expected?:(number|null)[][];intraday:{step_minutes:10;minutes:number[];demand_cdf:number[];dispatch_cdf:number[];arrival_minutes:number[][];opening_on_hand:number[]};runs:{scoop:PlayRun;baseline:PlayRun};capacity_pallets:number};
 const metrics:{id:DashboardMetric;label:string}[] = [
   {id:'on_hand',label:'Stock on hand'},{id:'lost_units',label:'Units short'},
   {id:'demand',label:'Store requests'},{id:'fill_rate',label:'Fill rate'},
@@ -17,40 +19,36 @@ const format=(value:number|null|undefined,unit:DashboardWidget['unit'])=>unit===
 const label=(w:DashboardWidget, data:DashboardData)=>data.options.find(o=>o.kind===w.scope.kind&&o.key===w.scope.key)?.label || (w.scope.kind==='warehouse'?'Whole warehouse':w.scope.key||w.scope.kind);
 const receipt=(value:unknown, name:string):PlanEdit=>({...value as PlanEdit,label:name});
 
-function forward(result:DashboardPlay, widget:DashboardWidget, policy:'scoop'|'baseline', products:Product[]):{values:(number|null)[];expected?:(number|null)[]} {
-  const run=result.runs[policy];
-  const included=new Set(widget.skus);
-  const indexes=result.skus.map((sku,i)=>included.has(sku)?i:-1).filter(i=>i>=0);
-  const sum=(rows:number[][])=>rows.map(row=>indexes.reduce((total,i)=>total+(row?.[i]||0),0));
-  const demand=sum(result.demand),shipped=sum(run.per_sku.shipped),stock=sum(run.per_sku.on_hand),lost=sum(run.per_sku.lost);
-  if(widget.metric==='on_hand')return {values:stock};
-  if(widget.metric==='lost_units')return {values:lost};
-  if(widget.metric==='demand')return {values:demand};
-  if(widget.metric==='fill_rate')return {values:demand.map((d,i)=>d?shipped[i]/d:null)};
-  if(widget.metric==='days_cover')return {values:stock.map((s,i)=>{const history=(widget.recent_demand||[]).filter(point=>point.date<result.dates[0]).map(point=>point.value);const recent=[...history,...demand.slice(0,i)].slice(-7);if(recent.length!==7||recent.some(value=>value==null))return null;const average=recent.reduce<number>((a,b)=>a+(b||0),0)/7;return average>0?s/average:null})};
-  if(widget.metric==='pallets'){
-    const footprints=new Map(products.map(p=>[p.sku,p.units_per_case*p.cases_per_pallet]));
-    return {values:run.per_sku.on_hand.map(row=>indexes.reduce((total,i)=>total+(row?.[i]||0)/(footprints.get(result.skus[i])||Infinity),0))};
-  }
-  const grid=result.expected||run.expected;
-  const expected=grid?.map(row=>indexes.length&&indexes.every(index=>row?.[index]!=null)?indexes.reduce((total,index)=>total+(row[index] as number),0):null);
-  return {values:demand,expected};
-}
-
-function WidgetChart({widget,result,day,products}:{widget:DashboardWidget;result?:DashboardPlay|null;day:number;products:Product[]}) {
-  const past=widget.series.map(point=>({date:point.date,plan:point.value??NaN,expected:point.expected??NaN,rule:NaN,dot:NaN}));
-  const plan=result&&day>=0?forward(result,widget,'scoop',products):null;
-  const rule=result&&day>=0?forward(result,widget,'baseline',products):null;
-  const future=result&&plan&&rule?result.dates.slice(0,day+1).map((at,i)=>({date:at,plan:plan.values[i]??NaN,rule:rule.values[i]??NaN,expected:plan.expected?.[i]??NaN,dot:widget.skus.some(sku=>{const index=result.skus.indexOf(sku);return index>=0&&(result.runs.baseline.per_sku.lost[i]?.[index]||0)>0})?rule.values[i]??NaN:NaN})):[];
-  const data=[...past,...future];
+function WidgetChart({widget,result,day,minute,products}:{widget:DashboardWidget;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[]}) {
+  const chartMinute=minute===null?null:Math.floor(minute/60)*60;
+  // Recalculate chart history only on an hour boundary or when a widget/result changes.
+  const data=useMemo(()=>{
+    const past=widget.series.map(point=>({date:point.date,plan:point.value??NaN,expected:point.expected??NaN,rule:NaN,dot:NaN}));
+    const future=result&&day>=0?result.dates.slice(0,day+1).map((at,i)=>{
+      const pointMinute=i===day?chartMinute:null;
+      const plan=pointMinute===null?widgetPoint(result,widget,'scoop',products,i,null):widgetHourPoint(result,widget,'scoop',products,i,pointMinute/60);
+      const rule=pointMinute===null?widgetPoint(result,widget,'baseline',products,i,null):widgetHourPoint(result,widget,'baseline',products,i,pointMinute/60);
+      const lost=i===day&&pointMinute!==null?result.skus.map((_,skuIndex)=>result.runs.baseline.hourly.lost.slice(i*24,i*24+pointMinute/60).reduce((total,row)=>total+(row?.[skuIndex]||0),0)):result.runs.baseline.per_sku.lost[i];
+      const dot=widget.skus.some(sku=>{const index=result.skus.indexOf(sku);return index>=0&&(lost?.[index]||0)>0});
+      return {date:at,plan:plan.value??NaN,rule:rule.value??NaN,expected:plan.expected??NaN,dot:dot?rule.value??NaN:NaN};
+    }):[];
+    return [...past,...future];
+  },[widget,result,day,chartMinute,products]);
   const hasExpected=data.some(row=>Number.isFinite(row.expected));
-  const latest=future.at(-1)?.plan;
-  const value=result&&day>=0?(latest!=null&&Number.isFinite(latest)?latest:null):widget.value;
+  const live=result&&day>=0?widgetPoint(result,widget,'scoop',products,day,minute):null;
+  const value=live?live.value:widget.value;
   const state=value==null?'unknown':widget.threshold?((widget.threshold.operator==='lt'?value<widget.threshold.value:value>widget.threshold.value)?'warning':'normal'):'normal';
   const simulated=!!result&&day>=0;
   const cell=(value:number)=>Number.isFinite(value)?format(value,widget.unit):'—';
-  return <><strong className="dashboard-value">{value==null?'Not available':format(value,widget.unit)}</strong>{widget.threshold&&<small className={`dashboard-current-state ${state}`}>{state==='warning'?'Alert':state==='unknown'?'Threshold unavailable':'Within threshold'}</small>}{data.some(row=>Number.isFinite(row.plan))?<Chart small data={data} percent={widget.unit==='ratio'} lines={[{key:'plan',label:simulated?'This plan':'Recorded',color:'#205a4e'},{key:'rule',label:'Moving-average rule',color:'#b28a5a'},{key:'dot',label:'Rule stockout',color:'#c96c59',dots:true},...(hasExpected?[{key:'expected',label:'Expected',color:'#8f87a6',dashed:true}]:[])]}/>:<p className="muted">No recorded history yet.</p>}
+  const chart=useMemo(()=>data.some(row=>Number.isFinite(row.plan))?<Chart small data={data} percent={widget.unit==='ratio'} lines={[{key:'plan',label:simulated?'This plan':'Recorded',color:'#205a4e'},{key:'rule',label:'Moving-average rule',color:'#b28a5a'},{key:'dot',label:'Rule stockout',color:'#c96c59',dots:true},...(hasExpected?[{key:'expected',label:'Expected',color:'#8f87a6',dashed:true}]:[])]}/>:<p className="muted">No recorded history yet.</p>,[data,widget.unit,simulated,hasExpected]);
+  return <><strong className="dashboard-value">{value==null?'Not available':format(value,widget.unit)}</strong>{widget.threshold&&<small className={`dashboard-current-state ${state}`}>{state==='warning'?'Alert':state==='unknown'?'Threshold unavailable':'Within threshold'}</small>}{chart}
     <details className="dashboard-evidence"><summary>Source data</summary><p className="muted">{widget.skus.length} products · {metrics.find(m=>m.id===widget.metric)?.label}{simulated?` · Simulated from ${date(result!.dates[0])}`:''}</p><div className="table-wrap"><table><thead><tr><th>Date</th><th>{simulated?'Recorded / this plan':'Recorded'}</th>{simulated&&<th>Moving-average rule</th>}{hasExpected&&<th>Expected</th>}</tr></thead><tbody>{data.map(row=><tr key={row.date}><th scope="row">{date(row.date)}</th><td>{cell(row.plan)}</td>{simulated&&<td>{cell(row.rule)}</td>}{hasExpected&&<td>{cell(row.expected)}</td>}</tr>)}</tbody></table></div></details></>;
+}
+
+function WidgetCard({widget,index,count,data,result,day,minute,products,disabled,readonly,dragged,drop,move,remove,edit}:{widget:DashboardWidget;index:number;count:number;data:DashboardData;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];disabled:boolean;readonly:boolean;dragged:React.RefObject<string|null>;drop:(before?:string)=>void;move:(id:string,delta:number)=>void;remove:(widget:DashboardWidget)=>void;edit:(widget:DashboardWidget)=>void}) {
+  const value=result&&day>=0?widgetPoint(result,widget,'scoop',products,day,minute).value:widget.value;
+  const warning=value!=null&&!!widget.threshold&&(widget.threshold.operator==='lt'?value<widget.threshold.value:value>widget.threshold.value);
+  return <article className={`dashboard-widget ${warning?'warning':''}`} draggable={!disabled} onDragStart={(e:DragEvent)=>{dragged.current=widget.id;e.dataTransfer.effectAllowed='move'}} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.stopPropagation();drop(widget.id)}}><header><div><h3>{widget.title}</h3><small>{label(widget,data)}{widget.threshold?` · ${widget.threshold.operator==='lt'?'Below':'Above'} ${format(widget.threshold.value,widget.unit)}`:''}</small></div>{warning&&<span className="dashboard-warning">Alert</span>}</header><WidgetChart widget={widget} result={result} day={day} minute={minute} products={products}/>{!readonly&&<div className="dashboard-actions"><button className="text-button" disabled={disabled||index===0} aria-label={`Move ${widget.title} up`} onClick={()=>move(widget.id,-1)}>↑</button><button className="text-button" disabled={disabled||index===count-1} aria-label={`Move ${widget.title} down`} onClick={()=>move(widget.id,1)}>↓</button><button className="text-button" disabled={disabled} onClick={()=>edit(widget)}>Edit</button><button className="text-button" disabled={disabled} onClick={()=>remove(widget)}>Remove</button></div>}</article>;
 }
 
 function Editor({item,data,path,close,saved}:{item?:DashboardWidget;data:DashboardData;path:string;close:()=>void;saved:(value:unknown,name:string)=>void}) {
@@ -77,7 +75,7 @@ function Editor({item,data,path,close,saved}:{item?:DashboardWidget;data:Dashboa
   </div><div className="modal-actions"><button className="button ghost" onClick={close}>Cancel</button><button className="button primary" disabled={!valid||busy||!preview} onClick={save}>{busy?'Saving…':item?'Save widget':'Add widget'}</button></div></Modal>;
 }
 
-export function Dashboard({detail,products,path,result,day=-1,pending=false,readonly=false,revision=0,onChanged}:{detail:Detail;products:Product[];path:string;result?:DashboardPlay|null;day?:number;pending?:boolean;readonly?:boolean;revision?:number;onChanged?:()=>void}) {
+export function Dashboard({detail,products,path,result,day=-1,minute=null,pending=false,readonly=false,revision=0,onChanged}:{detail:Detail;products:Product[];path:string;result?:DashboardPlay|null;day?:number;minute?:number|null;pending?:boolean;readonly?:boolean;revision?:number;onChanged?:()=>void}) {
   const [data,setData]=useState<DashboardData|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false);
   const [editing,setEditing]=useState<DashboardWidget|null|undefined>(),[edit,setEdit]=useState<PlanEdit|null>(null);
   const dragged=useRef<string|null>(null);
@@ -94,7 +92,7 @@ export function Dashboard({detail,products,path,result,day=-1,pending=false,read
     {error&&<p role="alert" className="chat-error">{error}</p>}
     {!data&&!error&&<p className="muted">Loading dashboard…</p>}
     {data&&!data.widgets.length&&<p className="muted">No widgets yet. Add a measure to follow.</p>}
-    <div className="dashboard-grid" onDragOver={e=>e.preventDefault()} onDrop={()=>drop()}>{data?.widgets.map((widget,index)=>{const value=result&&day>=0?forward(result,widget,'scoop',products).values[day]:widget.value;const state=value==null?'unknown':widget.threshold?((widget.threshold.operator==='lt'?value<widget.threshold.value:value>widget.threshold.value)?'warning':'normal'):'normal';return <article key={widget.id} className={`dashboard-widget ${state==='warning'?'warning':''}`} draggable={!disabled} onDragStart={(e:DragEvent)=>{dragged.current=widget.id;e.dataTransfer.effectAllowed='move'}} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.stopPropagation();drop(widget.id)}}><header><div><h3>{widget.title}</h3><small>{label(widget,data)}{widget.threshold?` · ${widget.threshold.operator==='lt'?'Below':'Above'} ${format(widget.threshold.value,widget.unit)}`:''}</small></div>{state==='warning'&&<span className="dashboard-warning">Alert</span>}</header><WidgetChart widget={widget} result={result} day={day} products={products}/>{!readonly&&<div className="dashboard-actions"><button className="text-button" disabled={disabled||index===0} aria-label={`Move ${widget.title} up`} onClick={()=>move(widget.id,-1)}>↑</button><button className="text-button" disabled={disabled||index===data.widgets.length-1} aria-label={`Move ${widget.title} down`} onClick={()=>move(widget.id,1)}>↓</button><button className="text-button" disabled={disabled} onClick={()=>setEditing(widget)}>Edit</button><button className="text-button" disabled={disabled} onClick={()=>remove(widget)}>Remove</button></div>}</article>})}</div>
+    <div className="dashboard-grid" onDragOver={e=>e.preventDefault()} onDrop={()=>drop()}>{data?.widgets.map((widget,index)=><WidgetCard key={widget.id} widget={widget} index={index} count={data.widgets.length} data={data} result={result} day={day} minute={minute} products={products} disabled={disabled} readonly={readonly} dragged={dragged} drop={drop} move={move} remove={remove} edit={setEditing}/>)}</div>
     {edit&&<EditReceipt key={edit.edit_id} edit={edit} detail={detail} path={path} onChanged={()=>{void refresh();onChanged?.()}} disabled={disabled}/>}
     {editing!==undefined&&data&&<Editor item={editing||undefined} data={data} path={path} close={()=>setEditing(undefined)} saved={changed}/>}
   </section>;

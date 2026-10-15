@@ -186,6 +186,8 @@ The default first cohort card is the actual broad 25-SKU Water-based leaf, not a
 | Empirical ratios mixed with lognormal factor error | The distribution is an approximation; forecast error correlations are not fully modelled. |
 | Dated greedy capacity removal | Results need not be globally optimal; inherited arrivals may already exceed physical capacity. |
 | Exogenous requests and shared DC stock in Play | Both sides face the same requests; there is no district stock ledger or stock-to-demand feedback. |
+| Fixed intraday timing | Intraday timing comes from a fixed demand curve and delivery windows; daily totals equal the daily simulation. Requests peak in the afternoon, supplier receipts land in the morning, supplier orders use a 14:00 cut-off and dispatch runs from 18:00 to 22:00. |
+| Hourly inventory balances | Demand, dispatch, lost units and receipt flows reconcile to their daily totals. On-hand stock is a level: hourly changes reconcile to closing minus opening, and each hourly balance reconciles receipts and dispatch. |
 | Cohort level projection | The latest effect is held over the planning window, without trend extrapolation. |
 
 ### Limitations

@@ -1,14 +1,15 @@
-import { useEffect, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useMemo, type Dispatch, type SetStateAction } from 'react';
 import { date, fullDate, n, pct } from './api';
 import { Dashboard, type DashboardPlay } from './Dashboard';
+import { palletsFor } from './replayData';
 import type { Detail, Product } from './types';
 
 type Policy = 'scoop'|'baseline';
 type Summary = {fill_rate:number;lost_units:number;lost_margin:number;avg_pallets:number;peak_pallets:number;days_over_capacity:number;stockout_sku_days:number;ending_on_hand:number;ordered_cases:number};
-type PlayEvent = {date:string;kind:string;tone:'good'|'bad'|'warn'|'neutral';text:string;sku?:string;order_date?:string;cases?:number;card_ids?:string[]};
+type PlayEvent = {id:string;date:string;minute:number;time:string;at:string;kind:string;tone:'good'|'bad'|'warn'|'neutral';text:string;sku?:string;order_date?:string;cases?:number;card_ids?:string[]};
 export type PlayResult = DashboardPlay & {start:string;end:string;days:number;events:PlayEvent[];summary:Record<Policy,Summary>;notes:Record<string,string|null>;affected_skus:string[];affected_summary:Record<Policy,Summary>;affected_comparison:{units_saved:number;pallet_difference:number;stockout_days_avoided:number}};
-export type ReplayState = {planId:string;orderHash:string|null;result:PlayResult|null;day:number;running:boolean;unlocked:boolean};
-export const emptyReplay=(planId='',orderHash:string|null=null):ReplayState=>({planId,orderHash,result:null,day:-1,running:false,unlocked:false});
+export type ReplayState = {planId:string;orderHash:string|null;result:PlayResult|null;day:number;minute:number;running:boolean;unlocked:boolean};
+export const emptyReplay=(planId='',orderHash:string|null=null):ReplayState=>({planId,orderHash,result:null,day:-1,minute:0,running:false,unlocked:false});
 const POLICY_LABEL:Record<Policy,string>={scoop:'This plan',baseline:'Moving-average rule'};
 
 export function Results({result,detail,products,path,revision=0}:{result:PlayResult;detail:Detail;products:Product[];path:string;revision?:number}){
@@ -31,15 +32,20 @@ export function Results({result,detail,products,path,revision=0}:{result:PlayRes
 }
 
 export function PlayWeek({detail,products,path,replay,setReplay,revision=0,onSeeResults}:{detail:Detail;products:Product[];path:string;replay:ReplayState;setReplay:Dispatch<SetStateAction<ReplayState>>;revision?:number;onSeeResults:()=>void}){
-  const {result,day,running,unlocked}=replay;
+  const {result,day,minute,running,unlocked}=replay;
   const ready=!!result;
-  useEffect(()=>{if(ready)setReplay(current=>current.day<result!.days-1?{...current,day:Math.max(0,current.day),running:true}:current)},[ready,setReplay]);
-  const complete=ready&&day>=result.days-1&&!running;
+  useEffect(()=>{if(ready)setReplay(current=>current.day<0?{...current,day:0,minute:0,running:true}:current.day===current.result!.days-1&&current.minute===1430?current:{...current,running:true})},[ready,setReplay]);
+  const complete=ready&&day===result.days-1&&minute===1430;
   const today=result&&day>=0?result.dates[day]:null;
-  const events=result&&today?result.events.filter(event=>event.date<=today).slice().reverse():[];
+  const eventCount=result&&today?result.events.filter(event=>event.date<today||(event.date===today&&event.minute<=minute)).length:0;
+  const events=useMemo(()=>result?result.events.slice(0,eventCount).reverse():[],[result,eventCount]);
+  const hhmm=`${String(Math.floor(minute/60)).padStart(2,'0')}:${String(minute%60).padStart(2,'0')}`;
+  const used=result&&day>=0?palletsFor(result,products,day,minute):0;
+  const usage=result?used/result.capacity_pallets:0;
+  const names=useMemo(()=>new Map(products.map(product=>[product.sku,product.name])),[products]);
+  const feed=useMemo(()=>events.map(event=><div key={event.id} className={`play-event ${event.tone}`}><span>{date(event.date)} · {event.time}</span><p>{event.sku&&!event.text.toLowerCase().includes((names.get(event.sku)||'').toLowerCase())?<><strong>{names.get(event.sku)||event.sku}</strong> · </>:null}{event.text}</p></div>),[events,names]);
   const update=(patch:Partial<ReplayState>)=>setReplay(current=>({...current,...patch}));
-  return <section className="play"><div className="play-bar"><div className="play-clock"><span>{today?`Day ${day+1} of ${result!.days} · 2×`:'Preparing…'}</span><strong>{today?fullDate(today):`Week of ${fullDate(detail.plan.week_start)}`}</strong></div>{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
-    <p className="play-autopilot">Week-2 orders are placed automatically on both sides.</p>
-    <div className="play-body"><div><Dashboard detail={detail} products={products} path={path} result={result} day={day} readonly revision={revision}/></div><aside className="play-events" aria-live="polite"><h3>What happened</h3>{events.length?events.map((event,i)=><div key={`${event.date}-${i}`} className={`play-event ${event.tone}`}><span>{date(event.date)}</span><p>{event.text}</p></div>):<p className="muted">{result?'Nothing notable yet.':'Preparing the week…'}</p>}</aside></div>
+  return <section className="play"><div className="play-bar"><div className="play-clock" data-day={today||''} data-minute={today?minute:''}><span>{today?`Day ${day+1} of ${result!.days} · 2×`:'Preparing…'}</span><strong>{today?`${date(today)} ${hhmm}`:`Week of ${fullDate(detail.plan.week_start)}`}</strong></div>{ready&&<div className={`play-capacity ${usage>1?'over-limit':''}`} aria-label={`Cold store ${used.toFixed(1)} of ${result.capacity_pallets.toFixed(1)} pallets`}><div className="play-capacity-line"><span>Cold store</span><strong>{used.toFixed(1)} <small>/ {result.capacity_pallets.toFixed(1)} pallets</small></strong></div><div className="play-capacity-track"><div style={{width:`${Math.min(100,Math.max(0,usage*100))}%`}}/></div></div>}{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,minute:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
+    <div className="play-body"><div><Dashboard detail={detail} products={products} path={path} result={result} day={day} minute={minute} readonly revision={revision}/></div><aside className="play-events" aria-live="polite"><h3>What happened</h3>{events.length?feed:<p className="muted">{result?'Nothing notable yet.':'Preparing the week…'}</p>}</aside></div>
   </section>;
 }

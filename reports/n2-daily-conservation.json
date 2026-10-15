@@ -1,0 +1,10 @@
+{
+  "plan": "P20260720",
+  "n1_order_hash": "8f36f79c413ace96949941835efb9a1c39b2f76466f6fd771f9eb2a08652ee73",
+  "n2_order_hash": "2d0571e67136a121181c6f72aebecce37529ea4f980470e691649d8a8389897e",
+  "daily_and_per_sku_sha256": "869c95766e04ff4cf66904084ec61cc6ce88fa66797b92412da976ce6dad40a4",
+  "daily_quantities_unchanged": true,
+  "policies": 2,
+  "products": 75,
+  "days": 16
+}

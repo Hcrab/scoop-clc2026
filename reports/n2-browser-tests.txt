@@ -1,0 +1,9 @@
+
+Running 1 test using 1 worker
+
+
+
+(node:16392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] e2e\n2-clock.spec.ts:5:1 › N2 ten-minute clock, timed events, stock gauge and final frame
+  1 passed (49.6s)

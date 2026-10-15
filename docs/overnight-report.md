@@ -5,17 +5,17 @@
 | Phase | Status | Commit | Main evidence / open issue |
 |---|---|---|---|
 | N1 Five-step flow | Accepted | `1a7b2ada3401` | Five screens; persisted replay; widget edits do not simulate. Cold preparation 37.203 s; accepted browser flow reused it. |
-| N2 Hours and minutes | Not started | — | Begins after N1 acceptance. |
+| N2 Hours and minutes | Accepted | Pending commit | 129,600 balances checked; 31 correctly timed shortages; 31.212 s replay versus 30.931 s expected. |
 | N3 UI polish | Not started | — | Begins after N2 acceptance. |
 | N4 Product illustrations | Not started | — | 75 individual illustrations and a reviewed contact sheet. |
 | N5 Compound demo scenario | Not started | — | Single illustrative world; only the explicitly authorized small algorithm changes. |
 | N6 Walkthrough and docs | Not started | — | Final five-step walkthrough and documentation. |
 
-Starting revision: `e12d5977f85b8564618109f6eb4585eeaeed3d55`, branch `claude/scoop-prototype`. Night 1 is archived in [reports/night1.md](reports/night1.md). N1 has passed its acceptance checks; N2–N6 have not begun.
+Starting revision: `e12d5977f85b8564618109f6eb4585eeaeed3d55`, branch `claude/scoop-prototype`. Night 1 is archived in [reports/night1.md](reports/night1.md). N1 is accepted and pushed as implementation 1a7b2ada3401 with ledger revision 2526180c1b5e; remote SHA verified. N2 is accepted; N3–N6 have not begun.
 
 Key numbers at the start of this run: Gemini ledger **138 calls, $14.671322 estimated/reserved of the existing $20 total**; remaining **$5.328678**. The ledger and reservations are retained. Tests use the scripted provider unless a live call is specifically under review. Source world: seed 93, current date 20 July 2026, 75 products, plan `P20260720`, 5 widgets. User edits made after Night 1 are preserved; the ignored baseline snapshot is `.codex/backups/night2-baseline.json`.
 
-Open acceptance questions: N1 simulation preparation time; N2 exact intraday conservation; N4 consistency across 75 images; N5 whether the designed compound cohort is isolated and wins at matched average pallets. These are work to verify, not claims of completion.
+Open acceptance questions: N3 evidence and report presentation; N4 consistency across 75 images; N5 whether the designed compound cohort is isolated and wins at matched average pallets. These are work to verify, not claims of completion.
 
 ## Rules and scope
 
@@ -45,9 +45,17 @@ No live Gemini call was made in N1. Existing stored Gemini report content was di
 
 ## N2 — Hours and minutes
 
-- ❌ Pending — Test: hourly totals equal daily values for every product, day and policy, including inventory balance.
-- ❌ Pending — Test: stockout time is the first point cumulative demand exceeds available stock.
-- ❌ Pending — Browser: minute clock and a mid-day timed event screenshot.
+- ✅ Test — `test_hourly_reconciles_every_day_sku_and_policy` checks both policies, each day/product, all four hourly flows, every inventory balance and the closing endpoint. Full backend command `.venv/Scripts/python.exe -m pytest backend/tests -q --basetemp=../scoop-runtime/pytest-n2-all` → **238 passed in 83.98 s**, saved in `reports/n2-backend-tests.txt`.
+- ✅ Test — `test_stockout_events_use_first_strict_exceedance` checks the first ten-minute point where requests exceed available stock. `test_profile_arrivals_and_events_are_timed_and_stable` checks morning supplier windows, monotone bounded profiles, timestamps, deterministic event IDs/order and unchanged daily simulation rows.
+- ✅ Browser — `pnpm --dir frontend exec playwright test n2-clock.spec.ts --reporter=line` → **1 passed (49.6 s)**, real API and persisted simulation. `docs/screenshots/n2-01-midday.png` shows **20 Jul 12:40**, timed shortage events and **38.2 / 71.0 pallets**. `n2-02-final-frame.png` shows **4 Aug 23:50**, Replay and See results; `n2-03-results.png` shows completed final widgets. Pause preserves the exact minute; Resume advances; the final frame unlocks Results without jumping. Remaining replay took **31.212 s**, versus **30.931 s** expected. No page errors; quantities unchanged. Evidence: `reports/n2-clock.json` and `reports/n2-browser-tests.txt`.
+
+The fixed profile puts receipts in supplier-specific morning windows, requests between 10:00 and 22:00 with an afternoon peak, supplier orders at the 14:00 cut-off, and dispatch between 18:00 and 22:00. Daily simulation remains the physical model. Hourly demand, dispatch, shortage and receipt **flows** sum to daily totals; inventory is a **level**, so its hourly changes and closing endpoint reconcile instead. Play advances ten minutes per tick at about two seconds per day, updates widget numbers and the cold-store gauge, redraws charts hourly, and reveals events at their timestamps. Results retain final daily values.
+
+Central review removed superseded daily aggregate events, stopped early weather events from exposing full-day request totals, used actual receipt units in arrival text, and restored automatic playback when returning to an unfinished Play view. Finite-precision CDF accumulation is clamped to prevent negative tail flows. An initial browser run exposed cumulative timer drift; the clock now derives ten-minute positions from elapsed time, with the event feed reused between arrivals. A repeat pass also caught stale completion state when approving the same orders again; approval now resets playback while preserving the ready simulation.
+
+The production payload reconciles **2 policies × 75 products × 16 days**, with **129,600** flow/level comparisons and maximum absolute error **9.095 × 10⁻¹³**. All **31** emitted shortage/comparison events use the first strict exceedance. Daily rows and per-product daily quantities are byte-equivalent under a canonical JSON fingerprint to the N1 result: `869c95766e04ff4cf66904084ec61cc6ce88fa66797b92412da976ce6dad40a4`; evidence in `reports/n2-daily-conservation.json`. The first timed result took **38.5 s** to precompute, then repeated approvals reused it. Frontend build passed (54 modules); `git diff --check` passed.
+
+Visual review: the mid-day clock and cold-store gauge are readable in a single top row, timed events align in the right feed, and final Play keeps a clear See results action. The first Results capture showed a loading state and was rejected; the retained capture waits for all five final widgets. The pre-existing long negative cohort title and unrounded chart ticks are explicitly N3 work. Simplifications now state the fixed timing assumption. No live Gemini calls or world regeneration were used.
 
 ## N3 — UI polish
 

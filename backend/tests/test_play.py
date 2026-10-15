@@ -18,10 +18,10 @@ def played_week(monkeypatch):
     play._CACHE.clear()
     products = pd.DataFrame(
         [
-            {"sku": "A", "name": "A", "brand": "Test", "price_hkd": 4.0,
+            {"sku": "A", "name": "A", "brand": "Test", "supplier_id": "SUP01", "price_hkd": 4.0,
              "cost_hkd": 2.0, "units_per_case": 10, "cases_per_pallet": 10,
              "moq_cases": 1, "lead_time_days": 3, "order_weekday": 0, "review_days": 7},
-            {"sku": "B", "name": "B", "brand": "Test", "price_hkd": 3.0,
+            {"sku": "B", "name": "B", "brand": "Test", "supplier_id": "SUP02", "price_hkd": 3.0,
              "cost_hkd": 1.0, "units_per_case": 5, "cases_per_pallet": 10,
              "moq_cases": 1, "lead_time_days": 3, "order_weekday": 1, "review_days": 7},
         ]
@@ -336,10 +336,11 @@ def test_events_reference_orders_and_match_arrival_quantities(played_week):
     assert {(event['date'], event['sku'], event['cases']) for event in orders} == {
         (START.isoformat(), 'A', 1), ((START + timedelta(days=1)).isoformat(), 'B', 2)}
     arrivals = [event for event in result['events'] if event['kind'] == 'arrival']
-    assert {event['date']: event['skus'] for event in arrivals} == {
-        (START + timedelta(days=3)).isoformat(): ['A'],
-        (START + timedelta(days=4)).isoformat(): ['B']}
-    assert all(event['order_dates'] and event['card_ids'] == [] for event in arrivals)
+    assert {(event['date'], event['sku'], event['cases']) for event in arrivals if event['cases']} == {
+        ((START + timedelta(days=3)).isoformat(), 'A', 1),
+        ((START + timedelta(days=4)).isoformat(), 'B', 2)}
+    assert any(event['date'] == START.isoformat() and event['sku'] == 'B' for event in arrivals)
+    assert all(event['order_dates'] and event['card_ids'] == [] for event in arrivals if event['cases'])
     for event in result['events']:
         if event['kind'] in {'stockout', 'kept'}:
             assert 'order_dates' in event and 'rule_order_dates' in event and 'card_ids' in event

@@ -1,0 +1,58 @@
+{
+  "plan": "P20260720",
+  "mocked_responses": false,
+  "screenshots": [
+    "docs/screenshots/n2-01-midday.png",
+    "docs/screenshots/n2-02-final-frame.png",
+    "docs/screenshots/n2-03-results.png"
+  ],
+  "errors": [],
+  "simulation": {
+    "status": "ready",
+    "order_hash": "2d0571e67136a121181c6f72aebecce37529ea4f980470e691649d8a8389897e",
+    "queued_at": "2026-10-15T18:00:30.646783",
+    "started_at": "2026-10-15T18:00:30.747913",
+    "completed_at": "2026-10-15T18:01:09.291127",
+    "elapsed_seconds": 38.5
+  },
+  "conservation": {
+    "policies": 2,
+    "products": 75,
+    "days": 16,
+    "balances": 129600,
+    "max_error": 9.094947017729282e-13,
+    "timed_shortages": 31
+  },
+  "midday": {
+    "minute": 760,
+    "clock": "20 Jul 12:40",
+    "events": [
+      "20 Jul · 11:50Lemon Tea Ice Bar ran out.",
+      "20 Jul · 11:40Yuzu Lemon Sorbet Cup ran out.",
+      "20 Jul · 11:20Pineapple Breeze Ice Bar ran out.",
+      "20 Jul · 11:20Kids Rainbow Pop ran out.",
+      "20 Jul · 11:00Apple Orchard Ice Bar ran out.",
+      "20 Jul · 10:50Strawberry Spring Ice Bar ran out.",
+      "20 Jul · 10:40Strawberry Puree Sorbet Bar ran out.",
+      "20 Jul · 10:40Strawberry Breeze Ice Bar ran out.",
+      "20 Jul · 10:10Tropical Ice Pop 6-Pack ran out.",
+      "20 Jul · 09:20Kids Choc Cone 4-Pack arrived: 416 units.",
+      "20 Jul · 09:20Mixed Berry Ice Pop 6-Pack arrived: 1,048 units.",
+      "20 Jul · 08:50Coffee Crunch Bar arrived: 2,000 units.",
+      "20 Jul · 08:50Vanilla Choc Dip Bar arrived: 1,120 units.",
+      "20 Jul · 08:50Vanilla Classic Cone arrived: 624 units.",
+      "20 Jul · 08:50Almond Choc Coated Bar arrived: 1,800 units.",
+      "20 Jul · 08:50Classic Choc Crunch Bar arrived: 720 units.",
+      "20 Jul · 08:20Oat Milk Vanilla Tub arrived: 426 units.",
+      "20 Jul · 06:20Strawberry Garden Sorbet Bar arrived: 1,880 units.",
+      "20 Jul · 06:20Black Sesame Mochi 6-Pack arrived: 540 units."
+    ],
+    "gauge": "Cold store38.2 / 71.0 pallets"
+  },
+  "playback": {
+    "expected_remaining_ms": 30930.555555555555,
+    "actual_remaining_ms": 31212
+  },
+  "final_clock": "4 Aug 23:50",
+  "accepted": true
+}
