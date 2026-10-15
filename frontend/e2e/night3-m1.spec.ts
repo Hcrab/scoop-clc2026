@@ -1,0 +1,51 @@
+import {test,expect} from '@playwright/test';
+import {writeFile,mkdir} from 'node:fs/promises';
+import path from 'node:path';
+
+test('M1 normal policies share one cold store and Results use whole-warehouse outcomes',async({page,request})=>{
+  test.setTimeout(360_000);
+  const endpoint='/api/plans/P20260727',errors:string[]=[],evidence:any={mocked_responses:false};
+  page.on('pageerror',error=>errors.push(error.message));
+  const read=async(suffix='')=>{const response=await request.get(endpoint+suffix,{timeout:120_000});expect(response.ok(),await response.text()).toBeTruthy();return response.json()};
+  const quantities=(detail:any)=>detail.orders.map((o:any)=>[o.sku,o.effective_cases]).sort((a:any,b:any)=>a[0].localeCompare(b[0]));
+  const initial=await read();
+  await request.put(endpoint+'/flow',{data:{step:'report'}});
+  await page.goto('/');
+  await page.getByRole('button',{name:'Review orders',exact:true}).click();
+  await page.getByRole('button',{name:'Approve orders',exact:true}).click();
+  await expect(page.getByRole('tab',{name:/\bWatch\b/})).toHaveAttribute('aria-selected','true');
+  await expect.poll(async()=>(await read('/simulation')).status,{timeout:240_000,intervals:[2000]}).toBe('ready');
+  const job=await read('/simulation'),result=job.result;
+  expect(result).not.toHaveProperty('matched');
+  for(const policy of ['scoop','baseline']){
+    expect(result.summary[policy].days_over_capacity).toBe(0);
+    expect(Math.max(...result.runs[policy].daily.map((row:any)=>row.pallets_pre_ship))).toBeLessThanOrEqual(result.capacity_pallets+1e-8);
+  }
+  await page.getByRole('button',{name:'Next: Play',exact:true}).click();
+  await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Pause',exact:true}).click();
+  const completed=await request.post(endpoint+'/play-complete');expect(completed.ok()).toBeTruthy();
+  const selected=await request.put(endpoint+'/flow',{data:{step:'results'}});expect(selected.ok()).toBeTruthy();
+  await page.reload();
+  await expect(page.getByRole('tab',{name:/\bResults\b/})).toHaveAttribute('aria-selected','true');
+  const diffs=['lost_units','stockout_sku_days','lost_margin'].map(key=>result.summary.baseline[key]-result.summary.scoop[key]);
+  await expect(page.locator('.play-outcomes strong')).toHaveCount(3);
+  await expect(page.locator('.play-outcomes .result-negative')).toHaveCount(diffs.filter(value=>value<0).length);
+  await expect(page.locator('.results-cold-store')).toContainText(`Same cold store (${result.capacity_pallets} pallets)`);
+  await expect(page.locator('.results-cold-store')).toContainText('this plan peaks at');
+  await expect(page.locator('.results-cold-store')).toContainText('the rule at');
+  await expect(page.locator('.inline-refresh')).toHaveCount(0);
+  await mkdir(path.resolve('..','docs','screenshots'),{recursive:true});
+  await page.screenshot({path:path.resolve('..','docs','screenshots','m1-results.png'),animations:'disabled'});
+  await page.getByText('See full comparison',{exact:true}).click();
+  await expect(page.locator('.play-comparison table')).toHaveCount(1);
+  await expect(page.locator('.play-comparison table')).toContainText('Average closing pallets');
+  await expect(page.locator('.play-comparison table')).toContainText('Days over capacity');
+  expect(quantities(await read())).toEqual(quantities(initial));
+  expect(errors).toEqual([]);
+  evidence.result={capacity:result.capacity_pallets,summary:result.summary,differences:diffs,job_seconds:job.elapsed_seconds};
+  evidence.screenshot='docs/screenshots/m1-results.png';evidence.errors=errors;evidence.orders_unchanged=true;
+  evidence.note='Simulation was prepared through browser approval; result view selected through normal flow endpoints after preparation. The full timed replay is reserved for M5.';
+  await request.put(endpoint+'/flow',{data:{step:'report'}});
+  await writeFile(path.resolve('..','reports','m1-browser.json'),JSON.stringify(evidence,null,2)+'\n');
+});

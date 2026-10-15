@@ -1,0 +1,9 @@
+
+Running 1 test using 1 worker
+
+(node:44012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] e2e\night3-m1.spec.ts:5:1 › M1 normal policies share one cold store and Results use whole-warehouse outcomes
+  1 passed (1.4m)

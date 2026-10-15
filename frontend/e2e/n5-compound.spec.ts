@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
-test('N5 compound path, shared evidence drilldown and matched-space outcome', async ({page,request})=>{
+test('Compound path, shared evidence drilldown and same-cold-store outcome', async ({page,request})=>{
   test.setTimeout(600_000);
   page.setDefaultTimeout(30_000);
   const endpoint='/api/plans/P20260727',out=path.resolve('..','docs','screenshots');
@@ -52,21 +52,24 @@ test('N5 compound path, shared evidence drilldown and matched-space outcome', as
   await top();await page.getByRole('button',{name:'Approve orders',exact:true}).click();
   await expect(page.getByRole('tab',{name:/\bWatch\b/})).toHaveAttribute('aria-selected','true');
   await expect.poll(async()=>(await read('/simulation')).status,{timeout:300_000,intervals:[2000]}).toBe('ready');
-  const ready=await read('/simulation'),result=ready.result,matched=result.matched;
-  expect(matched.simulation_count).toBeLessThanOrEqual(6);
-  expect(matched.within_tolerance).toBeTruthy();
-  expect(matched.relative_pallet_gap).toBeLessThanOrEqual(.02);
-  record.simulation={order_hash:ready.order_hash,elapsed_seconds:ready.elapsed_seconds,actual:result.summary,matched:{...matched,runs:undefined}};
+  const ready=await read('/simulation'),result=ready.result;
+  expect(result).not.toHaveProperty('matched');
+  for(const policy of ['scoop','baseline']){
+    expect(result.summary[policy].peak_pallets).toBeLessThanOrEqual(result.capacity_pallets+1e-8);
+    expect(result.summary[policy].days_over_capacity).toBe(0);
+  }
+  record.simulation={order_hash:ready.order_hash,elapsed_seconds:ready.elapsed_seconds,summary:result.summary};
   await page.getByRole('button',{name:'Next: Play',exact:true}).click();
   await expect(page.getByRole('button',{name:'See results',exact:true})).toBeVisible({timeout:90_000});
   await page.getByRole('button',{name:'See results',exact:true}).click();
   await expect(page.locator('.play-outcomes strong')).toHaveCount(3);
-  await expect(page.locator('.results-reading')).toContainText('matched average cold-store use');
-  await top();await shot('04-matched-results');
+  await expect(page.locator('.results-cold-store')).toContainText('Same cold store');
+  await top();await shot('04-same-store-results');
   await page.getByText('See full comparison',{exact:true}).click();
-  await expect(page.getByText('Actual approved orders · whole warehouse',{exact:true})).toBeVisible();
+  await expect(page.locator('.play-comparison table')).toHaveCount(1);
   await page.locator('.play-comparison').scrollIntoViewIfNeeded();await shot('05-full-comparison');
   expect(record.errors).toEqual([]);
   await writeFile(path.resolve('..','reports','n5-browser.json'),JSON.stringify(record,null,2)+'\n');
-  for(const key of ['lost_units','stockout_sku_days','lost_margin'])expect(matched.summary.scoop[key]).toBeLessThan(matched.summary.baseline[key]);
+  const differences=['lost_units','stockout_sku_days','lost_margin'].map(key=>result.summary.baseline[key]-result.summary.scoop[key]);
+  await expect(page.locator('.play-outcomes .result-negative')).toHaveCount(differences.filter(value=>value<0).length);
 });

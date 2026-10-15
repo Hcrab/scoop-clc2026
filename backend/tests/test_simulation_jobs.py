@@ -35,10 +35,10 @@ def test_approval_edit_and_widget_flow_use_committed_quantities(api, monkeypatch
     calls = []
 
     def simulate(pid, week, **kwargs):
-        if '_service_level' not in kwargs:
-            with db.session_scope() as session:
-                order = session.get(PurchaseSuggestion, (pid, 'IC001'))
-                calls.append(order.final_cases if order.final_cases is not None else order.suggested_cases)
+        assert kwargs == {}
+        with db.session_scope() as session:
+            order = session.get(PurchaseSuggestion, (pid, 'IC001'))
+            calls.append(order.final_cases if order.final_cases is not None else order.suggested_cases)
         return original_simulate(pid, week, days=7, **kwargs)
 
     monkeypatch.setattr(play, 'simulate', simulate)
@@ -54,6 +54,8 @@ def test_approval_edit_and_widget_flow_use_committed_quantities(api, monkeypatch
         assert approved.status_code == 200, approved.text
         first = client.get('/api/plans/TESTAPI/simulation').json()
         assert first['status'] == 'ready' and first['result']['runs']['scoop']['per_sku']['demand']
+        assert 'matched' not in first['result']
+        assert simulation_jobs.LOGIC_VERSION == 'same-cold-store-play-v5'
         assert client.post('/api/plans/TESTAPI/play', json={}).json() == first['result']
         assert calls == [3]
         assert client.post('/api/plans/TESTAPI/approve-orders').status_code == 200

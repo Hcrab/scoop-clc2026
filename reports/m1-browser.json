@@ -1,0 +1,40 @@
+{
+  "mocked_responses": false,
+  "result": {
+    "capacity": 60,
+    "summary": {
+      "scoop": {
+        "fill_rate": 0.9458662372184171,
+        "lost_units": 11160,
+        "lost_margin": 68203.72,
+        "avg_pallets": 36.578548177083334,
+        "peak_pallets": 57.98659722222222,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 89,
+        "ending_on_hand": 61147,
+        "ordered_cases": 7977
+      },
+      "baseline": {
+        "fill_rate": 0.9439065562001591,
+        "lost_units": 11564,
+        "lost_margin": 61438.78,
+        "avg_pallets": 36.60944444444444,
+        "peak_pallets": 57.98659722222222,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 75,
+        "ending_on_hand": 48539,
+        "ordered_cases": 8209
+      }
+    },
+    "differences": [
+      404,
+      -14,
+      -6764.940000000002
+    ],
+    "job_seconds": 35.437999999994645
+  },
+  "screenshot": "docs/screenshots/m1-results.png",
+  "errors": [],
+  "orders_unchanged": true,
+  "note": "Simulation was prepared through browser approval; result view selected through normal flow endpoints after preparation. The full timed replay is reserved for M5."
+}

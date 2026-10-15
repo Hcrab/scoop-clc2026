@@ -269,21 +269,74 @@ def test_cache_invalidates_order_date_and_context(played_week, monkeypatch):
     assert resized['capacity_pallets'] == 90.
 
 
-def test_counterfactual_service_and_quantities_have_separate_cache_entries(played_week):
-    baseline = played_week['runs']['baseline']
-    a = play.simulate('test-plan', START, days=7, _service_level=.6,
-                      _first_week_cases={'A': 2, 'B': 2}, _baseline_run=baseline)
-    assert a['runs']['baseline'] is baseline
-    assert play.simulate('test-plan', START, days=7, _service_level=.6,
-                         _first_week_cases={'A': 2, 'B': 2}, _baseline_run=baseline) is a
-    different_cases = play.simulate('test-plan', START, days=7, _service_level=.6,
-                                    _first_week_cases={'A': 3, 'B': 2}, _baseline_run=baseline)
-    different_service = play.simulate('test-plan', START, days=7, _service_level=.7,
-                                      _first_week_cases={'A': 2, 'B': 2}, _baseline_run=baseline)
-    assert different_cases is not a
-    assert different_service is not a
-    assert different_cases['runs']['scoop']['per_sku']['placed_cases'][0][0] == 3
-    assert played_week['runs']['scoop']['per_sku']['placed_cases'][0][0] == 1
+def test_proportional_receiving_uses_whole_units_and_stable_remainders():
+    stock = pd.Series({'A': 4., 'B': 0.})
+    due = pd.Series({'A': 6., 'B': 4.})
+    upp = pd.Series({'A': 100., 'B': 50.})
+    assert play._admit_receipts(stock, due, upp, .10).to_dict() == {'A': 2., 'B': 2.}
+    assert play._admit_receipts(stock, due, upp, .20).to_dict() == due.to_dict()
+
+
+def test_saturated_receipts_defer_without_losing_pipeline(played_week, monkeypatch):
+    original_read = play.read_sql
+
+    def read(query, **params):
+        frame = original_read(query, **params)
+        if 'FROM nodes' in query:
+            frame.at[0, 'capacity_pallets'] = .12
+        return frame
+
+    monkeypatch.setattr(play, 'read_sql', read)
+    result = play.simulate('test-plan', START, days=7)
+    assert 'matched' not in result
+    for policy in ('scoop', 'baseline'):
+        run = result['runs'][policy]
+        rows = run['per_sku']
+        assert any(sum(day) > 0 for day in rows['deferred'])
+        assert rows['deferred'][0][1] > 0
+        assert rows['arrived'][1][1] > 0
+        assert result['summary'][policy]['days_over_capacity'] == 0
+        assert result['summary'][policy]['peak_pallets'] == pytest.approx(
+            max(day['pallets_pre_ship'] for day in run['daily']))
+        for day in run['daily']:
+            assert day['pallets_pre_ship'] <= .12 + 1e-9
+        for hour in run['hourly']['on_hand']:
+            assert hour[0] / 100 + hour[1] / 50 <= .12 + 1e-9
+        for day, arrivals in enumerate(rows['arrived']):
+            opening = [OPENING[s] for s in SKUS] if day == 0 else rows['on_hand'][day - 1]
+            for step, minute in enumerate(result['intraday']['minutes']):
+                level = [opening[j] + (arrivals[j] if minute >= result['intraday']['arrival_minutes'][day][j] else 0)
+                         - rows['shipped'][day][j] * result['intraday']['dispatch_cdf'][step]
+                         for j in range(len(SKUS))]
+                assert level[0] / 100 + level[1] / 50 <= .12 + 1e-9
+        initial_pipeline = 10.
+        ordered_units = sum(day[0] * 10 + day[1] * 5 for day in rows['placed_cases'])
+        received = sum(map(sum, rows['arrived']))
+        pending = sum(run['pipeline_units_after'].values())
+        assert initial_pipeline + ordered_units == pytest.approx(received + pending)
+        assert pending == pytest.approx(sum(sum(values.values()) for values in run['pending_after'].values()))
+        if policy == 'scoop':
+            assert rows['placed_cases'][0][0] == 1
+            assert rows['placed_cases'][1][1] == 2
+    for event in result['events']:
+        if event['kind'] == 'arrival':
+            i = result['dates'].index(event['date'])
+            j = result['skus'].index(event['sku'])
+            assert event['units'] == result['runs'][event['policy']]['per_sku']['arrived'][i][j]
+
+
+def test_overfull_opening_stock_fails_explicitly(played_week, monkeypatch):
+    original_read = play.read_sql
+
+    def read(query, **params):
+        frame = original_read(query, **params)
+        if 'FROM nodes' in query:
+            frame.at[0, 'capacity_pallets'] = .08
+        return frame
+
+    monkeypatch.setattr(play, 'read_sql', read)
+    with pytest.raises(ValueError, match='Opening cold-store inventory'):
+        play.simulate('test-plan', START, days=7)
 
 
 def test_empty_affected_set_has_zero_quantities(played_week, monkeypatch):

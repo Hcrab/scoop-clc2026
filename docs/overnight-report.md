@@ -5,7 +5,7 @@
 | Phase | Status | Commit | Evidence / open issue |
 |---|---|---|---|
 | Requested pre-step: fast Reset | Accepted | `425ab1f` | Reset API 174 / 85 / 94 ms; usable report after 1.404 s; 47 focused backend tests and the real Settings flow pass. |
-| M1 Same cold store | Not started | — | Remove matched-space bisection; capacity constraints and five-SKU loss diagnosis. |
+| M1 Same cold store | Accepted | See phase commit | 25 tests + real Results capture; both peaks 57.9866 / 60; 404 units avoided, 14 extra product-days, HK$6,764.94 extra lost margin. Five-SKU diagnosis and fixes recorded. |
 | M2 Demo start state | Not started | — | Default projected peak at 90–95% of physical capacity. |
 | M3 Report layout and language | Not started | — | Direction preview, action rows, native metrics and independent columns. |
 | M4 Play widget values | Not started | — | Today-so-far values and partial daily curves without a midnight zero drop. |
@@ -29,9 +29,9 @@ Local runtime repair: PostgreSQL accepted TCP but could not complete new session
 
 ## M1 — Same cold store, normal policies
 
-- ❌ Pending — Test both policies use the same physical capacity and neither exceeds it.
-- ❌ Pending — Results screenshot shows the three outcomes and one same-cold-store line.
-- ❌ Pending — All three outcomes improve, or five-SKU diagnosis and fixes tried are reported.
+- ✅ Shared capacity — **25 passed** (`reports/m1-tests.txt`); saturated receipts and pipeline conservation checked. Default daily/hourly/ten-minute peaks are **57.9865972222 / 60 pallets** for both, with zero over-capacity days (`reports/m1-diagnosis.json`). The queue executes one normal replay, with no service search.
+- ✅ Results — Real browser test **1 passed (1.4 min)** (`reports/m1-browser.txt`, `m1-browser.json`); screenshot `docs/screenshots/m1-results.png` personally reviewed: three aligned numbers, adverse outcomes in red and one same-cold-store line. Production build passed (`reports/m1-build.txt`); saved orders unchanged.
+- ✅ Diagnosis alternative — **404 fewer units short, 14 extra stockout product-days, HK$6,764.94 extra lost margin**. [Five-SKU diagnosis and fixes tried](reports/night3-m1.md) traces dated receipts and shortages. Zero first-week capacity cuts and no deferred receipts: the observed gap comes from lower normal coverage before later replenishment, not strawberry displacing those SKUs through space cuts. No threshold/buffer changes. Ledger unchanged at 160 calls / $16.897085.
 
 ## M2 — Demo start state
 

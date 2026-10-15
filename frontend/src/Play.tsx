@@ -1,6 +1,6 @@
 import { useEffect, useMemo, type Dispatch, type SetStateAction } from 'react';
 import { date, fullDate, n, pct } from './api';
-import { Dashboard, type DashboardPlay, type PlayRun } from './Dashboard';
+import { Dashboard, type DashboardPlay } from './Dashboard';
 import { Chart } from './ui';
 import { palletsFor } from './replayData';
 import type { Detail, Product } from './types';
@@ -9,45 +9,40 @@ import { ProductIcon } from './ProductIcon';
 type Policy = 'scoop'|'baseline';
 type Summary = {fill_rate:number;lost_units:number;lost_margin:number;avg_pallets:number;peak_pallets:number;days_over_capacity:number;stockout_sku_days:number;ending_on_hand:number;ordered_cases:number};
 type PlayEvent = {id:string;date:string;minute:number;time:string;at:string;kind:string;tone:'good'|'bad'|'warn'|'neutral';text:string;sku?:string;order_date?:string;cases?:number;card_ids?:string[]};
-type MatchedComparison={status:'matched'|'closest';within_tolerance:boolean;tolerance:number;service_level:number|null;relative_pallet_gap:number;simulation_count:number;summary:Record<Policy,Summary>;runs:{scoop:Pick<PlayRun,'daily'|'per_sku'>};attempts:unknown[]};
-export type PlayResult = DashboardPlay & {start:string;end:string;days:number;events:PlayEvent[];summary:Record<Policy,Summary>;notes:Record<string,string|null>;affected_skus:string[];affected_summary:Record<Policy,Summary>;affected_comparison:{units_saved:number;pallet_difference:number;stockout_days_avoided:number};matched?:MatchedComparison};
+export type PlayResult = DashboardPlay & {start:string;end:string;days:number;events:PlayEvent[];summary:Record<Policy,Summary>;notes:Record<string,string|null>;affected_skus:string[]};
 export type ReplayState = {planId:string;orderHash:string|null;result:PlayResult|null;day:number;minute:number;running:boolean;unlocked:boolean};
 export const emptyReplay=(planId='',orderHash:string|null=null):ReplayState=>({planId,orderHash,result:null,day:-1,minute:0,running:false,unlocked:false});
 const POLICY_LABEL:Record<Policy,string>={scoop:'This plan',baseline:'Moving-average rule'};
 
 export function Results({result,detail,products,path,revision=0}:{result:PlayResult;detail:Detail;products:Product[];path:string;revision?:number}){
-  const rows:[string,(x:Summary)=>string,(s:Summary,b:Summary)=>number][]=[
+  const rows:[string,(x:Summary)=>string,((s:Summary,b:Summary)=>number)?][]=[
     ['Fill rate to stores',x=>pct(x.fill_rate),(s,b)=>s.fill_rate-b.fill_rate],
     ['Units short',x=>n(x.lost_units),(s,b)=>b.lost_units-s.lost_units],
     ['Margin lost (HKD)',x=>n(x.lost_margin),(s,b)=>b.lost_margin-s.lost_margin],
     ['Stockout product-days',x=>n(x.stockout_sku_days),(s,b)=>b.stockout_sku_days-s.stockout_sku_days],
-    ['Average pallets used',x=>n(x.avg_pallets,1),(s,b)=>b.avg_pallets-s.avg_pallets],
-    ['Peak pallets',x=>n(x.peak_pallets,1),(s,b)=>b.peak_pallets-s.peak_pallets],
+    ['Average closing pallets',x=>n(x.avg_pallets,1)],
+    ['Physical peak pallets',x=>n(x.peak_pallets,1)],
+    ['Days over capacity',x=>n(x.days_over_capacity)],
   ];
-  const table=(caption:string,summary:Record<Policy,Summary>)=><table><caption>{caption}</caption><thead><tr><th/><th>{POLICY_LABEL.scoop}</th><th>{POLICY_LABEL.baseline}</th></tr></thead><tbody>{rows.map(([name,format,compare])=>{const better=compare(summary.scoop,summary.baseline);return <tr key={name}><td>{name}</td><td className={better>1e-9?'better':better< -1e-9?'worse':''}>{format(summary.scoop)}</td><td>{format(summary.baseline)}</td></tr>})}</tbody></table>;
-  const affected=result.affected_comparison,matched=result.matched;
-  const comparisonSummary=matched?.summary||result.affected_summary;
-  const unitsAvoided=matched?matched.summary.baseline.lost_units-matched.summary.scoop.lost_units:affected.units_saved;
-  const daysAvoided=matched?matched.summary.baseline.stockout_sku_days-matched.summary.scoop.stockout_sku_days:affected.stockout_days_avoided;
-  const marginAvoided=comparisonSummary.baseline.lost_margin-comparisonSummary.scoop.lost_margin;
+  const summary=result.summary;
+  const table=<div className="results-table-wrap"><table><caption>Whole warehouse · actual approved orders</caption><thead><tr><th/><th>{POLICY_LABEL.scoop}</th><th>{POLICY_LABEL.baseline}</th></tr></thead><tbody>{rows.map(([name,format,compare])=>{const better=compare?.(summary.scoop,summary.baseline)??0;return <tr key={name}><th scope="row">{name}</th><td className={better>1e-9?'better':better< -1e-9?'worse':''}>{format(summary.scoop)}</td><td>{format(summary.baseline)}</td></tr>})}</tbody></table></div>;
+  const unitsAvoided=summary.baseline.lost_units-summary.scoop.lost_units;
+  const daysAvoided=summary.baseline.stockout_sku_days-summary.scoop.stockout_sku_days;
+  const marginAvoided=summary.baseline.lost_margin-summary.scoop.lost_margin;
   const names=new Map(products.map(product=>[product.sku,product.name]));
-  const affectedIndexes=matched?result.skus.map((_,index)=>index):result.affected_skus.map(sku=>result.skus.indexOf(sku)).filter(index=>index>=0);
   let planShort=0,ruleShort=0;
   const comparison=result.dates.map((at,day)=>{
-    planShort+=affectedIndexes.reduce((sum,index)=>sum+((matched?.runs.scoop||result.runs.scoop).per_sku.lost[day]?.[index]||0),0);
-    ruleShort+=affectedIndexes.reduce((sum,index)=>sum+(result.runs.baseline.per_sku.lost[day]?.[index]||0),0);
+    planShort+=(result.runs.scoop.per_sku.lost[day]||[]).reduce((sum,lost)=>sum+lost,0);
+    ruleShort+=(result.runs.baseline.per_sku.lost[day]||[]).reduce((sum,lost)=>sum+lost,0);
     return {date:at,plan:planShort,rule:ruleShort};
   });
-  const spaceDifference=result.affected_summary.scoop.avg_pallets-result.affected_summary.baseline.avg_pallets;
-  const spacePhrase=Math.abs(spaceDifference)<0.05?'the same average cold-store space':`${n(Math.abs(spaceDifference),1)} ${Math.abs(spaceDifference)<1.05?'pallet':'pallets'} ${spaceDifference<0?'less':'more'} on average`;
-  const shortagePhrase=affected.units_saved>0?'left fewer units short than the moving-average rule':affected.units_saved<0?'left more units short than the moving-average rule':'left the same number of units short as the moving-average rule';
   return <section className="results-view"><div className="play-comparison"><h2>Results · {fullDate(result.start)} – {fullDate(result.end)}</h2>
     <div className="play-outcomes"><div className={unitsAvoided<0?'result-negative':undefined}><span>{unitsAvoided<0?'Extra units short':'Units short avoided'}</span><strong>{n(Math.abs(unitsAvoided))}</strong></div><div className={daysAvoided<0?'result-negative':undefined}><span>{daysAvoided<0?'Extra stockout product-days':'Stockout product-days avoided'}</span><strong>{n(Math.abs(daysAvoided))}</strong></div><div className={marginAvoided<0?'result-negative':undefined}><span>{marginAvoided<0?'Extra margin lost':'Lost margin avoided'}</span><strong>HK${n(Math.abs(marginAvoided))}</strong></div></div>
-    {matched?<p className="results-reading">{matched.within_tolerance?'At matched average cold-store use':'At the closest measured cold-store use'} ({n(matched.summary.scoop.avg_pallets,1)} vs {n(matched.summary.baseline.avg_pallets,1)} pallets), the compared plan left {unitsAvoided>0?'fewer units short':unitsAvoided<0?'more units short':'the same number of units short'} than the moving-average rule.</p>:<p className="results-reading">Using {spacePhrase}, this plan {shortagePhrase}.</p>}
+    <p className="results-cold-store">Same cold store ({n(result.capacity_pallets)} pallets) · this plan peaks at {n(summary.scoop.peak_pallets,1)}, the rule at {n(summary.baseline.peak_pallets,1)}</p>
     <p className="results-scenario">Illustrative scenario · simulated warehouse and store outcomes.</p>
-    <div className="results-chart"><h3>Cumulative units short · {matched?'whole warehouse':'affected products'}</h3><Chart data={comparison} lines={[{key:'plan',label:matched?'Selected plan at compared space':'This plan',color:'#205a4e'},{key:'rule',label:'Moving-average rule',color:'#b28a5a'}]}/></div>
+    <div className="results-chart"><h3>Cumulative units short · whole warehouse</h3><Chart data={comparison} lines={[{key:'plan',label:'This plan',color:'#205a4e'},{key:'rule',label:'Moving-average rule',color:'#b28a5a'}]}/></div>
     <details><summary>Affected products · {result.affected_skus.length}</summary><ul>{result.affected_skus.map(sku=><li key={sku}>{names.get(sku)||sku}</li>)}</ul></details>
-    <details><summary>See full comparison</summary>{matched?<>{table('Whole warehouse · compared space',matched.summary)}{table('Actual approved orders · whole warehouse',result.summary)}</>:result.affected_skus.length===result.skus.length?table(`Whole warehouse · ${result.affected_skus.length} affected products`,result.summary):<>{table('Affected products',result.affected_summary)}{table('Whole warehouse',result.summary)}</>}<p className="muted">Cold-store limit: {n(result.capacity_pallets)} pallets.</p></details>
+    <details><summary>See full comparison</summary>{table}</details>
   </div><Dashboard detail={detail} products={products} path={path} result={result} day={result.days-1} readonly revision={revision}/></section>;
 }
 

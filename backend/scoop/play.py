@@ -45,56 +45,39 @@ def _week_orders(pid: str) -> pd.DataFrame:
     return df
 
 
-def _candidate_week_cases(start, skus, orders_week, inv0, open_po, plan_summary,
-                          service_level, goal, cohort_cache):
-    """Reprice the known first-week position without changing saved order lines."""
-    from types import SimpleNamespace
-    from .algorithms import cohort_model
-    from .planning import suggest_orders
+def _admit_receipts(on_hand: pd.Series, due: pd.Series, upp: pd.Series,
+                    capacity: float) -> pd.Series:
+    """Admit whole units proportionally, retaining the rest outside cold storage.
 
-    saved_cohort = (plan_summary or {}).get("cohort_model")
-    if saved_cohort:
-        cohort_result = saved_cohort
-    elif cohort_cache is not None and start in cohort_cache:
-        cohort_result = cohort_cache[start]
-    else:
-        cohort_result = cohort_model.fit(SimpleNamespace(week_start=start))
-        if cohort_cache is not None:
-            cohort_cache[start] = cohort_result
-    pipeline = open_po.groupby("sku").units.sum().reindex(skus).fillna(0.0)
-    position = pd.DataFrame({"sku": skus,
-                             "on_hand_units": inv0.reindex(skus).fillna(0).round().astype(int).to_numpy(),
-                             "on_order": pipeline.round().astype(int).to_numpy()})
-    pending = {}
-    for r in open_po.itertuples():
-        day = r.received_date if r.received_date is not None and not pd.isna(r.received_date) else r.expected_date
-        pending.setdefault(day, pd.Series(0.0, index=skus))[r.sku] += r.units
-    proposed = suggest_orders(start, [], position=position, pending_arrivals=pending,
-                              cohort_result=cohort_result, overrides=[] if saved_cohort else None,
-                              goal=goal, service_level=service_level)
-    proposed.attrs.clear()
-    proposed = proposed.set_index("sku")
-    absolute = (plan_summary or {}).get("cohort_model", {}).get("cases_overrides", {})
-    saved = orders_week.set_index("sku")
-    cases = {}
-    for sku in skus:
-        if sku not in saved.index:
-            cases[sku] = 0
-            continue
-        row = saved.loc[sku]
-        old_auto = int(max(0, row.suggested_cases - row.capacity_cut_cases))
-        old_default = int(absolute.get(sku, old_auto))
-        intervention = int(row.cases) - old_default
-        proposed_cases = int(proposed.loc[sku, "final_cases"]) if sku in proposed.index else 0
-        cases[sku] = max(0, proposed_cases + intervention)
-    return cases
+    The daily model admits units, even though purchase orders are placed in cases.
+    Ties in largest-remainder rounding follow SKU order for reproducibility.
+    """
+    free = capacity - float((on_hand / upp).sum())
+    if free < -1e-9:
+        raise ValueError("Opening cold-store inventory exceeds physical capacity")
+    due = due.astype(float)
+    due_pallets = float((due / upp).sum())
+    if due_pallets <= max(free, 0.0) + 1e-9:
+        return due.copy()
+    exact = due * (max(free, 0.0) / due_pallets)
+    admitted = np.floor(exact).astype(float)
+    room = max(free, 0.0) - float((admitted / upp).sum())
+    ranking = sorted(due.index, key=lambda sku: (-(exact[sku] - admitted[sku]), str(sku)))
+    # One-unit passes handle different SKU pallet sizes without wasting a slot.
+    while True:
+        added = False
+        for sku in ranking:
+            unit_space = 1.0 / upp[sku]
+            if admitted[sku] < due[sku] and unit_space <= room + 1e-9:
+                admitted[sku] += 1
+                room -= unit_space
+                added = True
+        if not added:
+            break
+    return admitted
 
 
-def simulate(pid: str, week_start: date, days: int | None = None, *,
-             _service_level: float | None = None,
-             _first_week_cases: dict[str, int] | None = None,
-             _baseline_run: dict | None = None,
-             _cohort_cache: dict | None = None) -> dict:
+def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
     orders_week = _week_orders(pid)
     prod = read_sql(
         """SELECT p.sku, p.name, p.brand, p.supplier_id, p.price_hkd, p.cost_hkd, p.units_per_case, p.cases_per_pallet, p.moq_cases,
@@ -117,8 +100,7 @@ def simulate(pid: str, week_start: date, days: int | None = None, *,
         plan_summary = json.loads(plan_summary)
     cards = (plan_summary or {}).get("cohort_cards", [])
     goal = context.goal.iloc[0] if not context.empty else "margin"
-    service_level = (_service_level if _service_level is not None else
-                     context.service_level.iloc[0] if not context.empty else None)
+    service_level = context.service_level.iloc[0] if not context.empty else None
     raw = read_sql(
         "SELECT date, sku, SUM(ordered_units) AS u FROM store_orders WHERE date BETWEEN :a AND :b GROUP BY date, sku",
         a=start - timedelta(days=28), b=end,
@@ -151,11 +133,8 @@ def simulate(pid: str, week_start: date, days: int | None = None, *,
         expectations["date"] = pd.to_datetime(expectations.date).dt.date
     upp = (prod.units_per_case * prod.cases_per_pallet).astype(float)
     margin = (prod.price_hkd - prod.cost_hkd).astype(float)
-    if _service_level is not None and _first_week_cases is None:
-        _first_week_cases = _candidate_week_cases(start, skus, orders_week, inv0, open_po,
-                                                 plan_summary, _service_level, goal, _cohort_cache)
     # All inputs that can change a replay are read before consulting the cache.
-    inputs = [pid, start, days, _service_level, _first_week_cases,
+    inputs = [pid, start, days,
               orders_week[["sku", "order_date", "cases", "suggested_cases", "capacity_cut_cases", "final_cases"]].to_dict("records"), prod.reset_index().to_dict("records"),
               goal, service_level, plan_summary, settings.to_dict("records"), raw.to_dict("records"),
               inv0.to_dict(), open_po.to_dict("records"), weather.to_dict("records"), capacity,
@@ -174,27 +153,35 @@ def simulate(pid: str, week_start: date, days: int | None = None, *,
 
     week_cases = orders_week.set_index("sku").cases.reindex(skus).fillna(0).astype(int)
     week_dates = orders_week.set_index("sku").order_date.reindex(skus)
-    if _first_week_cases is not None:
-        week_cases = pd.Series(_first_week_cases).reindex(skus).fillna(0).astype(int)
+    opening_pallets = float((inv0.reindex(skus).fillna(0.0) / upp).sum())
+    if opening_pallets > capacity + 1e-9:
+        raise ValueError(f"Opening cold-store inventory {opening_pallets:.3f} pallets exceeds capacity {capacity:.3f}")
 
     runs = {}
     autopilot_notes: list[dict] = []
     for policy in ("scoop", "baseline"):
-        if policy == "baseline" and _baseline_run is not None:
-            runs[policy] = _baseline_run
-            continue
         on_hand, arrivals, pipeline = initial()
         own_arrivals: dict[date, pd.Series] = {}
+        deferred = pd.Series(0.0, index=skus)
+        deferred_own = pd.Series(0.0, index=skus)
         cohort_result = None
         cohort_week = None
-        daily, per_sku = [], {"on_hand": [], "shipped": [], "lost": [], "demand": [], "arrived": [], "placed_cases": [], "pre_ship": []}
+        daily, per_sku = [], {"on_hand": [], "shipped": [], "lost": [], "demand": [], "arrived": [], "deferred": [], "placed_cases": [], "pre_ship": []}
         d = start
         while d <= end:
-            arrived = pd.Series(0.0, index=skus)
-            if d in arrivals:
-                arrived = arrivals.pop(d)
-                on_hand += arrived
-                pipeline -= arrived
+            due_receipts = arrivals.pop(d, pd.Series(0.0, index=skus)) + deferred
+            own_due = own_arrivals.pop(d, pd.Series(0.0, index=skus)) + deferred_own
+            arrived = _admit_receipts(on_hand, due_receipts, upp, capacity)
+            deferred = due_receipts - arrived
+            # Attribute same-SKU receipts to inherited transit first for the
+            # orders_after diagnostic; this does not change physical admission.
+            own_received = pd.Series(0.0, index=skus)
+            for s in skus:
+                inherited_due = due_receipts[s] - own_due[s]
+                own_received[s] = min(own_due[s], max(0.0, arrived[s] - inherited_due))
+            deferred_own = own_due - own_received
+            on_hand += arrived
+            pipeline -= arrived
             pre_ship = float((on_hand / upp).sum())
             dem = demand.loc[d] if d in demand.index else pd.Series(0.0, index=skus)
             ship = np.minimum(on_hand, dem)
@@ -214,22 +201,20 @@ def simulate(pid: str, week_start: date, days: int | None = None, *,
 
                 current_week = d - timedelta(days=d.weekday())
                 if cohort_week != current_week:
-                    if _cohort_cache is not None and current_week in _cohort_cache:
-                        cohort_result = _cohort_cache[current_week]
-                    else:
-                        cohort_result = cohort_model.fit(SimpleNamespace(week_start=current_week))
-                        if _cohort_cache is not None:
-                            _cohort_cache[current_week] = cohort_result
+                    cohort_result = cohort_model.fit(SimpleNamespace(week_start=current_week))
                     cohort_week = current_week
-                    if _baseline_run is None:
-                        try:
-                            found = detect(d)
-                            autopilot_notes.append({"date": d.isoformat(), "findings": [f.get("display", f.get("group", "signal"))
-                                                    for f in found if f.get("kind") == "significant"][:4]})
-                        except Exception:  # CUSUM notes do not control automatic orders
-                            pass
+                    try:
+                        found = detect(d)
+                        autopilot_notes.append({"date": d.isoformat(), "findings": [f.get("display", f.get("group", "signal"))
+                                                for f in found if f.get("kind") == "significant"][:4]})
+                    except Exception:  # CUSUM notes do not control automatic orders
+                        pass
                 pos = pd.DataFrame({"sku": skus, "on_hand_units": on_hand.round().astype(int).to_numpy(), "on_order": pipeline.round().astype(int).to_numpy()})
-                plan = suggest_orders(d, [], position=pos, only_due=True, pending_arrivals=arrivals,
+                pending = dict(arrivals)
+                if deferred.sum() > 0:
+                    next_day = d + timedelta(days=1)
+                    pending[next_day] = pending.get(next_day, pd.Series(0.0, index=skus)) + deferred
+                plan = suggest_orders(d, [], position=pos, only_due=True, pending_arrivals=pending,
                                       cohort_result=cohort_result, goal=goal,
                                       service_level=service_level)
                 # The fitted tree is already retained above. Avoid copying its large
@@ -257,7 +242,8 @@ def simulate(pid: str, week_start: date, days: int | None = None, *,
             daily.append({
                 "date": d.isoformat(), "demand": float(dem.sum()), "shipped": float(ship.sum()), "lost": float(lost.sum()),
                 "lost_margin": float((lost * margin).sum()), "on_hand": float(on_hand.sum()), "pallets_pre_ship": pre_ship,
-                "pallets": closing, "arrived_units": float(arrived.sum()), "ordered_cases": int(placed.sum()),
+                "pallets": closing, "arrived_units": float(arrived.sum()), "deferred_units": float(deferred.sum()),
+                "ordered_cases": int(placed.sum()),
                 "skus_short": int((lost > 0).sum()),
             })
             per_sku["on_hand"].append(on_hand.round(1).tolist())
@@ -265,10 +251,18 @@ def simulate(pid: str, week_start: date, days: int | None = None, *,
             per_sku["lost"].append(lost.round(1).tolist())
             per_sku["demand"].append(dem.round(1).tolist())
             per_sku["arrived"].append(arrived.round(1).tolist())
+            per_sku["deferred"].append(deferred.round(1).tolist())
             per_sku["placed_cases"].append(placed.tolist())
             per_sku["pre_ship"].append((on_hand + ship).round(1).tolist())
             d += timedelta(days=1)
-        runs[policy] = {"daily": daily, "per_sku": per_sku, "orders_after": {k.isoformat(): v[v > 0].round().to_dict() for k, v in own_arrivals.items() if k > end}}
+        pending_after = {k.isoformat(): v[v > 0].round().to_dict() for k, v in arrivals.items() if k > end}
+        if deferred.sum() > 0:
+            pending_after['deferred'] = deferred[deferred > 0].round().to_dict()
+        orders_after = {k.isoformat(): v[v > 0].round().to_dict() for k, v in own_arrivals.items() if k > end}
+        if deferred_own.sum() > 0:
+            orders_after['deferred'] = deferred_own[deferred_own > 0].round().to_dict()
+        runs[policy] = {"daily": daily, "per_sku": per_sku, "orders_after": orders_after,
+                        "pending_after": pending_after, "pipeline_units_after": pipeline.round(3).to_dict()}
 
     intraday_data = {'dates': [x['date'] for x in runs['scoop']['daily']], 'skus': skus, 'runs': runs}
     intraday.enrich(intraday_data, suppliers)
@@ -329,7 +323,8 @@ def simulate(pid: str, week_start: date, days: int | None = None, *,
                 first_week_order = (policy == 'scoop' and week_cases[sku] > 0 and
                                     not pd.isna(week_dates[sku]) and
                                     week_dates[sku] + timedelta(days=int(prod.loc[sku, 'lead_time_days'])) == dt)
-                cases = int(week_cases[sku]) if first_week_order else None
+                fully_received = runs[policy]['per_sku']['deferred'][i][j] == 0
+                cases = int(week_cases[sku]) if first_week_order and fully_received else None
                 links = event_links(policy, [sku], i)
                 events.append({'date': day, 'kind': 'arrival', 'tone': 'good', 'policy': policy,
                                'sku': sku, 'skus': [sku], 'name': names[sku], 'units': amount,
@@ -418,7 +413,7 @@ def simulate(pid: str, week_start: date, days: int | None = None, *,
             "lost_margin": lost_margin,
             "avg_pallets": float(np.mean(pallets)),
             "peak_pallets": float(max(pre_ship)),
-            "days_over_capacity": int(sum(x > capacity for x in pre_ship)),
+            "days_over_capacity": int(sum(x > capacity + 1e-9 for x in pre_ship)),
             "stockout_sku_days": sku_days,
             "ending_on_hand": ending,
             "ordered_cases": int(ordered),
