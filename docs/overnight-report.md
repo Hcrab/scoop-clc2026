@@ -4,7 +4,7 @@
 
 | Phase | Status | Commit | Main evidence / open issue |
 |---|---|---|---|
-| N1 Five-step flow | Accepted | Delivery commit pending push | Five screens; persisted replay; widget edits do not simulate. Cold preparation 37.203 s; accepted browser flow reused it. |
+| N1 Five-step flow | Accepted | `1a7b2ada3401` | Five screens; persisted replay; widget edits do not simulate. Cold preparation 37.203 s; accepted browser flow reused it. |
 | N2 Hours and minutes | Not started | — | Begins after N1 acceptance. |
 | N3 UI polish | Not started | — | Begins after N2 acceptance. |
 | N4 Product illustrations | Not started | — | 75 individual illustrations and a reviewed contact sheet. |
