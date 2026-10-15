@@ -73,10 +73,19 @@ the measured adjustment to the forecast and the products it affects, rather than
 coefficient, forecast arithmetic, SKU codes or a promised fill rate. Clarify overlapping groups.
 Action rows should add the proposed response, not replay the observations. Capacity needs one useful
 comparison and an operational response, not a recap of every baseline, preview and allocation number.
+Keep action rows consistent with the computed product orders. An overlapping subgroup already
+covered by another action need not get a second row; "hold at baseline" applies only when its
+computed order change is zero.
 Describe an exploratory signal in business terms, such as "Check whether the local uplift continues
 next week"; do not refer to internal significance gates in the visible narrative.
 Use observed replenishment requests, not claimed consumer sales. Name the comparison: deviation
 from forecast is different from change since last week. Separate alarm dates from review windows.
+The forecast already contains weather. Interpret departures from that expectation using additional
+operational evidence or a specific question for the planner, rather than attributing the residual
+to temperature again. An estimated service benefit is a projection, not a promise of no shortages.
+Keep a group's scope faithful to its definition: examples from a heterogeneous leaf do not make
+the entire leaf one product format. Different groups with different effects deserve separate
+illustrated observations, even when they are small. Label a positive buying change as an increase.
 Use a consistent, familiar price basis in the report. Prefer the catalog's per-item price tier
 when describing purchasing groups; introduce price per volume only when that distinction explains
 something useful. Overlapping price definitions should not give the same products confusing labels.
@@ -164,9 +173,9 @@ class _Fragment(HTMLParser):
             if self.evidence:
                 result=self.evidence.get(source,{})
                 daily=result.get('daily',[])
-                keys={'actual':'requested_units','expected':'expected_units','prior':'prior_year_units'}
+                keys={'actual':('requested_units',),'expected':('expected_units',),'prior':('prior_year_units','prior_year_requested_units')}
                 available=set()
-                if daily:available={item for item,key in keys.items() if any(key in row for row in daily)}
+                if daily:available={item for item,fields in keys.items() if any(any(key in row for key in fields) for row in daily)}
                 elif 'actual_share' in result and 'expected_share' in result:available={'actual','expected'}
                 if not set(series)<=available:raise ValueError('Chart series are absent from cited evidence.')
         elif tag=='figure' and any(key in attributes for key in ('data-series','data-evidence-id')):
@@ -177,7 +186,7 @@ class _Fragment(HTMLParser):
                 raise ValueError('Report HTML must not execute code or request external resources.')
             if key in {'href','src','xlink:href','poster','background'} and value and not value.startswith('#'):
                 raise ValueError('Report resources must be inline; use evidence hooks for sources.')
-            if key=='style':raise ValueError('Inline CSS is unsupported in report HTML.')
+            if key=='style':_css(value)
             if key in {'filter','mask','clip-path','fill','stroke','marker','marker-start','marker-mid','marker-end','cursor'}:_css(value)
             if key in {'data-evidence-id','data-trend-id'} and value not in self.ids:
                 raise ValueError('Use only returned evidence IDs in the presentation.')

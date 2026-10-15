@@ -1,11 +1,10 @@
 """Plan-owned dashboard widgets backed by observed history."""
-from collections import defaultdict
 from datetime import timedelta
 from math import isfinite
 from uuid import uuid4
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, func
 
 from .models import Product, Store, StoreOrder, NodeInventory, WatchItem, DailyExpectation, ModelRun
 from .ai.exploration_tools import _groups
@@ -75,10 +74,14 @@ def resolve(session, plan, spec):
     if kind == 'tag':
         group = _groups(session).get(key)
         if group is None: raise HTTPException(422, 'Unknown catalog group')
-        return sorted(set(group.skus) & set(products))
+        selected = sorted(set(group.skus) & set(products))
+        if not selected: raise HTTPException(422, 'Catalog group has no products')
+        return selected
     card = next((c for c in (plan.summary or {}).get('cohort_cards', []) if c['id'] == key), None)
     if card is None: raise HTTPException(422, 'Unknown plan cohort')
-    return sorted(set(card.get('skus', [])) & set(products))
+    selected = sorted(set(card.get('skus', [])) & set(products))
+    if not selected: raise HTTPException(422, 'Plan cohort has no products')
+    return selected
 
 
 def active(session, plan):
@@ -92,22 +95,25 @@ def ordered(session, plan):
 
 
 def initialize(session, plan):
-    if 'dashboard_order' in (plan.summary or {}): return
-    # Old watches have a different scope shape and cannot be interpreted as widgets.
-    for watch in session.scalars(select(WatchItem).where(WatchItem.plan_id == plan.id, WatchItem.status == 'active')):
-        watch.status = 'archived'
-        watch.title = ('~' + watch.id + ' ' + watch.title)[:160]
-    specs = []
-    for card in (plan.summary or {}).get('cohort_cards', [])[:2]:
-        specs.append({'title': f"{card.get('name') or card['id']} demand vs expected", 'scope': {'kind': 'cohort', 'key': card['id']}, 'metric': 'requested_vs_expected', 'threshold': None})
-    specs += [{'title': 'Warehouse units on hand', 'scope': {'kind': 'warehouse', 'key': ''}, 'metric': 'on_hand', 'threshold': None},
-              {'title': 'Warehouse pallets', 'scope': {'kind': 'warehouse', 'key': ''}, 'metric': 'pallets', 'threshold': None},
-              {'title': 'Store fill rate', 'scope': {'kind': 'warehouse', 'key': ''}, 'metric': 'fill_rate', 'threshold': None}]
-    ids = []
-    for spec in specs:
-        widget = save(session, plan, spec, origin='baseline')
-        ids.append(widget.id)
-    plan.summary = {**(plan.summary or {}), 'dashboard_order': ids}
+    # Called only from a mutation. A read must never write layout or widgets.
+    if 'dashboard_order' not in (plan.summary or {}):
+        plan.summary = {**(plan.summary or {}), 'dashboard_order': [w.id for w in ordered(session, plan)]}
+
+
+def seed_defaults(session, plan):
+    """Draft the initial measures once, as part of explicit plan creation."""
+    if 'dashboard_order' in (plan.summary or {}):return
+    existing=ordered(session,plan)
+    if existing:
+        initialize(session,plan)
+        return
+    specs=[{'title':f"{card['name']} requests",'scope':{'kind':'cohort','key':card['id']},
+            'metric':'requested_vs_expected','threshold':None}
+           for card in (plan.summary or {}).get('cohort_cards',[])[:2]]
+    specs.extend({'title':title,'scope':{'kind':'warehouse'},'metric':metric,'threshold':None}
+                 for title,metric in [('Warehouse stock','on_hand'),('Warehouse pallets','pallets'),('Store fill rate','fill_rate')])
+    ids=[save(session,plan,spec,origin='baseline').id for spec in specs]
+    plan.summary={**(plan.summary or {}),'dashboard_order':ids}
     session.flush()
 
 
@@ -124,72 +130,96 @@ def save(session, plan, spec, origin='decision'):
     return widget
 
 
-def evaluate(session, plan, spec, widget_id='preview'):
-    spec = canonical(spec)
-    skus = resolve(session, plan, spec)
-    selected = set(skus)
-    card = next((c for c in (plan.summary or {}).get('cohort_cards', []) if c['id'] == spec['scope']['key']), None) if spec['scope']['kind'] == 'cohort' else None
-    districts = set(card.get('districts', [])) if card else set()
-    stores = {store.id: store.district for store in session.scalars(select(Store))}
-    scoped_stores = {sid for sid, district in stores.items() if district in districts} if districts else set(stores)
+def historical_facts(session, plan, need_expected=False):
+    """Aggregate the fixed history window once for every widget in a response."""
     end = plan.week_start
     start = end - timedelta(days=28)
     warmup = start - timedelta(days=7)
-    orders = list(session.scalars(select(StoreOrder).where(StoreOrder.date >= warmup, StoreOrder.date < end)))
-    inventory = list(session.scalars(select(NodeInventory).where(NodeInventory.date >= start, NodeInventory.date < end)))
     products = {p.sku: p for p in session.scalars(select(Product))}
-    requested = defaultdict(float); shipped = defaultdict(float); per_sku = defaultdict(float)
-    order_dates = set()
-    for order in orders:
-        if order.store_id not in scoped_stores: continue
-        order_dates.add(order.date)
-        if order.sku in selected:
-            requested[order.date] += order.ordered_units
-            shipped[order.date] += order.shipped_units
-            per_sku[(order.date, order.sku)] += order.ordered_units
-    stock = defaultdict(dict)
-    for row in inventory:
-        if row.sku in selected: stock[row.date][row.sku] = row.on_hand_units
-    expected = defaultdict(float); expected_dates = set()
-    if spec['metric'] == 'requested_vs_expected':
-        # Existing issued forecasts only; never run or train a model for a widget.
-        run = session.scalar(select(ModelRun).where(ModelRun.trained_through < end).order_by(ModelRun.trained_through.desc(), ModelRun.created_at.desc()).limit(1))
-        if run:
-            forecasts = session.scalars(select(DailyExpectation).where(DailyExpectation.run_id == run.id, DailyExpectation.date >= start, DailyExpectation.date < end, DailyExpectation.sku.in_(skus), DailyExpectation.store_id.in_(scoped_stores)))
-            for row in forecasts:
-                expected[row.date] += row.p50
-                expected_dates.add(row.date)
+    store_count = session.scalar(select(func.count()).select_from(Store)) or 0
+    orders = {}
+    for day, sku, demand, shipped, count in session.execute(
+        select(StoreOrder.date, StoreOrder.sku, func.sum(StoreOrder.ordered_units),
+               func.sum(StoreOrder.shipped_units), func.count(StoreOrder.store_id))
+        .where(StoreOrder.date >= warmup, StoreOrder.date < end)
+        .group_by(StoreOrder.date, StoreOrder.sku)):
+        orders[(day, sku)] = (float(demand), float(shipped)) if count == store_count else None
+    stock = {(day, sku): float(units) for day, sku, units in session.execute(
+        select(NodeInventory.date, NodeInventory.sku, NodeInventory.on_hand_units)
+        .where(NodeInventory.date >= start, NodeInventory.date < end))}
+    runs = list(session.scalars(select(ModelRun).where(ModelRun.trained_through < end)
+                                .order_by(ModelRun.trained_through.desc(), ModelRun.created_at.desc()))) if need_expected else []
+    run_for_day = {}
+    day = start
+    while day < end:
+        run_for_day[day] = next((run for run in runs if run.trained_through < day), None)
+        day += timedelta(days=1)
+    selected_run_ids = {run.id for run in run_for_day.values() if run is not None}
+    issued = {}
+    if selected_run_ids:
+        for run_id, day, sku, value, count in session.execute(
+            select(DailyExpectation.run_id, DailyExpectation.date, DailyExpectation.sku,
+                   func.sum(DailyExpectation.p50), func.count(DailyExpectation.store_id))
+            .where(DailyExpectation.run_id.in_(selected_run_ids),
+                   DailyExpectation.date >= start, DailyExpectation.date < end)
+            .group_by(DailyExpectation.run_id, DailyExpectation.date, DailyExpectation.sku)):
+            issued[(run_id, day, sku)] = float(value) if count == store_count else None
+    return {'orders': orders, 'stock': stock, 'issued': issued, 'runs': run_for_day,
+            'products': products, 'start': start, 'end': end}
+
+
+def _total(facts, day, skus, source):
+    values = [facts[source].get((day, sku)) for sku in skus]
+    return sum(values) if values and all(value is not None for value in values) else None
+
+
+def _demand(facts, day, skus, field=0):
+    rows = [facts['orders'].get((day, sku)) for sku in skus]
+    return sum(row[field] for row in rows) if rows and all(row is not None for row in rows) else None
+
+
+def evaluate(session, plan, spec, widget_id='preview', facts=None):
+    spec = canonical(spec)
+    skus = resolve(session, plan, spec)
+    facts = facts or historical_facts(session, plan, spec['metric'] == 'requested_vs_expected')
+    start, end = facts['start'], facts['end']
     series = []
     threshold = spec['threshold']
-    latest_state = 'unknown'
     day = start
     while day < end:
         value = None
         metric = spec['metric']
-        if metric in {'demand', 'lost_units', 'fill_rate', 'requested_vs_expected'} and day in order_dates:
-            demand = requested[day]
-            if metric in {'demand', 'requested_vs_expected'}: value = demand
-            elif metric == 'lost_units': value = demand - shipped[day]
-            elif demand > 0: value = shipped[day] / demand
-        elif metric in {'on_hand', 'pallets', 'days_cover'} and day in stock and set(stock[day]) == selected:
-            if metric == 'on_hand': value = sum(stock[day].values())
-            elif metric == 'pallets':
-                value = sum(units / (products[sku].units_per_case * products[sku].cases_per_pallet)
-                            for sku, units in stock[day].items())
-            elif all(day - timedelta(days=i) in order_dates for i in range(1, 8)):
-                demand = sum(per_sku[(day - timedelta(days=i), sku)] for i in range(1, 8) for sku in skus)
-                if demand > 0: value = sum(stock[day].values()) / (demand / 7)
-        state = 'unknown' if value is None else 'warning' if threshold and ((value < threshold['value']) if threshold['operator'] == 'lt' else (value > threshold['value'])) else 'normal'
+        demand = _demand(facts, day, skus)
+        shipped = _demand(facts, day, skus, 1)
+        on_hand = _total(facts, day, skus, 'stock')
+        if metric in {'demand', 'requested_vs_expected'}: value = demand
+        elif metric == 'lost_units' and demand is not None and shipped is not None: value = demand - shipped
+        elif metric == 'fill_rate' and demand: value = shipped / demand
+        elif metric == 'on_hand': value = on_hand
+        elif metric == 'pallets' and on_hand is not None:
+            value = sum(facts['stock'][(day, sku)] / (facts['products'][sku].units_per_case * facts['products'][sku].cases_per_pallet) for sku in skus)
+        elif metric == 'days_cover' and on_hand is not None:
+            preceding = [_demand(facts, day - timedelta(days=i), skus) for i in range(1, 8)]
+            if all(item is not None for item in preceding) and sum(preceding) > 0:
+                value = on_hand / (sum(preceding) / 7)
         point = {'date': day.isoformat(), 'value': value}
-        if metric == 'requested_vs_expected': point['expected'] = expected[day] if day in expected_dates else None
+        if metric == 'requested_vs_expected':
+            run = facts['runs'][day]
+            expected = [facts['issued'].get((run.id, day, sku)) for sku in skus] if run else []
+            point['expected'] = sum(expected) if expected and all(item is not None for item in expected) else None
+            point['expected_run_id'] = run.id if point['expected'] is not None else None
         series.append(point)
-        latest_state = state
         day += timedelta(days=1)
+    recent = [{'date': (end - timedelta(days=i)).isoformat(),
+               'value': _demand(facts, end - timedelta(days=i), skus)} for i in range(7, 0, -1)]
+    latest = series[-1]['value']
+    latest_state = 'unknown' if latest is None else 'warning' if threshold and ((latest < threshold['value']) if threshold['operator'] == 'lt' else (latest > threshold['value'])) else 'normal'
     return {'id': widget_id, **spec, 'skus': skus, 'unit': UNITS[spec['metric']],
-            'series': series, 'value': series[-1]['value'], 'state': latest_state}
+            'series': series, 'recent_demand': recent, 'value': latest, 'state': latest_state}
 
 
 def view(session, plan):
-    initialize(session, plan)
-    return {'widgets': [evaluate(session, plan, w.scope, w.id) for w in ordered(session, plan)],
+    widgets = ordered(session, plan)
+    facts = historical_facts(session, plan, any(w.scope['metric'] == 'requested_vs_expected' for w in widgets)) if widgets else None
+    return {'widgets': [evaluate(session, plan, w.scope, w.id, facts) for w in widgets],
             'options': options(session, plan), 'facts_through': (plan.week_start - timedelta(days=1)).isoformat()}

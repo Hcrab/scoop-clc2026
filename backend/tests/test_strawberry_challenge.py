@@ -134,7 +134,7 @@ def test_null_counterfactual_uses_same_seed93_catalog(monkeypatch):
 def test_neutral_scenario():
     from scoop.demo_worlds import SCENARIOS
     scenario = next(s for s in SCENARIOS if s['seed'] == 93)
-    assert scenario['name'] == 'Fresh week' and scenario['default_week'] == '2026-07-27'
+    assert scenario['name'] == 'Demo warehouse' and scenario['default_week'] == '2026-07-20'
     assert {'2026-07-20', '2026-07-27', '2026-08-03'} <= set(scenario['weeks'])
     assert not any(term in scenario['description'].lower() for term in ('strawberry', 'water', 'price', 'hx93', 'uplift'))
     assert any(s['seed'] == 92 for s in SCENARIOS)

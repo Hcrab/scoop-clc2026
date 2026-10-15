@@ -8,11 +8,12 @@ import time
 from ..db import copy_frame, engine, set_setting
 from ..models import Base
 from .generate import generate
+from ..demo_config import DEMO_SEED, DEMO_WEEK, DEMO_SCENARIO
 
-DEMO_TODAY = "2026-07-13"
+DEMO_TODAY = DEMO_WEEK
 
 
-def load(seed: int = 42) -> None:
+def load(seed: int = DEMO_SEED) -> None:
     t0 = time.time()
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
@@ -42,6 +43,8 @@ def load(seed: int = 42) -> None:
         copy_frame(frame, table)
     set_setting("today", DEMO_TODAY)
     set_setting("seed", str(seed))
+    if seed == DEMO_SEED:
+        set_setting("demo_scenario", DEMO_SCENARIO)
     print(f"loaded in {time.time() - t0:.1f}s; cold store capacity {int(world.nodes.capacity_pallets[0])} pallets")
 
 

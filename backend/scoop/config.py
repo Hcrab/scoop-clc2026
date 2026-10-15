@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from .demo_config import DEMO_SEED
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -23,7 +24,7 @@ class Settings:
     llm_max_calls: int = int(os.getenv("SCOOP_LLM_MAX_CALLS", "120"))
     llm_timeout_seconds: float = float(os.getenv("SCOOP_LLM_TIMEOUT_SECONDS", "75"))
     reports_dir: Path = ROOT / "reports"
-    seed: int = int(os.getenv("SCOOP_SEED", "42"))
+    seed: int = int(os.getenv("SCOOP_SEED", str(DEMO_SEED)))
 
 
 settings = Settings()

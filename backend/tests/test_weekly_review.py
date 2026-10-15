@@ -90,7 +90,7 @@ def test_live_loop_saves_evidence_questions_and_preserves_business(api,monkeypat
     assert after['review']['presentation']==presentation()
     assert after['discussion']['open_count']==1
     assert after['discussion']['items'][0]['title']==report()['questions'][0]['text']
-    for key in ['orders','directions','questions','decisions','watch']:
+    for key in ['orders','directions','questions','decisions','dashboard']:
         assert before[key]==after[key],key
     c.post('/api/plans/TESTAPI/review')
     assert len(calls)==2 # Reload or repeat never silently spends again.
@@ -137,6 +137,56 @@ def test_provider_failure_keeps_query_trace(api,monkeypatch):
         assert result['status']=='failed' and len(result['queries'])==2
 
 
+def test_exploration_reserves_last_round_for_report_instead_of_another_query(api,monkeypatch):
+    from scoop.ai import exploration_tools
+    _,scope,_,_=api
+    monkeypatch.setattr(exploration_tools,'execute',lambda *args:{'requested_units':180})
+    calls=[]
+    def wire(payload):
+        calls.append(deepcopy(payload))
+        if len(calls)<weekly.MAX_ROUNDS:
+            name='query_group';args={'group_ids':[f'group-{len(calls)}']}
+        else:
+            assert payload['toolConfig']['functionCallingConfig']=={'mode':'ANY','allowedFunctionNames':['finish_weekly_review']}
+            assert [d['name'] for d in payload['tools'][0]['functionDeclarations']]==['finish_weekly_review']
+            name='finish_weekly_review';args=report()
+        return {'candidates':[{'content':{'role':'model','parts':[{'functionCall':{'name':name,'args':args}}]}}]}
+    with scope() as session:
+        result=weekly.investigate(session,session.get(Plan,'TESTAPI'),wire)
+        assert result['status']=='complete'
+        assert len(calls)==weekly.MAX_ROUNDS
+        assert len([q for q in result['queries'] if q['name']=='query_group'])==weekly.MAX_ROUNDS-1
+
+
+def test_retry_authors_from_collected_evidence_without_repeating_queries(api,monkeypatch):
+    from scoop.ai import exploration_tools
+    _,scope,_,_=api
+    monkeypatch.setattr(exploration_tools,'execute',lambda *args:pytest.fail('Evidence was already collected'))
+    prior=[{'id':'Q1','name':'query_group','args':{'group_ids':['a']},'result':{'requested_units':180}}]
+    calls=[]
+    def wire(payload):
+        calls.append(payload)
+        assert payload['toolConfig']['functionCallingConfig']['allowedFunctionNames']==['finish_weekly_review']
+        assert 'Read-only evidence already collected' in payload['contents'][0]['parts'][1]['text']
+        return {'candidates':[{'content':{'role':'model','parts':[{'functionCall':{'name':'finish_weekly_review','args':report()}}]}}]}
+    with scope() as session:
+        result=weekly.investigate(session,session.get(Plan,'TESTAPI'),wire,prior_queries=prior)
+        assert result['status']=='complete' and result['queries'][0]==prior[0]
+        assert len(calls)==1
+
+
+def test_output_limit_does_not_repeat_the_same_incomplete_response_seven_times(api):
+    _,scope,_,_=api
+    calls=[]
+    def wire(payload):
+        calls.append(payload)
+        return {'candidates':[{'finishReason':'MAX_TOKENS','content':{'parts':[]}}]}
+    with scope() as session:
+        result=weekly.investigate(session,session.get(Plan,'TESTAPI'),wire)
+        assert result['status']=='failed' and 'output limit' in result['error']
+        assert len(calls)==1
+
+
 def _legacy(scope):
     legacy=report();legacy.pop('presentation')
     legacy.update(status='complete',model='original-model',usage={'input_tokens':100,'output_tokens':50},created_at='saved-date',
@@ -178,7 +228,7 @@ def test_explicit_legacy_upgrade_uses_saved_evidence_once_and_preserves_history(
     for key in legacy:assert response[key]==legacy[key]
     assert response['presentation_upgrade']['model']=='designer-fixture'
     after=c.get('/api/plans/TESTAPI').json()
-    for key in ('discussion','messages','orders','directions','questions','decisions','watch'):
+    for key in ('discussion','messages','orders','directions','questions','decisions','dashboard'):
         assert after[key]==before[key],key
     with scope() as session:assert session.get(Plan,'TESTAPI').summary['discussion']==discussion
     assert c.post('/api/plans/TESTAPI/review').json()==response

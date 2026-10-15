@@ -104,6 +104,10 @@ def test_intersection_cutoff_share_and_decomposition(exploration,monkeypatch):
     assert result['evidence_through']=='2026-07-12'
     assert result['recent']['requested_units']==315
     assert result['recent']['expected_units']==210
+    assert result['recent_7d']['requested_units']==315
+    assert result['recent_7d']['expected_units']==210
+    assert result['recent_7d']['excess_units']==105
+    assert result['recent_7d']['deviation_pct']==50
     assert result['recent']['actual_share']==pytest.approx(45/115)
     assert result['recent']['expected_share']==pytest.approx(.3)
     assert result['before']['requested_units']==210

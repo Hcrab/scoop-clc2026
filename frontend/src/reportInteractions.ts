@@ -2,20 +2,28 @@ import type { Detail } from './types';
 
 export const interactionStyles = `
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.chart svg{display:block;width:100%;height:auto}.chart svg text{font:var(--report-label-size,13px) system-ui,sans-serif;fill:#617566}
-.chart .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:var(--report-label-size,13px)}.chart .legend i{display:inline-block;width:16px;height:2px;margin-right:8px;vertical-align:middle}
-.chart .chart-summary{font-size:var(--report-label-size,13px);color:#617566}.chart-empty{font-size:var(--report-body-size,15px);color:#617566}
-figure[data-chart]{margin:16px 0}figure[data-chart] figcaption{font-weight:600;margin-bottom:8px}
+.chart svg{display:block;width:100%;height:auto}.chart svg text{font-family:system-ui,sans-serif;font-size:var(--type-label)!important;fill:#617566}
+.chart .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:var(--type-label)}.chart .legend i{display:inline-block;width:16px;height:2px;margin-right:8px;vertical-align:middle}
+.chart .chart-summary{font-size:var(--type-label);color:#617566}.chart-empty{font-size:var(--type-body);color:#617566}
+figure[data-chart]{margin:16px 0;height:auto!important;max-height:none!important;min-height:0}figure[data-chart] figcaption{font-weight:600;margin-bottom:8px}
+.report-range button{border:1px solid #dde5d8;border-radius:7px;background:white;color:#476b56;padding:5px 11px;font-size:var(--type-label);min-height:32px}.report-range button[aria-pressed=true]{background:#e5eee3;color:#254f3e}
 
 [data-trend-id],[data-evidence-id]{cursor:pointer;text-decoration:none}
 .report-card-expanded{grid-column:1/-1!important;flex-basis:100%!important;width:100%!important;max-width:none!important}
 .report-card-expanded [data-report-summary]{display:none!important}
-.report-inline{grid-column:1/-1;margin:20px 0 8px;padding:18px;background:#f6f8f3;border:1px solid #e0e7dc;border-radius:10px;color:#284f3d;font:13px/1.7 system-ui,sans-serif;clear:both;min-width:0}
+.report-inline{grid-column:1/-1;margin:20px 0 8px;padding:18px;background:#f6f8f3;border:1px solid #e0e7dc;border-radius:10px;color:#284f3d;font-family:system-ui,sans-serif;line-height:1.7;clear:both;min-width:0}
 .report-inline[hidden]{display:none!important}
-.report-inline h4{margin:0;font-size:13px}.report-inline-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.report-inline button{border:1px solid #dde5d8;border-radius:7px;background:white;color:#476b56;padding:5px 11px;font-size:12px;min-height:32px}.report-inline button:disabled{opacity:.45;cursor:default}.report-inline button[aria-pressed=true]{background:#e5eee3;color:#254f3e}
-.report-range{display:flex;gap:4px;flex-wrap:wrap}.report-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:#617566}.report-legend span:before{content:'';display:inline-block;width:18px;border-top:2px solid #377663;vertical-align:middle;margin-right:6px}.report-legend span:nth-child(2):before{border-color:#9985b6;border-top-style:dashed}.report-legend span:nth-child(3):before{border-color:#91a7b3;border-top-style:dotted}
-.report-plot{display:block;width:100%;height:auto;margin-top:12px}.report-inline pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.7 Consolas,monospace;margin:8px 0}.report-inline dl{display:grid;grid-template-columns:minmax(90px,auto) 1fr;gap:4px 16px;margin:10px 0}.report-inline dt{color:#718273}.report-inline dd{margin:0}.report-inline p{margin:8px 0}.report-inline details{margin:10px 0}.report-inline-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.report-inline h4{margin:0;font-size:var(--type-section)}.report-inline-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.report-inline button{border:1px solid #dde5d8;border-radius:7px;background:white;color:#476b56;padding:5px 11px;font-size:var(--type-label);min-height:32px}.report-inline button:disabled{opacity:.45;cursor:default}.report-inline button[aria-pressed=true]{background:#e5eee3;color:#254f3e}
+.report-range{display:flex;gap:4px;flex-wrap:wrap}.report-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:var(--type-label);color:#617566}.report-legend span:before{content:'';display:inline-block;width:18px;border-top:2px solid #377663;vertical-align:middle;margin-right:6px}.report-legend span:nth-child(2):before{border-color:#9985b6;border-top-style:dashed}.report-legend span:nth-child(3):before{border-color:#91a7b3;border-top-style:dotted}
+.report-plot{display:block;width:100%;height:auto;margin-top:12px}.report-inline pre{white-space:pre-wrap;overflow-wrap:anywhere;font-family:Consolas,monospace;font-size:var(--type-label);line-height:1.7;margin:8px 0}.report-inline dl{display:grid;grid-template-columns:minmax(90px,auto) 1fr;gap:4px 16px;margin:10px 0}.report-inline dt{color:#718273}.report-inline dd{margin:0}.report-inline p{margin:8px 0}.report-inline details{margin:10px 0}.report-inline-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+body *{font-size:var(--type-body)!important}
+body h1{font-size:var(--type-page)!important}body h2,body h3,body h4{font-size:var(--type-section)!important}
+body small,body figcaption,body .metric-label,body .card-meta,body .chart .legend,body .chart svg text,body .report-range button{font-size:var(--type-label)!important}
+body [data-report-card] .metric-val{font-size:var(--type-body)!important}
+body [data-report-card] .metric-val:first-child{font-size:var(--type-key)!important}
+body [data-report-card] .metric-item:first-child .metric-val{font-size:var(--type-key)!important}
+body .card-meta,body .metric-label{text-transform:none!important;letter-spacing:normal!important}
 `;
 
 // This is host-owned code, never generated JavaScript. Escape every script terminator in data.
@@ -27,6 +35,14 @@ const data=${payload},send=value=>parent.postMessage({channel:data.channel,...va
 let scheduled=false,lastHeight=0,serial=0;
 const schedule=()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;const height=Math.ceil(document.body.getBoundingClientRect().height);if(height!==lastHeight){lastHeight=height;send({type:'resize',height})}})};
 const element=(tag,text,className)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el};
+// Inline priority wins over authored selector rules while leaving layout, color,
+// table sizing, and every piece of authored copy untouched.
+const keyElements=new Set(Array.from(document.querySelectorAll('[data-report-card]')).map(card=>card.querySelector('[data-report-key],.metric-val,.key-number,.key-metric,.stat-value,.big-number')).filter(Boolean));
+document.body.querySelectorAll('*').forEach(el=>{
+ if(!(el instanceof HTMLElement))return;
+ const role=keyElements.has(el)?'key':/^H1$/.test(el.tagName)?'page':/^H[234]$/.test(el.tagName)?'section':el.matches('small,figcaption,button,.metric-label,.card-meta')?'label':'body';
+ el.style.setProperty('font-size','var(--type-'+role+')','important');
+});
 const entries=new Map(data.queries.map((q,i)=>[q.id||'Q'+(i+1),{...q,kind:'query'}]));data.findings.forEach(f=>entries.set(f.id,{...f,kind:'finding'}));
 const pretty=value=>JSON.stringify(value,null,2),label=key=>key.replaceAll('_',' ');
 const cardFor=el=>el.closest('[data-report-card],article,.card')||el.parentElement;
@@ -38,16 +54,22 @@ function evidence(trigger,id){
  if(panel){const open=panel.hidden;panel.hidden=!open;setOpen(trigger,open,panel);schedule();return}
  panel=element('div',undefined,'report-inline');panel.dataset.reportEvidence=id;panel.id='report-evidence-'+(++serial);panel.setAttribute('role','region');panel.setAttribute('aria-label','Evidence '+id);
  const head=element('div',undefined,'report-inline-head');head.append(element('h4',id+' · '+titleFor(item)));panel.append(head);
- if(item.kind==='query'){
-  panel.append(element('h4','Scope examined'),element('pre',pretty(item.args)));
-  const result=item.result;const summary=element('dl');if(result&&typeof result==='object')Object.entries(result).forEach(([key,value])=>{
-   let text;if(Array.isArray(value))text=value.length+' rows';else if(value!==null&&typeof value==='object')text=Object.entries(value).filter(([,v])=>v===null||typeof v!=='object').map(([k,v])=>label(k)+': '+String(v)).slice(0,8).join(' · ');else text=String(value);
+ const appendSource=(source,sourceId,related=false)=>{
+ if(related)panel.append(element('h4',sourceId+' · '+titleFor(source)));
+ if(source.kind==='query'){
+  panel.append(element('h4','Scope examined'),element('pre',pretty(source.args)));
+  const result=source.result;const summary=element('dl');if(result&&typeof result==='object')Object.entries(result).forEach(([key,value])=>{
+   let text;if(Array.isArray(value))text=value.length+' rows';else if(value!==null&&typeof value==='object')text=Object.entries(value).filter(([,v])=>v===null||typeof v!=='object').map(([k,v])=>label(k)+': '+String(v)).join(' · ');else text=String(value);
    if(text){summary.append(element('dt',label(key)),element('dd',text))}
   });else summary.append(element('dd',String(result)));panel.append(summary);
   const raw=element('details');raw.append(element('summary','Full saved result'),element('pre',pretty(result)));panel.append(raw);
  }else{
-  panel.append(element('p',item.district),element('p',item.explanation));const checks=element('details');checks.append(element('summary','Checks and supporting evidence'),element('pre',pretty({checks:item.evidence.checks,hypotheses:item.hypotheses})));panel.append(checks);
+  panel.append(element('p',source.district),element('p',source.explanation));const checks=element('details');checks.append(element('summary','Checks and supporting evidence'),element('pre',pretty({checks:source.evidence.checks,hypotheses:source.hypotheses})));panel.append(checks);
  }
+ };
+ appendSource(item,id);
+ const relatedIds=new Set(Array.from(card.querySelectorAll('[data-evidence-id]')).map(node=>node.dataset.evidenceId));
+ relatedIds.delete(id);relatedIds.forEach(sourceId=>{const source=entries.get(sourceId);if(source)appendSource(source,sourceId,true)});
  const actions=element('div',undefined,'report-inline-actions');actions.append(button('Close',()=>{panel.hidden=true;setOpen(trigger,false,panel);trigger.focus();schedule()}),button('Discuss this evidence',()=>send({type:'discuss',id})));panel.append(actions);card.append(panel);setOpen(trigger,true,panel);schedule();
 }
 function trend(trigger,id){
@@ -60,10 +82,16 @@ function trend(trigger,id){
  const close=button('Collapse trend',()=>{toggle(false);trigger.focus()});panel.append(close);const summary=card.querySelector('[data-report-summary]');if(summary)summary.after(panel);else card.append(panel);toggle(true);
 }
 function mountChart(panel,chart){
- let range=chart.defaultRange;const controls=element('div',undefined,'report-range'),plot=element('div');
- const draw=()=>{plot.innerHTML=chart.html[range];controls.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.range===range)));schedule()};
+ let range=chart.defaultRange,lastWidth='';const controls=element('div',undefined,'report-range'),plot=element('div');
+ const widths=[240,320,480,680];
+ const draw=()=>{
+  const available=panel.clientWidth||panel.parentElement?.clientWidth||320;
+  const width=String(widths.filter(candidate=>candidate<=available).at(-1)||widths[0]);
+  if(width!==lastWidth||plot.dataset.range!==range){plot.innerHTML=chart.html[range][width];lastWidth=width;plot.dataset.range=range}
+  controls.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.range===range)));schedule()
+ };
  [...chart.ranges.map(String),'all'].forEach(value=>{const b=button(value==='all'?'All available':value+' days',()=>{range=value;draw()});b.dataset.range=value;controls.append(b)});
- panel.append(controls,plot);draw();
+ panel.append(controls,plot);new ResizeObserver(draw).observe(panel);draw();
 }
 const seriesKey=value=>['actual','expected','prior'].filter(key=>value.split(',').map(s=>s.trim()).includes(key)).join(',');
 document.querySelectorAll('figure[data-chart="line"]').forEach(figure=>{

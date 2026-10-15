@@ -454,6 +454,9 @@ def generate(seed: int = 42) -> World:
     pallets = inventory / (products.units_per_case.to_numpy() * products.cases_per_pallet.to_numpy())[None, :]
     summer = [i for i, d in enumerate(days) if d.month in (7, 8) and d.year == 2025]
     capacity = int(math.ceil(np.percentile(pallets[summer].sum(axis=1), 90) * 1.08))
+    if seed == 93:
+        from ..demo_config import DEMO_CAPACITY_PALLETS
+        capacity = DEMO_CAPACITY_PALLETS
     nodes = pd.DataFrame([{"id": "DC1", "name": "Tsing Yi Cold Store", "kind": "dc_cold_store", "capacity_pallets": capacity}])
 
     return World(stores, suppliers, products, nutrition, tag_dimensions, tags, product_tags, weather, forecasts,

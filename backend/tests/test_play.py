@@ -54,6 +54,10 @@ def played_week(monkeypatch):
         if "FROM purchase_suggestions" in query:
             assert params == {"p": "test-plan"}
             return suggestions.copy()
+        if "FROM plans" in query:
+            return pd.DataFrame({"summary": [{}], "goal": ["margin"], "service_level": [None]})
+        if "FROM settings" in query:
+            return pd.DataFrame({"value": ["[]"]})
         if "FROM products p JOIN suppliers" in query:
             return products.copy()
         if "FROM store_orders" in query:
@@ -69,6 +73,8 @@ def played_week(monkeypatch):
                                  "tmax": [25.0] * 7})
         if "FROM nodes" in query:
             return pd.DataFrame({"capacity_pallets": [100.0]})
+        if "FROM model_runs" in query:
+            return pd.DataFrame(columns=["id", "trained_through"])
         raise AssertionError(f"Unexpected database read: {query}")
 
     monkeypatch.setattr(play, "read_sql", read_sql)
@@ -136,8 +142,225 @@ def test_autopilot_refits_each_week_even_without_monday_orders(played_week, monk
     monkeypatch.setattr(play, 'read_sql', read)
     monkeypatch.setattr(cohort_model, 'fit', lambda plan: fitted.append(plan.week_start) or {'sku_factors': {}})
     monkeypatch.setattr(planning, 'detect', lambda day: [])
-    monkeypatch.setattr(planning, 'suggest_orders', lambda *args, **kwargs:
-                        pd.DataFrame({'sku': list(SKUS), 'final_cases': [1, 1]}))
+    calls = []
+
+    def suggest(*args, **kwargs):
+        calls.append((args, kwargs))
+        return pd.DataFrame({'sku': list(SKUS), 'final_cases': [1, 1]})
+
+    monkeypatch.setattr(planning, 'suggest_orders', suggest)
     result = play.simulate('test-plan', START, days=21)
     assert fitted == [START+timedelta(days=7), START+timedelta(days=14)]
     assert result['days'] == 21
+    for policy in ('scoop', 'baseline'):
+        placed = result['runs'][policy]['per_sku']['placed_cases']
+        assert sum(placed[8]) > 0
+    assert all(kwargs['goal'] == 'margin' and kwargs['service_level'] is None for _, kwargs in calls)
+    assert any(event['date'] == (START + timedelta(days=8)).isoformat() and
+               event['kind'] == 'order' and 'Automatically' in event['text'] for event in result['events'])
+
+
+def test_default_window_covers_arrival_and_caps_at_calendar(played_week, monkeypatch):
+    from scoop import planning
+    from scoop.algorithms import cohort_model
+    original_read = play.read_sql
+
+    def read(query, **params):
+        frame = original_read(query, **params)
+        if 'FROM products p JOIN suppliers' in query:
+            frame['lead_time_days'] = 18
+        return frame
+
+    monkeypatch.setattr(play, 'read_sql', read)
+    monkeypatch.setattr(cohort_model, 'fit', lambda plan: {})
+    monkeypatch.setattr(planning, 'detect', lambda day: [])
+    monkeypatch.setattr(planning, 'suggest_orders', lambda *args, **kwargs:
+                        pd.DataFrame({'sku': list(SKUS), 'final_cases': [0, 0]}))
+    assert play.simulate('test-plan', START)['days'] == 21
+    monkeypatch.setattr(play, 'MAX_DAY', START + timedelta(days=9))
+    clipped = play.simulate('test-plan', START)
+    assert clipped['days'] == 10
+    assert clipped['end'] == (START + timedelta(days=9)).isoformat()
+    assert len(clipped['demand']) == len(clipped['dates']) == 10
+
+
+def test_default_window_uses_only_positive_orders(played_week, monkeypatch):
+    from scoop import planning
+    from scoop.algorithms import cohort_model
+    original_read = play.read_sql
+
+    def read(query, **params):
+        frame = original_read(query, **params)
+        if 'FROM products p JOIN suppliers' in query:
+            frame.loc[frame.sku == 'B', 'lead_time_days'] = 18
+        if 'FROM purchase_suggestions' in query:
+            frame.loc[frame.sku == 'B', 'final_cases'] = 0
+        return frame
+
+    monkeypatch.setattr(play, 'read_sql', read)
+    monkeypatch.setattr(cohort_model, 'fit', lambda plan: {})
+    monkeypatch.setattr(planning, 'detect', lambda day: [])
+    monkeypatch.setattr(planning, 'suggest_orders', lambda *args, **kwargs:
+                        pd.DataFrame({'sku': list(SKUS), 'final_cases': [0, 0]}))
+    assert play.simulate('test-plan', START)['days'] == 10
+
+
+def test_affected_summary_excludes_unchanged_sku_and_includes_cards(played_week, monkeypatch):
+    original_read = play.read_sql
+    card = {'skus': ['C']}
+
+    def read(query, **params):
+        frame = original_read(query, **params)
+        if 'FROM products p JOIN suppliers' in query:
+            return pd.concat([frame, pd.DataFrame([{'sku': 'C', 'name': 'C', 'brand': 'Test',
+                'price_hkd': 2., 'cost_hkd': 1., 'units_per_case': 10, 'cases_per_pallet': 10,
+                'moq_cases': 1, 'lead_time_days': 3, 'order_weekday': 0, 'review_days': 7}])], ignore_index=True)
+        if 'FROM node_inventory' in query:
+            return pd.concat([frame, pd.DataFrame([{'sku': 'C', 'on_hand_units': 100.}])], ignore_index=True)
+        if 'FROM plans' in query:
+            frame.at[0, 'summary'] = {'cohort_cards': []}
+        return frame
+
+    monkeypatch.setattr(play, 'read_sql', read)
+    result = play.simulate('test-plan', START, days=7)
+    assert result['affected_skus'] == ['A', 'B']
+    assert result['summary']['scoop']['ending_on_hand'] - result['affected_summary']['scoop']['ending_on_hand'] == 100
+    assert result['affected_summary']['scoop']['lost_units'] == result['summary']['scoop']['lost_units']
+    assert result['affected_comparison']['units_saved'] == result['summary']['baseline']['lost_units'] - result['summary']['scoop']['lost_units']
+
+    def with_card(query, **params):
+        frame = read(query, **params)
+        if 'FROM plans' in query:
+            frame.at[0, 'summary'] = {'cohort_cards': [card]}
+        return frame
+
+    monkeypatch.setattr(play, 'read_sql', with_card)
+    assert play.simulate('test-plan', START, days=7)['affected_skus'] == ['A', 'B', 'C']
+
+
+def test_cache_invalidates_order_date_and_context(played_week, monkeypatch):
+    original_read = play.read_sql
+    state = {'day': START, 'context': '[]', 'capacity': 100.}
+
+    def read(query, **params):
+        frame = original_read(query, **params)
+        if 'FROM purchase_suggestions' in query:
+            frame.loc[frame.sku == 'A', 'order_date'] = state['day']
+        if 'FROM settings' in query:
+            frame.at[0, 'value'] = state['context']
+        if 'FROM nodes' in query:
+            frame.at[0, 'capacity_pallets'] = state['capacity']
+        return frame
+
+    monkeypatch.setattr(play, 'read_sql', read)
+    first = play.simulate('test-plan', START, days=7)
+    assert play.simulate('test-plan', START, days=7) is first
+    state['day'] = START + timedelta(days=1)
+    moved = play.simulate('test-plan', START, days=7)
+    assert moved is not first
+    assert moved['runs']['scoop']['per_sku']['arrived'][3][0] != first['runs']['scoop']['per_sku']['arrived'][3][0]
+    state['context'] = '[{"id":"updated"}]'
+    changed = play.simulate('test-plan', START, days=7)
+    assert changed is not moved
+    state['capacity'] = 90.
+    resized = play.simulate('test-plan', START, days=7)
+    assert resized is not changed
+    assert resized['capacity_pallets'] == 90.
+
+
+def test_empty_affected_set_has_zero_quantities(played_week, monkeypatch):
+    original_read = play.read_sql
+
+    def read(query, **params):
+        frame = original_read(query, **params)
+        if 'FROM purchase_suggestions' in query:
+            return frame.iloc[0:0].copy()
+        if 'FROM node_inventory' in query:
+            frame['on_hand_units'] = 1000.
+        return frame
+
+    monkeypatch.setattr(play, 'read_sql', read)
+    result = play.simulate('test-plan', START)
+    assert result['days'] == 7
+    assert result['affected_skus'] == []
+    for policy in ('scoop', 'baseline'):
+        values = result['affected_summary'][policy]
+        assert values['fill_rate'] == 1
+        assert all(values[key] == 0 for key in ('lost_units', 'lost_margin', 'avg_pallets', 'peak_pallets',
+                                                 'days_over_capacity', 'stockout_sku_days', 'ending_on_hand', 'ordered_cases'))
+
+
+def test_missing_demand_days_stay_aligned(played_week, monkeypatch):
+    original_read = play.read_sql
+
+    def read(query, **params):
+        frame = original_read(query, **params)
+        if 'FROM store_orders' in query:
+            return frame[frame.date != START + timedelta(days=2)].copy()
+        return frame
+
+    monkeypatch.setattr(play, 'read_sql', read)
+    result = play.simulate('test-plan', START, days=7)
+    assert len(result['dates']) == len(result['demand']) == 7
+    assert result['demand'][2] == [0., 0.]
+    for policy in ('scoop', 'baseline'):
+        run = result['runs'][policy]
+        assert run['daily'][2]['demand'] == 0
+        assert len(run['per_sku']['lost']) == 7
+
+
+def test_expected_evidence_keeps_missing_cells_unknown(played_week, monkeypatch):
+    original_read = play.read_sql
+
+    def read(query, **params):
+        if 'FROM model_runs' in query:
+            return pd.DataFrame({'id': ['issued'], 'trained_through': [START - timedelta(days=1)]})
+        if 'FROM daily_expectations' in query:
+            assert params == {'r': 'issued', 'a': START, 'b': START + timedelta(days=6)}
+            return pd.DataFrame({'date': [START, START + timedelta(days=1)],
+                                 'sku': ['A', 'B'], 'expected_units': [2.5, 1.25]})
+        return original_read(query, **params)
+
+    monkeypatch.setattr(play, 'read_sql', read)
+    result = play.simulate('test-plan', START, days=7)
+    assert result['expected_source'] == {'run_id': 'issued', 'trained_through': str(START - timedelta(days=1))}
+    assert result['expected'][0] == [2.5, None]
+    assert result['expected'][1] == [None, 1.25]
+    assert all(value is None for row in result['expected'][2:] for value in row)
+
+
+def test_events_reference_orders_and_match_arrival_quantities(played_week):
+    result = played_week
+    orders = [event for event in result['events'] if event['kind'] == 'order']
+    assert {(event['date'], event['sku'], event['cases']) for event in orders} == {
+        (START.isoformat(), 'A', 1), ((START + timedelta(days=1)).isoformat(), 'B', 2)}
+    arrivals = [event for event in result['events'] if event['kind'] == 'arrival']
+    assert {event['date']: event['skus'] for event in arrivals} == {
+        (START + timedelta(days=3)).isoformat(): ['A'],
+        (START + timedelta(days=4)).isoformat(): ['B']}
+    assert all(event['order_dates'] and event['card_ids'] == [] for event in arrivals)
+    for event in result['events']:
+        if event['kind'] in {'stockout', 'kept'}:
+            assert 'order_dates' in event and 'rule_order_dates' in event and 'card_ids' in event
+
+
+def test_whole_and_affected_summaries_derive_from_daily_sku_rows(played_week):
+    result = played_week
+    for policy in ('scoop', 'baseline'):
+        run = result['runs'][policy]
+        rows = run['per_sku']
+        whole = result['summary'][policy]
+        affected = result['affected_summary'][policy]
+        for day, daily in enumerate(run['daily']):
+            assert daily['demand'] == pytest.approx(sum(result['demand'][day]))
+            assert daily['shipped'] == pytest.approx(sum(rows['shipped'][day]))
+            assert daily['lost'] == pytest.approx(sum(rows['lost'][day]))
+            assert daily['arrived_units'] == pytest.approx(sum(rows['arrived'][day]))
+            assert daily['on_hand'] == pytest.approx(sum(rows['on_hand'][day]))
+        assert whole['lost_units'] == pytest.approx(sum(map(sum, rows['lost'])))
+        assert whole['ending_on_hand'] == pytest.approx(sum(rows['on_hand'][-1]))
+        assert whole['ordered_cases'] == sum(map(sum, rows['placed_cases']))
+        assert whole['stockout_sku_days'] == sum(value > 0 for row in rows['lost'] for value in row)
+        assert affected == whole
+    assert result['affected_comparison']['units_saved'] == pytest.approx(
+        result['affected_summary']['baseline']['lost_units'] - result['affected_summary']['scoop']['lost_units'])

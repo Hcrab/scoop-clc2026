@@ -131,7 +131,7 @@ def test_execute_confirmation_idempotent_and_capacity(api):
     assert c.post('/api/plans/TESTAPI/orders/IC001/confirm',json={'cases':4}).status_code==409
     assert 'confirmed' in c.get('/api/plans/TESTAPI/orders.csv').text
 
-def test_cutoff_clock_reuse_and_watch_archive(api,monkeypatch):
+def test_cutoff_clock_reuse_and_dashboard_archive(api,monkeypatch):
     c,scope,clock,planning=api
     data=c.get('/api/bootstrap').json()
     assert data['metrics']['ordered_units']==10
@@ -141,11 +141,17 @@ def test_cutoff_clock_reuse_and_watch_archive(api,monkeypatch):
     assert c.post('/api/plans',json={'week_start':'2026-07-06'}).json()=={'id':'TESTAPI'}
     assert c.post('/api/plans',json={'week_start':'2026-07-20'}).status_code==422
     assert c.put('/api/clock',json={'today':'2026-09-01'}).status_code==422
-    body={'kind':'fill_rate','title':'Fixture watch','assumption':'99%','scope':{}}
-    wid=c.post('/api/plans/TESTAPI/watch',json=body).json()['id']
-    assert c.post('/api/plans/TESTAPI/watch',json=body).json()['id']==wid
-    assert next(w for w in c.get('/api/plans/TESTAPI').json()['watch'] if w['id']==wid)['series']==[{'date':'2026-07-12','value':1.0}]
-    assert c.delete('/api/plans/TESTAPI/watch/'+wid).status_code==200
+    body={'title':'Fixture fill rate','scope':{'kind':'sku','key':'IC001'},'metric':'fill_rate','threshold':{'operator':'lt','value':.99}}
+    added=c.post('/api/plans/TESTAPI/dashboard',json=body)
+    assert added.status_code==200,added.text
+    wid=next(w['id'] for w in added.json()['widgets'] if w['title']==body['title'])
+    assert c.post('/api/plans/TESTAPI/dashboard',json=body).status_code==422
+    widget=next(w for w in c.get('/api/plans/TESTAPI').json()['dashboard']['widgets'] if w['id']==wid)
+    assert widget['series'][-1]=={'date':'2026-07-05','value':None}
+    assert widget['state']=='unknown'
+    assert all(point['date']<'2026-07-06' for point in widget['series'])
+    assert c.delete('/api/plans/TESTAPI/dashboard/'+wid).status_code==200
+    assert wid not in {w['id'] for w in c.get('/api/plans/TESTAPI/dashboard').json()['widgets']}
     with scope() as s: assert s.get(WatchItem,wid).status=='archived'
 
 def test_chat_persists_actions_and_rejects_completed_stage(api):
@@ -174,37 +180,36 @@ def test_chat_persists_actions_and_rejects_completed_stage(api):
     assert len(data['messages'])==8
     assert all(m['meta']['provider']=='scripted' for m in data['messages'])
 
-def test_historical_plan_metrics_and_sku_watch_thresholds(api):
+def test_historical_plan_metrics_and_sku_dashboard_thresholds(api):
     c,scope,_,_=api
     assert c.get('/api/bootstrap').json()['metrics']['ordered_units']==10
     assert c.get('/api/plans/TESTAPI').json()['metrics']['ordered_units']==0
     with scope() as s:
-        s.get(NodeInventory,(date(2026,7,12),'IC001')).on_hand_units=1
-        s.add(WatchItem(id='LOW',plan_id='TESTAPI',kind='days_cover',title='Low cover',scope={'mode':'below_lead'},assumption='Lead time',origin='baseline',status='active'))
-    watch=next(w for w in c.get('/api/plans/TESTAPI').json()['watch'] if w['id']=='LOW')
-    assert (watch['value'],watch['unit'],watch['state'])==(1,'SKUs','warning')
+        s.add(NodeInventory(date=date(2026,7,5),sku='IC001',on_hand_units=1))
+    body={'title':'Low stock','scope':{'kind':'sku','key':'IC001'},'metric':'on_hand','threshold':{'operator':'lt','value':3}}
+    added=c.post('/api/plans/TESTAPI/dashboard',json=body)
+    assert added.status_code==200,added.text
+    wid=next(w['id'] for w in added.json()['widgets'] if w['title']==body['title'])
+    widget=next(w for w in c.get('/api/plans/TESTAPI').json()['dashboard']['widgets'] if w['id']==wid)
+    assert (widget['value'],widget['unit'],widget['state'])==(1,'units','warning')
     with scope() as s:
-        s.get(NodeInventory,(date(2026,7,12),'IC001')).on_hand_units=1000
-        s.get(WatchItem,'LOW').scope={'mode':'excess'}
-        for i in range(6): s.add(StoreOrder(date=date(2026,7,6)+timedelta(days=i),store_id='ST',sku='IC001',ordered_units=10,shipped_units=10))
-    assert next(w for w in c.get('/api/plans/TESTAPI').json()['watch'] if w['id']=='LOW')['value']==1
+        s.get(NodeInventory,(date(2026,7,5),'IC001')).on_hand_units=10
+    assert next(w for w in c.get('/api/plans/TESTAPI/dashboard').json()['widgets'] if w['id']==wid)['state']=='normal'
 
-def test_refresh_watches_tracks_final_direction_and_keeps_user_items(api,monkeypatch):
-    from types import SimpleNamespace
-    c,scope,_,planning=api
-    monkeypatch.setattr(planning,'monitoring',lambda:SimpleNamespace(group_by_id={'family:fruit':SimpleNamespace(id='family:fruit',name='Fruit')}))
-    with scope() as s:
-        p=s.get(Plan,'TESTAPI')
-        service.refresh_watches(s,p)
-        s.add(WatchItem(id='custom',plan_id=p.id,kind='fill_rate',title='My custom watch',scope={},assumption='Keep',origin='user',status='active'))
-    with scope() as s:
-        s.get(DirectionItem,'TESTAPI-D').bucket='more'
-        service.refresh_watches(s,s.get(Plan,'TESTAPI'))
-    with scope() as s:
-        active=[w.title for w in service.objects(s,WatchItem,'TESTAPI') if w.status=='active']
-        assert 'My custom watch' in active
-        assert any(w.kind=='tag_share' and 'higher demand share continues' in w.assumption for w in service.objects(s,WatchItem,'TESTAPI') if w.status=='active')
-        assert sum(w.kind=='tag_share' for w in service.objects(s,WatchItem,'TESTAPI') if w.status=='active')==1
+def test_recompute_keeps_user_dashboard_and_orders_separate(api):
+    c,scope,_,_=api
+    body={'title':'Fruit demand','scope':{'kind':'tag','key':'family:fruit'},'metric':'demand','threshold':None}
+    added=c.post('/api/plans/TESTAPI/dashboard',json=body)
+    assert added.status_code==200,added.text
+    before=c.get('/api/plans/TESTAPI').json()
+    changed=c.put('/api/plans/TESTAPI/goal',json={'goal':'fill_rate','service_level':.98})
+    assert changed.status_code==200,changed.text
+    after=c.get('/api/plans/TESTAPI').json()
+    assert after['orders'][0]['critical_ratio']==.98
+    assert after['dashboard']==before['dashboard']
+    assert c.post(f"/api/plans/TESTAPI/edits/{changed.json()['edit_id']}/undo").status_code==200
+    restored=c.get('/api/plans/TESTAPI').json()
+    assert restored['orders']==before['orders'] and restored['dashboard']==before['dashboard']
 
 
 def test_large_persistent_shift_matches_supported_direction_range(api):
