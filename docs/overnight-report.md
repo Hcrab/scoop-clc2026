@@ -7,11 +7,11 @@
 | N1 Five-step flow | Accepted | `1a7b2ada3401` | Five screens; persisted replay; widget edits do not simulate. Cold preparation 37.203 s; accepted browser flow reused it. |
 | N2 Hours and minutes | Accepted | `0311c5bf532a` | 129,600 balances checked; 31 correctly timed shortages; 31.212 s replay versus 30.931 s expected. |
 | N3 UI polish | Accepted | `59c62e8e8bbf` | Native adjustments; 40-group evidence modal; 13 observations / membership filters; aligned round-tick widgets and Results. |
-| N4 Product illustrations | Accepted | Pending commit | 75 reviewed illustrations; 225 icon renders; all required screens; exact orders/widgets preserved. |
+| N4 Product illustrations | Accepted | `d9f77f5cb89d` | 75 reviewed illustrations; 225 icon renders; all required screens; exact orders/widgets preserved. |
 | N5 Compound demo scenario | Not started | — | Single illustrative world; only the explicitly authorized small algorithm changes. |
 | N6 Walkthrough and docs | Not started | — | Final five-step walkthrough and documentation. |
 
-Starting revision: `e12d5977f85b8564618109f6eb4585eeaeed3d55`, branch `claude/scoop-prototype`. Night 1 is archived in [reports/night1.md](reports/night1.md). N1 is accepted and pushed as implementation 1a7b2ada3401 with ledger revision 2526180c1b5e; remote SHA verified. N2 is accepted and pushed as implementation 0311c5b with ledger revision 803f215a6c71; remote SHA verified. N3 is accepted and pushed as implementation 59c62e8 with ledger revision a97c01565f21; remote SHA verified. N4 is accepted; N5–N6 have not begun.
+Starting revision: `e12d5977f85b8564618109f6eb4585eeaeed3d55`, branch `claude/scoop-prototype`. Night 1 is archived in [reports/night1.md](reports/night1.md). N1 is accepted and pushed as implementation 1a7b2ada3401 with ledger revision 2526180c1b5e; remote SHA verified. N2 is accepted and pushed as implementation 0311c5b with ledger revision 803f215a6c71; remote SHA verified. N3 is accepted and pushed as implementation 59c62e8 with ledger revision a97c01565f21; remote SHA verified. N4 is accepted as implementation d9f77f5cb89d, including all75 illustrations; N5–N6 have not begun.
 
 Key numbers at the start of this run: Gemini ledger **138 calls, $14.671322 estimated/reserved of the existing $20 total**; remaining **$5.328678**. The ledger and reservations are retained. Tests use the scripted provider unless a live call is specifically under review. Source world: seed 93, current date 20 July 2026, 75 products, plan `P20260720`, 5 widgets. User edits made after Night 1 are preserved; the ignored baseline snapshot is `.codex/backups/night2-baseline.json`.
 
