@@ -8,7 +8,7 @@
 | N2 Hours and minutes | Accepted | `0311c5bf532a` | 129,600 balances checked; 31 correctly timed shortages; 31.212 s replay versus 30.931 s expected. |
 | N3 UI polish | Accepted | `59c62e8e8bbf` | Native adjustments; 40-group evidence modal; 13 observations / membership filters; aligned round-tick widgets and Results. |
 | N4 Product illustrations | Accepted | `d9f77f5cb89d` | 75 reviewed illustrations; 225 icon renders; all required screens; exact orders/widgets preserved. |
-| N5 Compound demo scenario | Blocked: performance exception | Pending push | Exact four-product intersection and visual drilldown pass. At 0.084% space difference: 404 fewer units short, but 14 extra product-days and HK$6,764.94 extra lost margin. |
+| N5 Compound demo scenario | Blocked: performance exception | `a59f1d631af9` | Exact four-product intersection and visual drilldown pass. At 0.084% space difference: 404 fewer units short, but 14 extra product-days and HK$6,764.94 extra lost margin. |
 | N6 Walkthrough and docs | Not started | — | Final five-step walkthrough and documentation. |
 
 Starting revision: `e12d5977f85b8564618109f6eb4585eeaeed3d55`, branch `claude/scoop-prototype`. Night 1 is archived in [reports/night1.md](reports/night1.md). N1 is accepted and pushed as implementation 1a7b2ada3401 with ledger revision 2526180c1b5e; remote SHA verified. N2 is accepted and pushed as implementation 0311c5b with ledger revision 803f215a6c71; remote SHA verified. N3 is accepted and pushed as implementation 59c62e8 with ledger revision a97c01565f21; remote SHA verified. N4 is accepted as implementation d9f77f5cb89d, including all 75 illustrations. N5's functionality is verified; its all-three-metrics superiority criterion remains blocked under the no-further-tuning exception. N6 has not begun.
@@ -133,7 +133,7 @@ The recent window includes part of the ramp; raw ratio, change after baseline co
 
 ### N5 validation and visual review
 
-Backend: **260 passed in 97.37 s**, `reports/n5-backend-tests.txt`; TypeScript/Vite build: **64 modules**. Focused checks cover seed-specific alpha, variance without changing raw y, real-prefix sibling conservation, exact intervention cells, bounded comparison count, selection by space even when loss is worse, and aggregate grounding beyond the 20-item preview cap.
+Implementation: `a59f1d631af9f16ff753d48dbab0f07be2a3cf36`. Backend: **260 passed in 97.37 s**, `reports/n5-backend-tests.txt`; TypeScript/Vite build: **64 modules**. Type-token / banned-copy searches had no matches (`n5-static-checks.txt`), and the staged diff check passed. Focused checks cover seed-specific alpha, variance without changing raw y, real-prefix sibling conservation, exact intervention cells, bounded comparison count, selection by space even when loss is worse, and aggregate grounding beyond the 20-item preview cap.
 
 The real `gemini-3.8-flash` report is complete and places the strawberry native card first, without model SVG. Initial grounding rejected the legitimate sums 153 and 362 because the operations tool exposed only receipt rows; `total_cases` now reports the full-scope sum, including rows beyond the preview cap, and a wrong total still fails. Repeated parent/sibling curves are removed only from the model-context copy, not saved evidence. This keeps the final authoring requests at **70,581 / 121,797 bytes**, below the existing request guard, and retains the full interactive drilldown. Final ledger: **152 calls, $16.435259 estimated/reserved of $20**.
 
