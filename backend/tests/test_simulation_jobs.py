@@ -15,7 +15,9 @@ def test_approval_edit_and_widget_flow_use_committed_quantities(api, monkeypatch
     client, fixture_scope, _, _ = api
     with fixture_scope() as session:
         disposable_engine = session.bind
-        session.get(Plan, 'TESTAPI').stage = 'direction'
+        plan = session.get(Plan, 'TESTAPI')
+        plan.stage = 'direction'
+        plan.summary = {'cohort_model': {'sku_factors': {}, 'cases_overrides': {}}}
 
     # Route production sessions and the worker to the fixture schema. This exercises
     # db.py's after-commit queue, not an in-memory copy of the business logic.
@@ -32,11 +34,12 @@ def test_approval_edit_and_widget_flow_use_committed_quantities(api, monkeypatch
     original_simulate = play.simulate
     calls = []
 
-    def simulate(pid, week):
-        with db.session_scope() as session:
-            order = session.get(PurchaseSuggestion, (pid, 'IC001'))
-            calls.append(order.final_cases if order.final_cases is not None else order.suggested_cases)
-        return original_simulate(pid, week, days=7)
+    def simulate(pid, week, **kwargs):
+        if '_service_level' not in kwargs:
+            with db.session_scope() as session:
+                order = session.get(PurchaseSuggestion, (pid, 'IC001'))
+                calls.append(order.final_cases if order.final_cases is not None else order.suggested_cases)
+        return original_simulate(pid, week, days=7, **kwargs)
 
     monkeypatch.setattr(play, 'simulate', simulate)
     play._CACHE.clear()

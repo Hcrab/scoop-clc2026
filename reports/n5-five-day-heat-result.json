@@ -1,0 +1,389 @@
+{
+  "summary": {
+    "scoop": {
+      "fill_rate": 0.9691702113501534,
+      "lost_units": 6023.0,
+      "lost_margin": 35373.51,
+      "avg_pallets": 38.19688585069444,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 51,
+      "ending_on_hand": 64107.0,
+      "ordered_cases": 7758
+    },
+    "baseline": {
+      "fill_rate": 0.9707723570993484,
+      "lost_units": 5710.0,
+      "lost_margin": 27573.12,
+      "avg_pallets": 38.820666232638885,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 33,
+      "ending_on_hand": 50778.0,
+      "ordered_cases": 7822
+    }
+  },
+  "matched": {
+    "status": "matched",
+    "within_tolerance": true,
+    "tolerance": 0.02,
+    "service_level": 0.98,
+    "relative_pallet_gap": 0.004450776733715343,
+    "simulation_count": 3,
+    "summary": {
+      "scoop": {
+        "fill_rate": 0.9731423043257935,
+        "lost_units": 5247.0,
+        "lost_margin": 30031.280000000002,
+        "avg_pallets": 38.99344835069444,
+        "peak_pallets": 57.98659722222222,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 45,
+        "ending_on_hand": 66769.0,
+        "ordered_cases": 7760
+      },
+      "baseline": {
+        "fill_rate": 0.9707723570993484,
+        "lost_units": 5710.0,
+        "lost_margin": 27573.12,
+        "avg_pallets": 38.820666232638885,
+        "peak_pallets": 57.98659722222222,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 33,
+        "ending_on_hand": 50778.0,
+        "ordered_cases": 7822
+      }
+    },
+    "attempts": [
+      {
+        "service_level": null,
+        "avg_pallets": 38.19688585069444,
+        "lost_units": 6023.0,
+        "stockout_sku_days": 51,
+        "lost_margin": 35373.51
+      },
+      {
+        "service_level": 0.5,
+        "avg_pallets": 32.730716145833334,
+        "lost_units": 14986.0,
+        "stockout_sku_days": 118,
+        "lost_margin": 94911.37
+      },
+      {
+        "service_level": 0.98,
+        "avg_pallets": 38.99344835069444,
+        "lost_units": 5247.0,
+        "stockout_sku_days": 45,
+        "lost_margin": 30031.280000000002
+      }
+    ]
+  },
+  "matched_loss_products": [
+    {
+      "sku": "IC010",
+      "name": "Mango Sticky Rice Bar",
+      "plan": 932.0,
+      "rule": 292.0,
+      "units_avoided": -640.0,
+      "plan_days": 2,
+      "rule_days": 1
+    },
+    {
+      "sku": "IC045",
+      "name": "Durian Cream Cup",
+      "plan": 150.0,
+      "rule": 0.0,
+      "units_avoided": -150.0,
+      "plan_days": 2,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC064",
+      "name": "Strawberry Puree Sorbet Bar",
+      "plan": 163.0,
+      "rule": 43.0,
+      "units_avoided": -120.0,
+      "plan_days": 1,
+      "rule_days": 1
+    },
+    {
+      "sku": "IC005",
+      "name": "Yuzu Lemon Sorbet Cup",
+      "plan": 83.0,
+      "rule": 11.0,
+      "units_avoided": -72.0,
+      "plan_days": 1,
+      "rule_days": 1
+    },
+    {
+      "sku": "IC053",
+      "name": "Protein Berry Cup",
+      "plan": 67.0,
+      "rule": 0.0,
+      "units_avoided": -67.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC040",
+      "name": "Mango Mochi 6-Pack",
+      "plan": 51.0,
+      "rule": 0.0,
+      "units_avoided": -51.0,
+      "plan_days": 2,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC048",
+      "name": "Pistachio Gelato Tub",
+      "plan": 51.0,
+      "rule": 0.0,
+      "units_avoided": -51.0,
+      "plan_days": 2,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC008",
+      "name": "Tropical Ice Pop 6-Pack",
+      "plan": 124.0,
+      "rule": 84.0,
+      "units_avoided": -40.0,
+      "plan_days": 2,
+      "rule_days": 2
+    },
+    {
+      "sku": "IC028",
+      "name": "Vanilla Classic Cone",
+      "plan": 40.0,
+      "rule": 0.0,
+      "units_avoided": -40.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC074",
+      "name": "Strawberry Meadow Cream Bar",
+      "plan": 35.0,
+      "rule": 0.0,
+      "units_avoided": -35.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC014",
+      "name": "Green Apple Sorbet Tub",
+      "plan": 34.0,
+      "rule": 0.0,
+      "units_avoided": -34.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC051",
+      "name": "Oat Milk Vanilla Tub",
+      "plan": 32.0,
+      "rule": 0.0,
+      "units_avoided": -32.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC034",
+      "name": "Hokkaido Milk Soft Cup",
+      "plan": 23.0,
+      "rule": 0.0,
+      "units_avoided": -23.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC042",
+      "name": "Taro Milk Cup",
+      "plan": 20.0,
+      "rule": 0.0,
+      "units_avoided": -20.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC039",
+      "name": "Black Sesame Mochi 6-Pack",
+      "plan": 17.0,
+      "rule": 0.0,
+      "units_avoided": -17.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC020",
+      "name": "Dark Choc Truffle Cup",
+      "plan": 16.0,
+      "rule": 0.0,
+      "units_avoided": -16.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC031",
+      "name": "Salted Caramel Cup",
+      "plan": 8.0,
+      "rule": 0.0,
+      "units_avoided": -8.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC016",
+      "name": "Dragon Fruit Smoothie Cup",
+      "plan": 2.0,
+      "rule": 0.0,
+      "units_avoided": -2.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC013",
+      "name": "Raspberry Ripple Tub",
+      "plan": 1.0,
+      "rule": 0.0,
+      "units_avoided": -1.0,
+      "plan_days": 1,
+      "rule_days": 0
+    },
+    {
+      "sku": "IC060",
+      "name": "Grapefruit Sorbet Bar",
+      "plan": 240.0,
+      "rule": 240.0,
+      "units_avoided": 0.0,
+      "plan_days": 1,
+      "rule_days": 1
+    },
+    {
+      "sku": "IC056",
+      "name": "Kids Choc Cone 4-Pack",
+      "plan": 49.0,
+      "rule": 57.0,
+      "units_avoided": 8.0,
+      "plan_days": 2,
+      "rule_days": 2
+    },
+    {
+      "sku": "IC066",
+      "name": "Strawberry Coastal Sorbet Bar",
+      "plan": 0.0,
+      "rule": 25.0,
+      "units_avoided": 25.0,
+      "plan_days": 0,
+      "rule_days": 1
+    },
+    {
+      "sku": "IC072",
+      "name": "Pineapple Breeze Ice Bar",
+      "plan": 105.0,
+      "rule": 145.0,
+      "units_avoided": 40.0,
+      "plan_days": 1,
+      "rule_days": 1
+    },
+    {
+      "sku": "IC011",
+      "name": "Peach Oolong Ice Bar",
+      "plan": 0.0,
+      "rule": 49.0,
+      "units_avoided": 49.0,
+      "plan_days": 0,
+      "rule_days": 1
+    },
+    {
+      "sku": "IC007",
+      "name": "Mixed Berry Ice Pop 6-Pack",
+      "plan": 50.0,
+      "rule": 114.0,
+      "units_avoided": 64.0,
+      "plan_days": 1,
+      "rule_days": 2
+    },
+    {
+      "sku": "IC055",
+      "name": "Kids Rainbow Pop",
+      "plan": 224.0,
+      "rule": 304.0,
+      "units_avoided": 80.0,
+      "plan_days": 2,
+      "rule_days": 2
+    },
+    {
+      "sku": "IC059",
+      "name": "Lemon Tea Ice Bar",
+      "plan": 63.0,
+      "rule": 143.0,
+      "units_avoided": 80.0,
+      "plan_days": 1,
+      "rule_days": 2
+    },
+    {
+      "sku": "IC061",
+      "name": "Strawberry Spring Ice Bar",
+      "plan": 245.0,
+      "rule": 325.0,
+      "units_avoided": 80.0,
+      "plan_days": 2,
+      "rule_days": 3
+    },
+    {
+      "sku": "IC004",
+      "name": "Passion Fruit Sorbet Cup",
+      "plan": 34.0,
+      "rule": 130.0,
+      "units_avoided": 96.0,
+      "plan_days": 1,
+      "rule_days": 1
+    },
+    {
+      "sku": "IC063",
+      "name": "Strawberry Breeze Ice Bar",
+      "plan": 794.0,
+      "rule": 914.0,
+      "units_avoided": 120.0,
+      "plan_days": 3,
+      "rule_days": 3
+    },
+    {
+      "sku": "IC071",
+      "name": "Apple Orchard Ice Bar",
+      "plan": 297.0,
+      "rule": 417.0,
+      "units_avoided": 120.0,
+      "plan_days": 2,
+      "rule_days": 2
+    },
+    {
+      "sku": "IC006",
+      "name": "Strawberry Burst Bar",
+      "plan": 304.0,
+      "rule": 464.0,
+      "units_avoided": 160.0,
+      "plan_days": 2,
+      "rule_days": 2
+    },
+    {
+      "sku": "IC041",
+      "name": "Red Bean Ice Bar",
+      "plan": 0.0,
+      "rule": 160.0,
+      "units_avoided": 160.0,
+      "plan_days": 0,
+      "rule_days": 1
+    },
+    {
+      "sku": "IC062",
+      "name": "Strawberry Orchard Ice Bar",
+      "plan": 993.0,
+      "rule": 1793.0,
+      "units_avoided": 800.0,
+      "plan_days": 3,
+      "rule_days": 4
+    }
+  ]
+}

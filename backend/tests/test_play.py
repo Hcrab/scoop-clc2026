@@ -269,6 +269,23 @@ def test_cache_invalidates_order_date_and_context(played_week, monkeypatch):
     assert resized['capacity_pallets'] == 90.
 
 
+def test_counterfactual_service_and_quantities_have_separate_cache_entries(played_week):
+    baseline = played_week['runs']['baseline']
+    a = play.simulate('test-plan', START, days=7, _service_level=.6,
+                      _first_week_cases={'A': 2, 'B': 2}, _baseline_run=baseline)
+    assert a['runs']['baseline'] is baseline
+    assert play.simulate('test-plan', START, days=7, _service_level=.6,
+                         _first_week_cases={'A': 2, 'B': 2}, _baseline_run=baseline) is a
+    different_cases = play.simulate('test-plan', START, days=7, _service_level=.6,
+                                    _first_week_cases={'A': 3, 'B': 2}, _baseline_run=baseline)
+    different_service = play.simulate('test-plan', START, days=7, _service_level=.7,
+                                      _first_week_cases={'A': 2, 'B': 2}, _baseline_run=baseline)
+    assert different_cases is not a
+    assert different_service is not a
+    assert different_cases['runs']['scoop']['per_sku']['placed_cases'][0][0] == 3
+    assert played_week['runs']['scoop']['per_sku']['placed_cases'][0][0] == 1
+
+
 def test_empty_affected_set_has_zero_quantities(played_week, monkeypatch):
     original_read = play.read_sql
 

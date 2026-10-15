@@ -65,6 +65,29 @@ def run(scope,name,args):
         return result
 
 
+def test_open_arrival_total_covers_rows_beyond_the_display_cap(exploration):
+    from scoop.ai.grounding import mismatches
+    scope, _ = exploration
+    args = {'group_ids': ['format:cone']}
+    initial = run(scope, 'query_operations', args)['known_open_arrivals']
+    with scope() as session:
+        plan = session.get(Plan, 'TESTAPI')
+        product = session.get(Product, 'IC001')
+        for i in range(21):
+            session.add(PurchaseOrder(id=f'TOTAL{i}', sku=product.sku,
+                supplier_id=product.supplier_id, order_date=plan.week_start-timedelta(days=1),
+                expected_date=plan.week_start+timedelta(days=1), received_date=None,
+                cases=i+1, source='history'))
+    result = run(scope, 'query_operations', args)
+    arrivals = result['known_open_arrivals']
+    assert arrivals['count'] == initial['count'] + 21
+    assert len(arrivals['items']) == 20
+    assert arrivals['total_cases'] == initial['total_cases'] + sum(range(1,22))
+    good = {'text': f"{arrivals['total_cases']} cases are due.", 'evidence_ids': ['Q']}
+    assert mismatches([good], {'Q': result}) == []
+    assert mismatches([{**good, 'text': '999999 cases are due.'}], {'Q': result})
+
+
 def test_catalog_and_strict_parameter_contract(exploration):
     scope,_=exploration
     result=run(scope,'catalog_groups',{})

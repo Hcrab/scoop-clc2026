@@ -68,5 +68,7 @@
 .results-chart{min-width:0;border-top:1px solid var(--line);padding:20px 0 16px;margin-bottom:10px}
 .results-chart h3{font-size:var(--type-label);font-weight:600;color:var(--ink);margin:0 0 12px}
 .results-chart .chart{width:100%}
+.results-view .results-scenario{color:var(--muted);font-size:var(--type-label);margin:0 0 12px}
 @media(max-width:620px){.flow-primary{justify-content:stretch}.flow-primary .button{width:100%}.results-view .play-comparison{padding:18px}}
 .play-event{display:flex;align-items:flex-start;gap:8px}.play-event>div{min-width:0}
+.play-outcomes .result-negative strong{color:#b7483c}

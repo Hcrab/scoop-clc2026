@@ -56,7 +56,7 @@ def api(monkeypatch, request):
     import scoop.planning as planning
     def fake_orders(as_of,directions,service_level=None,goal='margin',**kwargs):
         case_edits={x['value']['sku']:x['value']['cases'] for x in kwargs.get('overrides',[]) if x['type']=='cases'}
-        frame=pd.DataFrame([{'sku':'IC001','order_date':as_of,'pdays':10,'demand_p10':20.,'demand_p50':30.,'demand_p90':40.,'adjustment':directions[0]['factor'],'critical_ratio':service_level or (.97 if goal=='fill_rate' else .8),'target_units':50. if goal=='fill_rate' else 40.,'on_hand_units':10,'on_order_units':0,'inventory_position':10,'suggested_cases':4 if goal=='fill_rate' else 3,'capacity_cut_cases':0,'final_cases':case_edits.get('IC001',4 if goal=='fill_rate' else 3)}])
+        frame=pd.DataFrame([{'sku':'IC001','order_date':as_of,'pdays':10,'demand_p10':20.,'demand_p50':30.,'demand_p90':40.,'adjustment':directions[0]['factor'] if directions else 1,'critical_ratio':service_level or (.97 if goal=='fill_rate' else .8),'target_units':50. if goal=='fill_rate' else 40.,'on_hand_units':10,'on_order_units':0,'inventory_position':10,'suggested_cases':4 if goal=='fill_rate' else 3,'capacity_cut_cases':0,'final_cases':case_edits.get('IC001',4 if goal=='fill_rate' else 3)}])
         frame.attrs['cohort_model']={'cases_overrides':case_edits,'leaves':[],'sku_factors':{}}
         return frame
     monkeypatch.setattr(planning,'suggest_orders',fake_orders)

@@ -14,7 +14,7 @@ from sqlalchemy.dialects.postgresql import insert
 from .db import engine, session_scope
 from .models import Plan, PurchaseSuggestion, Setting, SimulationRun
 
-LOGIC_VERSION = 'intraday-play-v2'
+LOGIC_VERSION = 'matched-space-play-v4'
 _executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix='scoop-simulation')
 _dispatch_lock = Lock()
 _dispatched: set[tuple[str, str]] = set()
@@ -44,6 +44,7 @@ def order_hash(session, plan: Plan) -> str:
                 for sql in queries]
     seed = session.get(Setting, 'seed')
     payload = [LOGIC_VERSION, plan.id, plan.week_start, lines, plan.goal, plan.service_level,
+               (plan.summary or {}).get('cohort_model'),
                overrides, seed.value if seed else None, physical]
     return hashlib.sha256(json.dumps(payload, sort_keys=True, default=str, separators=(',', ':')).encode()).hexdigest()
 
@@ -138,9 +139,9 @@ def _run_active(plan_id: str, key: str) -> None:
             run.started_at = datetime.now()
             week = plan.week_start
         started = monotonic()
-        from .play import simulate
+        from .play_comparison import prepare
         from .api.service import clean
-        result = clean(simulate(plan_id, week))
+        result = clean(prepare(plan_id, week))
         elapsed = monotonic() - started
         with session_scope() as session:
             run = session.get(SimulationRun, (plan_id, key))

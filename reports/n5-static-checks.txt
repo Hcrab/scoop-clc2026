@@ -1,0 +1,7 @@
+COMMAND: rg -nP font-size\s*:\s*+(?!var\(--type-)\S[^;}]* frontend/src --glob *.css
+EXIT: 1
+(no matches)
+
+COMMAND: rg -n Early warnings|Where demand is changing|Keep attention where it matters|No purchases due|Orders due 0 frontend/src --glob *.tsx
+EXIT: 1
+(no matches)

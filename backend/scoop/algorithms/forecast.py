@@ -23,9 +23,12 @@ import pandas as pd
 from ..db import read_sql
 
 CATEGORICAL = ["store_id", "sku", "district", "format", "family"]
+FORMATS = ("stick", "cup", "tub", "cone", "sandwich", "mochi", "multipack")
 NUMERIC = [
     "size_factor", "dairy", "richness", "sweetness", "choc_coated", "low_sugar", "price_hkd", "sugar_100ml",
-    "dow", "month", "doy_sin", "doy_cos", "holiday", "tmax", "rain_mm", "tmax_x_dairy", "promo_disc",
+    "dow", "month", "doy_sin", "doy_cos", "holiday", "tmax", "rain_mm", "tmax_x_dairy",
+    "tmax_x_dairy_water", "tmax_x_dairy_middle", "tmax_x_dairy_rich",
+    *(f"tmax_x_format_{name}" for name in FORMATS), "promo_disc",
 ]
 FEATURES = CATEGORICAL + NUMERIC
 
@@ -118,6 +121,15 @@ def build_features(static: Static, dates: pd.DatetimeIndex, weather: pd.DataFram
     hol = _holidays()
     grid["holiday"] = grid.date.dt.date.isin(hol).astype(int)
     grid["tmax_x_dairy"] = grid.tmax * (0.45 - grid.dairy)
+    # Piecewise weather responses can differ by dairy band and serving format.
+    # The continuous interaction above remains available to the model.
+    dairy_edges = np.quantile(static.products.dairy.to_numpy(), [1 / 3, 2 / 3])
+    dairy_band = np.digitize(grid.dairy.to_numpy(), dairy_edges, right=True)
+    grid["tmax_x_dairy_water"] = grid.tmax * (dairy_band == 0)
+    grid["tmax_x_dairy_middle"] = grid.tmax * (dairy_band == 1)
+    grid["tmax_x_dairy_rich"] = grid.tmax * (dairy_band == 2)
+    for name in FORMATS:
+        grid[f"tmax_x_format_{name}"] = grid.tmax * (grid["format"] == name)
     for c in NUMERIC:
         grid[c] = grid[c].astype(float)
     for c in CATEGORICAL:

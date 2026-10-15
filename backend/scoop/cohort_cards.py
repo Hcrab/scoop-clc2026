@@ -44,6 +44,20 @@ def _shortage(mean, sigma, stock):
     return sigma*norm.pdf(z)+(mean-stock)*norm.sf(z)
 
 
+def _drilldown(leaf, groups):
+    trace = leaf.get('drilldown')
+    if trace is None:
+        return None
+    steps = []
+    for step in trace['steps']:
+        tag_id = step['tag_id']
+        name = (tag_id.split(':', 1)[1] if tag_id.startswith('district:')
+                else getattr(groups.get(tag_id), 'name', tag_id))
+        label = name if step['included'] else 'Other ' + name[:1].lower() + name[1:]
+        steps.append({**step, 'label': label})
+    return {'root': {**trace['root'], 'label': 'All eligible products'}, 'steps': steps}
+
+
 def build_cards(result, orders, baseline, products, groups, names):
     actual = orders.set_index('sku')
     plain = baseline.set_index('sku')
@@ -88,6 +102,7 @@ def build_cards(result, orders, baseline, products, groups, names):
                       'effect_basis':'Estimated sustained change in requested/forecast ratio from baseline to recent, after shrinkage; not the raw recent requested-minus-forecast percentage.',
                       'interval_pct':[float(np.expm1(low)*100),float(np.expm1(high)*100)],
                       'interval_coverage_pct':80.,'daily':leaf.get('daily',[]),'series_scope':leaf.get('series_scope',''),
+                      'drilldown':_drilldown(leaf, groups),
                       'sku_factors':per_sku,'case_change':round(delta_cases),
                       'expected_lost_margin_avoided':float(saved_margin),'pallet_change':delta_pallets,
                       'pallet_change_basis':'Footprint of the change in total purchased cases; not a change in simultaneous warehouse peak occupancy.',

@@ -1,0 +1,39 @@
+{
+  "scenario": {
+    "start": "2026-07-06",
+    "full": "2026-07-20",
+    "end": "2026-08-31",
+    "strawberry": 0.5,
+    "mango_kowloon": 0.35,
+    "coated": -0.2,
+    "coated_start": "2026-07-20",
+    "coated_full": "2026-07-27",
+    "heatwave": {
+      "2026-08-01": 33.5,
+      "2026-08-02": 33.8,
+      "2026-08-03": 33.7,
+      "2026-08-04": 33.5,
+      "2026-08-05": 33.4
+    }
+  },
+  "tested_nodes": [
+    {
+      "path": [],
+      "candidate_count": 44,
+      "gain": 101.38136543902249,
+      "split_tag": "flavour:strawberry",
+      "p_value": 0.05025125628140704,
+      "permutations": 199
+    }
+  ],
+  "quiet_tested_nodes": [
+    {
+      "path": [],
+      "candidate_count": 44,
+      "gain": 5.5654470709619925,
+      "split_tag": "band:price_100ml:0",
+      "p_value": 0.6984924623115578,
+      "permutations": 199
+    }
+  ]
+}

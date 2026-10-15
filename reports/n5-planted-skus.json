@@ -1,0 +1,30 @@
+[
+  {
+    "sku": "IC006",
+    "true_multiplier": 1.5,
+    "raw_ratio": 1.4452579649055068,
+    "raw_y": 0.39303568373491377,
+    "fitted_factor": 1.381551970913412
+  },
+  {
+    "sku": "IC061",
+    "true_multiplier": 1.5,
+    "raw_ratio": 1.374776066769452,
+    "raw_y": 0.30307007895810134,
+    "fitted_factor": 1.381551970913412
+  },
+  {
+    "sku": "IC062",
+    "true_multiplier": 1.5,
+    "raw_ratio": 1.4201761812171585,
+    "raw_y": 0.31454872400245465,
+    "fitted_factor": 1.381551970913412
+  },
+  {
+    "sku": "IC063",
+    "true_multiplier": 1.5,
+    "raw_ratio": 1.458594703500962,
+    "raw_y": 0.3328071320780952,
+    "fitted_factor": 1.381551970913412
+  }
+]

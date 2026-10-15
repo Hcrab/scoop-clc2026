@@ -85,21 +85,21 @@ def test_original_seed_catalogs_and_rng_state_unchanged(seed):
 
 @pytest.mark.parametrize('seed', [42, 73, 91, 92, 93])
 def test_generation_hook_precedes_dc_and_only_runs_for_seed93(seed, monkeypatch):
-    from scoop.synth import challenge as old91, combination_challenge as old92
-    days = [date(2025, 7, 1), challenge.START, challenge.FULL, challenge.END]
+    from scoop.synth import challenge as old91, combination_challenge as old92, compound_demo
+    days = [date(2025, 7, 1), compound_demo.START, compound_demo.FULL, compound_demo.END]
     monkeypatch.setattr(generator, '_dates', lambda: days)
-    monkeypatch.setattr(generator, 'build_weather', lambda *args: (pd.DataFrame(), pd.DataFrame(), None))
-    monkeypatch.setattr(generator, 'build_demand', lambda rng, days, stores, products, tags, weather:
+    monkeypatch.setattr(generator, 'build_weather', lambda *args, **kwargs: (pd.DataFrame(), pd.DataFrame(), None))
+    monkeypatch.setattr(generator, 'build_demand', lambda rng, days, stores, products, tags, weather, **kwargs:
                         (np.full((len(days), len(stores), len(products)), 100, dtype=np.int64), pd.DataFrame(), pd.DataFrame()))
     old_calls = []
     monkeypatch.setattr(old91, 'inject', lambda *args: old_calls.append(91) or pd.DataFrame())
     monkeypatch.setattr(old92, 'inject', lambda *args: old_calls.append(92) or pd.DataFrame())
-    actual_inject = challenge.inject
+    actual_inject = compound_demo.inject
     new_calls = []
     def inject(*args):
         new_calls.append(93)
         return actual_inject(*args)
-    monkeypatch.setattr(challenge, 'inject', inject)
+    monkeypatch.setattr(compound_demo, 'inject', inject)
     dc_calls = []
     def dc(rng, days, stores, products, suppliers, orders):
         dc_calls.append(True)
@@ -116,7 +116,7 @@ def test_generation_hook_precedes_dc_and_only_runs_for_seed93(seed, monkeypatch)
     assert old_calls == ([seed] if seed in (91, 92) else [])
     assert new_calls == ([93] if seed == 93 else [])
     assert len(world.products) == (75 if seed == 93 else 60)
-    assert len(world.events) == (1 if seed == 93 else 0)
+    assert len(world.events) == (4 if seed == 93 else 0)
 
 
 def test_null_counterfactual_uses_same_seed93_catalog(monkeypatch):
@@ -134,7 +134,8 @@ def test_null_counterfactual_uses_same_seed93_catalog(monkeypatch):
 def test_neutral_scenario():
     from scoop.demo_worlds import SCENARIOS
     scenario = next(s for s in SCENARIOS if s['seed'] == 93)
-    assert scenario['name'] == 'Demo warehouse' and scenario['default_week'] == '2026-07-20'
+    from scoop.demo_config import DEMO_WEEK
+    assert scenario['name'] == 'Demo warehouse' and scenario['default_week'] == DEMO_WEEK
     assert {'2026-07-20', '2026-07-27', '2026-08-03'} <= set(scenario['weeks'])
     assert not any(term in scenario['description'].lower() for term in ('strawberry', 'water', 'price', 'hx93', 'uplift'))
     assert any(s['seed'] == 92 for s in SCENARIOS)

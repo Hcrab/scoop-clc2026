@@ -22,7 +22,7 @@ from .forecast import (DemandModel, Static, build_features, calibrate_ratios,
                        issued_daily_weather, PARAMS, FEATURES, ROUNDS, protection_days)
 
 CACHE = ROOT / "data" / "cache"
-LOGIC_VERSION = "monthly-issued-v1"
+LOGIC_VERSION = "monthly-issued-v2"
 TRAIN_START = date(2024, 6, 1)
 RUN_A_END = date(2026, 3, 31)  # legacy aliases: April live version
 RUN_B_END = date(2026, 5, 31)  # legacy alias: June live version
@@ -41,7 +41,7 @@ def month_end(as_of: date) -> date:
 
 
 def version_for(as_of: date) -> str:
-    return f"M{month_start(as_of):%Y%m}-v1-s{get_setting('seed', '42')}"
+    return f"M{month_start(as_of):%Y%m}-v2-s{get_setting('seed', '42')}"
 
 
 def model_metadata(as_of: date) -> dict:

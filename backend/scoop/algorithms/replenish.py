@@ -29,7 +29,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm
 
-HOLDING_RATE = 0.25  # cost of one excess unit per cycle, as a share of unit cost (storage + markdown risk)
+HOLDING_RATE = 0.025  # per cycle: 1% storage/financing + 1.5% summer carryover/markdown provision
 CR_BOUNDS = (0.5, 0.98)
 
 
@@ -110,6 +110,8 @@ def plan_orders(items: list[SkuInput], ratios: np.ndarray, capacity_pallets: flo
             "demand_p90": it.mean * q90,
             "adjustment": it.adjustment,
             "critical_ratio": cr,
+            "excess_unit_cost_rate": HOLDING_RATE,
+            "excess_unit_cost_basis": "Per cycle: 1% storage/financing + 1.5% summer carryover/markdown provision, applied to unit cost.",
             "target_units": target,
             "on_hand_units": it.on_hand,
             "on_order_units": it.on_order,

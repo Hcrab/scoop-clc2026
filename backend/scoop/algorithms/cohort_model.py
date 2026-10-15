@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from sqlalchemy import select
 
-from ..models import Product, Promotion, Store, StoreOrder
+from ..models import Product, Promotion, Store, StoreOrder, Setting
 
 PERMUTATIONS = 199
 SEED = 20261014
@@ -63,7 +63,7 @@ def _permutation_orders(skus, districts, rng):
     return tag_order, district_order
 
 
-def fit_units(units, groups):
+def fit_units(units, groups, *, split_alpha=.05):
     """Fit SKU/district observations with block-aware split permutations.
 
     Unit fields: sku, district, y, v, expected_recent (or E_r), plus optional trace.
@@ -114,7 +114,7 @@ def fit_units(units, groups):
             p = float(np.mean(np.array(maximum) >= observed))
             tested.append({'path': path, 'candidate_count': len(choices), 'gain': observed,
                            'split_tag': choices[winner][0], 'p_value': p, 'permutations': PERMUTATIONS})
-            if p < .05:
+            if p < split_alpha:
                 key, mask = choices[winner]
                 grow(indices[mask], path + [{'id': key, 'included': True}], p_path + [p], depth + 1)
                 grow(indices[~mask], path + [{'id': key, 'included': False}], p_path + [p], depth + 1)
@@ -173,7 +173,7 @@ def fit_units(units, groups):
                          'f90': exp(mean + Z80 * sd), 'm': mean, 's2': variance}
     return {'leaves': leaves, 'sku_factors': factors, 'units': rows,
             'method': {'tree': 'inverse-variance conditional inference; max depth 3; min 3 distinct SKUs per child',
-                       'permutations': PERMUTATIONS, 'seed': SEED, 'split_alpha': .05,
+                       'permutations': PERMUTATIONS, 'seed': SEED, 'split_alpha': split_alpha,
                        'permutation_scheme': 'product tags: whole SKU district vectors within equal-support strata; district tags: districts within each SKU; y and v paired; max across all candidates',
                        'tested_nodes': tested, 'eb': 'two-level DerSimonian-Laird',
                        'sku_covariance': 'district demand weights; conditional variances independent; shared leaf posterior covariance',
@@ -198,6 +198,50 @@ def current_expectations(plan):
     return result
 
 
+def _attach_drilldowns(result, chart_rows, groups):
+    """Preserve the actual fitted prefix and its sibling from eligible history."""
+    catalog = ({key: set(getattr(group, 'skus', group)) for key, group in groups.items()}
+               if isinstance(groups, dict) else {group.id: set(group.skus) for group in groups})
+    rows = result['units']
+
+    def aggregate(indices):
+        totals = {}
+        for i in indices:
+            unit = rows[i]
+            for day, (observed, predicted) in chart_rows[(unit['sku'], unit['district'])].items():
+                value = totals.setdefault(day, [0., 0.])
+                value[0] += observed
+                value[1] += predicted
+        return [{'date': day.isoformat(), 'requested_units': totals[day][0],
+                 'expected_units': totals[day][1]} for day in sorted(totals)]
+
+    def effect(indices):
+        weights = np.array([1 / rows[i]['v'] for i in indices])
+        values = np.array([rows[i]['y'] for i in indices])
+        return float(np.expm1(np.dot(weights, values) / weights.sum()) * 100)
+
+    all_indices = list(range(len(rows)))
+    if not all_indices:
+        return
+    root = {'effect_pct': effect(all_indices), 'daily': aggregate(all_indices)}
+    for leaf in result['leaves']:
+        parent = all_indices
+        steps = []
+        for path in leaf['tag_path']:
+            tag_id, included = path['id'], path['included']
+            members = [i for i in parent if (rows[i]['district'] == tag_id.split(':', 1)[1]
+                       if tag_id.startswith('district:') else rows[i]['sku'] in catalog[tag_id]) == included]
+            member_set = set(members)
+            rest = [i for i in parent if i not in member_set]
+            steps.append({'tag_id': tag_id, 'included': included,
+                          'effect_pct': effect(members), 'rest_effect_pct': effect(rest),
+                          'daily': aggregate(members), 'rest_daily': aggregate(rest),
+                          'sku_count': len({rows[i]['sku'] for i in members}),
+                          'rest_sku_count': len({rows[i]['sku'] for i in rest})})
+            parent = members
+        leaf['drilldown'] = {'root': root, 'steps': steps}
+
+
 def fit(plan, session=None):
     """Refit recorded observations against the current plan's forecast model."""
     if session is None:
@@ -216,14 +260,17 @@ def fit(plan, session=None):
     promotions = list(session.scalars(select(Promotion).where(Promotion.start_date <= end,
                                                             Promotion.end_date >= start)))
     expected = current_expectations(plan)
+    from ..demo_config import DEMO_SEED, DEMO_COHORT_ALPHA
+    seed = session.get(Setting, 'seed')
+    split_alpha = DEMO_COHORT_ALPHA if seed and seed.value == str(DEMO_SEED) else .05
     result = fit_observations(plan.week_start, orders, expected, stores, skus,
-                              promotions, _groups(session))
+                              promotions, _groups(session), split_alpha=split_alpha)
     result['method']['expectation_basis'] = 'current_model_rescored_with_historical_issued_weather'
     result['method']['model_version'] = expected.attrs.get('model_version')
     return result
 
 
-def fit_observations(week_start, orders, expected, stores, skus, promotions, groups):
+def fit_observations(week_start, orders, expected, stores, skus, promotions, groups, *, split_alpha=.05):
     """Fit recorded or counterfactual observations through the same preparation path.
 
     Orders are (date, store_id, sku, ordered_units) rows. No database is changed.
@@ -283,6 +330,8 @@ def fit_observations(week_start, orders, expected, stores, skus, promotions, gro
             ar, er = (sum(daily[d][i] for d in recent) for i in (0, 1))
             ab, eb = (sum(daily[d][i] for d in baseline) for i in (0, 1))
             weekly = []
+            weekly_log_errors = []
+            weekly_sampling_variances = []
             for first in range(0, len(baseline), 7):
                 days = baseline[first:first + 7]
                 if len(days) == 7:
@@ -290,16 +339,28 @@ def fit_observations(week_start, orders, expected, stores, skus, promotions, gro
                     we = sum(daily[d][1] for d in days)
                     if we > 0:
                         weekly.append((wa - we) / sqrt(we))
+                        weekly_log_errors.append(log((wa + .5) / (we + .5)))
+                        weekly_sampling_variances.append(1 / (we + .5))
             phi = max(1., float(np.var(weekly, ddof=1))) if len(weekly) >= 2 else 1.
+            # Baseline seven-day issued-weather residuals estimate the forecast's
+            # systematic log-rate error beyond count sampling. Scale from a
+            # weekly residual to the recent and baseline window averages.
+            systematic_weekly = (max(0., float(np.var(weekly_log_errors, ddof=1))
+                                     - float(np.mean(weekly_sampling_variances)))
+                                 if len(weekly_log_errors) >= 2 else 0.)
+            forecast_error_v = systematic_weekly * (7 / len(recent) + 1 / len(weekly_log_errors)) if weekly_log_errors else 0.
             units.append({'sku': name, 'district': area,
                           'y': log((ar + .5) / (er + .5)) - log((ab + .5) / (eb + .5)),
-                          'v': phi * (1 / (ar + .5) + 1 / (ab + .5)),
+                          'v': phi * (1 / (ar + .5) + 1 / (ab + .5)) + forecast_error_v,
+                          'forecast_error_v': forecast_error_v,
+                          'forecast_error_weekly_log_variance': systematic_weekly,
                           'recent_A': ar, 'recent_E': er, 'baseline_A': ab, 'baseline_E': eb,
                           'expected_recent': er, 'phi': phi, 'recent_days': len(recent),
                           'baseline_days': len(baseline),
                           'promotion_exclusions': sorted(d.isoformat() for d in excluded[name] if start <= d <= end),
                           'winsorised': clipped, 'winsor_caps': caps})
-    result = fit_units(units, groups)
+    result = fit_units(units, groups, split_alpha=split_alpha)
+    _attach_drilldowns(result, chart_rows, groups)
     for leaf in result['leaves']:
         totals = {}
         for unit in result['units']:
@@ -317,5 +378,7 @@ def fit_observations(week_start, orders, expected, stores, skus, promotions, gro
                             unit_definition='SKU × district; complete observed and issued rows; at least one eligible day in each window',
                             winsorisation='per store/SKU 99th percentile across eligible 70-day history before aggregation',
                             overdispersion='sample variance of seven-day (A-E)/sqrt(E) baseline residuals, floored at 1',
+                            forecast_error_variance='Per SKU/district, sample variance of eligible baseline seven-day log((A+0.5)/(E+0.5)) current-model residuals minus mean 1/(E+0.5) count-sampling variance, clipped at zero; log-rate units squared. Add this weekly systematic variance times (7/recent eligible days + 1/baseline eligible weeks) to each unit log-change variance. Uses historical issued weather and baseline outcomes only; part of the baseline may be in the current model training period. No percentage floor.',
+                            drilldown_effect='Inverse-variance weighted mean unit log change transformed with expm1 × 100 at each actual tree prefix, before leaf and SKU shrinkage. Daily requests are raw eligible observations; siblings are within the same parent.',
                             skipped_units=skipped)
     return result

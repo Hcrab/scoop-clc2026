@@ -288,4 +288,14 @@ def compact_result(result):
         if 'skus' in group:group.pop('members',None)
     cusum=result.get('cusum')
     if isinstance(cusum,dict) and ('daily' in result or 'checks' in cusum):cusum.pop('series',None)
+    # The host renders drilldown curves from the full saved card. The analyst
+    # needs path effects and sibling comparisons, not repeated copies of every
+    # parent/sibling daily series in every function-calling round.
+    drilldown=result.get('drilldown')
+    if isinstance(drilldown,dict):
+        root=drilldown.get('root',{})
+        root.pop('daily',None)
+        for step in drilldown.get('steps',[]):
+            step.pop('daily',None)
+            step.pop('rest_daily',None)
     return result

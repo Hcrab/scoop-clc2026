@@ -45,7 +45,56 @@ def _week_orders(pid: str) -> pd.DataFrame:
     return df
 
 
-def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
+def _candidate_week_cases(start, skus, orders_week, inv0, open_po, plan_summary,
+                          service_level, goal, cohort_cache):
+    """Reprice the known first-week position without changing saved order lines."""
+    from types import SimpleNamespace
+    from .algorithms import cohort_model
+    from .planning import suggest_orders
+
+    saved_cohort = (plan_summary or {}).get("cohort_model")
+    if saved_cohort:
+        cohort_result = saved_cohort
+    elif cohort_cache is not None and start in cohort_cache:
+        cohort_result = cohort_cache[start]
+    else:
+        cohort_result = cohort_model.fit(SimpleNamespace(week_start=start))
+        if cohort_cache is not None:
+            cohort_cache[start] = cohort_result
+    pipeline = open_po.groupby("sku").units.sum().reindex(skus).fillna(0.0)
+    position = pd.DataFrame({"sku": skus,
+                             "on_hand_units": inv0.reindex(skus).fillna(0).round().astype(int).to_numpy(),
+                             "on_order": pipeline.round().astype(int).to_numpy()})
+    pending = {}
+    for r in open_po.itertuples():
+        day = r.received_date if r.received_date is not None and not pd.isna(r.received_date) else r.expected_date
+        pending.setdefault(day, pd.Series(0.0, index=skus))[r.sku] += r.units
+    proposed = suggest_orders(start, [], position=position, pending_arrivals=pending,
+                              cohort_result=cohort_result, overrides=[] if saved_cohort else None,
+                              goal=goal, service_level=service_level)
+    proposed.attrs.clear()
+    proposed = proposed.set_index("sku")
+    absolute = (plan_summary or {}).get("cohort_model", {}).get("cases_overrides", {})
+    saved = orders_week.set_index("sku")
+    cases = {}
+    for sku in skus:
+        if sku not in saved.index:
+            cases[sku] = 0
+            continue
+        row = saved.loc[sku]
+        old_auto = int(max(0, row.suggested_cases - row.capacity_cut_cases))
+        old_default = int(absolute.get(sku, old_auto))
+        intervention = int(row.cases) - old_default
+        proposed_cases = int(proposed.loc[sku, "final_cases"]) if sku in proposed.index else 0
+        cases[sku] = max(0, proposed_cases + intervention)
+    return cases
+
+
+def simulate(pid: str, week_start: date, days: int | None = None, *,
+             _service_level: float | None = None,
+             _first_week_cases: dict[str, int] | None = None,
+             _baseline_run: dict | None = None,
+             _cohort_cache: dict | None = None) -> dict:
     orders_week = _week_orders(pid)
     prod = read_sql(
         """SELECT p.sku, p.name, p.brand, p.supplier_id, p.price_hkd, p.cost_hkd, p.units_per_case, p.cases_per_pallet, p.moq_cases,
@@ -68,7 +117,8 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
         plan_summary = json.loads(plan_summary)
     cards = (plan_summary or {}).get("cohort_cards", [])
     goal = context.goal.iloc[0] if not context.empty else "margin"
-    service_level = context.service_level.iloc[0] if not context.empty else None
+    service_level = (_service_level if _service_level is not None else
+                     context.service_level.iloc[0] if not context.empty else None)
     raw = read_sql(
         "SELECT date, sku, SUM(ordered_units) AS u FROM store_orders WHERE date BETWEEN :a AND :b GROUP BY date, sku",
         a=start - timedelta(days=28), b=end,
@@ -101,9 +151,13 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
         expectations["date"] = pd.to_datetime(expectations.date).dt.date
     upp = (prod.units_per_case * prod.cases_per_pallet).astype(float)
     margin = (prod.price_hkd - prod.cost_hkd).astype(float)
+    if _service_level is not None and _first_week_cases is None:
+        _first_week_cases = _candidate_week_cases(start, skus, orders_week, inv0, open_po,
+                                                 plan_summary, _service_level, goal, _cohort_cache)
     # All inputs that can change a replay are read before consulting the cache.
-    inputs = [pid, start, days, orders_week[["sku", "order_date", "cases"]].to_dict("records"), prod.reset_index().to_dict("records"),
-              goal, service_level, cards, settings.to_dict("records"), raw.to_dict("records"),
+    inputs = [pid, start, days, _service_level, _first_week_cases,
+              orders_week[["sku", "order_date", "cases", "suggested_cases", "capacity_cut_cases", "final_cases"]].to_dict("records"), prod.reset_index().to_dict("records"),
+              goal, service_level, plan_summary, settings.to_dict("records"), raw.to_dict("records"),
               inv0.to_dict(), open_po.to_dict("records"), weather.to_dict("records"), capacity,
               forecast_run.to_dict("records"), expectations.to_dict("records")]
     key = hashlib.sha256(json.dumps(inputs, sort_keys=True, default=str).encode()).hexdigest()
@@ -120,10 +174,15 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
 
     week_cases = orders_week.set_index("sku").cases.reindex(skus).fillna(0).astype(int)
     week_dates = orders_week.set_index("sku").order_date.reindex(skus)
+    if _first_week_cases is not None:
+        week_cases = pd.Series(_first_week_cases).reindex(skus).fillna(0).astype(int)
 
     runs = {}
     autopilot_notes: list[dict] = []
     for policy in ("scoop", "baseline"):
+        if policy == "baseline" and _baseline_run is not None:
+            runs[policy] = _baseline_run
+            continue
         on_hand, arrivals, pipeline = initial()
         own_arrivals: dict[date, pd.Series] = {}
         cohort_result = None
@@ -155,14 +214,20 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
 
                 current_week = d - timedelta(days=d.weekday())
                 if cohort_week != current_week:
-                    cohort_result = cohort_model.fit(SimpleNamespace(week_start=current_week))
+                    if _cohort_cache is not None and current_week in _cohort_cache:
+                        cohort_result = _cohort_cache[current_week]
+                    else:
+                        cohort_result = cohort_model.fit(SimpleNamespace(week_start=current_week))
+                        if _cohort_cache is not None:
+                            _cohort_cache[current_week] = cohort_result
                     cohort_week = current_week
-                    try:
-                        found = detect(d)
-                        autopilot_notes.append({"date": d.isoformat(), "findings": [f.get("display", f.get("group", "signal"))
-                                                for f in found if f.get("kind") == "significant"][:4]})
-                    except Exception:  # CUSUM notes do not control automatic orders
-                        pass
+                    if _baseline_run is None:
+                        try:
+                            found = detect(d)
+                            autopilot_notes.append({"date": d.isoformat(), "findings": [f.get("display", f.get("group", "signal"))
+                                                    for f in found if f.get("kind") == "significant"][:4]})
+                        except Exception:  # CUSUM notes do not control automatic orders
+                            pass
                 pos = pd.DataFrame({"sku": skus, "on_hand_units": on_hand.round().astype(int).to_numpy(), "on_order": pipeline.round().astype(int).to_numpy()})
                 plan = suggest_orders(d, [], position=pos, only_due=True, pending_arrivals=arrivals,
                                       cohort_result=cohort_result, goal=goal,

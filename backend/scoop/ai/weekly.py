@@ -121,7 +121,7 @@ def _context(session,plan):
     return {'week_start':str(plan.week_start),'goal':plan.goal,'stage':plan.stage,
             'all_observations':[{k:v for k,v in observation.items() if k not in {'method','daily'}} for observation in
                                 ((plan.summary or {}).get('cohort_observations') or cohort_observations(session,plan))],
-            'cohort_cards':[{**q,'result':{**{k:v for k,v in q['result'].items() if k not in {'method','sku_factors'}},
+            'cohort_cards':[{**q,'result':{**{k:v for k,v in compact_result(q['result']).items() if k not in {'method','sku_factors'}},
                 **({'order_rows':[{k:v for k,v in row.items() if k in {'sku','name','before_cases','cases','case_change'}} for row in q['result']['sku_factors']]} if 'sku_factors' in q['result'] else {})}} for q in program_evidence(plan)],
             'mechanical_findings':[{'id':f.id,'name':(f.evidence or {}).get('display',f.tag_id),
                 'districts':(f.evidence or {}).get('districts',[]),'actual_share':f.share_now,

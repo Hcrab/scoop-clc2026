@@ -1,0 +1,30 @@
+[
+  {
+    "week": "2026-07-13",
+    "tested": [
+      {
+        "path": [],
+        "candidate_count": 44,
+        "gain": 6.6800226857810685,
+        "split_tag": "district:HK Island",
+        "p_value": 0.6130653266331658,
+        "permutations": 199
+      }
+    ],
+    "cards": []
+  },
+  {
+    "week": "2026-07-20",
+    "tested": [
+      {
+        "path": [],
+        "candidate_count": 44,
+        "gain": 39.92764886897265,
+        "split_tag": "flavour:strawberry",
+        "p_value": 0.15577889447236182,
+        "permutations": 199
+      }
+    ],
+    "cards": []
+  }
+]

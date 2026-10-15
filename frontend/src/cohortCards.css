@@ -47,3 +47,4 @@
 
 .discover-with-cohorts>.original-findings .signal-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr))}.original-findings .signal-choice:last-child:nth-child(odd){grid-column:auto}
 .cohort-numbers>.product-icon{margin-left:auto}
+.cohort-heading{display:flex;align-items:center;gap:12px;min-width:0}.cohort-heading>.product-icon{flex:none}.cohort-path{display:flex;gap:5px;margin:12px 0 0!important;overflow-x:auto;white-space:nowrap}.cohort-path span{border-radius:999px;background:#eef3ea;color:#476653;padding:3px 8px;font-size:var(--type-label)}.cohort-path span+span:before{content:'›';margin-right:7px;color:#8ca18e}.cohort-how{margin:12px 0;border-top:1px solid #dce6dc;padding-top:10px}.cohort-how>summary{font-size:var(--type-label)}

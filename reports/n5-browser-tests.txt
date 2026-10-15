@@ -1,0 +1,28 @@
+
+Running 1 test using 1 worker
+
+
+
+(node:48524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] e2e\n5-compound.spec.ts:5:1 › N5 compound path, shared evidence drilldown and matched-space outcome
+  1) e2e\n5-compound.spec.ts:5:1 › N5 compound path, shared evidence drilldown and matched-space outcome
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 75
+    Received:   89
+
+      69 |   expect(record.errors).toEqual([]);
+      70 |   await writeFile(path.resolve('..','reports','n5-browser.json'),JSON.stringify(record,null,2)+'\n');
+    > 71 |   for(const key of ['lost_units','stockout_sku_days','lost_margin'])expect(matched.summary.scoop[key]).toBeLessThan(matched.summary.baseline[key]);
+         |                                                                                                        ^
+      72 | });
+      73 |
+        at C:\Users\ping\Documents\Codex\2026-10-14\new-chat\work\scoop-clc2026\frontend\e2e\n5-compound.spec.ts:71:104
+
+    Error Context: test-results\n5-compound-N5-compound-pa-49ffc-n-and-matched-space-outcome\error-context.md
+
+
+  1 failed
+    e2e\n5-compound.spec.ts:5:1 › N5 compound path, shared evidence drilldown and matched-space outcome

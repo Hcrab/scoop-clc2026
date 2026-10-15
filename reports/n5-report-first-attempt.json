@@ -1,0 +1,67 @@
+{
+  "status": "offline",
+  "grounding_failure": {
+    "mismatches": [
+      {
+        "claim_index": 2,
+        "number": "153",
+        "evidence_ids": [
+          "Q2"
+        ],
+        "reason": "No cited evidence value matches within displayed rounding."
+      },
+      {
+        "claim_index": 4,
+        "number": "362",
+        "evidence_ids": [
+          "Q3"
+        ],
+        "reason": "No cited evidence value matches within displayed rounding."
+      },
+      {
+        "claim_index": 0,
+        "number": "153",
+        "evidence_ids": [
+          "Q-cohort-C6b627a31b52c",
+          "Q-cohort-C831a53fca012",
+          "Q2",
+          "Q3",
+          "Q4",
+          "Q5"
+        ],
+        "reason": "No cited evidence value matches within displayed rounding."
+      },
+      {
+        "claim_index": 0,
+        "number": "362",
+        "evidence_ids": [
+          "Q-cohort-C6b627a31b52c",
+          "Q-cohort-C831a53fca012",
+          "Q2",
+          "Q3",
+          "Q4",
+          "Q5"
+        ],
+        "reason": "No cited evidence value matches within displayed rounding."
+      },
+      {
+        "claim_index": 2,
+        "number": "362",
+        "evidence_ids": [
+          "Q-cohort-C6b627a31b52c",
+          "Q-cohort-C831a53fca012",
+          "Q2",
+          "Q3",
+          "Q4",
+          "Q5"
+        ],
+        "reason": "No cited evidence value matches within displayed rounding."
+      }
+    ],
+    "repair_attempted": true
+  },
+  "usage": {
+    "input_tokens": 513369,
+    "output_tokens": 4285
+  }
+}

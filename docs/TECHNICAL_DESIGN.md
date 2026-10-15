@@ -66,6 +66,8 @@ The visible flow is **Report & direction → Orders → Watch & play**. Cohort c
 
 A Poisson-mean LightGBM model and 0.1/0.9 quantile models use catalog, calendar, promotion and issued-weather features. Monthly versions train through the preceding month; detection and purchasing use the same version. The Poisson mean supplies the central level displayed as p50; it is not a separately trained median quantile. This gives an ordinary-demand counterfactual and protection-period mean.
 
+N5 adds temperature interactions for the catalog's three dairy bands and seven serving formats. Artifact identity `monthly-issued-v2` prevents reuse of models without these features. Training dates, rounds and other model parameters are unchanged.
+
 Code: `backend/scoop/algorithms/forecast.py`, `backend/scoop/algorithms/runs.py`.
 
 ### 4.2. Rolling backtest and baselines
@@ -88,9 +90,13 @@ Code: `backend/scoop/algorithms/shiftshare.py`, `backend/scoop/ai/investigator.p
 
 ### 4.5. Cohort tree
 
-Each eligible SKU × district compares recent 14 days with the previous 56 eligible days: `y = log((Ar+.5)/(Er+.5)) - log((Ab+.5)/(Eb+.5))`, `v = phi(1/(Ar+.5)+1/(Ab+.5))`. Promotion days are excluded; requests are capped per store/SKU at the eligible-history 99th percentile. Candidate splits come from existing catalog groups and districts, need at least three distinct SKUs on each side, and stop at depth three. The maximum inverse-variance gain is tested against 199 max-gain permutations at fixed `p < 0.05`.
+Each eligible SKU × district compares recent 14 days with the previous 56 eligible days: `y = log((Ar+.5)/(Er+.5)) - log((Ab+.5)/(Eb+.5))`. Variance adds count overdispersion `phi(1/(Ar+.5)+1/(Ab+.5))` and a measured forecast-error component. The latter estimates baseline weekly log residual variance beyond count sampling, clips it at zero, and scales it to the two averaging windows; it has no fixed percentage floor. These are current-model residuals with historical issued weather, so some baseline dates are in the model's training period. Promotion days are excluded; requests are capped per store/SKU at the eligible-history 99th percentile. Candidate splits come from existing catalog groups and districts, need at least three distinct SKUs on each side, and stop at depth three. The maximum inverse-variance gain is tested against 199 max-gain permutations at fixed `p < 0.05`.
+
+The saved drilldown aggregates each actual path prefix and its sibling within the same parent. Bars display the inverse-variance weighted raw log-change transformed to percent, before shrinkage; the card's headline remains the shrunk leaf estimate. The daily curves use raw eligible requests and their current-model expectations.
 
 Code: `backend/scoop/algorithms/cohort_model.py`.
+
+The illustrative seed-93 world uses the specifically authorized `alpha = 0.10` exception. After the weather/variance/cost fixes, the 27 July tree stopped at root `p = 0.0502512563` under 0.05. At 0.10 its strawberry path tests were 0.0502512563, 0.0954773869 and 0.0050251256. Other worlds and the pure statistical fitting functions retain 0.05; permutation units, depth, minimum sizes and shrinkage are unchanged. This is a demo setting, not a new validation claim.
 
 ### 4.6. Corrected permutation units
 
@@ -112,7 +118,7 @@ Code: `backend/scoop/algorithms/cohort_overrides.py`, `backend/scoop/cohort_cont
 
 ### 4.9. Order-up-to and critical ratio
 
-Calendar-aware protection includes wait until supplier order day, lead time and review. For the default margin objective, shortage cost `Cu = price-cost`; excess cost `Co = 0.25 × cost`; `CR = clip(Cu/(Cu+Co), 0.5, 0.98)`. An explicit service parameter replaces that ratio with the same clipping bounds. The CR demand quantile gives target `S`; buy `ceil(max(0, S-on_hand-on_order)/units_per_case)` with MOQ when positive. Empirical demand ratios mix with lognormal factor error by deterministic quadrature and are re-centred at the empirical median.
+Calendar-aware protection includes wait until supplier order day, lead time and review. For the default margin objective, shortage cost `Cu = price-cost`; excess cost `Co = 0.025 × cost` per ordering cycle (1% storage/financing plus 1.5% summer carryover/markdown); `CR = clip(Cu/(Cu+Co), 0.5, 0.98)`. This illustrative summer cost assumption replaces the earlier 25% cost input and also drives marginal capacity allocation. An explicit service parameter replaces that ratio with the same clipping bounds. The CR demand quantile gives target `S`; buy `ceil(max(0, S-on_hand-on_order)/units_per_case)` with MOQ when positive. Empirical demand ratios mix with lognormal factor error by deterministic quadrature and are re-centred at the empirical median.
 
 Code: `backend/scoop/algorithms/forecast.py`, `backend/scoop/algorithms/replenish.py`, `backend/scoop/planning.py`.
 
@@ -133,6 +139,8 @@ Code: `backend/scoop/dashboard.py`, `backend/scoop/api/dashboard.py`, `frontend/
 Both sides begin with the same closing stock, historical POs in transit and future synthetic requests. Scoop week one uses saved cases or post-cut suggestions; later weeks refit cohorts and order automatically. The rule orders toward `1.25 × mean(last 28 days) × (lead+review)`, then rounds to cases/MOQ. New orders arrive after lead time. Daily shipped units are `min(on_hand, requests)` and lost units are unmet requests. Charts use the latest saved expectation issued before the plan. Later automatic orders call the ordinary as-of-day forecast and cohort path, including the monthly version change when reached.
 
 Code: `backend/scoop/play.py`, `frontend/src/Play.tsx`.
+
+N5 prepares a separate matched-average-space comparison in the same background job. The actual approved-order replay counts as one evaluation; at most five more evaluations test service levels between 0.50 and 0.98 by bounded bisection. Selection minimizes measured average-pallet difference from the unchanged rule, with a 2% tolerance, never the shortage result. If the tolerance cannot be reached, Results labels the closest measured comparison. All policies share opening stock, in-transit receipts, requests and weather information; planner quantity deltas and absolute case overrides remain attached to the candidate plan. The actual approved-order replay and final widgets remain available separately.
 
 
 The read-only exploratory scanner separately tests one-to-three-tag intersections across district scopes with a seven-lag Bartlett–Newey–West variance and Benjamini–Yekutieli adjustment. It is an approximate screen, not a cohort tree split or a newly calibrated CUSUM discovery (`backend/scoop/algorithms/trend_scan.py`).
@@ -173,7 +181,9 @@ Application validation covers phase guards, persisted choices, invalid input, id
 
 The P6 seed-93 default Play covers 20 July–4 August (16 days), with no active context overrides. The physical capacity is 71 pallets. The synthetic history rule peaks at 65.4033 pallets over this selected window, or 92.12% of capacity. Full generated July–August history has a separate 77.8620-pallet peak, above that capacity; it is not the selected Play window. The default Play loses 11,528 units with Scoop versus 10,191 with the rule, while averaging 36.6402 versus 44.6169 pallets. A 27 July seven-day rerun loses 1,344 units on each side and averages 53.8392 versus 55.2196 pallets. These are observed trade-offs, not a universal savings claim (`reports/p6-play-final.json`, `reports/p6-capacity-correction.json`).
 
-The default first cohort card is the actual broad 25-SKU Water-based leaf, not an isolated strawberry card. In the 27 July planted-group check, the corrected fixed permutation test gave the candidate strawberry split `p = 0.1005025126`, above the fixed 0.05 criterion; across two null seeds and 34 weeks there were 4 root splits against an acceptance limit of at most 3. Both P1 criteria remain **blocked** under the explicit no-tuning exception. No statistical threshold, prior, variance, forecast input or buffer was changed to force a pass (`reports/cohort-seed93-block-evaluation.json`, `reports/cohort-null-block-evaluation.json`).
+In the archived Night 1 world, the default first cohort card was the broad 25-SKU Water-based leaf. Its 27 July planted-group check gave the strawberry split `p = 0.1005025126`, above the then-fixed 0.05 criterion; across two null seeds and 34 weeks there were 4 root splits against a limit of at most 3. Those historical P1 criteria remain blocked in the Night 1 report. N5 changes the illustrative world and makes only the newly authorized fixes described above; the archived null results do not validate the revised world (`reports/cohort-seed93-block-evaluation.json`, `reports/cohort-null-block-evaluation.json`).
+
+The revised illustrative seed-93 default is 27 July. Strawberry × water-based × value-price requests ramp 6–20 July to +50%; Mango × Kowloon ramps to +35%; coating declines 20–27 July to −20%. A 33.4–33.8°C heat period runs 31 July–8 August. The exact four-product strawberry leaf is the first card (+38.16% estimated), while 13/20 July and quiet 22 June have no cards. Capacity is 60 pallets; the unchanged rule peaks at 57.9866 (96.64%). At matched average space, this plan has 11,160 versus 11,564 short units, but 89 versus 75 stockout product-days and HK$68,203.72 versus HK$61,438.78 lost margin. The all-three-metrics superiority criterion remains blocked under the no-further-tuning exception; it is not presented as a policy win. See `docs/overnight-report.md` and `reports/n5-replay-analysis.json`.
 
 ### Simplifications
 
@@ -187,6 +197,8 @@ The default first cohort card is the actual broad 25-SKU Water-based leaf, not a
 | Dated greedy capacity removal | Results need not be globally optimal; inherited arrivals may already exceed physical capacity. |
 | Exogenous requests and shared DC stock in Play | Both sides face the same requests; there is no district stock ledger or stock-to-demand feedback. |
 | Fixed intraday timing | Intraday timing comes from a fixed demand curve and delivery windows; daily totals equal the daily simulation. Requests peak in the afternoon, supplier receipts land in the morning, supplier orders use a 14:00 cut-off and dispatch runs from 18:00 to 22:00. |
+| Illustrative compound scenario | Seed 93 is a deliberately designed example, not a multi-seed evaluation or evidence of general superiority. The planted answer key is private to offline checks. |
+| Matched average space | Up to six measured replays adjust only the compared plan's service level; the selected result minimizes average-pallet distance within a 2% tolerance. Cases and a finite horizon make exact matching discrete. Actual approved-order results remain separate. |
 | Hourly inventory balances | Demand, dispatch, lost units and receipt flows reconcile to their daily totals. On-hand stock is a level: hourly changes reconcile to closing minus opening, and each hourly balance reconciles receipts and dispatch. |
 | Cohort level projection | The latest effect is held over the planning window, without trend extrapolation. |
 

@@ -6,6 +6,21 @@ from scoop.ai import weekly,gemini,chat
 from scoop.models import Plan,ChatMessage
 
 
+def test_model_context_keeps_path_numbers_without_repeating_saved_chart_rows():
+    from scoop.ai.report_design import compact_result
+    source={'daily':[{'date':'2026-07-20','requested_units':100}],
+            'drilldown':{'root':{'effect_pct':2,'daily':[{'requested_units':1000}]},
+                         'steps':[{'label':'Strawberry','effect_pct':12,'rest_effect_pct':1,
+                                   'daily':[{'requested_units':100}],
+                                   'rest_daily':[{'requested_units':900}]}]}}
+    before=deepcopy(source)
+    compact=compact_result(source)
+    assert compact['daily']==source['daily']
+    assert compact['drilldown']['root']=={'effect_pct':2}
+    assert compact['drilldown']['steps']==[{'label':'Strawberry','effect_pct':12,'rest_effect_pct':1}]
+    assert source==before
+
+
 def presentation(evidence_id='Q1'):
     return {'title':'A localized demand shift merits a closer look',
             'html':f'<article><h1>A localized demand shift merits a closer look</h1><p>Demand differs from its comparison.</p><details data-evidence-id="{evidence_id}"><summary>Inspect the demand evidence</summary></details></article>',

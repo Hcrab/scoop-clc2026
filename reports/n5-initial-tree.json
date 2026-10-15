@@ -1,0 +1,85 @@
+{
+  "scenario": {
+    "start": "2026-07-06",
+    "full": "2026-07-20",
+    "end": "2026-08-31",
+    "strawberry": 0.5,
+    "mango_kowloon": 0.35,
+    "coated": -0.2,
+    "heatwave": {
+      "2026-08-01": 33.5,
+      "2026-08-02": 33.8,
+      "2026-08-03": 33.7,
+      "2026-08-04": 33.5,
+      "2026-08-05": 33.4
+    }
+  },
+  "tested_nodes": [
+    {
+      "path": [],
+      "candidate_count": 44,
+      "gain": 262.051067185411,
+      "split_tag": "feature:choc_coated",
+      "p_value": 0.0,
+      "permutations": 199
+    },
+    {
+      "path": [
+        {
+          "id": "feature:choc_coated",
+          "included": true
+        }
+      ],
+      "candidate_count": 14,
+      "gain": 3.7776041764051342,
+      "split_tag": "format:cone",
+      "p_value": 0.8944723618090452,
+      "permutations": 199
+    },
+    {
+      "path": [
+        {
+          "id": "feature:choc_coated",
+          "included": false
+        }
+      ],
+      "candidate_count": 43,
+      "gain": 79.12822568529973,
+      "split_tag": "flavour:strawberry",
+      "p_value": 0.19597989949748743,
+      "permutations": 199
+    }
+  ],
+  "intervention_effects": {
+    "flavour:strawberry": {
+      "baseline_units": 34195,
+      "planted_units": 39031,
+      "planted_change_pct": 14.142418482234254
+    },
+    "band:dairy:0": {
+      "baseline_units": 57831,
+      "planted_units": 62868,
+      "planted_change_pct": 8.709861492970905
+    },
+    "band:price_hkd:0": {
+      "baseline_units": 63612,
+      "planted_units": 68804,
+      "planted_change_pct": 8.161982015971825
+    },
+    "intersection": {
+      "baseline_units": 10949,
+      "planted_units": 15785,
+      "planted_change_pct": 44.16841720705087
+    }
+  },
+  "quiet_tested_nodes": [
+    {
+      "path": [],
+      "candidate_count": 44,
+      "gain": 5.5654470709619925,
+      "split_tag": "band:price_100ml:0",
+      "p_value": 0.6984924623115578,
+      "permutations": 199
+    }
+  ]
+}

@@ -8,14 +8,14 @@
 | N2 Hours and minutes | Accepted | `0311c5bf532a` | 129,600 balances checked; 31 correctly timed shortages; 31.212 s replay versus 30.931 s expected. |
 | N3 UI polish | Accepted | `59c62e8e8bbf` | Native adjustments; 40-group evidence modal; 13 observations / membership filters; aligned round-tick widgets and Results. |
 | N4 Product illustrations | Accepted | `d9f77f5cb89d` | 75 reviewed illustrations; 225 icon renders; all required screens; exact orders/widgets preserved. |
-| N5 Compound demo scenario | Not started | — | Single illustrative world; only the explicitly authorized small algorithm changes. |
+| N5 Compound demo scenario | Blocked: performance exception | Pending push | Exact four-product intersection and visual drilldown pass. At 0.084% space difference: 404 fewer units short, but 14 extra product-days and HK$6,764.94 extra lost margin. |
 | N6 Walkthrough and docs | Not started | — | Final five-step walkthrough and documentation. |
 
-Starting revision: `e12d5977f85b8564618109f6eb4585eeaeed3d55`, branch `claude/scoop-prototype`. Night 1 is archived in [reports/night1.md](reports/night1.md). N1 is accepted and pushed as implementation 1a7b2ada3401 with ledger revision 2526180c1b5e; remote SHA verified. N2 is accepted and pushed as implementation 0311c5b with ledger revision 803f215a6c71; remote SHA verified. N3 is accepted and pushed as implementation 59c62e8 with ledger revision a97c01565f21; remote SHA verified. N4 is accepted as implementation d9f77f5cb89d, including all75 illustrations; N5–N6 have not begun.
+Starting revision: `e12d5977f85b8564618109f6eb4585eeaeed3d55`, branch `claude/scoop-prototype`. Night 1 is archived in [reports/night1.md](reports/night1.md). N1 is accepted and pushed as implementation 1a7b2ada3401 with ledger revision 2526180c1b5e; remote SHA verified. N2 is accepted and pushed as implementation 0311c5b with ledger revision 803f215a6c71; remote SHA verified. N3 is accepted and pushed as implementation 59c62e8 with ledger revision a97c01565f21; remote SHA verified. N4 is accepted as implementation d9f77f5cb89d, including all 75 illustrations. N5's functionality is verified; its all-three-metrics superiority criterion remains blocked under the no-further-tuning exception. N6 has not begun.
 
 Key numbers at the start of this run: Gemini ledger **138 calls, $14.671322 estimated/reserved of the existing $20 total**; remaining **$5.328678**. The ledger and reservations are retained. Tests use the scripted provider unless a live call is specifically under review. Source world: seed 93, current date 20 July 2026, 75 products, plan `P20260720`, 5 widgets. User edits made after Night 1 are preserved; the ignored baseline snapshot is `.codex/backups/night2-baseline.json`.
 
-Open acceptance questions: N5 whether the designed compound cohort is isolated and wins at matched average pallets; N6 the final walkthrough and documentation. Current Gemini ledger remains 140 calls / $14.842303 estimated and reserved of $20 ($5.157697 remaining); N4 made no Gemini calls.
+Open acceptance issue: N5 does not beat the rule on all three outcome measures. The exact compound cohort is now isolated; the final walkthrough and documentation remain N6. Current Gemini ledger is 152 calls / **$16.435259** estimated and reserved of $20 (**$3.564741 remaining**); all earlier reservations remain. N4 made no Gemini calls.
 
 ## Rules and scope
 
@@ -91,12 +91,53 @@ Cohort illustrations use the saved SKU with the most recent excess units, with p
 
 ## N5 — Illustrative compound-trend scenario
 
-- ❌ Pending — Report all scenario parameters, authorized algorithm fixes, and before/after numbers.
-- ❌ Pending — Default week: strawberry × water-based × value-price cohort first, new that week; quiet week has no cards.
-- ❌ Pending — Mango × Kowloon is a separate card, or record the actual reason it is absent.
-- ❌ Pending — Screenshot: compound-cohort tree drill-down and change-versus-rest bars.
-- ❌ Pending — Matched average pallets within 2%, at most six plan simulations; plan beats the rule on units short avoided, stockout product-days avoided, and lost margin avoided; screenshot.
-- ❌ Pending — Illustrative label and Simplifications cover the scenario, intraday timing and matched-space comparison.
+- ✅ Parameters, fixes and before/after numbers — `scripts/n5-demo-evidence.py`, `reports/n5-demo-evidence.json`, `reports/n5-planted-skus.json` and the tables below. Source database was backed up once to ignored `.codex/backups/n5-before-world.dump` (66,137,473 bytes); the assistant ledger was never reset.
+- ✅ Default week and new decision — Fresh plan `P20260727` was built in `discover`, with no prior plan or overrides, after the revised world load. Its first card is exactly `IC006 / IC061 / IC062 / IC063`, `Strawberry → Value price → Water-based`, estimated **+38.1552%**, 80% interval **+35.1210% to +41.2575%**. Read-only checks of 13 and 20 July produced no cards, so 27 July is the first of those three weeks that isolates the target. Quiet 22 June also produces no cards. Evidence: `reports/n5-default-week-selection.json`, `n5-demo-evidence.json`, and the browser test's exact membership and first Gemini figure assertions.
+- ✅ Smaller product/place trend, with the permitted absence explanation — Mango × Kowloon is planted at +35%, but does not get a separate tree card. After the strawberry split, the other-products branch splits on coating; its remaining branch's best candidate is Low sugar with max-gain permutation **p=0.3718592965**, so it stops before a district/flavour subdivision. This is a detection limitation, not a claim that the planted change is absent. The saved tested-node trace records it; the algorithm was not given the answer key.
+- ✅ Drilldown — `docs/screenshots/n5-02-strawberry-drilldown.png` and `n5-03-evidence-drilldown.png`, personally inspected. Actual prefixes show **+11.2 / +23.6 / +39.2%** with same-parent remainders **−0.8 / −0.4 / +0.2%**. Clicking a row switches the chart; 70-day range works. Both locations use the same saved trace. `n5-browser.json` records no page errors.
+- ❌ **BLOCKED — all three performance measures better.** Space matching itself passes: **36.57855 vs 36.60944** average pallets, **0.084394%** relative difference, **3 measured replays**. Short units improve **11,160 vs 11,564** (404 avoided), but stockout product-days worsen **89 vs 75**, and lost margin worsens **HK$68,203.72 vs HK$61,438.78**. The maximum allowed explicit service point, 0.98, still gives **86 vs 75** product-days and **HK$61,842.60 vs HK$61,438.78**, so it also fails the latter two targets. `pnpm --dir frontend exec playwright test n5-compound.spec.ts --reporter=line` completes the real UI flow, captures every required image, then fails the explicit **89 < 75** performance assertion. Evidence: `reports/n5-browser-tests.txt`, `n5-browser.json`, `n5-replay-analysis.json`, screenshots `n5-04-matched-results.png` and `n5-05-full-comparison.png`. All specifically authorized basic fixes were applied; no service-cap increase, calibration/optimizer redesign, further threshold, prior or buffer tuning was used to force this check. The explicit no-further-tuning exception is used to move to N6. This phase is **not claimed fully accepted**.
+- ✅ Disclosure — One muted illustrative-scenario line appears on Results; negative outcomes are labelled and coloured as worse. TECHNICAL_DESIGN documents the designed world, the alpha exception, matched-space selection and intraday simplification. The full comparison retains the actual approved-order outcome; final widgets use that actual replay.
+
+### N5 scenario and authorized changes
+
+| Input | Delivered setting |
+|---|---|
+| Main intersection | Four existing 75 ml strawberry × water-based × value-price SKUs; linear ramp 6–20 July to +50%, held through 31 August. |
+| Single-tag planted changes in the default recent window | Strawberry +14.14%; water-based +8.71%; value price +8.16%; intersection +44.17% versus the same underlying unplanted draws. These differ from deviations against the fitted forecast. |
+| Smaller intersection | Existing Mango flavour SKUs in Kowloon only; +35%, same 6–20 July ramp. |
+| Declining group | Chocolate-coated −20%, ramp 20–27 July, then sustained. |
+| Heat | 31 July–8 August, 33.4–33.8°C, generated before issued forecasts; ordinary lead-dependent forecast noise remains. |
+| Physical capacity | 60 pallets; unchanged rule peak 57.986597 is **96.64%** of it. Supplier calendars, lead times and the rule's 1.25 buffer are unchanged. |
+| Forecast fix | Temperature × dairy-tercile and × seven-format features; v2 model identity; unchanged training dates, rounds and other hyperparameters. |
+| Uncertainty fix | Measured baseline weekly log-residual variance beyond count sampling, scaled to the windows; no arbitrary interval floor. Current-model rescoring includes some training-period dates, disclosed in method metadata. |
+| Cost fix | 2.5% of cost per ordering cycle: 1% storage/financing + 1.5% summer carryover/markdown. Same marginal allocation cost. Auto critical ratios now 96.10–97.35%, rather than the older approximately 73% operating point. |
+| Authorized demo alpha | 0.10 only for seed 93; pure fitting defaults and other worlds retain 0.05. Root p=0.0502512563 stopped the corrected 0.05 fit; path tests at 0.10 are 0.0502512563, 0.0954773869 and 0.0050251256. Depth 3, minimum 3 SKUs, permutations and shrinkage are unchanged. |
+
+The first illustrative draft ramped coating decline at the same time as strawberry and split coating first; its strawberry candidate stopped at p=0.1959798995 (`n5-initial-tree.json`). Moving the decline to the week before Play made the compound path the leading candidate, but its root still failed 0.05 (`n5-corrected-alpha05.json`); the authorized 0.10 exception then isolated the four products. A five-day heat version had 5,247 versus 5,710 matched short units, but 45 versus 33 product-days and HK$30,031.28 versus HK$27,573.12 lost margin. Extending heat to overlap more scheduled receipts did not produce an all-metrics win either; both measured versions remain in the evidence (`n5-five-day-heat-result.json`). No multi-seed run or held-out evaluation was performed.
+
+| Context, not an ablation | Plan / rule units short | Plan / rule average pallets | Plan / rule product-days | Plan / rule lost margin |
+|---|---:|---:|---:|---:|
+| P0 world, 20 July, before N5 | 11,528 / 10,191 | 36.6402 / 44.6169 | 69 / 61 | HK$60,737.38 / HK$53,735.37 |
+| N5 illustrative world, 27 July | 11,160 / 11,564 | 36.5785 / 36.6094 | 89 / 75 | HK$68,203.72 / HK$61,438.78 |
+
+The world and week differ, so the table is not a causal estimate of the fixes. Original P0 reference **1,815 vs 1,344** belongs to the earlier archived evaluation and is not substituted for either measured replay here.
+
+| Planted SKU | Full true multiplier | Recent raw A/E | Inverse-variance weighted raw y | Fitted factor |
+|---|---:|---:|---:|---:|
+| IC006 | 1.50 | 1.44526 | 0.39304 | 1.38155 |
+| IC061 | 1.50 | 1.37478 | 0.30307 | 1.38155 |
+| IC062 | 1.50 | 1.42018 | 0.31455 | 1.38155 |
+| IC063 | 1.50 | 1.45859 | 0.33281 | 1.38155 |
+
+The recent window includes part of the ramp; raw ratio, change after baseline comparison, and shrunk factor have different definitions. They are reported without modifying the shrinkage to match the planted multiplier. Strawberry Burst Bar receives a newly placed 27 July order on **31 July**, day 5 of Play; arrival dates were not forced.
+
+### N5 validation and visual review
+
+Backend: **260 passed in 97.37 s**, `reports/n5-backend-tests.txt`; TypeScript/Vite build: **64 modules**. Focused checks cover seed-specific alpha, variance without changing raw y, real-prefix sibling conservation, exact intervention cells, bounded comparison count, selection by space even when loss is worse, and aggregate grounding beyond the 20-item preview cap.
+
+The real `gemini-3.8-flash` report is complete and places the strawberry native card first, without model SVG. Initial grounding rejected the legitimate sums 153 and 362 because the operations tool exposed only receipt rows; `total_cases` now reports the full-scope sum, including rows beyond the preview cap, and a wrong total still fails. Repeated parent/sibling curves are removed only from the model-context copy, not saved evidence. This keeps the final authoring requests at **70,581 / 121,797 bytes**, below the existing request guard, and retains the full interactive drilldown. Final ledger: **152 calls, $16.435259 estimated/reserved of $20**.
+
+Screens inspected at 1440×1000: the right-column path and signed bars align, the large evidence modal gives the chart room, the Gemini report has a concrete finding title, and Results separates its three outcomes from the cumulative comparison. Two negative outcomes are visibly red; the near-equal average space is stated once. Full comparison preserves both compared and approved-order tables. The performance failure is visible, not hidden in copy.
 
 ## N6 — Walkthrough and documentation
 
