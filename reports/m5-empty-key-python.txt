@@ -1,0 +1,10 @@
+{"key_empty": true, "configured_provider": "gemini", "port": 58517, "health": {"status": "ok", "synthetic": true, "provider": "scripted", "label": "Demo assistant", "live": false, "available": true}}
+
+Running 1 test using 1 worker
+
+(node:54252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] e2e\n6-empty-key.spec.ts:5:1 › N6 empty-key process serves native report cards and editable order view
+  1 passed (7.7s)

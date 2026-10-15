@@ -2,9 +2,11 @@
 
 During Play, request and shortage widgets show **Today so far**. Each completed day remains a full daily observation; the unfinished day is a hollow point excluded from the connected lines. Expected requests use the same elapsed-day fraction. Fill rate remains **Pending dispatch** until dispatch starts, rather than treating an unstarted dispatch as a failed service day.
 
-The original illustrative request profile contained no overnight requests. The presentation profile now combines 90% of that daytime shape with 10% uniform background requests across 24 hours. Daily demand, order quantities, inventory settlement, losses and policy comparisons are unchanged. Supplier receipt windows and evening dispatch are retained. This is an illustrative clock allocation, not measured hourly demand. The replay's existing final tick, 23:50, displays settled daily arrays; Results also uses those daily arrays.
+The original illustrative request profile contained no overnight requests. At M4 acceptance, the presentation profile combined 90% of that daytime shape with 10% uniform background requests across 24 hours. Daily demand, order quantities, inventory settlement, losses and policy comparisons are unchanged. Supplier receipt windows and evening dispatch are retained. This is an illustrative clock allocation, not measured hourly demand. The replay's existing final tick, 23:50, displays settled daily arrays; Results also uses those daily arrays.
 
-Cumulative shortage is capped by the settled daily loss and cannot decrease after a receipt. Backend hourly increments and the frontend ten-minute point use the same running maximum. Both policies use this presentation rule. Cached jobs are invalidated with `same-cold-store-play-v6`.
+Cumulative shortage is capped by the settled daily loss and cannot decrease after a receipt. Backend hourly increments and the frontend ten-minute point use the same running maximum. Both policies use this presentation rule. This phase's evidence uses `same-cold-store-play-v6`.
+
+M5 subsequently aligned the 10% background requests with the 22:00 dispatch close, rather than extending them to midnight. That corrects a 100.8% late-evening fill-rate artefact without changing daily quantities. The current profile and cache version `v7` are documented in [the M5 record](night3-m5.md); the captures below retain the original M4 acceptance evidence.
 
 ## Verification
 

@@ -12,7 +12,7 @@
   "errors": [],
   "simulation_requests": [],
   "initial": {
-    "stage": "execute",
+    "stage": "discover",
     "quantities": [
       [
         "IC001",
@@ -317,7 +317,7 @@
     ],
     "widgets": [
       {
-        "id": "c8010de5afbc4faa8ef8ea73f28cf651",
+        "id": "5cf10ca8e35c4d808b10daec29fb3aa4",
         "title": "Value price · Strawberry · Water-based requests",
         "metric": "requested_vs_expected",
         "scope": {
@@ -327,7 +327,7 @@
         "threshold": null
       },
       {
-        "id": "e676f277a7a64a149ce324ecf6cf3353",
+        "id": "c2cd1e2d8f054910b0425687510412b3",
         "title": "Other chocolate-coated requests",
         "metric": "requested_vs_expected",
         "scope": {
@@ -337,7 +337,7 @@
         "threshold": null
       },
       {
-        "id": "9e90f196de994133bf7d28ec8402a913",
+        "id": "4acaa76aedcc40b48e9f832281812e71",
         "title": "Warehouse stock",
         "metric": "on_hand",
         "scope": {
@@ -347,7 +347,7 @@
         "threshold": null
       },
       {
-        "id": "5ec96dc9361c420d8d11869ede478568",
+        "id": "c7e13279538c469a9713b54829068c9d",
         "title": "Warehouse pallets",
         "metric": "pallets",
         "scope": {
@@ -357,7 +357,7 @@
         "threshold": null
       },
       {
-        "id": "aee3ee6186344fc4942a9b5859bfb94e",
+        "id": "31be3f7d44a44e7da7fc880d18f30f03",
         "title": "Store fill rate",
         "metric": "fill_rate",
         "scope": {
@@ -370,32 +370,37 @@
   },
   "report": {
     "model": "gemini-3.8-flash",
-    "title": "Value water-based strawberry surges while chocolate-coated lines soften",
+    "title": "Value water-based strawberry surges +38.2% while chocolate-coated softens -4.6%",
     "first_card": "Value price · Strawberry · Water-based"
+  },
+  "orders": {
+    "ready_ms": 484,
+    "capacity_text": "61.3 / 66 pallets"
   },
   "preparation": {
     "status": "ready",
-    "order_hash": "a1430332a347bbb19ddcde8fbc630fe58e4581152c31d93915c394c519b203e8",
-    "completed_at": "2026-10-15T20:51:54.847330",
-    "elapsed_seconds": 47.82799999999406
+    "order_hash": "e142d75b3df20e9e992723cea81714bc20b9d1ac9a656b05e855655582308ddb",
+    "completed_at": "2026-10-16T01:25:02.154832",
+    "elapsed_seconds": 19.359000000011292
   },
-  "play_entered_at": "2026-10-15T13:17:18.528Z",
+  "play_entered_at": "2026-10-15T17:25:06.796Z",
   "midplay": {
-    "clock": "2 Aug 00:50",
+    "clock": "1 Aug 23:40",
     "event": "1 Aug · 17:20Grapefruit Sorbet Bar ran out."
   },
   "result": {
-    "matched": {
+    "capacity_pallets": 66,
+    "summary": {
       "scoop": {
         "fill_rate": 0.9458662372184171,
         "lost_units": 11160,
         "lost_margin": 68203.72,
-        "avg_pallets": 36.578548177083334,
+        "avg_pallets": 36.86417317708333,
         "peak_pallets": 57.98659722222222,
         "days_over_capacity": 0,
         "stockout_sku_days": 89,
-        "ending_on_hand": 61147,
-        "ordered_cases": 7977
+        "ending_on_hand": 65475,
+        "ordered_cases": 8349
       },
       "baseline": {
         "fill_rate": 0.9439065562001591,
@@ -409,14 +414,14 @@
         "ordered_cases": 8209
       }
     },
-    "space_gap": 0.0008439425353201803,
-    "simulation_count": 3,
     "differences": [
       404,
       -14,
       -6764.940000000002
     ],
-    "performance_exception": "N5: three-metric superiority remains BLOCKED; walkthrough checks truthful rendering and flow."
+    "comparison": "Normal policies in the same cold store; no service search or space matching.",
+    "outcome_note": "404 fewer units short; 14 extra stockout product-days and HK$6,764.94 extra margin lost. Five-SKU diagnosis is in docs/reports/night3-m1.md."
   },
-  "exact_widget_and_quantity_restoration": true
+  "exact_widget_and_quantity_restoration": true,
+  "clean_initial_state_restored_by_reset": true
 }

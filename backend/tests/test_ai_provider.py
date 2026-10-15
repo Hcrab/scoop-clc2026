@@ -155,6 +155,9 @@ def test_ledger_counts_thinking_tokens_and_contains_no_prompt_or_key(tmp_path):
 
 def test_stream_saves_response_and_exposes_real_progress_only(api,monkeypatch):
     from scoop.ai import http
+    from scoop import demo_gate
+    gate=demo_gate.ActivityGate()
+    monkeypatch.setattr(demo_gate,'gate',gate)
     c,scope,_,_=api
     def provider(session,plan,message,stage,focus,progress):
         progress({'phase':'tool','label':'Checking the evidence','tool':'inspect_finding'})
@@ -162,6 +165,8 @@ def test_stream_saves_response_and_exposes_real_progress_only(api,monkeypatch):
     monkeypatch.setattr(http,'respond',provider)
     response=c.post('/api/plans/TESTAPI/chat/stream',json={'message':'Explain this change','stage':'discover','context':{'finding_id':'TESTAPI-F'}})
     assert response.status_code==200
+    assert gate.readers==gate.mutators==0
+    with gate.replacement(timeout=.1,planning_only=True): pass
     assert response.headers['content-type'].startswith('text/event-stream')
     blocks=[block for block in response.text.split('\n\n') if block]
     assert blocks[0].startswith('event: progress') and blocks[1].startswith('event: result')
@@ -174,6 +179,9 @@ def test_stream_saves_response_and_exposes_real_progress_only(api,monkeypatch):
 
 def test_stream_failure_rolls_back_partial_change_and_never_emits_success(api,monkeypatch):
     from scoop.ai import http
+    from scoop import demo_gate
+    gate=demo_gate.ActivityGate()
+    monkeypatch.setattr(demo_gate,'gate',gate)
     c,scope,_,_=api
     def provider(session,plan,*args):
         plan.goal='sales';session.flush()
@@ -181,6 +189,8 @@ def test_stream_failure_rolls_back_partial_change_and_never_emits_success(api,mo
     monkeypatch.setattr(http,'respond',provider)
     response=c.post('/api/plans/TESTAPI/chat/stream',json={'message':'Set sales goal','stage':'discover'})
     assert 'event: error' in response.text and 'event: result' not in response.text
+    assert gate.readers==gate.mutators==0
+    with gate.replacement(timeout=.1,planning_only=True): pass
     detail=c.get('/api/plans/TESTAPI').json()
     assert detail['plan']['goal']=='margin' and detail['messages']==[]
 

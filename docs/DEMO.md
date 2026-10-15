@@ -1,6 +1,6 @@
 # Demonstration guide
 
-This walkthrough uses the designed synthetic seed-93 world: 75 products, 20 stores, one distribution centre, eight suppliers and a 60-pallet cold store. The public plan opens on **27 July 2026** (`P20260727`). First-plan preparation may take several minutes. The app does not place real supplier orders.
+This walkthrough uses the designed synthetic seed-93 world: 75 products, 20 stores, four districts, one distribution centre, eight suppliers and a 66-pallet cold store. The source has 1,233,000 store-SKU-day rows. The public plan opens on **27 July 2026** (`P20260727`). First-plan preparation may take several minutes. The app does not place real supplier orders.
 
 ## 1. Report
 
@@ -8,7 +8,7 @@ Read the weekly report and open the first change card, **Strawberry → Value pr
 
 The synthetic strawberry requests rise to +50% over 6–20 July. A smaller Mango × Kowloon rise and a coating decline are also planted. Mango × Kowloon does not receive its own card: the remaining non-strawberry/non-coated branch's best Low sugar split has `p = 0.371859`, so the tree stops there. This is a detector limit, not evidence that the planted rise did not happen.
 
-With Gemini configured, the saved weekly report can include the assistant's investigation and an authored explanation. With an empty key, the native card list and scripted local commands remain available. The assistant's topics are optional. Try a card context change and its Undo if useful; inspect how the cases respond. The stock-versus-space preference changes the calculation, without guaranteeing a measured fulfilment rate. Choose **Review orders**.
+With Gemini configured, the saved weekly report can include the assistant's investigation and an authored explanation. With an empty key, the native card list and scripted local commands remain available. The assistant's topics are optional. Each change card puts one estimated-demand effect up front; raw 14-day and fill context is quieter. The left action rows focus their matching cards without showing quantities. Try a card context change and its Undo if useful. In the right column's **This week's direction**, move the in-stock target toward **Save space** or **Avoid stockouts**. Check the live, read-only preview of cases and whole-warehouse peak; **Apply** commits the choice and **Reset to auto** restores automatic targets. An amber inherited-excess line appears if existing arrivals warrant it. The control changes the calculation without guaranteeing a measured fulfilment rate. On desktop, the two columns scroll separately; on a narrow screen they stack. Choose **Review orders**.
 
 ## 2. Orders
 
@@ -20,16 +20,16 @@ Add a widget for a measure and product scope, optionally with an alert threshold
 
 ## 4. Play
 
-Play starts automatically once the prepared result is ready. The clock advances in ten-minute steps at fixed 2×, about two seconds per simulated day. Watch stock, deliveries, shortages and the chosen widgets update; the charts redraw hourly. Use **Pause** and **Resume**, then **Replay** if you want another pass. At the final frame, choose **See results** to advance.
+Play starts automatically once the prepared result is ready. The clock advances in ten-minute steps at fixed 2×, about two seconds per simulated day. **Today so far** accumulates requests and losses during the current day; completed daily lines settle at 23:50, while the current day has its own hollow point. Dispatch stays pending until 18:00. Watch stock, deliveries, shortages and the chosen widgets update every ten simulated minutes. Use **Pause** and **Resume**, then **Replay** if you want another pass. At the final frame, choose **See results** to advance.
 
 ## 5. Results
 
-Read the matched-average-space comparison and expand the full comparison. In this designed example, average stock is **36.578548 versus 36.609444 pallets**, a **0.084394%** difference. The plan has **11,160 versus 11,564 short units** (404 fewer), but **89 versus 75 stockout product-days** (14 more) and **HK$68,203.72 versus HK$61,438.78 lost margin** (HK$6,764.94 more). The unchanged rule peaks at **57.986597 pallets**, or **96.64%** of capacity. The selected comparison is the actual approved-order policy; the saved actual result and its final widgets remain available in Results.
+Read the three whole-warehouse outcomes against the unchanged moving-average rule under the same 66-pallet cold-store capacity. In this designed example, the plan has **11,160 versus 11,564 short units** (404 avoided), **89 versus 75 stockout product-days** (14 extra) and **HK$68,203.72 versus HK$61,438.78 lost margin** (HK$6,764.94 extra). The adverse differences appear in red. Average closing stock is **36.864173 versus 36.609444 pallets**. Both replay peaks are **57.986597 pallets**, with zero days over capacity; the starting projected peak was **61.304557 pallets**, or **92.8857%** of capacity. The approved-order outcome and its final widgets remain available in Results.
 
-The matched comparison selects by measured average-pallet distance within a 2% tolerance, not by shortages. It used three evaluations here. Even the maximum tested explicit service level, 0.98, misses the product-day and lost-margin targets. Do not present this example as an overall policy win or a measured real-world saving. The result and its performance exception are recorded in the [Night 2 ledger](overnight-report.md) and [replay analysis](../reports/n5-replay-analysis.json).
+The 16-day result avoids some short units while losing more product-days and margin. The [five-SKU diagnosis](reports/night3-m1.md) traces the adverse outcome to smaller first orders and lead-time coverage, with no first-week capacity cuts or deferred default receipts. Present this as an accepted diagnosis, not an overall policy win or a measured real-world saving. The [work ledger](overnight-report.md) records the broader evidence.
 
 ## Quiet week and reset
 
-In sidebar **Settings**, choose **22 June 2026**. It has no cohort cards, though early CUSUM warnings may appear. Return to 27 July for the designed example. Reset restores the prepared week's initial report, orders and default widgets and clears manual planning progress and conversations. It retains synthetic source data and provider allowance. Reloading the app alone preserves saved progress. `python -m scoop.synth.load` intentionally replaces demo tables in the configured database.
+In sidebar **Settings**, choose **22 June 2026**. It has no cohort cards, though early CUSUM warnings may appear. Return to 27 July for the designed example. Reset restores that prepared week's persisted initial report, orders and default widgets, clearing edits, context, chat, replay and progression. A same-world reset reuses small saved plan records without rebuilding source data or model fits or calling Gemini; measured API resets took 174, 85 and 94 ms, with a usable report in 1.404 s. A first unprepared week still needs preparation. Reloading alone preserves progress. `python -m scoop.synth.load` intentionally replaces demo tables in the configured database.
 
 The [system design](TECHNICAL_DESIGN.md) explains the model, replay and limits. This is one illustrative synthetic world, not a multi-seed evaluation. The archived 20 July and seed-42 measurements remain in that document for historical context.

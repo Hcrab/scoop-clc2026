@@ -60,7 +60,7 @@ def api(monkeypatch, request):
         frame.attrs['cohort_model']={'cases_overrides':case_edits,'leaves':[],'sku_factors':{}}
         return frame
     monkeypatch.setattr(planning,'suggest_orders',fake_orders)
-    monkeypatch.setattr(planning,'confirmation_capacity',lambda day,cases:{'capacity_pallets':10,'projected_peak_pallets':.1+sum(cases.values())/10,'inherited_peak_pallets':.1,'incremental_overcapacity_pallets':max(0,.1+sum(cases.values())/10-10),'feasible':.1+sum(cases.values())/10<=10})
+    monkeypatch.setattr(planning,'confirmation_capacity',lambda day,cases,*args:{'capacity_pallets':10,'projected_peak_pallets':.1+sum(cases.values())/10,'inherited_peak_pallets':.1,'incremental_overcapacity_pallets':max(0,.1+sum(cases.values())/10-10),'feasible':.1+sum(cases.values())/10<=10})
     with TestClient(app) as client:
         yield client,scope,clock,planning
 

@@ -4,17 +4,25 @@ from test_api_state import api
 from scoop.models import Plan, PurchaseSuggestion, Decision
 
 
-def test_order_groups_use_cohort_first_and_list_each_sku_once(api):
-    client, scope, _, _ = api
+def test_order_groups_use_cohort_first_and_list_each_sku_once(api,monkeypatch):
+    client, scope, _, planning = api
+    seen=[]
+    original=planning.confirmation_capacity
+    def capacity(day,cases,factors):
+        seen.append(factors)
+        return original(day,cases,factors)
+    monkeypatch.setattr(planning,'confirmation_capacity',capacity)
     with scope() as session:
         plan=session.get(Plan,'TESTAPI')
         plan.summary={'cohort_cards':[{'id':'first','name':'Leading cohort','skus':['IC001']},
                                       {'id':'overlap','name':'Overlapping cohort','skus':['IC001']}]}
+        session.get(PurchaseSuggestion,('TESTAPI','IC001')).adjustment=1.35
     result=client.get('/api/plans/TESTAPI/order-summary')
     assert result.status_code==200,result.text
     assert result.json()['groups']==[{'id':'first','name':'Leading cohort','skus':['IC001']}]
     assert result.json()['edited_skus']==[]
     assert result.json()['capacity']['projected_peak_pallets']>0
+    assert seen==[{'IC001':1.35}]
 
 
 def test_approve_orders_is_atomic_and_idempotent(api,monkeypatch):

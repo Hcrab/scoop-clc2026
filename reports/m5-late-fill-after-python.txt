@@ -1,0 +1,8 @@
+{
+  "date": "2026-07-27",
+  "daily_demand": 9898.0,
+  "daily_shipped": 9898.0,
+  "request_fraction_at_22": 1.0,
+  "dispatch_fraction_at_22": 1.0,
+  "displayed_fill_at_22": 1.0
+}

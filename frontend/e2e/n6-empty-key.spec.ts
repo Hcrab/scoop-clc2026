@@ -18,6 +18,10 @@ test('N6 empty-key process serves native report cards and editable order view',a
   await expect(frame.locator('figure[data-card="cohort"]')).toHaveCount(initial.cohort_cards.length);
   await expect(frame.locator('figure[data-card="cohort"]').first()).toContainText('Strawberry');
   await expect(page.locator('.cohort-card').first()).toContainText('Strawberry');
+  await expect(page.locator('.cohort-preview-row')).toContainText('cases this week');
+  await expect(page.locator('.cohort-preview-row')).not.toContainText(/updating/i);
+  await expect(page.getByRole('slider',{name:'In-stock target'})).toBeEnabled();
+  await expect.poll(()=>page.locator('.product-icon img').evaluateAll(nodes=>nodes.every(img=>(img as HTMLImageElement).complete&&(img as HTMLImageElement).naturalWidth>0))).toBeTruthy();
   await mkdir(path.resolve('..','docs','screenshots'),{recursive:true});
   await page.screenshot({path:path.resolve('..','docs','screenshots','n6-empty-key.png'),animations:'disabled'});
   await page.getByRole('button',{name:'Review orders',exact:true}).click();

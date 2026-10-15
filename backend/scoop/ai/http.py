@@ -1,5 +1,6 @@
 """Actual assistant progress events; final responses are emitted after commit."""
 from datetime import datetime
+from contextvars import copy_context
 import json
 import logging
 from queue import Empty,Queue
@@ -69,18 +70,19 @@ def stream_chat(pid:str,body:ChatRequest):
             logger.error('Assistant request failed (%s)',type(exc).__name__)
             events.put(('error',{'detail':'The response could not be saved. No partial plan change was committed. Please try again.','status':503}))
         finally:
-            events.put(('done',{}))
             worker_lease.__exit__(None,None,None)
+            events.put(('done',{}))
 
     def stream():
         # Reserve activity before starting the thread so disconnects cannot let
         # a simulation switch overtake a not-yet-scheduled assistant worker.
         nonlocal worker_lease
         worker_lease=gate.activity()
-        worker_lease.__enter__()
-        try: Thread(target=work,daemon=True,name='scoop-assistant').start()
+        worker_context=copy_context()
+        worker_context.run(worker_lease.__enter__)
+        try: Thread(target=worker_context.run,args=(work,),daemon=True,name='scoop-assistant').start()
         except BaseException:
-            worker_lease.__exit__(None,None,None)
+            worker_context.run(worker_lease.__exit__,None,None,None)
             raise
         while True:
             try:kind,payload=events.get(timeout=10)

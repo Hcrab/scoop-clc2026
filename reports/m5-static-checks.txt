@@ -1,0 +1,45 @@
+Font sizes outside tokens
+COMMAND: ["rg", "--pcre2", "-n", "-o", "font-size\\s*:\\s*(?!\\s|var\\(|inherit\\b|unset\\b)[^;}\\n]+", "frontend/src"]
+EXIT: 1
+(no matches)
+
+Literal font shorthand sizes
+COMMAND: ["rg", "--pcre2", "-n", "-o", "font\\s*:[^;}\\n]*\\b\\d+(?:\\.\\d+)?(?:px|rem|em|pt)\\b", "frontend/src"]
+EXIT: 1
+(no matches)
+
+Inline fontSize
+COMMAND: ["rg", "-n", "fontSize", "frontend/src"]
+EXIT: 1
+(no matches)
+
+Removed UI copy
+COMMAND: ["rg", "-n", "-i", "-F", "-e", "MAKE EVERY CASE COUNT", "-e", "Follow the evidence. Set a clear direction. Buy with confidence.", "-e", "The right stock, on the right day.", "-e", "One warehouse. A smarter weekly rhythm.", "-e", "Where demand is changing", "-e", "Keep attention where it matters", "-e", "Stock and space", "-e", "Fewer stockouts ↔ Less space", "-e", "Fewer stockouts ⟷ Less space", "-e", "Warehouse storage notice", "frontend/src", "backend/scoop"]
+EXIT: 1
+(no matches)
+
+Type tokens
+COMMAND: ["rg", "-n", "--", "--type-(page|section|key|body|label):", "frontend/src/typography.css"]
+EXIT: 0
+2:  --type-page: 32px;
+3:  --type-section: 20px;
+4:  --type-key: 28px;
+5:  --type-body: 15px;
+6:  --type-label: 13px;
+
+Diff check
+COMMAND: ["git", "diff", "--check"]
+EXIT: 0
+warning: in the working copy of 'backend/scoop/ai/http.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/scoop/api/service.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/scoop/config.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/scoop/simulation_jobs.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_action_orders.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_ai_provider.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_cohort_planning.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_intraday.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_simulation_jobs.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/reports/night3-m4.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/e2e/n6-empty-key.spec.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/e2e/walkthrough.spec.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'reports/n6-walkthrough.json', LF will be replaced by CRLF the next time Git touches it

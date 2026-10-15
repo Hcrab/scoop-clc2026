@@ -13,15 +13,24 @@ test('N6 real report → orders → watch → timed Play → measured Results', 
   page.on('pageerror',error=>record.errors.push(error.message));
   page.on('request',req=>{if(watchEdits&&req.method()==='POST'&&/\/(play|simulation)$/.test(new URL(req.url()).pathname))record.simulation_requests.push(req.url())});
   const read=async(suffix='')=>{const response=await request.get(endpoint+suffix,{timeout:120_000});expect(response.ok(),await response.text()).toBeTruthy();return response.json()};
-  const top=async()=>{await page.evaluate(()=>window.scrollTo(0,0));await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))};
+  const top=async()=>{await page.evaluate(()=>{window.scrollTo(0,0);document.querySelector('.report-column')?.scrollTo(0,0);document.querySelector('.cohort-panel')?.scrollTo(0,0)});await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))};
   const shot=async(name:string)=>{
     await expect(page.locator('.inline-refresh')).toHaveCount(0);
+    if(await page.locator('.cohort-panel').count()){
+      await expect(page.locator('.cohort-preview-row')).toContainText('cases this week');
+      await expect(page.locator('.cohort-preview-row')).not.toContainText(/updating/i);
+      await expect(page.getByRole('slider',{name:'In-stock target'})).toBeEnabled();
+    }
     await expect.poll(()=>page.locator('.product-icon img').evaluateAll(nodes=>nodes.every(img=>(img as HTMLImageElement).complete&&(img as HTMLImageElement).naturalWidth===256))).toBeTruthy();
     await top();const file=`n6-${name}.png`;await page.screenshot({path:path.join(out,file),animations:'disabled'});record.screenshots.push(`docs/screenshots/${file}`)
   };
   const quantities=(detail:any)=>detail.orders.map((o:any)=>[o.sku,o.final_cases??Math.max(0,o.suggested_cases-o.capacity_cut_cases)]).sort((a:any,b:any)=>a[0].localeCompare(b[0]));
   const widgetState=(dashboard:any)=>dashboard.widgets.map(({id,title,metric,scope,position,threshold}:any)=>({id,title,metric,scope,position,threshold}));
+  const settings=await(await request.get('/api/demo-settings')).json();
+  const fresh=await request.post('/api/demo-settings/reset',{data:{scenario_id:settings.scenario_id,week_start:'2026-07-27'},timeout:120_000});
+  expect(fresh.ok()).toBeTruthy();
   const initial=await read(),dashboard=await read('/dashboard');
+  expect(initial.flow).toMatchObject({step:'report',max_step:'report'});
   const initialWidgets=widgetState(dashboard);
   record.initial={stage:initial.plan.stage,quantities:quantities(initial),widgets:initialWidgets};
   expect(initial.review.status).toBe('complete');
@@ -37,13 +46,16 @@ test('N6 real report → orders → watch → timed Play → measured Results', 
     await expect(frame.locator('figure[data-card="cohort"]').first()).toHaveAttribute('data-id',initial.cohort_cards[0].id);
     await expect(page.locator('.cohort-card')).toHaveCount(initial.cohort_cards.length);
     await expect(page.locator('.cohort-card').first()).toBeVisible();
+    await expect(page.getByRole('heading',{name:"This week's direction",exact:true})).toBeVisible();
     await expect(page.getByText('Loading changes…',{exact:true})).toHaveCount(0);
     await shot('01-report');
     record.report={model:initial.review.model,title:initial.review.presentation.title,first_card:initial.cohort_cards[0].name};
 
+    const ordersStarted=Date.now();
     await page.getByRole('button',{name:'Review orders',exact:true}).click();
     await expect(page.getByRole('tab',{name:/\bOrders\b/})).toHaveAttribute('aria-selected','true');
-    await expect(page.locator('.action-group tbody tr').first()).toBeVisible();
+    await expect(page.locator('.action-group tbody tr').first()).toBeVisible({timeout:120_000});
+    record.orders={ready_ms:Date.now()-ordersStarted,capacity_text:await page.locator('.action-capacity strong').textContent()};
     await expect(page.getByRole('link',{name:'Export orders',exact:true})).toHaveAttribute('href',`${endpoint}/orders.csv`);
     expect(await page.locator('.action-capacity').evaluate(el=>getComputedStyle(el).position)).toBe('sticky');
     await expect(page.locator('.action-group').first().locator('.product-icon img').first()).toBeVisible();
@@ -94,15 +106,21 @@ test('N6 real report → orders → watch → timed Play → measured Results', 
     await expect(page.getByRole('tab',{name:/\bResults\b/})).toHaveAttribute('aria-selected','true');
     await expect(page.locator('.play-outcomes strong')).toHaveCount(3);
     await expect(page.locator('.results-scenario')).toContainText('Illustrative scenario');
-    const result=(await read('/simulation')).result,summary=result.matched.summary;
+    const result=(await read('/simulation')).result,summary=result.summary;
+    expect(result).not.toHaveProperty('matched');
     const diffs=['lost_units','stockout_sku_days','lost_margin'].map(key=>summary.baseline[key]-summary.scoop[key]);
     await expect(page.locator('.play-outcomes .result-negative')).toHaveCount(diffs.filter(value=>value<0).length);
     await expect(page.locator('.results-view .dashboard-widget')).toHaveCount(initialWidgets.length+1);
+    const peakText=(value:number)=>value.toLocaleString('en-HK',{maximumFractionDigits:1});
+    await expect(page.locator('.results-cold-store')).toHaveText(`Same cold store (${result.capacity_pallets} pallets) · this plan peaks at ${peakText(summary.scoop.peak_pallets)}, the rule at ${peakText(summary.baseline.peak_pallets)}`);
     await shot('06-results');
     await page.getByText('See full comparison',{exact:true}).click();
-    await expect(page.getByText('Actual approved orders · whole warehouse',{exact:true})).toBeVisible();
+    await expect(page.getByText('Whole warehouse · actual approved orders',{exact:true})).toBeVisible();
+    await expect(page.locator('.results-table-wrap table')).toHaveCount(1);
     expect(quantities(await read())).toEqual(quantities(initial));
-    record.result={matched:result.matched.summary,space_gap:result.matched.relative_pallet_gap,simulation_count:result.matched.simulation_count,differences:diffs,performance_exception:'N5: three-metric superiority remains BLOCKED; walkthrough checks truthful rendering and flow.'};
+    record.result={capacity_pallets:result.capacity_pallets,summary,differences:diffs,
+      comparison:'Normal policies in the same cold store; no service search or space matching.',
+      outcome_note:'404 fewer units short; 14 extra stockout product-days and HK$6,764.94 extra margin lost. Five-SKU diagnosis is in docs/reports/night3-m1.md.'};
     expect(record.errors).toEqual([]);
   }finally{
     watchEdits=false;
@@ -110,7 +128,10 @@ test('N6 real report → orders → watch → timed Play → measured Results', 
     expect(widgetState(await read('/dashboard'))).toEqual(initialWidgets);
     expect(quantities(await read())).toEqual(quantities(initial));
     record.exact_widget_and_quantity_restoration=true;
-    await request.put(endpoint+'/flow',{data:{step:'report'}});
+    const restored=await request.post('/api/demo-settings/reset',{data:{scenario_id:settings.scenario_id,week_start:'2026-07-27'},timeout:120_000});
+    expect(restored.ok()).toBeTruthy();
+    expect((await read()).flow).toMatchObject({step:'report',max_step:'report'});
+    record.clean_initial_state_restored_by_reset=true;
     await writeFile(path.resolve('..','reports','n6-walkthrough.json'),JSON.stringify(record,null,2)+'\n');
   }
 });

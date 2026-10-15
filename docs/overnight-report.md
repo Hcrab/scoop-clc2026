@@ -8,14 +8,14 @@
 | M1 Same cold store | Accepted | `517d776` | 25 tests + real Results capture; both peaks 57.9866 / 60; 404 units avoided, 14 extra product-days, HK$6,764.94 extra lost margin. Five-SKU diagnosis and fixes recorded. |
 | M2 Demo start state | Accepted | `b564792` | Capacity 66 pallets; projected peak 61.3046 = 92.8857%. Source requests, stock, policy settings and ledger retained. |
 | M3 Report layout and language | Accepted | `f176128` | 76 tests + real preview/Apply/Undo/action-link/scroll flow; Gemini report regenerated; screenshots reviewed. |
-| M4 Play widget values | Accepted | This phase | 27 backend + 4 frontend tests; real 00:50 capture shows 3 / 4 units and separate partial points; full-day close verified. |
-| M5 Walkthrough and docs | Not started | — | Refresh the five-step captures and document the delivered comparison. |
+| M4 Play widget values | Accepted | `26ea098` | 27 backend + 4 frontend tests; real 00:50 capture shows 3 / 4 units and separate partial points; full-day close verified. |
+| M5 Walkthrough and docs | Accepted | This phase | 287 backend tests; clean-reset walkthrough and empty-key browser pass; seven captures reviewed; timing, docs and final state verified. |
 
 Branch `claude/scoop-prototype`; starting revision `43b44fae4c70806137e276cfc4479ae5d955abee`. Night 2 is archived in [reports/night2.md](reports/night2.md). The user explicitly requested fast Reset before supplying the Night 3 handoff; finish and push it before M1. Work proceeds M1→M5 in order, with evidence for every check and a push after each accepted phase. No multi-seed work, deployment, slide deck, rebase or force-push.
 
 Tonight's new Gemini allowance is **$10**, starting after **160 historical calls / $16.897085 estimated or reserved**. The full ledger is retained. The cumulative enforcement cap is **$26.897085**; a new 120-call allowance gives a cumulative call cap of 280. This does not grant $26.90 of new usage. Receipt: `reports/night3-budget-start.json`. Reuse the stored report until M3 is complete, then regenerate it with `gemini-3.8-flash`. Ordinary tests use the scripted provider.
 
-After M3: **169 lifetime calls / $17.428208**, hence **$0.531123 new Night 3 usage**, approximately **$9.468877** of tonight's allowance remaining. The final regenerated report is persisted and included in the clean Reset template.
+Final after M5: **169 lifetime calls / $17.428208**, hence **$0.531123 new Night 3 usage**, approximately **$9.468877** of tonight's allowance remaining. M4 and M5 used no provider calls. The regenerated report is persisted and included in the clean Reset template; the app is left at the initial Report step with 75 orders and five widgets. Source quantities remain unchanged. All Night 3 phases are accepted, including M1's explicitly allowed five-SKU diagnosis alternative.
 
 ## Requested pre-step — fast Reset
 
@@ -52,4 +52,8 @@ Local runtime repair: PostgreSQL accepted TCP but could not complete new session
 
 ## M5 — Walkthrough and documentation
 
-- ❌ Pending — Five-step walkthrough passes, `docs/screenshots/n6-*.png` refreshed, TECHNICAL_DESIGN and Simplifications updated, summary covers every phase.
+- ✅ Five-step walkthrough — `frontend/e2e/walkthrough.spec.ts` → **1 passed (1.1 min)** against real HTTP data and the stored Gemini report; `reports/m5-walkthrough-browser.txt`, `n6-walkthrough.json`. Clean Reset start, Orders ready in **484 ms**, approval prepares one replay, adding a widget makes no replay request, timed Play reaches truthful Results, Undo restores all 75 quantities and five widget definitions/IDs/order, and Reset restores the initial Report step. No mocked responses or page errors.
+- ✅ Screenshots and docs — All seven `docs/screenshots/n6-*.png` captures refreshed and personally reviewed, with five litmus answers per capture in [the M5 record](reports/night3-m5.md). README, DEMO and TECHNICAL_DESIGN cover the current 66-pallet comparison, receipt admission, magnitude bands, direction preview, partial-day values and Simplifications. Summary above covers the requested pre-step and every M1–M5 phase.
+- ✅ Empty-key browser — **1 passed (7.7 s)** in a real temporary TCP process configured with an empty key: native cards, Orders and unchanged quantities, no page errors; `reports/m5-empty-key-python.txt`, `n6-empty-key.json`.
+- ✅ Integration and regression — **287 backend tests passed in 76.85 s**, including strict unhandled-thread-warning checks; `reports/m5-final-tests.txt`. Clean-start verification fixed a repeated cohort fit in existing-plan capacity checks and a streaming-chat activity lease that could prevent later Reset. Both fixes have regression assertions and change no model threshold, prior or buffer. The final production frontend build remains the accepted M4 build; M5 changes browser tests, backend integration and docs. Source typography/removed-copy scans and diff check pass (`m5-static-checks.txt`).
+- ✅ Final state and allowance — `reports/m5-final-state.json`: Reset **66 ms**, warm order summary **42 ms**, projected peak **61.3045565055 / 66**, source checksum unchanged, report hash unchanged, replay not started, clean Report. Ledger still **169 / $17.428208** and Night 3 new spend **$0.531123**. [Full evidence, cold-capacity timing and troubleshooting](reports/night3-m5.md).

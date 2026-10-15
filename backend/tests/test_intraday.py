@@ -44,10 +44,14 @@ def test_profile_arrivals_and_events_are_timed_and_stable(played_week):
     for key in ('demand_cdf', 'dispatch_cdf'):
         assert all(0 <= a <= b <= 1 for a, b in zip(profile[key], profile[key][1:]))
     assert len(DAYTIME_REQUEST_WEIGHTS) == len(DEMAND_HOURLY_WEIGHTS) == 24
-    assert all(weight > 0 for weight in DEMAND_HOURLY_WEIGHTS)
+    assert all(weight > 0 for weight in DEMAND_HOURLY_WEIGHTS[:22])
+    assert DEMAND_HOURLY_WEIGHTS[22:] == (0, 0)
     assert sum(DEMAND_HOURLY_WEIGHTS) == pytest.approx(1)
-    assert all(new == pytest.approx(.9 * old + .1 / 24)
-               for old, new in zip(DAYTIME_REQUEST_WEIGHTS, DEMAND_HOURLY_WEIGHTS))
+    assert all(new == pytest.approx(.9 * old + (.1 / 22 if hour < 22 else 0))
+               for hour, (old, new) in enumerate(zip(DAYTIME_REQUEST_WEIGHTS, DEMAND_HOURLY_WEIGHTS)))
+    assert profile['demand_cdf'][22 * 6] == 1
+    assert all(dispatch <= requested for dispatch, requested in zip(
+        profile['dispatch_cdf'], profile['demand_cdf']))
     assert 0 < profile['demand_cdf'][5] < profile['demand_cdf'][60]
     for day, receipts in enumerate(profile['arrival_minutes']):
         for j, supplier in enumerate(('SUP01', 'SUP02')):

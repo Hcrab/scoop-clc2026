@@ -76,6 +76,19 @@ def test_confirmation_capacity_refits_and_uses_same_cohort_factor(monkeypatch):
     assert result["feasible"] is True
 
 
+def test_saved_capacity_factors_preserve_projection_without_refit_or_double_context(monkeypatch):
+    _fixtures(monkeypatch)
+    monkeypatch.setattr(planning.cohort_model, "fit", lambda _: {"sku_factors": {"A": {"f50": 1.25}}})
+    monkeypatch.setattr(planning, "capacity_projection", lambda *args, **kwargs:
+                        (np.full((3, 1), args[4]["A"] * 20), np.ones((3, 1), dtype=bool)))
+    expected = planning.confirmation_capacity(DAY, {"A": 2})
+    monkeypatch.setattr(planning.cohort_model, "fit", lambda _: pytest.fail("saved plan must not refit"))
+    monkeypatch.setattr(planning, "contextual_effects", lambda *args: pytest.fail("saved factors already contain context"))
+    actual = planning.confirmation_capacity(DAY, {"A": 2}, {"A": 1.25})
+    assert actual == expected
+    assert actual["projected_peak_pallets"] == pytest.approx(.45)
+
+
 def test_recompute_refits_and_persists_new_cohort_evidence(monkeypatch):
     plan = SimpleNamespace(week_start=DAY, service_level=None, goal="margin",
                            summary={"existing": "kept"})
