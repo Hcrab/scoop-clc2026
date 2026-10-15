@@ -4,7 +4,7 @@
 
 | Phase | Status | Commit | Evidence / open issue |
 |---|---|---|---|
-| Requested pre-step: fast Reset | Accepted | This revision | Reset API 174 / 85 / 94 ms; usable report after 1.404 s; 47 focused backend tests and the real Settings flow pass. |
+| Requested pre-step: fast Reset | Accepted | `425ab1f` | Reset API 174 / 85 / 94 ms; usable report after 1.404 s; 47 focused backend tests and the real Settings flow pass. |
 | M1 Same cold store | Not started | — | Remove matched-space bisection; capacity constraints and five-SKU loss diagnosis. |
 | M2 Demo start state | Not started | — | Default projected peak at 90–95% of physical capacity. |
 | M3 Report layout and language | Not started | — | Direction preview, action rows, native metrics and independent columns. |
