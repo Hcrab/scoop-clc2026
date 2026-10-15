@@ -7,6 +7,8 @@ import { reportCharts } from './reportCharts';
 
 // Presentation content lives in an opaque-origin frame. Only this host bridge runs JS.
 function isolatedDocument(presentation: ReviewPresentation, detail: Detail, channel: string) {
+  const hostType = getComputedStyle(document.documentElement);
+  const typeTokens = ['page','section','key','body','label'].map(role => `--type-${role}:${hostType.getPropertyValue(`--type-${role}`).trim()}`).join(';');
   const parsed = new DOMParser().parseFromString(presentation.html, 'text/html');
   parsed.querySelectorAll('script,iframe,frame,frameset,object,embed,applet,base,meta,link,form,input,textarea,select,svg').forEach(node => node.remove());
   parsed.querySelectorAll('*').forEach(node => {
@@ -14,12 +16,16 @@ function isolatedDocument(presentation: ReviewPresentation, detail: Detail, chan
       const name = attr.name.toLowerCase();
       if (name.startsWith('on') || ['nonce', 'src', 'srcset', 'srcdoc', 'action', 'formaction', 'target', 'ping'].includes(name) || ((name === 'href' || name.endsWith(':href')) && !attr.value.startsWith('#'))) node.removeAttribute(attr.name);
     }
+    if (node instanceof HTMLElement) {
+      node.style.removeProperty('font');
+      node.style.removeProperty('font-size');
+    }
   });
   const css = presentation.css.replace(/<\/style/gi, '<\\/style');
   const policy = `default-src 'none'; script-src 'nonce-${channel}'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; media-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'`;
   const specs=[...parsed.querySelectorAll<HTMLElement>('figure[data-chart="line"]')].map(node=>({id:node.dataset.evidenceId||'',series:node.dataset.series||'actual,expected'}));
   const bridge = reportInteractionScript(detail, channel, reportCharts(detail,specs));
-  return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${policy}"><meta name="viewport" content="width=device-width, initial-scale=1"><style>html{margin:0;background:#fff;color:#284f3d}body{margin:0;padding:4px 0 12px;font:14px/1.8 system-ui,sans-serif;display:flow-root;overflow-wrap:anywhere}*{box-sizing:border-box}svg,img{max-width:100%;height:auto}button,summary,[data-evidence-id]{cursor:pointer}button{font:inherit}details{margin:12px 0}summary{min-height:36px}:focus-visible{outline:2px solid #39744f;outline-offset:3px}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}</style><style>${css}</style><style>${interactionStyles}</style></head><body>${parsed.body.innerHTML}<script nonce="${channel}">${bridge}</script></body></html>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${policy}"><meta name="viewport" content="width=device-width, initial-scale=1"><style>:root{${typeTokens}}html{margin:0;background:#fff;color:#284f3d}body{margin:0;padding:4px 0 12px;font-family:system-ui,sans-serif;font-size:var(--type-body);line-height:1.8;display:flow-root;overflow-wrap:anywhere}*{box-sizing:border-box}svg,img{max-width:100%;height:auto}button,summary,[data-evidence-id]{cursor:pointer}button{font:inherit}details{margin:12px 0}summary{min-height:36px}:focus-visible{outline:2px solid #39744f;outline-offset:3px}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}</style><style>${css}</style><style>${interactionStyles}</style></head><body>${parsed.body.innerHTML}<script nonce="${channel}">${bridge}</script></body></html>`;
 }
 
 export function GeneratedReport({presentation,detail,pending,onDiscuss,onSelectFinding,onDiscussEvidence}:{presentation:ReviewPresentation;detail:Detail;pending:boolean;onDiscuss:(id:string)=>void;onSelectFinding?:(id:string)=>void;onDiscussEvidence?:(id:string)=>void}) {
@@ -47,7 +53,7 @@ export function GeneratedReport({presentation,detail,pending,onDiscuss,onSelectF
     }
     window.addEventListener('message',receive);return()=>window.removeEventListener('message',receive);
   }, [channel, detail.findings, queries, pending, onDiscuss, onSelectFinding, onDiscussEvidence]);
-  return <article className="generated-report"><header className="generated-report-heading"><p>Week of {fullDate(detail.plan.week_start)}{detail.metadata?.facts_through?` · Facts through ${fullDate(detail.metadata.facts_through)}`:''}</p><h2>{presentation.title}</h2></header>
+  return <article className="generated-report"><header className="generated-report-heading"><p>{detail.metadata?.facts_through?`Facts through ${fullDate(detail.metadata.facts_through)}`:fullDate(detail.plan.week_start)}</p><h2>{presentation.title}</h2></header>
     <iframe ref={frame} title={presentation.title || 'Weekly report'} className="generated-report-frame" sandbox="allow-scripts" referrerPolicy="no-referrer" srcDoc={document} style={{height}}/>
     <details className="report-evidence-index"><summary>Report evidence</summary><div>{queries.map((q,i)=><button key={q.id||i} className="text-button" onClick={()=>setEvidenceId(q.id||`Q${i+1}`)}>{q.id||`Q${i+1}`} · {q.name.replaceAll('_',' ')}</button>)}{detail.findings.map(f=><button key={f.id} className="text-button" onClick={()=>setEvidenceId(f.id)}>{typeof f.evidence.display==='string'?f.evidence.display:f.tag_id} · {f.district}</button>)}</div>{detail.review?.created_at&&<small>Prepared {fullDate(detail.review.created_at)}</small>}</details>
     {evidenceId&&(query||finding)&&<section className="report-host-evidence" aria-label={finding?findingTitle:`Evidence ${evidenceId}`}><h3>{finding?findingTitle:`Evidence ${evidenceId}`}</h3>

@@ -1,0 +1,43 @@
+{
+  "mocked_responses": false,
+  "extra_llm_calls": false,
+  "screens": [
+    "docs/screenshots/p5-report.png",
+    "docs/screenshots/p5-report-evidence.png",
+    "docs/screenshots/p5-orders.png",
+    "docs/screenshots/p5-order-evidence.png",
+    "docs/screenshots/p5-dashboard.png",
+    "docs/screenshots/p5-widget-sheet.png",
+    "docs/screenshots/p5-play-result.png",
+    "docs/screenshots/p5-stores.png",
+    "docs/screenshots/p5-store-details.png",
+    "docs/screenshots/p5-catalog.png",
+    "docs/screenshots/p5-product-details.png",
+    "docs/screenshots/p5-evaluation.png",
+    "docs/screenshots/p5-settings.png",
+    "docs/screenshots/p5-discussion.png",
+    "docs/screenshots/p5-narrow.png"
+  ],
+  "fonts": {
+    "body": "15px",
+    "title": "32px",
+    "tokens": {
+      "page": "32px",
+      "section": "20px",
+      "key": "28px",
+      "body": "15px",
+      "label": "13px"
+    }
+  },
+  "dashboard_label_height": 17,
+  "play": {
+    "days": 16,
+    "affected_products": 75,
+    "comparison": {
+      "units_saved": -4668,
+      "pallet_difference": -6.00996961805555,
+      "stockout_days_avoided": -20
+    }
+  },
+  "page_errors": []
+}

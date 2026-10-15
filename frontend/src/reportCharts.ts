@@ -5,7 +5,10 @@ import type { Detail } from './types';
 
 export type FigureSpec = { id:string; series:string };
 type Row = Record<string,string|number>;
-type SavedChart = { html:Record<string,string>; defaultRange:string; ranges:number[] };
+type SavedChart = { html:Record<string,Record<string,string>>; defaultRange:string; ranges:number[] };
+// Each static SVG is drawn at its display width, so its label text is never
+// reduced from a large viewBox when a report card is narrow.
+const chartWidths=[240,320,480,680];
 const definitions = [
   {key:'actual',label:'Actual',color:'#205a4e'},
   {key:'expected',label:'Expected',color:'#91a398',dashed:true},
@@ -38,10 +41,13 @@ export function reportCharts(detail:Detail, specs:FigureSpec[]) {
     const source=sources.get(spec.id),series=chartSeries(spec.series),key=`${spec.id}|${series}`;
     if(!source||charts[key])continue;
     const rows=[...new Map(source.rows.map(row=>[String(row.date),row])).values()].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-    const lines=definitions.filter(line=>series.split(',').includes(line.key)&&rows.some(row=>typeof row[line.key]==='number'));
+    const lines=definitions.filter(line=>series.split(',').includes(line.key)&&rows.some(row=>typeof row[line.key]==='number'&&Number.isFinite(row[line.key])));
     const ranges=[7,14,28].filter(days=>rows.length>=days&&rows.slice(-days).every((row,i,tail)=>!i||Date.parse(String(row.date))-Date.parse(String(tail[i-1].date))===86400000));
-    const html:Record<string,string>={};
-    for(const range of ['all',...ranges.map(String)]) html[range]=renderToStaticMarkup(createElement(Chart,{data:range==='all'?rows:rows.slice(-Number(range)),lines,percent:source.percent}));
+    const html:Record<string,Record<string,string>>={};
+    for(const range of ['all',...ranges.map(String)]) {
+      html[range]={};
+      for(const width of chartWidths) html[range][width]=renderToStaticMarkup(createElement(Chart,{data:range==='all'?rows:rows.slice(-Number(range)),lines,percent:source.percent,plotWidth:width}));
+    }
     charts[key]={html,ranges,defaultRange:ranges.includes(14)?'14':ranges.includes(7)?'7':'all'};
   }
   return charts;

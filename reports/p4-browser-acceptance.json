@@ -5396,6 +5396,12 @@
     "orders_recomputed": 75,
     "final_cases": 1682,
     "stage": "direction",
-    "note": "Removed only P4 test-created context/widgets, then recomputed current orders. This is not an exact restoration of the older saved pre-test plan."
+    "note": "Removed only P4 test-created context/widgets, then recomputed current orders. This is not an exact restoration of the older saved pre-test plan.",
+    "context_history_inactivated": [
+      69,
+      70,
+      73,
+      78
+    ]
   }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { n, pct, date } from './api';
 export function Icon({ name, size = 20 }: { name: string; size?: number }) {
   const paths: Record<string, ReactNode> = {
@@ -28,22 +28,34 @@ export function DataView({ value }: { value: unknown }) {
   if (typeof value === 'object') return <dl className="data-grid">{Object.entries(value).map(([key, v]) => <div key={key}><dt>{key.replaceAll('_', ' ')}</dt><dd><DataView value={v}/></dd></div>)}</dl>;
   return <span>{typeof value === 'number' ? n(value, 4) : typeof value === 'boolean' ? value ? 'Yes' : 'No' : String(value)}</span>;
 }
-export function Chart({ data, lines, percent = false, small = false }: { data: Record<string, string | number>[]; lines: { key: string; label: string; color: string; dashed?: boolean; dots?: boolean }[]; percent?: boolean; small?: boolean }) {
-  if (!data.length) return <div className="chart-empty">The trend is not available yet.</div>;
-  const width = 680, height = small ? 150 : 260, left = 48, right = 18, top = 20, bottom = 36;
-  const values = data.flatMap(d => lines.map(l => Number(d[l.key]))).filter(Number.isFinite);
+export function Chart({ data, lines, percent = false, small = false, plotWidth }: { data: Record<string, string | number>[]; lines: { key: string; label: string; color: string; dashed?: boolean; dots?: boolean }[]; percent?: boolean; small?: boolean; plotWidth?: number }) {
+  const container = useRef<HTMLDivElement>(null);
+  const [measuredWidth, setMeasuredWidth] = useState(320);
+  const visibleLines = lines.filter(line => data.some(row => typeof row[line.key] === 'number' && Number.isFinite(row[line.key])));
+  useEffect(() => {
+    if (plotWidth !== undefined || !container.current) return;
+    const observer = new ResizeObserver(entries => {
+      const next = Math.round(entries[0].contentRect.width);
+      if (next > 0) setMeasuredWidth(next);
+    });
+    observer.observe(container.current);
+    return () => observer.disconnect();
+  }, [plotWidth, data.length, visibleLines.length]);
+  if (!data.length || !visibleLines.length) return <div className="chart-empty">No daily values available.</div>;
+  const width = Math.max(200, plotWidth ?? measuredWidth), height = small ? 150 : 260, left = 48, right = 18, top = 20, bottom = 36;
+  const values = data.flatMap(d => visibleLines.map(l => d[l.key])).filter((v): v is number => typeof v === 'number' && Number.isFinite(v));
   const lo = Math.min(0, ...values), hi = Math.max(...values, 0.001) * 1.12;
   const times=data.map(row=>Date.parse(String(row.date)));
   const first=times[0],duration=times.at(-1)!-first;
   const x = (i: number) => left + (Number.isFinite(duration)&&duration>0?(times[i]-first)/duration:i/Math.max(1,data.length-1)) * (width - left - right);
   const y = (v: number) => top + (hi - v) / (hi - lo) * (height - top - bottom);
-  const segments=(key:string)=>{const paths:string[][]=[];let current:string[]=[];data.forEach((row,i)=>{const value=Number(row[key]);if(Number.isFinite(value))current.push(`${x(i)},${y(value)}`);else if(current.length){paths.push(current);current=[]}});if(current.length)paths.push(current);return paths};
-  const summary = `${date(String(data[0].date))} to ${date(String(data.at(-1)!.date))}. ${lines.map(l=>{const value = Number(data.at(-1)?.[l.key]);return `${l.label}: ${!Number.isFinite(value)?'unavailable':percent?pct(value):n(value,1)} at the latest observation`}).join('. ')}.`;
-  return <div className={`chart ${small ? 'small' : ''}`}><svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={summary}>
+  const segments=(key:string)=>{const paths:string[][]=[];let current:string[]=[];data.forEach((row,i)=>{const value=row[key];if(typeof value==='number'&&Number.isFinite(value))current.push(`${x(i)},${y(value)}`);else if(current.length){paths.push(current);current=[]}});if(current.length)paths.push(current);return paths};
+  const summary = `${date(String(data[0].date))} to ${date(String(data.at(-1)!.date))}. ${visibleLines.map(l=>{const value = data.at(-1)?.[l.key];return `${l.label}: ${typeof value!=='number'||!Number.isFinite(value)?'unavailable':percent?pct(value):n(value,1)} at the latest observation`}).join('. ')}.`;
+  return <div ref={container} className={`chart ${small ? 'small' : ''}`}><svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={summary}>
     {[0, 1, 2, 3].map(i => { const val = lo + (hi - lo) * i / 3; return <g key={i}><line x1={left} x2={width - right} y1={y(val)} y2={y(val)} stroke="#e4e9e3"/><text x={left - 10} y={y(val) + 4} textAnchor="end">{percent ? pct(val) : n(val)}</text></g>; })}
-    {lines.map(l => l.dots?<g key={l.key} data-series={l.key}>{data.map((d,i)=>({i,v:Number(d[l.key])})).filter(d=>Number.isFinite(d.v)).map(d=><circle key={d.i} cx={x(d.i)} cy={y(d.v)} r="3.8" fill={l.color}/>)}</g>:<g key={l.key} data-series={l.key}>{segments(l.key).map((points,i)=><polyline key={i} fill="none" stroke={l.color} strokeWidth="2.8" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinejoin="round" strokeLinecap="round" points={points.join(' ')}/>)}</g>)}
-    {[0, Math.floor((data.length - 1) / 2), data.length - 1].filter((v, i, a) => a.indexOf(v) === i).map(i => <text key={i} x={x(i)} y={height - 10} textAnchor={i === 0 ? 'start' : i === data.length - 1 ? 'end' : 'middle'}>{date(String(data[i].date))}</text>)}
-  </svg><div className="legend">{lines.map(l => <span key={l.key}><i style={{ background:l.dashed?'none':l.color,borderTop:l.dashed?`2px dashed ${l.color}`:undefined }}/>{l.label}</span>)}</div><p className="chart-summary sr-only">{summary}</p></div>;
+    {visibleLines.map(l => l.dots?<g key={l.key} data-series={l.key}>{data.map((d,i)=>({i,v:d[l.key]})).filter((point): point is {i:number;v:number}=>typeof point.v==='number'&&Number.isFinite(point.v)).map(d=><circle key={d.i} cx={x(d.i)} cy={y(d.v)} r="3.8" fill={l.color}/>)}</g>:<g key={l.key} data-series={l.key}>{segments(l.key).map((points,i)=><polyline key={i} fill="none" stroke={l.color} strokeWidth="2.8" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinejoin="round" strokeLinecap="round" points={points.join(' ')}/>)}</g>)}
+    {[0, ...(width >= 360 ? [Math.floor((data.length - 1) / 2)] : []), data.length - 1].filter((v, i, a) => a.indexOf(v) === i).map(i => <text key={i} x={x(i)} y={height - 10} textAnchor={i === 0 ? 'start' : i === data.length - 1 ? 'end' : 'middle'}>{date(String(data[i].date))}</text>)}
+  </svg><div className="legend">{visibleLines.map(l => <span key={l.key}><i style={{ background:l.dashed?'none':l.color,borderTop:l.dashed?`2px dashed ${l.color}`:undefined }}/>{l.label}</span>)}</div><p className="chart-summary sr-only">{summary}</p></div>;
 }
 
 export function Metric({ label, value, unit }: { label: string; value: string; unit: string }) { return <div className="metric"><span>{label}</span><strong>{value}</strong><small>{unit}</small></div>; }
@@ -51,5 +63,5 @@ export function Modal({ title, children, onClose }: { title: string; children: R
   const ref = useRef<HTMLElement>(null);
   useEffect(() => { const before = document.activeElement as HTMLElement | null; ref.current?.focus(); const overflow = document.body.style.overflow; document.body.style.overflow = 'hidden'; return () => { document.body.style.overflow = overflow; before?.focus(); }; }, []);
   useEffect(() => { const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); if (e.key === 'Tab') { const elements = Array.from(ref.current?.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),a[href],summary') || []); const first = elements[0], last = elements[elements.length - 1]; if (e.shiftKey && (document.activeElement === first || document.activeElement === ref.current)) { e.preventDefault(); last?.focus(); } else if (!e.shiftKey && (document.activeElement === last || document.activeElement === ref.current)) { e.preventDefault(); first?.focus(); } } }; document.addEventListener('keydown', handler); return () => document.removeEventListener('keydown', handler); }, [onClose]);
-  return <div className="modal-backdrop" onClick={e => e.target === e.currentTarget && onClose()}><section ref={ref} tabIndex={-1} className="modal" role="dialog" aria-modal="true" aria-label={title}><button className="modal-close icon-button" aria-label="Close dialog" onClick={onClose}><Icon name="close"/></button><div className="eyebrow">SCOOP PLANNER</div><h2>{title}</h2>{children}</section></div>;
+  return <div className="modal-backdrop" onClick={e => e.target === e.currentTarget && onClose()}><section ref={ref} tabIndex={-1} className="modal" role="dialog" aria-modal="true" aria-label={title}><button className="modal-close icon-button" aria-label="Close dialog" onClick={onClose}><Icon name="close"/></button><h2>{title}</h2>{children}</section></div>;
 }

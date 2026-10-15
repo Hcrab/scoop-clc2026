@@ -1,0 +1,102 @@
+:root {
+  --type-page: 32px;
+  --type-section: 20px;
+  --type-key: 28px;
+  --type-body: 15px;
+  --type-label: 13px;
+}
+
+body, input, select, textarea, button, table, td { font-size: var(--type-body); }
+label, th, caption, small, .chart text, .chart-label, .legend { font-size: var(--type-label); }
+h1 { font-size: var(--type-page); font-weight: 650; }
+h2 { font-size: var(--type-section); font-weight: 600; }
+h3 { font-size: var(--type-body); font-weight: 600; }
+p, td { font-weight: 400; }
+label, th, caption, small, .chart text, .chart-label { font-weight: 500; }
+
+/* Keep explanatory copy and data readable beside the assistant. */
+.page-heading p, .section-heading p, .report-lead, .business-story p,
+.purchase-title>p, .purchase-rationale, .direction-description p,
+.generated-report-heading>p, .evidence-explanation, .weekly-review .message-body,
+.weekly-review-start p, .play-event p, .play-comparison p,
+.trend-explanation, .trend-evidence p, .cohort-panel p,
+.action-group td, .action-group tbody th, .play-comparison td,
+.play-comparison tbody th, .trend-evidence td, .cohort-table-wrap td,
+.edit-receipt td, .catalog-table td { font-size: var(--type-body); }
+.chart text, .chart-label, .trend-chart text { font-size: var(--type-label); fill: #526759; }
+th, .legend, .trend-evidence th { color: #526759; }
+td { color: #344e3e; }
+.nav-item.active { background: #dce7d5; color: var(--ink); font-weight: 600; }
+.nav-item:hover:not(.active) { background: #eef3eb; }
+
+/* The main figure carries each card; supporting values return to reading size. */
+.metric>strong, .dashboard-value, .play-widget-value,
+.trend-deviation strong, .cohort-key { font-size: var(--type-key); font-weight: 600; }
+.dashboard-preview strong, .trend-volumes dd, .report-stats strong { font-size: var(--type-body); font-weight: 600; }
+.play-outcomes strong { font-size: var(--type-key); font-weight: 600; }
+.trend-card h3, .dashboard-heading h2, .play-comparison h2,
+.weekly-review-heading h3 { font-size: var(--type-section); font-weight: 600; }
+.generated-report-heading h2 { font-size: var(--type-page); font-weight: 650; }
+.generated-report-heading { margin-bottom: 16px; }
+.generated-report-heading>p { margin-bottom: 8px; }
+.generated-report { overflow-anchor: none; }
+.network-intro { padding: 16px 24px; }
+.network-intro .district-summary { width: 100%; min-width: 0; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Rows remain distinct without a tinted first column or nested panels. */
+.action-group th:first-child, .action-group td:first-child,
+.cohort-table-wrap th:first-child, .cohort-table-wrap td:first-child { background: transparent; }
+.trend-volumes { gap: 16px; padding: 16px 0; }
+.trend-card, .dashboard-widget, .play-widget { padding: 16px; }
+.signal-list, .original-findings .signal-list {
+  display: flex; flex-wrap: wrap; gap: 16px; overflow: visible;
+  scroll-snap-type: none; padding-bottom: 0;
+}
+.signal-choice, .original-findings .signal-choice {
+  flex: 1 1 240px; min-width: min(100%, 240px); max-width: 100%;
+  scroll-snap-align: none;
+}
+
+/* Keep capacity in view; evidence targets leave room for its sticky height. */
+.action-capacity { position: sticky; top: 0; padding: 16px 0; gap: 16px; }
+.action-group { scroll-margin-top: 128px; }
+.action-group input { width: 112px; min-width: 0; min-height: 44px; }
+.action-group table { border-collapse: collapse; }
+.action-group th, .action-group td { padding: 8px; border-bottom: 1px solid var(--line); }
+.action-group tbody th { white-space: normal; overflow-wrap: anywhere; }
+.edit-receipt { scroll-margin-top: 128px; }
+.dashboard-evidence { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 8px; }
+.dashboard-evidence summary { color: var(--muted); font-size: var(--type-label); cursor: pointer; }
+.dashboard-evidence .table-wrap { max-height: 280px; overflow: auto; }
+.dashboard-evidence table { width: 100%; font-variant-numeric: tabular-nums; }
+.dashboard-evidence th, .dashboard-evidence td { padding: 8px; }
+
+.play-widget .chart-summary { display: block; }
+.play-comparison details ul { max-height: 192px; overflow: auto; padding: 8px 8px 8px 32px; }
+.play-comparison details { margin-top: 16px; }
+
+@media (max-width: 1100px) {
+  .stage-tabs .stage-lock { display: none; }
+  .stage-tabs .step-number, .with-dock .stage-tabs .step-number { display: flex !important; flex-shrink: 0; }
+  .stage-tabs button { gap: 8px; }
+  .stage-tabs button>span:nth-child(2) { min-width: 0; white-space: normal; }
+}
+
+@media (min-width: 761px) and (max-width: 950px) {
+  :root { --sidebar: 170px; }
+  .sidebar { padding: 24px 12px; }
+  .wordmark { justify-content: flex-start; margin-bottom: 32px !important; }
+  .nav-item { justify-content: flex-start; gap: 8px; padding: 12px 8px; }
+}
+@media (max-width: 760px) {
+  .network-intro .district-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wordmark { width: 42px; overflow: hidden; justify-content: flex-start; gap: 20px; }
+  .wordmark .logo { flex: none; }
+  .nav-item { width: 44px; gap: 24px; overflow: hidden; white-space: nowrap; }
+  .nav-item svg { flex: none; }
+  .play-comparison { padding: 16px; }
+  .play-comparison table { display: block; overflow-x: auto; }
+  .trend-card { padding: 16px; }
+  .action-group { overflow-x: auto; }
+  .action-group table { min-width: 520px; }
+}
