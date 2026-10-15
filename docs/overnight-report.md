@@ -5,7 +5,7 @@
 | Phase | Status | Commit | Main evidence / open issue |
 |---|---|---|---|
 | N1 Five-step flow | Accepted | `1a7b2ada3401` | Five screens; persisted replay; widget edits do not simulate. Cold preparation 37.203 s; accepted browser flow reused it. |
-| N2 Hours and minutes | Accepted | Pending commit | 129,600 balances checked; 31 correctly timed shortages; 31.212 s replay versus 30.931 s expected. |
+| N2 Hours and minutes | Accepted | `0311c5bf532a` | 129,600 balances checked; 31 correctly timed shortages; 31.212 s replay versus 30.931 s expected. |
 | N3 UI polish | Not started | — | Begins after N2 acceptance. |
 | N4 Product illustrations | Not started | — | 75 individual illustrations and a reviewed contact sheet. |
 | N5 Compound demo scenario | Not started | — | Single illustrative world; only the explicitly authorized small algorithm changes. |
