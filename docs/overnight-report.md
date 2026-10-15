@@ -6,7 +6,7 @@
 |---|---|---|---|
 | Requested pre-step: fast Reset | Accepted | `425ab1f` | Reset API 174 / 85 / 94 ms; usable report after 1.404 s; 47 focused backend tests and the real Settings flow pass. |
 | M1 Same cold store | Accepted | `517d776` | 25 tests + real Results capture; both peaks 57.9866 / 60; 404 units avoided, 14 extra product-days, HK$6,764.94 extra lost margin. Five-SKU diagnosis and fixes recorded. |
-| M2 Demo start state | Not started | — | Default projected peak at 90–95% of physical capacity. |
+| M2 Demo start state | Accepted | See phase commit | Capacity 66 pallets; projected peak 61.3046 = 92.8857%. Source requests, stock, policy settings and ledger retained. |
 | M3 Report layout and language | Not started | — | Direction preview, action rows, native metrics and independent columns. |
 | M4 Play widget values | Not started | — | Today-so-far values and partial daily curves without a midnight zero drop. |
 | M5 Walkthrough and docs | Not started | — | Refresh the five-step captures and document the delivered comparison. |
@@ -35,7 +35,7 @@ Local runtime repair: PostgreSQL accepted TCP but could not complete new session
 
 ## M2 — Demo start state
 
-- ❌ Pending — Default week's projected peak is 90–95% of capacity, with the measured number.
+- ✅ Default start — **61.3045565055 / 66 = 92.885691675%**, within 90–95%. Changed only the seed-93 physical capacity from 60 to 66, both in generator configuration and the existing local world; the peak is unchanged and no forecast/policy threshold was tuned. `reports/m2-start-state.json`, command output `m2-world-python.txt`. Source remains 1,233,000 rows / 6,523,011 requested / 6,484,384 shipped; zero provider calls. Recomputed native orders/cards and refreshed the clean Reset template. The stored report is deliberately reused until M3 regeneration. Future over-capacity presentation is part of M3. The measurement script now checks projected start-state occupancy, retaining replay peaks as context.
 
 ## M3 — Report text and layout
 

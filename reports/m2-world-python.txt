@@ -1,0 +1,163 @@
+{
+  "before": {
+    "capacity_pallets": 60.0,
+    "projected_peak_pallets": 61.304556505468874,
+    "inherited_peak_pallets": 61.304556505468874,
+    "incremental_overcapacity_pallets": 0.0,
+    "feasible": true,
+    "model_run": {
+      "version": "M202607-v2-s93",
+      "logic_version": "monthly-issued-v2",
+      "effective_start": "2026-07-01",
+      "effective_end": "2026-07-31",
+      "training_start": "2024-06-01",
+      "trained_through": "2026-06-30",
+      "calibration_start": "2026-06-01",
+      "calibration_end": "2026-06-30",
+      "calibration_source_version": "M202606-v2-s93",
+      "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+      "weather_cutoff": "previous_day_issued_forecast",
+      "seed": 93,
+      "protection_calibration_issues": [
+        "2026-06-01",
+        "2026-06-08"
+      ],
+      "protection_calibration_samples": 150,
+      "protection_calibration_outcome_end": "2026-06-24"
+    },
+    "series": [
+      {
+        "date": "2026-07-27",
+        "value": 46.70819444444445
+      },
+      {
+        "date": "2026-07-28",
+        "value": 54.298622290390455
+      },
+      {
+        "date": "2026-07-29",
+        "value": 61.304556505468874
+      },
+      {
+        "date": "2026-07-30",
+        "value": 55.28801903990525
+      },
+      {
+        "date": "2026-07-31",
+        "value": 56.23971022103448
+      },
+      {
+        "date": "2026-08-01",
+        "value": 54.54788322727269
+      },
+      {
+        "date": "2026-08-02",
+        "value": 44.78549055998016
+      },
+      {
+        "date": "2026-08-03",
+        "value": 40.488556599400916
+      },
+      {
+        "date": "2026-08-04",
+        "value": 46.014969228478144
+      },
+      {
+        "date": "2026-08-05",
+        "value": 50.93596819624806
+      },
+      {
+        "date": "2026-08-06",
+        "value": 45.35953813798109
+      },
+      {
+        "date": "2026-08-07",
+        "value": 44.10016064602006
+      }
+    ]
+  },
+  "after": {
+    "capacity_pallets": 66.0,
+    "projected_peak_pallets": 61.304556505468874,
+    "inherited_peak_pallets": 61.304556505468874,
+    "incremental_overcapacity_pallets": 0.0,
+    "feasible": true,
+    "model_run": {
+      "version": "M202607-v2-s93",
+      "logic_version": "monthly-issued-v2",
+      "effective_start": "2026-07-01",
+      "effective_end": "2026-07-31",
+      "training_start": "2024-06-01",
+      "trained_through": "2026-06-30",
+      "calibration_start": "2026-06-01",
+      "calibration_end": "2026-06-30",
+      "calibration_source_version": "M202606-v2-s93",
+      "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+      "weather_cutoff": "previous_day_issued_forecast",
+      "seed": 93,
+      "protection_calibration_issues": [
+        "2026-06-01",
+        "2026-06-08"
+      ],
+      "protection_calibration_samples": 150,
+      "protection_calibration_outcome_end": "2026-06-24"
+    },
+    "series": [
+      {
+        "date": "2026-07-27",
+        "value": 46.70819444444445
+      },
+      {
+        "date": "2026-07-28",
+        "value": 54.298622290390455
+      },
+      {
+        "date": "2026-07-29",
+        "value": 61.304556505468874
+      },
+      {
+        "date": "2026-07-30",
+        "value": 55.28801903990525
+      },
+      {
+        "date": "2026-07-31",
+        "value": 56.23971022103448
+      },
+      {
+        "date": "2026-08-01",
+        "value": 54.54788322727269
+      },
+      {
+        "date": "2026-08-02",
+        "value": 44.78549055998016
+      },
+      {
+        "date": "2026-08-03",
+        "value": 40.488556599400916
+      },
+      {
+        "date": "2026-08-04",
+        "value": 46.014969228478144
+      },
+      {
+        "date": "2026-08-05",
+        "value": 50.93596819624806
+      },
+      {
+        "date": "2026-08-06",
+        "value": 45.35953813798109
+      },
+      {
+        "date": "2026-08-07",
+        "value": 44.10016064602006
+      }
+    ]
+  },
+  "projected_capacity_fraction": 0.9288569167495284,
+  "source_checksum": {
+    "rows": 1233000,
+    "ordered": 6523011,
+    "shipped": 6484384
+  },
+  "new_provider_calls": 0
+}
