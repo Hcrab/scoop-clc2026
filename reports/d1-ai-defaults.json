@@ -1,0 +1,81 @@
+{
+  "before": {
+    "calls": 169,
+    "estimated_usd": 17.428208,
+    "input_tokens": 6224482,
+    "output_tokens": 355043,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "after": {
+    "calls": 171,
+    "estimated_usd": 17.645884,
+    "input_tokens": 6297779,
+    "output_tokens": 369407,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "status": "complete",
+  "title": "Value Strawberry Water Bars Surge 38% While Chocolate-Coated Lines Soften",
+  "dashboard_widgets": [
+    {
+      "title": "Value Strawberry Water Bars: Stock on Hand",
+      "scope": {
+        "kind": "cohort",
+        "key": "C831a53fca012"
+      },
+      "metric": "on_hand",
+      "threshold": {
+        "operator": "lt",
+        "value": 1000.0
+      }
+    },
+    {
+      "title": "Value Strawberry Water Bars: Service Fill Rate",
+      "scope": {
+        "kind": "cohort",
+        "key": "C831a53fca012"
+      },
+      "metric": "fill_rate",
+      "threshold": {
+        "operator": "lt",
+        "value": 0.92
+      }
+    },
+    {
+      "title": "Chocolate-Coated Cohort: Demand vs Expectation",
+      "scope": {
+        "kind": "cohort",
+        "key": "C6b627a31b52c"
+      },
+      "metric": "requested_vs_expected",
+      "threshold": null
+    },
+    {
+      "title": "Warehouse Lowest Days of Cover",
+      "scope": {
+        "kind": "warehouse",
+        "key": ""
+      },
+      "metric": "lowest_cover",
+      "threshold": {
+        "operator": "lt",
+        "value": 3.0
+      }
+    },
+    {
+      "title": "Cold-Store Peak Pallet Occupancy",
+      "scope": {
+        "kind": "warehouse",
+        "key": ""
+      },
+      "metric": "pallets",
+      "threshold": {
+        "operator": "gt",
+        "value": 62.0
+      }
+    }
+  ],
+  "evidence_reused": true,
+  "new_exploration_queries": 0
+}

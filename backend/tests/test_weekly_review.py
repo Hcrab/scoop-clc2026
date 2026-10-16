@@ -81,6 +81,21 @@ def report():
             'claims':[{'text':'The combination differs from its parent category.','kind':'observation','evidence_ids':['Q1']}],
             'questions':[{'text':'Was there a local promotion for these products this week?','finding_id':None}]}
 
+
+def test_report_validates_ai_default_widgets_from_exact_scopes(api):
+    _, scope, _, _ = api
+    from test_dashboard_health import default_specs
+    with scope() as session:
+        plan = session.get(Plan, 'TESTAPI')
+        packet = {**report(), 'dashboard_widgets': default_specs()}
+        queries = [{'id': 'Q1', 'name': 'query_group', 'args': {}, 'result': {}}]
+        result = weekly._finish(session, plan, packet, queries)
+        assert len(result['dashboard_widgets']) == 3
+        assert result['dashboard_widgets'][-1]['metric'] == 'lowest_cover'
+        packet['dashboard_widgets'][0]['scope']['key'] = 'MISSING'
+        with pytest.raises(ValueError, match='Unknown SKU'):
+            weekly._finish(session, plan, packet, queries)
+
 def test_live_loop_saves_evidence_questions_and_preserves_business(api,monkeypatch):
     from scoop.ai import exploration_tools
     c,scope,_,_=api

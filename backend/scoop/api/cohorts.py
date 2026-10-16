@@ -284,10 +284,11 @@ def undo_context(session, plan, edit_id):
         for data in before['watches']:
             session.add(WatchItem(**data))
         summary = deepcopy(plan.summary or {})
-        if 'dashboard_order' in (before['summary'] or {}):
-            summary['dashboard_order'] = before['summary']['dashboard_order']
-        else:
-            summary.pop('dashboard_order', None)
+        for key in ('dashboard_order', 'dashboard_customized'):
+            if key in (before['summary'] or {}):
+                summary[key] = before['summary'][key]
+            else:
+                summary.pop(key, None)
         plan.summary = summary
         edit.value = {**value, 'undone_at': datetime.now().isoformat()}
         session.flush()

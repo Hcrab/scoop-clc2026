@@ -81,3 +81,14 @@ test('partial last chart value remains a hollow marker outside connected lines',
   assert.equal((historical.match(/data-partial="true"/g) || []).length, 0);
   assert.equal(historical.match(/<polyline [^>]*points="([^"]+)"/)[1].trim().split(/\s+/).length, 3);
 });
+
+test('projected stockout points stay hollow and absent before the noon projection',()=>{
+  const lines=[{key:'plan',label:'Scoop plan',color:'#205a4e'},{key:'stockout',label:'Stockout',color:'#c96c59',dots:true}];
+  const data=[{date:'2026-10-15',plan:20,stockout:NaN},{date:'2026-10-16',plan:0,stockout:0}];
+  const html=renderToStaticMarkup(React.createElement(Chart,{data,lines,partialLast:true,partialLabel:'Projected full day',plotWidth:400}));
+  assert.match(html,/Projected full day/);
+  assert.equal((html.match(/data-partial="true"/g)||[]).length,2);
+  assert.match(html,/data-series="stockout"[^]*fill="var\(--paper, #fff\)"/);
+  const night=renderToStaticMarkup(React.createElement(Chart,{data:[data[0],{...data[1],plan:NaN,stockout:NaN}],lines,partialLast:true,plotWidth:400}));
+  assert.doesNotMatch(night,/data-partial="true"/);
+});

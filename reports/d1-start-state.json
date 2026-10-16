@@ -1,0 +1,91 @@
+{
+  "plan": "P20260727",
+  "source": [
+    1233000,
+    6523011,
+    6484384
+  ],
+  "allowance": {
+    "calls": 169,
+    "estimated_usd": 17.428208,
+    "input_tokens": 6224482,
+    "output_tokens": 355043,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "report_status": "complete",
+  "report_model": "gemini-3.8-flash",
+  "report_hash": "461f8cc8fe08a9e575376da082743720b5cf8f76a2094c96559bc0ee4281a48e",
+  "widgets": [
+    {
+      "id": "5cf10ca8e35c4d808b10daec29fb3aa4",
+      "title": "Value price \u00b7 Strawberry \u00b7 Water-based requests",
+      "scope": {
+        "kind": "cohort",
+        "key": "C831a53fca012"
+      },
+      "metric": "requested_vs_expected"
+    },
+    {
+      "id": "c2cd1e2d8f054910b0425687510412b3",
+      "title": "Other chocolate-coated requests",
+      "scope": {
+        "kind": "cohort",
+        "key": "C6b627a31b52c"
+      },
+      "metric": "requested_vs_expected"
+    },
+    {
+      "id": "4acaa76aedcc40b48e9f832281812e71",
+      "title": "Warehouse stock",
+      "scope": {
+        "kind": "warehouse",
+        "key": ""
+      },
+      "metric": "on_hand"
+    },
+    {
+      "id": "c7e13279538c469a9713b54829068c9d",
+      "title": "Warehouse pallets",
+      "scope": {
+        "kind": "warehouse",
+        "key": ""
+      },
+      "metric": "pallets"
+    },
+    {
+      "id": "31be3f7d44a44e7da7fc880d18f30f03",
+      "title": "Store fill rate",
+      "scope": {
+        "kind": "warehouse",
+        "key": ""
+      },
+      "metric": "fill_rate"
+    }
+  ],
+  "health": {
+    "period_start": "2026-06-29",
+    "through": "2026-07-26",
+    "requested_units": 288020.0,
+    "shipped_units": 285454.0,
+    "fill_rate": 0.9910908964655232,
+    "stockout_skus": [
+      "IC005",
+      "IC006",
+      "IC014",
+      "IC018",
+      "IC028",
+      "IC042",
+      "IC044",
+      "IC048",
+      "IC061",
+      "IC062",
+      "IC063"
+    ],
+    "stockout_sku_days": 23,
+    "pallets": 41.83319444444444,
+    "peak_pallets": 47.98958333333332,
+    "capacity_pallets": 66
+  },
+  "product_count": 75
+}

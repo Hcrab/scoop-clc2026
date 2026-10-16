@@ -1,0 +1,24 @@
+Removed Watch/Play names
+Command: ['rg', '-n', '-F', '-e', 'Moving-average rule', '-e', 'This plan', '-e', 'Pending dispatch', 'frontend/src']
+Exit: 1 (expected 1)
+(no matches/output)
+
+Simple-rule orange: palette definition and Results only
+Command: ['rg', '-n', '-F', '-e', '#b77d36', '-e', 'simpleRule', 'frontend/src']
+Exit: 0 (expected 0)
+frontend/src\dashboardHealth.ts:6:  requested:'#4e83b8', history:'#9aa6a0', scoop:'#205a4e', simpleRule:'#b77d36',
+frontend/src\Play.tsx:45:    <div className="results-chart"><h3>Cumulative units short · whole warehouse</h3><Chart data={comparison} lines={[{key:'plan',label:'Scoop plan',color:'#205a4e'},{key:'rule',label:'Simple rule',color:'#b77d36'}]}/></div>
+
+Diff whitespace
+Command: ['git', 'diff', '--check']
+Exit: 0 (expected 0)
+warning: in the working copy of 'backend/scoop/api/dashboard.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/scoop/dashboard.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/scoop/demo_reset.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_simulation_jobs.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/test_unified_dashboard.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/Dashboard.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/replayData.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/types.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/ui.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/tests/widget-today.test.cjs', LF will be replaced by CRLF the next time Git touches it

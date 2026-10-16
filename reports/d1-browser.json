@@ -1,0 +1,146 @@
+{
+  "mocked_responses": false,
+  "errors": [],
+  "screenshots": [
+    "docs/screenshots/d1-watch.png",
+    "docs/screenshots/d1-midnight.png",
+    "docs/screenshots/d1-noon.png",
+    "docs/screenshots/d1-stock-state.png"
+  ],
+  "watch": {
+    "tiles": "Fill rate\n99.1%\nof store requests\nStockouts\n11 products\n23 product-days\nLow cover\n↗\n38 products\nTap to see which\nCold store\n41.8 / 66\nPallets · peak 48",
+    "low_cover": [
+      "IC062",
+      "IC008",
+      "IC010",
+      "IC007",
+      "IC017",
+      "IC056",
+      "IC045",
+      "IC040",
+      "IC065",
+      "IC063",
+      "IC071",
+      "IC069",
+      "IC072",
+      "IC014",
+      "IC019",
+      "IC030",
+      "IC041",
+      "IC022",
+      "IC039",
+      "IC046",
+      "IC057",
+      "IC064",
+      "IC005",
+      "IC044",
+      "IC047",
+      "IC061",
+      "IC020",
+      "IC024",
+      "IC025",
+      "IC001",
+      "IC060",
+      "IC066",
+      "IC051",
+      "IC004",
+      "IC075",
+      "IC048",
+      "IC015",
+      "IC009"
+    ],
+    "default_widgets": [
+      {
+        "id": "a2c33815d942457685c7e696f51addf4",
+        "title": "Value Strawberry Water Bars: Stock on Hand",
+        "metric": "on_hand",
+        "scope": {
+          "kind": "cohort",
+          "key": "C831a53fca012"
+        }
+      },
+      {
+        "id": "95f8f913dae945c89332a7ea44072fec",
+        "title": "Value Strawberry Water Bars: Service Fill Rate",
+        "metric": "fill_rate",
+        "scope": {
+          "kind": "cohort",
+          "key": "C831a53fca012"
+        }
+      },
+      {
+        "id": "6e16a15ae2c14fdc83fc7782f9341b51",
+        "title": "Chocolate-coated requests",
+        "metric": "requested_vs_expected",
+        "scope": {
+          "kind": "cohort",
+          "key": "C6b627a31b52c"
+        }
+      },
+      {
+        "id": "985a3e18ee134adf8bf2d8b4259561a9",
+        "title": "Warehouse Lowest Days of Cover",
+        "metric": "lowest_cover",
+        "scope": {
+          "kind": "warehouse",
+          "key": ""
+        }
+      },
+      {
+        "id": "b66620fbb43e495e9c96396c3dd9f2e8",
+        "title": "Cold-store use",
+        "metric": "pallets",
+        "scope": {
+          "kind": "warehouse",
+          "key": ""
+        }
+      }
+    ]
+  },
+  "summary": {
+    "scoop": {
+      "fill_rate": 0.9458662372184171,
+      "lost_units": 11160,
+      "lost_margin": 68203.72,
+      "avg_pallets": 36.86417317708333,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 89,
+      "ending_on_hand": 65475,
+      "ordered_cases": 8349
+    },
+    "baseline": {
+      "fill_rate": 0.9439065562001591,
+      "lost_units": 11564,
+      "lost_margin": 61438.78,
+      "avg_pallets": 36.60944444444444,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 75,
+      "ending_on_hand": 48539,
+      "ordered_cases": 8209
+    }
+  },
+  "midnight": {
+    "clock": "DAY 3 OF 16 · 2×\n29 Jul 00:50",
+    "keys": [
+      "7.1 days",
+      "100%",
+      "1,281 units",
+      "2.5 days",
+      "51.8 pallets"
+    ],
+    "tiles": "Fill rate\n99.2%\nof store requests · through yesterday\nStockouts\n11 products\n23 product-days\nLow cover\n↗\n23 products\nTap to see which\nCold store\n51.8 / 66\nPallets · peak 58",
+    "partial_points": 0
+  },
+  "grouped_order": "Placed 17 orders, 409 cases\nMango Sticky Rice Bar\n\n54 cases · expected 4 Aug\n\nPeach Oolong Ice Bar\n\n14 cases · expected 4 Aug\n\nClassic Choc Crunch Bar\n\n14 cases · expected 3 Aug\n\nDecision\nDouble Choc Cone\n\n21 cases · expected 3 Aug\n\nDecision\nAlmond Choc Coated Bar\n\n27 cases · expected 3 Aug\n\nDecision\nChoc Hazelnut Cone\n\n15 cases · expected 3 Aug\n\nDecision\nVanilla Classic Cone\n\n12 cases · expected 3 Aug\n\nVanilla Choc Dip Bar\n\n23 cases · expected 3 Aug\n\nDecision\nMatcha Red Bean Bar\n\n21 cases · expected 4 Aug\n\nUji Matcha Cup\n\n19 cases · expected 4 Aug\n\nBlack Sesame Mochi 6-Pack\n\n32 cases · expected 4 Aug\n\nMango Mochi 6-Pack\n\n25 cases · expected 4 Aug\n\nHojicha Cone\n\n19 cases · expected 4 Aug\n\nDurian Cream Cup\n\n29 cases · expected 4 Aug\n\nCoffee Crunch Bar\n\n38 cases · expected 3 Aug\n\nDecision\nZero Sugar Choc Bar\n\n15 cases · expected 3 Aug\n\nDecision\nStrawberry Garden Sorbet Bar\n\n31 cases · expected 4 Aug",
+  "noon": {
+    "clock": "DAY 3 OF 16 · 2×\n29 Jul 12:40",
+    "partial_points": 5
+  },
+  "stock_state": {
+    "title": "Value Strawberry Water Bars: Stock on Hand",
+    "coral_dots": 8
+  },
+  "reset_restores_default_widgets": true
+}

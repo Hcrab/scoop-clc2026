@@ -2,17 +2,18 @@ import { useEffect, useMemo, type Dispatch, type SetStateAction } from 'react';
 import { date, fullDate, n, pct } from './api';
 import { Dashboard, type DashboardPlay } from './Dashboard';
 import { Chart } from './ui';
-import { palletsFor } from './replayData';
+import { evidenceUrl } from './evidence';
 import type { Detail, Product } from './types';
 import { ProductIcon } from './ProductIcon';
 
 type Policy = 'scoop'|'baseline';
 type Summary = {fill_rate:number;lost_units:number;lost_margin:number;avg_pallets:number;peak_pallets:number;days_over_capacity:number;stockout_sku_days:number;ending_on_hand:number;ordered_cases:number};
-type PlayEvent = {id:string;date:string;minute:number;time:string;at:string;kind:string;tone:'good'|'bad'|'warn'|'neutral';text:string;sku?:string;order_date?:string;cases?:number;card_ids?:string[]};
+type OrderEventLine = {sku:string;name:string;cases:number;order_date:string;expected_arrival:string;card_ids:string[]};
+type PlayEvent = {id:string;date:string;minute:number;time:string;at:string;kind:string;tone:'good'|'bad'|'warn'|'neutral';text:string;sku?:string;order_date?:string;cases?:number;card_ids?:string[];lines?:OrderEventLine[];automatic?:boolean};
 export type PlayResult = DashboardPlay & {start:string;end:string;days:number;events:PlayEvent[];summary:Record<Policy,Summary>;notes:Record<string,string|null>;affected_skus:string[]};
 export type ReplayState = {planId:string;orderHash:string|null;result:PlayResult|null;day:number;minute:number;running:boolean;unlocked:boolean};
 export const emptyReplay=(planId='',orderHash:string|null=null):ReplayState=>({planId,orderHash,result:null,day:-1,minute:0,running:false,unlocked:false});
-const POLICY_LABEL:Record<Policy,string>={scoop:'This plan',baseline:'Moving-average rule'};
+const POLICY_LABEL:Record<Policy,string>={scoop:'Scoop plan',baseline:'Simple rule'};
 
 export function Results({result,detail,products,path,revision=0}:{result:PlayResult;detail:Detail;products:Product[];path:string;revision?:number}){
   const rows:[string,(x:Summary)=>string,((s:Summary,b:Summary)=>number)?][]=[
@@ -38,9 +39,10 @@ export function Results({result,detail,products,path,revision=0}:{result:PlayRes
   });
   return <section className="results-view"><div className="play-comparison"><h2>Results · {fullDate(result.start)} – {fullDate(result.end)}</h2>
     <div className="play-outcomes"><div className={unitsAvoided<0?'result-negative':undefined}><span>{unitsAvoided<0?'Extra units short':'Units short avoided'}</span><strong>{n(Math.abs(unitsAvoided))}</strong></div><div className={daysAvoided<0?'result-negative':undefined}><span>{daysAvoided<0?'Extra stockout product-days':'Stockout product-days avoided'}</span><strong>{n(Math.abs(daysAvoided))}</strong></div><div className={marginAvoided<0?'result-negative':undefined}><span>{marginAvoided<0?'Extra margin lost':'Lost margin avoided'}</span><strong>HK${n(Math.abs(marginAvoided))}</strong></div></div>
-    <p className="results-cold-store">Same cold store ({n(result.capacity_pallets)} pallets) · this plan peaks at {n(summary.scoop.peak_pallets,1)}, the rule at {n(summary.baseline.peak_pallets,1)}</p>
+    <p className="results-cold-store">Same cold store ({n(result.capacity_pallets)} pallets) · Scoop plan peaks at {n(summary.scoop.peak_pallets,1)}, Simple rule at {n(summary.baseline.peak_pallets,1)}</p>
+    <p className="results-rule muted">Simple rule · 28-day average + 25%</p>
     <p className="results-scenario">Illustrative scenario · simulated warehouse and store outcomes.</p>
-    <div className="results-chart"><h3>Cumulative units short · whole warehouse</h3><Chart data={comparison} lines={[{key:'plan',label:'This plan',color:'#205a4e'},{key:'rule',label:'Moving-average rule',color:'#b28a5a'}]}/></div>
+    <div className="results-chart"><h3>Cumulative units short · whole warehouse</h3><Chart data={comparison} lines={[{key:'plan',label:'Scoop plan',color:'#205a4e'},{key:'rule',label:'Simple rule',color:'#b77d36'}]}/></div>
     <details><summary>Affected products · {result.affected_skus.length}</summary><ul>{result.affected_skus.map(sku=><li key={sku}>{names.get(sku)||sku}</li>)}</ul></details>
     <details><summary>See full comparison</summary>{table}</details>
   </div><Dashboard detail={detail} products={products} path={path} result={result} day={result.days-1} readonly revision={revision}/></section>;
@@ -55,12 +57,17 @@ export function PlayWeek({detail,products,path,replay,setReplay,revision=0,onSee
   const eventCount=result&&today?result.events.filter(event=>event.date<today||(event.date===today&&event.minute<=minute)).length:0;
   const events=useMemo(()=>result?result.events.slice(0,eventCount).reverse():[],[result,eventCount]);
   const hhmm=`${String(Math.floor(minute/60)).padStart(2,'0')}:${String(minute%60).padStart(2,'0')}`;
-  const used=result&&day>=0?palletsFor(result,products,day,minute):0;
-  const usage=result?used/result.capacity_pallets:0;
   const names=useMemo(()=>new Map(products.map(product=>[product.sku,product.name])),[products]);
-  const feed=useMemo(()=>events.map(event=><div key={event.id} className={`play-event ${event.tone}`}>{event.sku&&<ProductIcon sku={event.sku} size={32} decorative/>}<div><span>{date(event.date)} · {event.time}</span><p>{event.sku&&!event.text.toLowerCase().includes((names.get(event.sku)||'').toLowerCase())?<><strong>{names.get(event.sku)||event.sku}</strong> · </>:null}{event.text}</p></div></div>),[events,names]);
+  const feed=useMemo(()=>events.map(event=><div key={event.id} className={`play-event ${event.tone}`}>
+    {event.sku&&<ProductIcon sku={event.sku} size={32} decorative/>}
+    <div><span>{date(event.date)} · {event.time}</span>{event.kind==='order'&&event.lines?<details className="play-order-details">
+      <summary>{event.text}</summary>
+      {event.automatic&&<p className="muted">Automatic orders for the next week.</p>}
+      <ul>{event.lines.map(line=><li key={line.sku}><strong>{line.name}</strong><p>{n(line.cases)} cases · expected {date(line.expected_arrival)}</p>{line.card_ids.map((id,index)=><a key={id} href={evidenceUrl(detail.plan.id,`Q-cohort-${id}`)} target="_blank" rel="noreferrer">Decision{line.card_ids.length>1?` ${index+1}`:''}</a>)}</li>)}</ul>
+    </details>:<><p>{event.sku&&!event.text.toLowerCase().includes((names.get(event.sku)||'').toLowerCase())?<><strong>{names.get(event.sku)||event.sku}</strong> · </>:null}{event.text}</p>{event.card_ids?.map((id,index)=><a key={id} href={evidenceUrl(detail.plan.id,`Q-cohort-${id}`)} target="_blank" rel="noreferrer">Decision{event.card_ids!.length>1?` ${index+1}`:''}</a>)}</>}</div>
+  </div>),[events,names,detail.plan.id]);
   const update=(patch:Partial<ReplayState>)=>setReplay(current=>({...current,...patch}));
-  return <section className="play"><div className="play-bar"><div className="play-clock" data-day={today||''} data-minute={today?minute:''}><span>{today?`Day ${day+1} of ${result!.days} · 2×`:'Preparing…'}</span><strong>{today?`${date(today)} ${hhmm}`:`Week of ${fullDate(detail.plan.week_start)}`}</strong></div>{ready&&<div className={`play-capacity ${usage>1?'over-limit':''}`} aria-label={`Cold store ${used.toFixed(1)} of ${result.capacity_pallets.toFixed(1)} pallets`}><div className="play-capacity-line"><span>Cold store</span><strong>{used.toFixed(1)} <small>/ {result.capacity_pallets.toFixed(1)} pallets</small></strong></div><div className="play-capacity-track"><div style={{width:`${Math.min(100,Math.max(0,usage*100))}%`}}/></div></div>}{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,minute:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
+  return <section className="play"><div className="play-bar"><div className="play-clock" data-day={today||''} data-minute={today?minute:''}><span>{today?`Day ${day+1} of ${result!.days} · 2×`:'Preparing…'}</span><strong>{today?`${date(today)} ${hhmm}`:`Week of ${fullDate(detail.plan.week_start)}`}</strong></div>{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,minute:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
     <div className="play-body"><div><Dashboard detail={detail} products={products} path={path} result={result} day={day} minute={minute} readonly revision={revision}/></div><aside className="play-events" aria-live="polite"><h3>What happened</h3>{events.length?feed:<p className="muted">{result?'Nothing notable yet.':'Preparing the week…'}</p>}</aside></div>
   </section>;
 }

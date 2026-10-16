@@ -69,6 +69,15 @@ def _same_mechanics(before, after):
     # plan, order list, directions, or widgets must never replace the baseline.
     for name in ('plans', 'direction_items', 'purchase_suggestions', 'watch_items'):
         old, new = before[name], after[name]
+        if name == 'watch_items':
+            summary = after['plans'][0].get('summary') or {}
+            if (summary.get('dashboard_default_source') == 'ai'
+                    and not summary.get('dashboard_customized')
+                    and old and new
+                    and all(row['origin'] == 'baseline' for row in old + new)):
+                # First report authoring may choose the untouched initial layout.
+                # User widget edits are marked customized and remain excluded.
+                continue
         if name == 'plans':
             old = [{k: v for k, v in row.items() if k != 'summary'} for row in old]
             new = [{k: v for k, v in row.items() if k != 'summary'} for row in new]
