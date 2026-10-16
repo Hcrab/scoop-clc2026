@@ -1,0 +1,107 @@
+{
+  "upper_misses": 31,
+  "before_upper_misses": 17,
+  "after_low_misses": 75,
+  "by_origin": [
+    {
+      "origin": "2026-06-01",
+      "samples": 75,
+      "median_actual_forecast_ratio": 0.9794581557204576,
+      "new_upper_ratio": 1.0787100449118912,
+      "misses": 1,
+      "missed_skus": [
+        "IC053"
+      ]
+    },
+    {
+      "origin": "2026-06-08",
+      "samples": 75,
+      "median_actual_forecast_ratio": 0.9670070398058245,
+      "new_upper_ratio": 1.08679644569595,
+      "misses": 3,
+      "missed_skus": [
+        "IC023",
+        "IC036",
+        "IC053"
+      ]
+    },
+    {
+      "origin": "2026-06-15",
+      "samples": 75,
+      "median_actual_forecast_ratio": 0.9042683095647794,
+      "new_upper_ratio": 1.1009942746695467,
+      "misses": 0,
+      "missed_skus": []
+    },
+    {
+      "origin": "2026-06-22",
+      "samples": 75,
+      "median_actual_forecast_ratio": 0.9650984979761035,
+      "new_upper_ratio": 1.1015432468646134,
+      "misses": 0,
+      "missed_skus": []
+    },
+    {
+      "origin": "2026-06-29",
+      "samples": 75,
+      "median_actual_forecast_ratio": 1.0208027166317812,
+      "new_upper_ratio": 1.1009942746695467,
+      "misses": 11,
+      "missed_skus": [
+        "IC018",
+        "IC021",
+        "IC024",
+        "IC028",
+        "IC033",
+        "IC035",
+        "IC044",
+        "IC049",
+        "IC061",
+        "IC063",
+        "IC068"
+      ]
+    },
+    {
+      "origin": "2026-07-06",
+      "samples": 75,
+      "median_actual_forecast_ratio": 1.0471486545424002,
+      "new_upper_ratio": 1.0932834786575343,
+      "misses": 15,
+      "missed_skus": [
+        "IC006",
+        "IC008",
+        "IC010",
+        "IC014",
+        "IC016",
+        "IC021",
+        "IC028",
+        "IC033",
+        "IC042",
+        "IC054",
+        "IC061",
+        "IC062",
+        "IC063",
+        "IC073",
+        "IC074"
+      ]
+    },
+    {
+      "origin": "2026-07-13",
+      "samples": 28,
+      "median_actual_forecast_ratio": 0.9550699915656087,
+      "new_upper_ratio": 1.108404044427515,
+      "misses": 1,
+      "missed_skus": [
+        "IC006"
+      ]
+    }
+  ],
+  "misses_by_format": {
+    "cone": 8,
+    "cup": 4,
+    "multipack": 1,
+    "sandwich": 2,
+    "stick": 13,
+    "tub": 3
+  }
+}

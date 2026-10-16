@@ -1,0 +1,27 @@
+{
+  "status": "complete",
+  "model": "gemini-3.8-flash",
+  "title": "Value strawberry ice bars surge 38% while chocolate-coated lines soften",
+  "regeneration_required": true,
+  "reason": "Numeric claims lack cited evidence: [{\"claim_index\": 6, \"number\": \"132\", \"evidence_ids\": [\"Q-cohort-C831a53fca012\"], \"reason\": \"No cited evidence value matches within displayed rounding.\"}, {\"claim_index\": 6, \"number\": \"+2.2\", \"evidence_ids\": [\"Q-cohort-C831a53fca012\"], \"reason\": \"No cited evidence value matches within displayed rounding.\"}, {\"claim_index\": 6, \"number\": \"16,114\", \"evidence_ids\": [\"Q-cohort-C831a53fca012\"], \"reason\": \"No cited evidence value matches within displayed rounding.\"}, {\"claim_index\": 0, \"number\": \"132\", \"evidence_ids\": [\"Q-cohort-C6b627a31b52c\", \"Q-cohort-C831a53fca012\", \"Q2\", \"Q3\", \"Q4\", \"Q5\", \"Q6\"], \"reason\": \"No cited evidence value matches within displayed rounding.\"}, {\"claim_index\": 0, \"number\": \"16,114\", \"evidence_ids\": [\"Q-cohort-C6b627a31b52c\", \"Q-cohort-C831a53fca012\", \"Q2\", \"Q3\", \"Q4\", \"Q5\", \"Q6\"], \"reason\": \"No cited evidence value matches within displayed rounding.\"}]",
+  "refreshed_local_queries": 6,
+  "before": {
+    "calls": 171,
+    "estimated_usd": 17.645884,
+    "input_tokens": 6297779,
+    "output_tokens": 369407,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "after": {
+    "calls": 173,
+    "estimated_usd": 17.88305,
+    "input_tokens": 6372360,
+    "output_tokens": 386113,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "new_spend_usd": 0.237166,
+  "night3_remaining_usd": 9.014035,
+  "reset_template_refreshed": true
+}

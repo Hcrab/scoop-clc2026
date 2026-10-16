@@ -22,6 +22,7 @@ from .algorithms import cusum
 from .algorithms import cohort_model
 from .algorithms.forecast import protection_forecast, build_features, forecast_weather, daily_mean
 from .algorithms.replenish import SkuInput, plan_orders
+from .algorithms.protection_calibration import recent_forward_calibration
 from .algorithms.runs import RUN_B_END, artifacts, month_start, model_metadata
 from .algorithms.shiftshare import decompose
 from .db import engine, read_sql, session_scope
@@ -346,7 +347,8 @@ def suggest_orders(as_of: date, directions: list[dict], service_level: float | N
         ))
     capacity = float(read_sql("SELECT capacity_pallets FROM nodes WHERE id = 'DC1'").capacity_pallets.iloc[0])
     baseline, arrival_mask = capacity_projection(as_of, pos, st, model, adj, pending_arrivals, weather_scenario=weather_scenario)
-    plan = plan_orders(items, monthly.ratio_values, capacity if capacity_limit is None else capacity_limit, service_level,
+    calibration = recent_forward_calibration(st, as_of)
+    plan = plan_orders(items, calibration, capacity if capacity_limit is None else capacity_limit, service_level,
                        capacity_baseline=baseline, arrival_mask=arrival_mask, initial_cases=initial_cases)
     wd = prod.order_weekday.reindex(plan.sku).to_numpy()
     case_edits = cohort_result.get('cases_overrides', {}) if apply_case_overrides else {}
@@ -360,6 +362,7 @@ def suggest_orders(as_of: date, directions: list[dict], service_level: float | N
                      / units_per_pallet[None, :]).sum(axis=1)
         plan['projected_pallets'] = float(occupancy.max())
     plan.attrs["cohort_model"] = cohort_result
+    plan.attrs["protection_calibration"] = calibration.metadata
     plan.attrs["capacity_pallets"] = capacity
     plan.attrs["inherited_peak_pallets"] = float((np.maximum(baseline,0)/(st.products.units_per_case*st.products.cases_per_pallet).to_numpy()[None,:]).sum(axis=1).max())
     plan["model_version"] = model.version

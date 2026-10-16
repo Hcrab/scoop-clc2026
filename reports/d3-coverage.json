@@ -1,0 +1,290 @@
+{
+  "protocol": "docs/reports/day16-d3-protocol.md",
+  "world": 93,
+  "outcomes_through": "2026-07-26",
+  "overall": {
+    "samples": 478,
+    "before_central_80": 0.5543933054393305,
+    "after_central_80": 0.7175732217573222,
+    "before_upper_968": 0.9644351464435147,
+    "after_upper_968": 0.9351464435146444,
+    "before_mean_interval_width": 301.764889483263,
+    "after_mean_interval_width": 268.52272311149153
+  },
+  "origins": [
+    {
+      "origin": "2026-06-01",
+      "samples": 75,
+      "before_central_80": 0.6,
+      "after_central_80": 0.92,
+      "before_upper_968": 1.0,
+      "after_upper_968": 0.9866666666666667,
+      "before_mean_interval_width": 305.4622313675514,
+      "after_mean_interval_width": 237.6055363857118,
+      "calibration": {
+        "method": "recent_forward_split_conformal_v1",
+        "seed": "93",
+        "as_of": "2026-06-01",
+        "window_days": 56,
+        "sample_count": 403,
+        "issue_start": "2026-04-06",
+        "issue_cutoff": "2026-05-31",
+        "issue_dates": [
+          "2026-04-12",
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17",
+          "2026-05-24",
+          "2026-05-31"
+        ],
+        "scored_issue_start": "2026-04-12",
+        "scored_issue_end": "2026-05-17",
+        "actuals_cutoff": "2026-05-31",
+        "outcome_end": "2026-05-31",
+        "order_calendar": true,
+        "ratio_clip": [
+          0.3,
+          3.0
+        ],
+        "coverage_note": "Finite-rank rolling forward calibration; serial dependence and pooling preclude exact coverage guarantees."
+      }
+    },
+    {
+      "origin": "2026-06-08",
+      "samples": 75,
+      "before_central_80": 0.5333333333333333,
+      "after_central_80": 0.8133333333333334,
+      "before_upper_968": 1.0,
+      "after_upper_968": 0.96,
+      "before_mean_interval_width": 324.3913859261518,
+      "after_mean_interval_width": 248.29119099933527,
+      "calibration": {
+        "method": "recent_forward_split_conformal_v1",
+        "seed": "93",
+        "as_of": "2026-06-08",
+        "window_days": 56,
+        "sample_count": 403,
+        "issue_start": "2026-04-13",
+        "issue_cutoff": "2026-06-07",
+        "issue_dates": [
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17",
+          "2026-05-24",
+          "2026-05-31",
+          "2026-06-07"
+        ],
+        "scored_issue_start": "2026-04-19",
+        "scored_issue_end": "2026-05-24",
+        "actuals_cutoff": "2026-06-07",
+        "outcome_end": "2026-06-07",
+        "order_calendar": true,
+        "ratio_clip": [
+          0.3,
+          3.0
+        ],
+        "coverage_note": "Finite-rank rolling forward calibration; serial dependence and pooling preclude exact coverage guarantees."
+      }
+    },
+    {
+      "origin": "2026-06-15",
+      "samples": 75,
+      "before_central_80": 0.13333333333333333,
+      "after_central_80": 0.30666666666666664,
+      "before_upper_968": 1.0,
+      "after_upper_968": 1.0,
+      "before_mean_interval_width": 349.9887558328925,
+      "after_mean_interval_width": 286.56782773859214,
+      "calibration": {
+        "method": "recent_forward_split_conformal_v1",
+        "seed": "93",
+        "as_of": "2026-06-15",
+        "window_days": 56,
+        "sample_count": 403,
+        "issue_start": "2026-04-20",
+        "issue_cutoff": "2026-06-14",
+        "issue_dates": [
+          "2026-04-26",
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17",
+          "2026-05-24",
+          "2026-05-31",
+          "2026-06-07",
+          "2026-06-14"
+        ],
+        "scored_issue_start": "2026-04-26",
+        "scored_issue_end": "2026-05-31",
+        "actuals_cutoff": "2026-06-14",
+        "outcome_end": "2026-06-14",
+        "order_calendar": true,
+        "ratio_clip": [
+          0.3,
+          3.0
+        ],
+        "coverage_note": "Finite-rank rolling forward calibration; serial dependence and pooling preclude exact coverage guarantees."
+      }
+    },
+    {
+      "origin": "2026-06-22",
+      "samples": 75,
+      "before_central_80": 0.49333333333333335,
+      "after_central_80": 0.8533333333333334,
+      "before_upper_968": 1.0,
+      "after_upper_968": 1.0,
+      "before_mean_interval_width": 317.30610436566366,
+      "after_mean_interval_width": 250.55981470067698,
+      "calibration": {
+        "method": "recent_forward_split_conformal_v1",
+        "seed": "93",
+        "as_of": "2026-06-22",
+        "window_days": 56,
+        "sample_count": 403,
+        "issue_start": "2026-04-27",
+        "issue_cutoff": "2026-06-21",
+        "issue_dates": [
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17",
+          "2026-05-24",
+          "2026-05-31",
+          "2026-06-07",
+          "2026-06-14",
+          "2026-06-21"
+        ],
+        "scored_issue_start": "2026-05-03",
+        "scored_issue_end": "2026-06-07",
+        "actuals_cutoff": "2026-06-21",
+        "outcome_end": "2026-06-21",
+        "order_calendar": true,
+        "ratio_clip": [
+          0.3,
+          3.0
+        ],
+        "coverage_note": "Finite-rank rolling forward calibration; serial dependence and pooling preclude exact coverage guarantees."
+      }
+    },
+    {
+      "origin": "2026-06-29",
+      "samples": 75,
+      "before_central_80": 0.88,
+      "after_central_80": 0.72,
+      "before_upper_968": 0.96,
+      "after_upper_968": 0.8533333333333334,
+      "before_mean_interval_width": 319.4888091057385,
+      "after_mean_interval_width": 268.66304085380017,
+      "calibration": {
+        "method": "recent_forward_split_conformal_v1",
+        "seed": "93",
+        "as_of": "2026-06-29",
+        "window_days": 56,
+        "sample_count": 403,
+        "issue_start": "2026-05-04",
+        "issue_cutoff": "2026-06-28",
+        "issue_dates": [
+          "2026-05-10",
+          "2026-05-17",
+          "2026-05-24",
+          "2026-05-31",
+          "2026-06-07",
+          "2026-06-14",
+          "2026-06-21",
+          "2026-06-28"
+        ],
+        "scored_issue_start": "2026-05-10",
+        "scored_issue_end": "2026-06-14",
+        "actuals_cutoff": "2026-06-28",
+        "outcome_end": "2026-06-28",
+        "order_calendar": true,
+        "ratio_clip": [
+          0.3,
+          3.0
+        ],
+        "coverage_note": "Finite-rank rolling forward calibration; serial dependence and pooling preclude exact coverage guarantees."
+      }
+    },
+    {
+      "origin": "2026-07-06",
+      "samples": 75,
+      "before_central_80": 0.72,
+      "after_central_80": 0.6133333333333333,
+      "before_upper_968": 0.8266666666666667,
+      "after_upper_968": 0.8,
+      "before_mean_interval_width": 234.5137198041745,
+      "after_mean_interval_width": 315.14997818908773,
+      "calibration": {
+        "method": "recent_forward_split_conformal_v1",
+        "seed": "93",
+        "as_of": "2026-07-06",
+        "window_days": 56,
+        "sample_count": 403,
+        "issue_start": "2026-05-11",
+        "issue_cutoff": "2026-07-05",
+        "issue_dates": [
+          "2026-05-17",
+          "2026-05-24",
+          "2026-05-31",
+          "2026-06-07",
+          "2026-06-14",
+          "2026-06-21",
+          "2026-06-28",
+          "2026-07-05"
+        ],
+        "scored_issue_start": "2026-05-17",
+        "scored_issue_end": "2026-06-21",
+        "actuals_cutoff": "2026-07-05",
+        "outcome_end": "2026-07-05",
+        "order_calendar": true,
+        "ratio_clip": [
+          0.3,
+          3.0
+        ],
+        "coverage_note": "Finite-rank rolling forward calibration; serial dependence and pooling preclude exact coverage guarantees."
+      }
+    },
+    {
+      "origin": "2026-07-13",
+      "samples": 28,
+      "before_central_80": 0.4642857142857143,
+      "after_central_80": 0.9285714285714286,
+      "before_upper_968": 0.9642857142857143,
+      "after_upper_968": 0.9642857142857143,
+      "before_mean_interval_width": 193.11756045845792,
+      "after_mean_interval_width": 280.03776722330804,
+      "calibration": {
+        "method": "recent_forward_split_conformal_v1",
+        "seed": "93",
+        "as_of": "2026-07-13",
+        "window_days": 56,
+        "sample_count": 403,
+        "issue_start": "2026-05-18",
+        "issue_cutoff": "2026-07-12",
+        "issue_dates": [
+          "2026-05-24",
+          "2026-05-31",
+          "2026-06-07",
+          "2026-06-14",
+          "2026-06-21",
+          "2026-06-28",
+          "2026-07-05",
+          "2026-07-12"
+        ],
+        "scored_issue_start": "2026-05-24",
+        "scored_issue_end": "2026-06-28",
+        "actuals_cutoff": "2026-07-12",
+        "outcome_end": "2026-07-12",
+        "order_calendar": true,
+        "ratio_clip": [
+          0.3,
+          3.0
+        ],
+        "coverage_note": "Finite-rank rolling forward calibration; serial dependence and pooling preclude exact coverage guarantees."
+      }
+    }
+  ],
+  "note": "Rolling genuinely forward normalized split calibration, no future actual labels; serial correlation and SKU pooling prevent exact nominal-coverage guarantees. No parameters selected from this table."
+}

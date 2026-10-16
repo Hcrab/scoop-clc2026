@@ -9,6 +9,7 @@ import pandas as pd
 import pytest
 
 from scoop import planning
+from scoop.algorithms.protection_calibration import ProtectionCalibration
 
 
 DAY = date(2026, 7, 13)
@@ -21,6 +22,8 @@ def _fixtures(monkeypatch):
     static = SimpleNamespace(products=products)
     model = SimpleNamespace(version="test", trained_through=DAY)
     monthly = SimpleNamespace(model=model, ratio_values={}, metadata={})
+    monkeypatch.setattr(planning, "recent_forward_calibration", lambda *args:
+                        ProtectionCalibration(np.linspace(.8, 1.2, 101), pd.DataFrame(), {"method": "fixture"}))
     monkeypatch.setattr(planning, "artifacts", lambda: SimpleNamespace(
         static=static, run_for=lambda day: monthly))
     monkeypatch.setattr(planning, "inventory_position", lambda day: pd.DataFrame(

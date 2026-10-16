@@ -17,7 +17,8 @@ test('D2 report check heading and Results history use the requested styling',asy
     const heading=frame.getByRole('heading',{name:'Merchandising & planning checks',exact:true});
     await expect(heading).toBeVisible();
     const style=await heading.evaluate(el=>({text:el.textContent,color:getComputedStyle(el).color,transform:getComputedStyle(el).textTransform}));
-    expect(style.text).toBe('Merchandising & planning checks');expect(style.color).toBe('rgb(27, 56, 43)');expect(style.transform).toBe('none');
+    const ordinaryHeadingColor=await frame.locator('h2').first().evaluate(el=>getComputedStyle(el).color);
+    expect(style.text).toBe('Merchandising & planning checks');expect(style.color).toBe(ordinaryHeadingColor);expect(style.transform).toBe('none');
     const section=frame.locator('[data-planning-checks]');await section.screenshot({path:path.join(out,'d2-report-checks.png'),animations:'disabled'});record.heading=style;
     await page.getByRole('button',{name:'Review orders',exact:true}).click();await page.getByRole('button',{name:'Approve orders',exact:true}).click();
     await expect.poll(async()=>(await read('/simulation')).status,{timeout:240_000,intervals:[2000]}).toBe('ready');

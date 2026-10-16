@@ -7,11 +7,11 @@ Branch `claude/scoop-prototype`, starting revision `a9786c42c022029d4cd490a35b9f
 | Phase | Status | Evidence |
 |---|---|---|
 | D1 Watch / Play dashboard | Accepted · `03fa6c9` | 81 backend + 12 frontend tests; real browser flow; four reviewed captures. [Evidence](reports/day16-d1.md). |
-| D2 Small UI fixes | Accepted | 12 backend + 18 frontend tests; real browser flow; both required captures reviewed. [Evidence](reports/day16-d2.md). |
-| D3 Calibration and illustrative heat | Pending | Two authorised changes; normal policies and the same 66-pallet cold store. |
+| D2 Small UI fixes | Accepted · `f7c31ef` | 12 backend + 18 frontend tests; real browser flow; both required captures reviewed. [Evidence](reports/day16-d2.md). |
+| D3 Calibration and illustrative heat | Accepted; coverage target missed | 107 tests; fixed coverage table; one default replay. 7,570 vs 12,151 short units, 62 vs 79 product-days, HK$43,279.06 vs HK$65,343.80 lost margin. [Evidence](reports/day16-d3.md). |
 | D4 Walkthrough and docs | Pending | Starts after D3 acceptance. |
 
-Use only the remaining Night 3 Gemini allowance, and only if the report must be regenerated. Ordinary tests use the scripted provider. After D1: **171 lifetime calls / $17.645884**, including **$0.217676** for report authoring with the new AI widget selection. Night 3 plus today has used $0.748799 of its $10 allowance; **$9.251201 remains**. Source quantities, all 75 order lines and 2,195 cases are unchanged. Reread the ledger before any further paid generation.
+Use only the remaining Night 3 Gemini allowance, and only if the report must be regenerated. Ordinary tests use the scripted provider. After D3: **173 lifetime calls / $17.883050**, with **$9.014035** left. The revised purchasing implications required a report refresh ($0.237166). Pre-heat history, opening stock, inherited orders and 66-pallet capacity are unchanged; the current plan has 75 lines / 2,532 cases. D3 improves this illustrative Play result on all three measures, but central 80% coverage remains 71.76% and the 96.8% upper target covers 93.51%. No extra tuning was applied. Reread the ledger before further paid generation.
 
 ## D1 — Watch / Play dashboard
 
@@ -29,9 +29,9 @@ Use only the remaining Night 3 Gemini allowance, and only if the report must be 
 
 ## D3 — Calibration and illustrative heat
 
-- ❌ Pending — Split-conformal protection-period quantiles on recent forward errors: held-out interval coverage before/after table.
-- ❌ Pending — Heat starts 3–6 days after the order date, inside this week's cover window and issued-forecast skill window; document both changes.
-- ❌ Pending — One default-week replay, same cold store and normal policies: all three outcomes before/after; short diagnosis if not all three improve. No other tuning.
+- ✅ Recent forward normalized split calibration implemented and evaluated on 478 fixed, temporally held-out windows (`reports/d3-coverage.json`, `d3-coverage-windows.csv`). Central 80% coverage: **55.44% → 71.76%**; nominal 96.8% upper coverage: **96.44% → 93.51%**. The upper target remains unmet and is diagnosed explicitly; no retuning. **107 tests passed** (`d3-accepted-tests-tests.txt`).
+- ✅ Heat starts **30 July**, three days after the 27 July plan, and ends 7 August. Same nine temperatures, ordinary forecast errors and deterministic demand coupling; opening/history/PO/capacity hashes match before (`d3-heat.json`, `d3-before.json`, `d3-final-state.json`). Only future artifacts affected by changed source were rebuilt (`d3-derived.json`).
+- ✅ One default replay, same 66 pallets and normal policies (`d3-replay.json.gz`, `d3-results.json`): all three before/after outcomes in [the table](reports/day16-d3.md). New Scoop / Simple rule: **7,570 / 12,151** short units, **62 / 79** product-days, **HK$43,279.06 / HK$65,343.80** lost margin. Both peak at 57.9866 pallets; Scoop uses 1.5129 extra average pallets. No other tuning. Grounded report and initial Reset template refreshed; app restored to Report.
 
 ## D4 — Walkthrough and docs
 

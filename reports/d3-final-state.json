@@ -1,0 +1,58 @@
+{
+  "protected_history_and_capacity_match_before": true,
+  "source_quantities": [
+    1233000,
+    6524261,
+    6485861
+  ],
+  "orders": [
+    75,
+    2532
+  ],
+  "capacity_pallets": 66,
+  "flow": {
+    "step": "report",
+    "max_step": "report",
+    "notice": null
+  },
+  "calibration": {
+    "method": "recent_forward_split_conformal_v1",
+    "seed": "93",
+    "as_of": "2026-07-27",
+    "window_days": 56,
+    "sample_count": 403,
+    "issue_start": "2026-06-01",
+    "issue_cutoff": "2026-07-26",
+    "issue_dates": [
+      "2026-06-07",
+      "2026-06-14",
+      "2026-06-21",
+      "2026-06-28",
+      "2026-07-05",
+      "2026-07-12",
+      "2026-07-19",
+      "2026-07-26"
+    ],
+    "scored_issue_start": "2026-06-07",
+    "scored_issue_end": "2026-07-12",
+    "actuals_cutoff": "2026-07-26",
+    "outcome_end": "2026-07-26",
+    "order_calendar": true,
+    "ratio_clip": [
+      0.3,
+      3.0
+    ],
+    "coverage_note": "Finite-rank rolling forward calibration; serial dependence and pooling preclude exact coverage guarantees."
+  },
+  "report_status": "complete",
+  "report_model": "gemini-3.8-flash",
+  "allowance": {
+    "calls": 173,
+    "estimated_usd": 17.88305,
+    "input_tokens": 6372360,
+    "output_tokens": 386113,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "remaining_night3_usd": 9.014035
+}

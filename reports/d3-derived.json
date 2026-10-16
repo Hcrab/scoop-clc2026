@@ -1,0 +1,8 @@
+{
+  "elapsed_seconds": 119.42199999999139,
+  "historical_expectations_unchanged_before": "2026-07-30",
+  "expectation_rows": 229500,
+  "august_retrained_on_revised_source": true,
+  "april_through_july_models_reused": true,
+  "new_provider_calls": 0
+}

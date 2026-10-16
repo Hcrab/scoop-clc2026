@@ -29,6 +29,8 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm
 
+from .protection_calibration import ProtectionCalibration
+
 HOLDING_RATE = 0.025  # per cycle: 1% storage/financing + 1.5% summer carryover/markdown provision
 CR_BOUNDS = (0.5, 0.98)
 
@@ -58,11 +60,13 @@ def critical_ratio(price: float, cost: float, service_level: float | None = None
     return float(np.clip(cu / (cu + co), *CR_BOUNDS))
 
 
-def _ratio_quantile(ratios: np.ndarray, q: float) -> float:
+def _ratio_quantile(ratios: np.ndarray | ProtectionCalibration, q: float) -> float:
+    if isinstance(ratios, ProtectionCalibration):
+        return ratios.quantile(q)
     return float(np.quantile(ratios, q))
 
 
-def _uncertain_ratio_quantiles(ratios: np.ndarray, variance: float, probabilities):
+def _uncertain_ratio_quantiles(ratios: np.ndarray | ProtectionCalibration, variance: float, probabilities):
     """Deterministic quadrature for empirical ratio × lognormal factor error.
 
     Hermite nodes integrate the N(0, variance) log effect. The weighted mixture
@@ -71,20 +75,23 @@ def _uncertain_ratio_quantiles(ratios: np.ndarray, variance: float, probabilitie
     """
     if variance <= 0:
         return [_ratio_quantile(ratios, q) for q in probabilities]
+    calibrated = isinstance(ratios, ProtectionCalibration)
+    values_in = ratios.values if calibrated else np.asarray(ratios, dtype=float)
+    cdf_probabilities = [ratios.probability(q) for q in probabilities] if calibrated else list(probabilities)
     nodes, weights = np.polynomial.hermite.hermgauss(41)
     factors = np.exp(np.sqrt(2 * variance) * nodes)
-    values = (np.asarray(ratios, dtype=float)[:, None] * factors[None, :]).ravel()
-    masses = np.broadcast_to(weights / (np.sqrt(np.pi) * len(ratios)),
-                             (len(ratios), len(nodes))).ravel()
+    values = (values_in[:, None] * factors[None, :]).ravel()
+    masses = np.broadcast_to(weights / (np.sqrt(np.pi) * len(values_in)),
+                             (len(values_in), len(nodes))).ravel()
     order = np.argsort(values)
     values, masses = values[order], masses[order]
     cumulative = np.cumsum(masses)
-    quantiles = np.interp(probabilities + [0.5], cumulative, values)
+    quantiles = np.interp(cdf_probabilities + [0.5], cumulative, values)
     center = _ratio_quantile(ratios, .5) / quantiles[-1] if quantiles[-1] > 0 else 1.
     return [float(q * center) for q in quantiles[:-1]]
 
 
-def plan_orders(items: list[SkuInput], ratios: np.ndarray, capacity_pallets: float, service_level: float | None = None, capacity_baseline: np.ndarray | None = None,
+def plan_orders(items: list[SkuInput], ratios: np.ndarray | ProtectionCalibration, capacity_pallets: float, service_level: float | None = None, capacity_baseline: np.ndarray | None = None,
                 arrival_mask: np.ndarray | None = None,
                 initial_cases: dict[str, int] | None = None) -> pd.DataFrame:
     rows = []

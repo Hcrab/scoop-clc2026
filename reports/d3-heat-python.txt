@@ -1,0 +1,38 @@
+{
+  "legacy_matches_live_source": true,
+  "new_world_matches_live_source": true,
+  "protected_history_unchanged": true,
+  "source_update_rows": {
+    "store_orders": 49500,
+    "node_inventory": 2475,
+    "weather_daily": 10,
+    "weather_forecasts": 160,
+    "purchase_orders": 348
+  },
+  "heat": {
+    "2026-07-30": 33.6,
+    "2026-07-31": 33.5,
+    "2026-08-01": 33.8,
+    "2026-08-02": 33.7,
+    "2026-08-03": 33.5,
+    "2026-08-04": 33.4,
+    "2026-08-05": 33.6,
+    "2026-08-06": 33.8,
+    "2026-08-07": 33.5
+  },
+  "plan_date": "2026-07-27",
+  "start_offset_days": 3,
+  "same_temperatures_and_duration": true,
+  "cached_future_artifacts_backed_up": [
+    "expectations-Apr-Aug.pkl",
+    "M202608-v2-s93_calibration.json",
+    "M202608-v2-s93_mean.txt",
+    "M202608-v2-s93_meta.json",
+    "M202608-v2-s93_q10.txt",
+    "M202608-v2-s93_q90.txt",
+    "M202608-v2-s93_ratios.pkl",
+    "monthly-monitoring-v1.pkl"
+  ],
+  "unchanged_mean_models": "April through July retained; only August training inputs changed",
+  "calls_unchanged": true
+}
