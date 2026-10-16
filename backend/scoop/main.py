@@ -6,6 +6,7 @@ from .api.service import router
 from .api.cohorts import router as cohort_router
 from .api.dashboard import router as dashboard_router
 from .api.flow import router as flow_router
+from .api.tour import router as tour_router
 from .ai.http import router as assistant_router
 from .config import ROOT
 from .api.demo_settings import router as demo_router
@@ -17,6 +18,7 @@ app.include_router(router)
 app.include_router(cohort_router)
 app.include_router(dashboard_router)
 app.include_router(flow_router)
+app.include_router(tour_router)
 app.include_router(assistant_router)
 app.include_router(demo_router)
 app.add_middleware(DemoGateMiddleware,manager=manager)

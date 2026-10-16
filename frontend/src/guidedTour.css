@@ -1,0 +1,52 @@
+.take-tour{white-space:nowrap;margin-right:12px}
+.tour-modal-shade{position:fixed;inset:0;background:rgba(15,35,28,.55);z-index:1200;display:grid;place-items:center;padding:24px}
+.tour-modal{width:min(560px,100%);background:#fffdf7;border:1px solid #dce6dc;border-radius:18px;box-shadow:0 18px 70px #102c2840;padding:36px;color:#284f3d}
+.tour-modal h1{font-size:28px;font-weight:600;margin:0 0 16px;letter-spacing:-.5px}
+.tour-modal p{font-size:16px;line-height:1.65;margin:0 0 26px;color:#607563}
+.tour-modal .modal-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.tour-spotlight{position:fixed;inset:0;z-index:1100;pointer-events:none}
+.tour-coach{position:fixed;z-index:1110;width:400px;max-width:calc(100vw - 32px);background:#fffdf7;border:1px solid #cbd9cd;border-radius:14px;padding:20px 22px;box-shadow:0 10px 40px #132f2840;color:#284f3d;transition:left .2s ease,top .2s ease;animation:tour-coach-in .2s ease both}
+.tour-coach-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px;color:#607563;font-size:13px}
+.tour-coach-top .text-button{font-size:13px;white-space:nowrap}
+.tour-coach h2{font-size:20px!important;font-weight:600!important;line-height:1.35;margin:0 0 10px;letter-spacing:0}
+.tour-coach p{font-size:15px!important;font-weight:400!important;line-height:1.5;color:#607563;margin:0}
+.tour-choices{display:grid;gap:9px;margin-top:17px}
+.tour-choice{height:64px;width:100%;display:flex;align-items:center;justify-content:flex-start;text-align:left;padding:10px 16px;border:1px solid #cad9cc;border-radius:9px;background:#f3f7ee;color:#284f3d;font-family:inherit;font-size:15px;font-weight:500;line-height:1.4;cursor:pointer}
+.tour-choice[aria-pressed=true],.tour-choice:hover{background:#e2eddf;border-color:#205a4e}
+.tour-choice:disabled{cursor:default;opacity:.65}
+.tour-next{margin-top:17px}
+.tour-coach:before{content:'';position:absolute;width:14px;height:14px;background:#fffdf7;border:1px solid #cbd9cd;transform:rotate(45deg)}
+.tour-coach.arrow-left:before{left:-8px;top:calc(var(--tour-arrow) - 7px);border-right:0;border-top:0}
+.tour-coach.arrow-right:before{right:-8px;top:calc(var(--tour-arrow) - 7px);border-left:0;border-bottom:0}
+.tour-coach.arrow-top:before{top:-8px;left:calc(var(--tour-arrow) - 7px);border-right:0;border-bottom:0}
+.tour-coach.arrow-bottom:before{bottom:-8px;left:calc(var(--tour-arrow) - 7px);border-left:0;border-top:0}
+.tour-active{position:fixed;inset:0;width:100%;height:100dvh;overflow:hidden}
+.tour-active #root,.tour-active .app{height:100dvh;min-height:0;overflow:hidden}
+.tour-active .app .workspace,.tour-active .app.with-dock .workspace{height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.tour-active .app .workspace>.topbar{flex:none}
+.tour-active .app .workspace>main{display:flex;flex:1;min-height:0;flex-direction:column;overflow:hidden;padding-bottom:20px}
+.tour-active .page-heading,.tour-active .plan-toolbar,.tour-active .stage-tabs,.tour-active .week-recap,.tour-active .flow-notice{flex:none}
+.tour-active .page-footer{display:none!important}
+.tour-active .app.report-view .discover-with-cohorts{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,1fr);flex:1;min-height:0;overflow:hidden;align-items:stretch}
+.tour-active .app.report-view .discover-with-cohorts>.report-column,.tour-active .app.report-view .discover-with-cohorts>.cohort-panel{overflow:auto;min-height:0;padding-right:8px;overscroll-behavior:contain}
+.tour-active .discussion{height:100dvh;overflow:hidden}
+.tour-active .discussion-scroll{flex:1;min-height:0;overflow:auto}
+.tour-active .chat-compose,.tour-active .discussion .chat-message:not(.tour-recorded),.tour-active .discussion-stage,.tour-active .discussion-header button{display:none!important}
+.tour-active .tour-recorded{white-space:pre-wrap}
+.tour-active .tour-recorded>span{font-size:12px;color:#82927e;text-transform:none}
+.tour-active .cohort-context>div:not(.tour-context-result),.tour-active .cohort-chart>label,.tour-active .cohort-card-controls,.tour-active .cohort-reset,.tour-active .dashboard-actions,.tour-active .dashboard-heading>button,.tour-active .play-bar>.button.ghost{display:none!important}
+.tour-active .cohort-context>.tour-context-result{display:block;padding-top:0}
+.tour-active .cohort-overrides{display:none}
+.tour-active .tour-context-result .edit-receipt{margin:12px 0 0}
+.tour-active .cohort-service input:disabled{cursor:default}
+.tour-active .action-list{min-height:0;overflow:auto;flex:1}
+.tour-active .action-list input:disabled{border-color:transparent;background:transparent;opacity:1;color:inherit;appearance:textfield}
+.tour-active .watch-step,.tour-active .play{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.tour-active .watch-step>.flow-primary,.tour-active .play>.play-bar{flex:none}
+.tour-active .watch-step>.dashboard{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain}
+.tour-active .play-body{flex:1;min-height:0;overflow:hidden;align-items:stretch}
+.tour-active .play-body>div,.tour-active .play-body>.play-events{min-height:0;overflow:auto;overscroll-behavior:contain}
+.tour-active .results-view{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain}
+.tour-active .app *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+@keyframes tour-coach-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.tour-coach{transition:none;animation:none}}

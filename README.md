@@ -90,7 +90,25 @@ An earlier P7 revision of this setup recipe was checked from a clean clone with 
 
 The forecast, cohort detector, capacity allocation and Play comparison use synthetic data. The default 27 July report first isolates four strawberry × value-price × water-based products at an estimated +38.1552%. Heat runs 30 July–2 August inside the issued forecast's seven-day skill window; pre-30-July history is unchanged. The ordering target uses a one-sided upper correction, leaving central intervals intact. At the actual 98% target, the same 478 historical calibration windows cover **96.86% before → 98.33% after** (463 → 470 windows); this fitted coverage is not an independent performance estimate.
 
-The [current measured default replay](reports/tuning/demo-walkthrough.json) gives Scoop / Simple rule **4,297 / 6,063 short units**, **36 / 39 stockout product-days**, and **HK$24,271.33 / HK$30,849.11 lost margin**. Results therefore shows **1,766 short units, 3 product-days and HK$6,577.78 lost margin avoided**. Both policies share 62 usable pallet positions, peak at 57.9866 pallets and have zero over-capacity days. Initial orders are 2,413 cases with a 61.3046-pallet projected peak. The rule remains 28-day average +25% with unchanged inputs. See [chosen values and reasons](docs/TECHNICAL_DESIGN.md#demonstration-parameters), [full tuning evidence](reports/tuning/final.md), and [earlier measurements](docs/reports/day16-d4.md).
+The [current measured default replay](reports/tuning/demo-walkthrough.json) gives Scoop / Simple rule **4,297 / 6,063 short units**, **36 / 39 stockout product-days**, and **HK$24,271.33 / HK$30,849.11 lost margin**. Results shows both policies and their rounded relative differences: **29% fewer**, **8% fewer** and **21% less**. Both policies share 62 usable pallet positions, peak at 57.9866 pallets and have zero over-capacity days. Initial orders are 2,413 cases with a 61.3046-pallet projected peak. The rule remains 28-day average +25% with unchanged inputs. See [chosen values and reasons](docs/TECHNICAL_DESIGN.md#demonstration-parameters), [full tuning evidence](reports/tuning/final.md), and [earlier measurements](docs/reports/day16-d4.md).
+
+## Guided tour
+
+On first visit, choose **Start the tour** or **Explore on my own**. **Take the tour** in the top bar opens it again. The desktop tour guides ten steps through the same Report, Orders, Watch, Play and Results components, with suggested questions and context/widget choices. Skip or Esc returns to Explore at the default Report. Below 1280 px the welcome offers Explore only.
+
+The tour reads the checked-in `frontend/public/tour-bundle.json`. All tour changes stay in browser memory: no HTTP writes, provider calls or changes to Explore's database. Its five assistant answers were recorded from real Gemini calls and are labelled **Recorded example**. The three context choices contain distinct real orders and complete replays. Normal Play speed remains about two seconds per day, with no pause control in the tour.
+
+To rebuild after changing the default week, prepare its initial template first, then run these commands from the repository root with the backend environment active:
+
+```sh
+python scripts/build-tour-bundle.py
+# Requires Gemini credentials and provider allowance for the five recordings.
+python scripts/record-tour-answers.py
+pnpm --dir frontend build
+SCOOP_TEST_URL=http://127.0.0.1:8008 pnpm --dir frontend exec playwright test tour.spec.ts
+```
+
+The builder copies source data into a private PostgreSQL schema, excludes the evaluation-only ground-truth table, and calls the real API there. It retains that schema for the separate answer-recording command. Rebuild both data and answers before publishing a refreshed tour. A read-only `/api/tour/source` fingerprint rejects stale bundles; missing recordings are not replaced with fabricated answers. Build and recording evidence lives in `reports/night4/`.
 
 The current parameters are optimised for the demonstration scenario. Once real operational data is available, they will be re-optimised on that data.
 

@@ -1,0 +1,531 @@
+{
+  "reviewer": "Codex parent; final three contact sheets and full-size detail screenshots personally inspected",
+  "checks": [
+    "Readable coach and consistent choice cards",
+    "No coach/target overlap",
+    "Correct branch order and Results numbers",
+    "No Play document scroll",
+    "Verbatim coach copy and native receipt/recorded-answer labels"
+  ],
+  "branches": {
+    "summer": {
+      "screenshots": [
+        {
+          "path": "docs/screenshots/tour-summer-00-welcome.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "572e3f7c59fde3edd3116c2145bedd16f0624ce463962dcf04586fd15ef757d3"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-01.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "1b12c045bfc67c65a837b63aac062f80383a6781933e04bcb61d27c62552153a"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-02.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "4c180ab539780f9581f7cfa228ebb65e3ae954ecc5f21e121ac031b104093126"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-03.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "e447361c417be6f70c51b41925781266d8c0e84a3e65ff857bfc05f551da560a"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-03-answer.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "f6fe5db0cb6f6ac91e8ec052462d5f43288671d0f974cd4babd7e8262f95bcec"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-04.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "110ccb24042dc5be12720a9848f22e223e14be4bfb6d5f5718cfdc3ff6700d40"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-04-result.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "60b36ddcde00090159eec090a5e3376ff12fe5e6ae12a7700810721ecf3085ea"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-05.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "dca0dde45edfa7c36cc25528a69a266654be1f6dba8d46b142436c9e5abbf432"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-06.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "8fbe9c724b608345891702222341a585e350642c413fb6c3ac044304f2940e01"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-07.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "5fd3c7e98e441c21f7f5de5c5c5e9ee56a579a85d001a4df80c61488a179fce3"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-07-widget.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "9967d1eec4f1dee9f0dc1bbd001d8b34c398b268b20495f1394a938f09af76ba"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-08-start.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "9ec1111a9f2c1c48baaa4c6a1352b5385f8d993056b22000ea119a88693eab78"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-08-moment-1.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "2bc2cf0e9fa7fe106634f6faa1cfdf57c985d006ab2466ca3fbb066cdff5ed0b"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-08-moment-2.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "32b048ad2ffc7b8fc3e3f2ea9ba8f14564dff153f9147d6eb73ee4938cedf455"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-08-moment-3.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "e0bdd06e18ee47c45fe7832985218c89a6a016ec2fb42890e812189d06f33346"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-08-moment-4.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "f5e6aa54863318e1f33ec6bc87f56e68dbd5b95f7e64ad71392d36d98eab8b03"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-08-end.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "f5e6aa54863318e1f33ec6bc87f56e68dbd5b95f7e64ad71392d36d98eab8b03"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-09.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "8a5b34aeb0dbb658ad3d8277eddb360e78334d786fec9bf8329be68c86f95b8e"
+        },
+        {
+          "path": "docs/screenshots/tour-summer-10-end.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "43a97e6dde1638887e17f609ededa27eb88b8b9dafa9f27efd5749da2dc60d09"
+        }
+      ],
+      "zero_http_non_get": true,
+      "database_unchanged": true,
+      "provider_unchanged": true,
+      "coach_overlap_max": 0
+    },
+    "growing": {
+      "screenshots": [
+        {
+          "path": "docs/screenshots/tour-growing-00-welcome.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "572e3f7c59fde3edd3116c2145bedd16f0624ce463962dcf04586fd15ef757d3"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-01.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "1b12c045bfc67c65a837b63aac062f80383a6781933e04bcb61d27c62552153a"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-02.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "4c180ab539780f9581f7cfa228ebb65e3ae954ecc5f21e121ac031b104093126"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-03.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "e447361c417be6f70c51b41925781266d8c0e84a3e65ff857bfc05f551da560a"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-03-answer.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "aafea1fda592fba4d94cbba3ca4ae804ecfcda2ed1f5bec2fcaec89d582970fc"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-04.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "5f4fb2ecb64e91f53454f809a68970fbe7b3d5f5488c073bdb7af13b38a8eab0"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-04-result.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "320b461999e71fb5c8ded9f7bc839a0554351c942c0556332fd45a2f13b24972"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-05.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "dca0dde45edfa7c36cc25528a69a266654be1f6dba8d46b142436c9e5abbf432"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-06.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "6c0671721130a095d72dee4839b2c20293ce1938a091f1ed9f40d70dab118d27"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-07.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "5fd3c7e98e441c21f7f5de5c5c5e9ee56a579a85d001a4df80c61488a179fce3"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-07-widget.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "9967d1eec4f1dee9f0dc1bbd001d8b34c398b268b20495f1394a938f09af76ba"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-08-start.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "b4edf66fe4b07b425e9bedcdc6afe1872602a44867bac38435897121b5db649b"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-08-moment-1.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "ec3b6edb6dfdf5522218d159dea74964da75129888226a59273773e8f094ec01"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-08-moment-2.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "32b048ad2ffc7b8fc3e3f2ea9ba8f14564dff153f9147d6eb73ee4938cedf455"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-08-moment-3.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "5dcd5437cbf23279c3d4c5ad1aad3f35e01327e3b433e241b643bf3253aae54c"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-08-end.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "f69d4bfa7aaca01cce7543eeb0f49d90da290dcee8532d05c7ff7c46fbb90965"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-09.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "d475093d209a935ddd8b00257bfdba49ca234b255a6d5e488facc1400dd79687"
+        },
+        {
+          "path": "docs/screenshots/tour-growing-10-end.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "34bde9e901d41eae769f8b0810871eac561f01afe8ffac81ed3ae577be9fc50f"
+        }
+      ],
+      "zero_http_non_get": true,
+      "database_unchanged": true,
+      "provider_unchanged": true,
+      "coach_overlap_max": 0
+    },
+    "unchanged": {
+      "screenshots": [
+        {
+          "path": "docs/screenshots/tour-unchanged-00-welcome.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "572e3f7c59fde3edd3116c2145bedd16f0624ce463962dcf04586fd15ef757d3"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-01.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "1b12c045bfc67c65a837b63aac062f80383a6781933e04bcb61d27c62552153a"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-02.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "4c180ab539780f9581f7cfa228ebb65e3ae954ecc5f21e121ac031b104093126"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-03.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "e447361c417be6f70c51b41925781266d8c0e84a3e65ff857bfc05f551da560a"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-03-answer.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "f6fe5db0cb6f6ac91e8ec052462d5f43288671d0f974cd4babd7e8262f95bcec"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-04.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "b5c24cdfe2ef58fba870d7ac4c8ecfd527fb3ce6ff9900d3742ddfd4c6e4ca26"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-04-result.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "ccf48aeacb42e0099ac5f89518be1ab43623abd49bf2f9041a902f6ef74397f1"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-05.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "a7668f497975a8381c02e1327816c87a3e185edc56cce0b3061d12c3ae5f59b9"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-06.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "caa1358b80a3202268886dec5a8f23e8eeafe0b3a2a29a8d35c92f6d161e09fb"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-07.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "5fd3c7e98e441c21f7f5de5c5c5e9ee56a579a85d001a4df80c61488a179fce3"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-07-widget.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "9967d1eec4f1dee9f0dc1bbd001d8b34c398b268b20495f1394a938f09af76ba"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-08-start.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "440c378b0d83ae5b567a6490788f13ff71c14bea5a08fbc7cf2c779af853869e"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-08-moment-1.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "c8c71efc55caf41c5a2c5f88c58b1cedc832cb8a5e73291e38db2eaa19cff9da"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-08-moment-2.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "32b048ad2ffc7b8fc3e3f2ea9ba8f14564dff153f9147d6eb73ee4938cedf455"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-08-moment-3.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "e0bdd06e18ee47c45fe7832985218c89a6a016ec2fb42890e812189d06f33346"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-08-end.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "75cecc77005464bd60d39fcb45c4acba350a69b125d965ada1608b53337f8556"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-09.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "7ec4462e2c64ef18036a0814edf4a6e609ef718fded73b02f271c03d6f34e4c4"
+        },
+        {
+          "path": "docs/screenshots/tour-unchanged-10-end.png",
+          "dimensions": [
+            1440,
+            900
+          ],
+          "reviewed": true,
+          "sha256": "1575129a65dc1a3f4e9d009f2c116cd49ad102ea9fb187636943c69d5777aab0"
+        }
+      ],
+      "zero_http_non_get": true,
+      "database_unchanged": true,
+      "provider_unchanged": true,
+      "coach_overlap_max": 0
+    }
+  }
+}

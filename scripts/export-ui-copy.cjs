@@ -24,6 +24,7 @@ const screens = {
   TrendExplorer: 'Discover / Trend explorer', EvidenceModal: 'Evidence', evidence: 'Evidence', ResultsStockChart: 'Results / stock chart',
   ProductIcon: 'Product illustrations', productVisuals: 'Catalog / product illustrations', ui: 'Shared UI', api: 'Shared errors / number and date formatting',
   chartTicks: 'Shared chart labels', dashboardHealth: 'Watch / warehouse health', replayData: 'Play / event feed',
+  TourHost: 'Guided tour / welcome', GuidedTour: 'Guided tour / coach', copy: 'Guided tour / final copy', runtime: 'Guided tour / validation',
 };
 function add(file, position, role, text, screen, component) {
   if (typeof text !== 'string' || !text.trim()) return;
@@ -232,8 +233,14 @@ function exportRuntime(endpoint,data,pointer='') {
   }
 }
 async function main() {
-  const files=fs.readdirSync(path.join(root,'frontend/src')).filter(f=>/\.tsx?$/.test(f)&&f!=='types.ts').sort();
-  for(const file of files)exportTs(`frontend/src/${file}`,fs.readFileSync(path.join(root,'frontend/src',file),'utf8'));
+  function sourceFiles(directory){return fs.readdirSync(directory,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?sourceFiles(path.join(directory,entry.name)):/\.tsx?$/.test(entry.name)&&entry.name!=='types.ts'?[path.join(directory,entry.name)]:[])}
+  const files=sourceFiles(path.join(root,'frontend/src')).sort();
+  for(const file of files)exportTs(path.relative(root,file).replaceAll('\\','/'),fs.readFileSync(file,'utf8'));
+  const tourFile=path.join(root,'frontend/public/tour-bundle.json');
+  if(fs.existsSync(tourFile)){
+    const tour=JSON.parse(fs.readFileSync(tourFile,'utf8'));
+    for(const [id,answer] of [...Object.entries(tour.questions),...Object.entries(tour.branches).map(([id,branch])=>[id,branch.answer])])if(answer?.reply)add('frontend/public/tour-bundle.json',`answer/${id}`,'recorded Gemini reply sample',answer.reply.replace(/[ \t]+(\r?\n)/g,'$1'),'Guided tour / recorded assistant','recorded answer');
+  }
   exportHtml('frontend/index.html',fs.readFileSync(path.join(root,'frontend/index.html'),'utf8'),'Browser tab');
   const demoCapture=path.join(root,'docs/screenshots/demo-overview/capture.json');
   if(fs.existsSync(demoCapture)) {

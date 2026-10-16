@@ -1,4 +1,7 @@
+import { isTourActive, tourAssistant, tourRequest } from './tour/runtime';
+
 export async function api<T>(path: string, method = 'GET', body?: unknown): Promise<T> {
+  if (isTourActive()) return tourRequest<T>(path, method, body);
   const response = await fetch(`/api${path}`, { method, headers: body === undefined ? undefined : { 'Content-Type': 'application/json' }, body: body === undefined ? undefined : JSON.stringify(body) });
   if (!response.ok) {
     const data = await response.json().catch(() => null);
@@ -7,6 +10,7 @@ export async function api<T>(path: string, method = 'GET', body?: unknown): Prom
   return response.json();
 }
 export async function assistantStream<T>(path:string,body:unknown,onProgress:(event:{phase:string;label:string;tool?:string})=>void):Promise<T> {
+  if (isTourActive()) return tourAssistant<T>(path, body, onProgress);
   const response=await fetch(`/api${path}/stream`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   if(!response.ok){const error=await response.json().catch(()=>null);throw new Error(typeof error?.detail==='string'?error.detail:'The assistant could not start. Please try again.');}
   if(!response.body)throw new Error('The assistant connection is unavailable.');

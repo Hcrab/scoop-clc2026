@@ -1,0 +1,445 @@
+{
+  "context": "summer",
+  "question": "why",
+  "widget": "stock",
+  "screenshots": [
+    "docs/screenshots/tour-summer-00-welcome.png",
+    "docs/screenshots/tour-summer-01.png",
+    "docs/screenshots/tour-summer-02.png",
+    "docs/screenshots/tour-summer-03.png",
+    "docs/screenshots/tour-summer-03-answer.png",
+    "docs/screenshots/tour-summer-04.png",
+    "docs/screenshots/tour-summer-04-result.png",
+    "docs/screenshots/tour-summer-05.png",
+    "docs/screenshots/tour-summer-06.png",
+    "docs/screenshots/tour-summer-07.png",
+    "docs/screenshots/tour-summer-07-widget.png",
+    "docs/screenshots/tour-summer-08-start.png",
+    "docs/screenshots/tour-summer-08-moment-1.png",
+    "docs/screenshots/tour-summer-08-moment-2.png",
+    "docs/screenshots/tour-summer-08-moment-3.png",
+    "docs/screenshots/tour-summer-08-moment-4.png",
+    "docs/screenshots/tour-summer-08-end.png",
+    "docs/screenshots/tour-summer-09.png",
+    "docs/screenshots/tour-summer-10-end.png"
+  ],
+  "geometry": [
+    {
+      "step": "1",
+      "coach": {
+        "x": 450.671875,
+        "y": 727,
+        "width": 400,
+        "height": 156.796875
+      },
+      "target": {
+        "x": 870.671875,
+        "y": 792.265625,
+        "width": 514.3125,
+        "height": 32
+      },
+      "overlap": 0
+    },
+    {
+      "step": "2",
+      "coach": {
+        "x": 450.671875,
+        "y": 656.265625,
+        "width": 400,
+        "height": 213.984375
+      },
+      "target": {
+        "x": 870.671875,
+        "y": 656.265625,
+        "width": 514.3125,
+        "height": 207.734375
+      },
+      "overlap": 0
+    },
+    {
+      "step": "3",
+      "coach": {
+        "x": 679,
+        "y": 16,
+        "width": 400,
+        "height": 288.296875
+      },
+      "target": {
+        "x": 1099,
+        "y": 12,
+        "width": 326,
+        "height": 876
+      },
+      "overlap": 0
+    },
+    {
+      "step": "3",
+      "coach": {
+        "x": 679,
+        "y": 16,
+        "width": 400,
+        "height": 345.484375
+      },
+      "target": {
+        "x": 1099,
+        "y": 12,
+        "width": 326,
+        "height": 876
+      },
+      "overlap": 0
+    },
+    {
+      "step": "4",
+      "coach": {
+        "x": 276.296875,
+        "y": 500,
+        "width": 400,
+        "height": 383.796875
+      },
+      "target": {
+        "x": 696.296875,
+        "y": 848.34375,
+        "width": 362.6875,
+        "height": 31.65625
+      },
+      "overlap": 0
+    },
+    {
+      "step": "4",
+      "coach": {
+        "x": 276.296875,
+        "y": 466,
+        "width": 400,
+        "height": 418.484375
+      },
+      "target": {
+        "x": 696.296875,
+        "y": 738.34375,
+        "width": 362.6875,
+        "height": 141.65625
+      },
+      "overlap": 0
+    },
+    {
+      "step": "5",
+      "coach": {
+        "x": 828.234375,
+        "y": 108,
+        "width": 400,
+        "height": 156.796875
+      },
+      "target": {
+        "x": 1248.234375,
+        "y": 108,
+        "width": 144.765625,
+        "height": 40.1875
+      },
+      "overlap": 0
+    },
+    {
+      "step": "6",
+      "coach": {
+        "x": 32.65625,
+        "y": 373.578125,
+        "width": 400,
+        "height": 134.296875
+      },
+      "target": {
+        "x": 452.65625,
+        "y": 373.578125,
+        "width": 733.671875,
+        "height": 81
+      },
+      "overlap": 0
+    },
+    {
+      "step": "7",
+      "coach": {
+        "x": 246,
+        "y": 235.046875,
+        "width": 400,
+        "height": 361.296875
+      },
+      "target": {
+        "x": 246,
+        "y": 616.046875,
+        "width": 1147,
+        "height": 263.953125
+      },
+      "overlap": 0
+    },
+    {
+      "step": "7",
+      "coach": {
+        "x": 854.421875,
+        "y": 311.390625,
+        "width": 400,
+        "height": 134.296875
+      },
+      "target": {
+        "x": 1274.421875,
+        "y": 311.390625,
+        "width": 118.578125,
+        "height": 40.1875
+      },
+      "overlap": 0
+    },
+    {
+      "step": "8",
+      "coach": {
+        "x": 246,
+        "y": 264.390625,
+        "width": 400,
+        "height": 134.296875
+      },
+      "target": {
+        "x": 246,
+        "y": 418.390625,
+        "width": 1147,
+        "height": 461.609375
+      },
+      "overlap": 0
+    },
+    {
+      "step": "8",
+      "coach": {
+        "x": 246,
+        "y": 264.390625,
+        "width": 400,
+        "height": 134.296875
+      },
+      "target": {
+        "x": 246,
+        "y": 418.390625,
+        "width": 1147,
+        "height": 461.609375
+      },
+      "overlap": 0
+    },
+    {
+      "step": "8",
+      "coach": {
+        "x": 246,
+        "y": 241.390625,
+        "width": 400,
+        "height": 156.796875
+      },
+      "target": {
+        "x": 246,
+        "y": 418.390625,
+        "width": 1147,
+        "height": 461.609375
+      },
+      "overlap": 0
+    },
+    {
+      "step": "8",
+      "coach": {
+        "x": 246,
+        "y": 264.390625,
+        "width": 400,
+        "height": 134.296875
+      },
+      "target": {
+        "x": 246,
+        "y": 418.390625,
+        "width": 1147,
+        "height": 461.609375
+      },
+      "overlap": 0
+    },
+    {
+      "step": "8",
+      "coach": {
+        "x": 854.71875,
+        "y": 353.796875,
+        "width": 400,
+        "height": 134.296875
+      },
+      "target": {
+        "x": 1274.71875,
+        "y": 353.796875,
+        "width": 101.28125,
+        "height": 40.1875
+      },
+      "overlap": 0
+    },
+    {
+      "step": "8",
+      "coach": {
+        "x": 854.71875,
+        "y": 353.796875,
+        "width": 400,
+        "height": 134.296875
+      },
+      "target": {
+        "x": 1274.71875,
+        "y": 353.796875,
+        "width": 101.28125,
+        "height": 40.1875
+      },
+      "overlap": 0
+    },
+    {
+      "step": "9",
+      "coach": {
+        "x": 34.078125,
+        "y": 389.390625,
+        "width": 400,
+        "height": 213.984375
+      },
+      "target": {
+        "x": 454.078125,
+        "y": 389.390625,
+        "width": 730.828125,
+        "height": 159.78125
+      },
+      "overlap": 0
+    }
+  ],
+  "copy": [
+    {
+      "step": 1,
+      "big": "Open \"How we found it\"",
+      "small": "Scoop flagged value strawberry water ices: 38% above forecast."
+    },
+    {
+      "step": 2,
+      "big": "See where the trend lives",
+      "small": "Strawberry alone: +11%. Add value price: +24%. Add water-based: +39%. The rest barely moved."
+    },
+    {
+      "step": 3,
+      "big": "Ask Scoop about it",
+      "small": "Pick a question."
+    },
+    {
+      "step": 4,
+      "big": "Tell Scoop what you know",
+      "small": "Your context is added to the evidence and the order is recalculated."
+    },
+    {
+      "step": 5,
+      "big": "Review the orders",
+      "small": "Scoop has drafted this week's orders for all 75 products."
+    },
+    {
+      "step": 6,
+      "big": "Check the cold store, then approve",
+      "small": "2,381 cases this week · peak 61.4 of 62 pallets."
+    },
+    {
+      "step": 7,
+      "big": "Pick one more thing to watch",
+      "small": "The four tiles at the top are always on."
+    },
+    {
+      "step": 8,
+      "big": "Watch the week happen",
+      "small": "Monday. This week's orders go out at 14:00."
+    },
+    {
+      "step": 8,
+      "big": "See the results",
+      "small": "11 Aug. The order has played out."
+    },
+    {
+      "step": 9,
+      "big": "Here's how the week went",
+      "small": "Same cold store, same demand: Scoop against a simple 28-day-average rule."
+    }
+  ],
+  "requests": [],
+  "errors": [],
+  "moments": [
+    "08:10 27 Jul: 1,160 strawberry ices arrive.",
+    "30 Jul: the heat arrives. Keep an eye on strawberry stock.",
+    "15:40 1 Aug: Grapefruit Sorbet Bar runs out.",
+    "11 Aug. The order has played out."
+  ],
+  "integrity": {
+    "before": {
+      "database": {
+        "chat_messages": "d41d8cd98f00b204e9800998ecf8427e",
+        "cusum_series": "d41d8cd98f00b204e9800998ecf8427e",
+        "daily_expectations": "d41d8cd98f00b204e9800998ecf8427e",
+        "decisions": "4f6a34190869bf2b5468f64207f0fd09",
+        "direction_items": "d41d8cd98f00b204e9800998ecf8427e",
+        "findings": "023fb52513bd28c85e858d91b50ca532",
+        "ground_truth_events": "e78554349043c664c2172cbc970f9e13",
+        "hypotheses": "15d0974a94f8fc54249c4f04961431bd",
+        "model_runs": "4354cb556e22e7f69fb38d2ca423e72a",
+        "node_inventory": "9efd7bcbf66ed8136bd416195f298a0c",
+        "nodes": "387675b6e29289ec3d0f7308ba914a7c",
+        "plans": "fe3f4f7215bca970aed903b1454e660c",
+        "product_nutrition": "fe30da75aa81900fd9293c7499ad4e9e",
+        "product_tags": "1b12d4afd9960f2fcd72e4cab8f52c55",
+        "products": "3c7be6a75bf1fc8861add18bd84c7e29",
+        "promotions": "8a03359a2a7f21b9e596a7db74a9aeeb",
+        "purchase_orders": "1bc1586d5c728d1ca0c57a464a712ef6",
+        "purchase_suggestions": "ef5a651128124c07373e392f376372fb",
+        "questions": "d41d8cd98f00b204e9800998ecf8427e",
+        "settings": "e5f8b16216e37ebf81eae030f5fdfce8",
+        "simulation_runs": "fca40ed7cf6c94075eea57fa1c75eb01",
+        "store_orders": "8a212ad5ac2bd34d7528849118954f7b",
+        "stores": "dbea5b138018d3b6532cb46934b54dc5",
+        "suppliers": "d78a74f324fc60ac734729594672e25e",
+        "tag_dimensions": "829d7148591d6ac62a23582b8f1c2670",
+        "tags": "b2101a23ad5a3f56011c2edeedb5cd6f",
+        "watch_items": "4e279ae877b671f66a63db38a0fc04e6",
+        "weather_daily": "167d262cb6dd30517065bcc02c6cac28",
+        "weather_forecasts": "77607116ded4b269bffdb6b95f99faaa"
+      },
+      "provider": {
+        "call_limit": 280,
+        "calls": 188,
+        "estimated_usd": 18.649068,
+        "input_tokens": 6728109,
+        "limit_usd": 26.897085,
+        "output_tokens": 417099
+      }
+    },
+    "after": {
+      "database": {
+        "chat_messages": "d41d8cd98f00b204e9800998ecf8427e",
+        "cusum_series": "d41d8cd98f00b204e9800998ecf8427e",
+        "daily_expectations": "d41d8cd98f00b204e9800998ecf8427e",
+        "decisions": "4f6a34190869bf2b5468f64207f0fd09",
+        "direction_items": "d41d8cd98f00b204e9800998ecf8427e",
+        "findings": "023fb52513bd28c85e858d91b50ca532",
+        "ground_truth_events": "e78554349043c664c2172cbc970f9e13",
+        "hypotheses": "15d0974a94f8fc54249c4f04961431bd",
+        "model_runs": "4354cb556e22e7f69fb38d2ca423e72a",
+        "node_inventory": "9efd7bcbf66ed8136bd416195f298a0c",
+        "nodes": "387675b6e29289ec3d0f7308ba914a7c",
+        "plans": "fe3f4f7215bca970aed903b1454e660c",
+        "product_nutrition": "fe30da75aa81900fd9293c7499ad4e9e",
+        "product_tags": "1b12d4afd9960f2fcd72e4cab8f52c55",
+        "products": "3c7be6a75bf1fc8861add18bd84c7e29",
+        "promotions": "8a03359a2a7f21b9e596a7db74a9aeeb",
+        "purchase_orders": "1bc1586d5c728d1ca0c57a464a712ef6",
+        "purchase_suggestions": "ef5a651128124c07373e392f376372fb",
+        "questions": "d41d8cd98f00b204e9800998ecf8427e",
+        "settings": "e5f8b16216e37ebf81eae030f5fdfce8",
+        "simulation_runs": "fca40ed7cf6c94075eea57fa1c75eb01",
+        "store_orders": "8a212ad5ac2bd34d7528849118954f7b",
+        "stores": "dbea5b138018d3b6532cb46934b54dc5",
+        "suppliers": "d78a74f324fc60ac734729594672e25e",
+        "tag_dimensions": "829d7148591d6ac62a23582b8f1c2670",
+        "tags": "b2101a23ad5a3f56011c2edeedb5cd6f",
+        "watch_items": "4e279ae877b671f66a63db38a0fc04e6",
+        "weather_daily": "167d262cb6dd30517065bcc02c6cac28",
+        "weather_forecasts": "77607116ded4b269bffdb6b95f99faaa"
+      },
+      "provider": {
+        "call_limit": 280,
+        "calls": 188,
+        "estimated_usd": 18.649068,
+        "input_tokens": 6728109,
+        "limit_usd": 26.897085,
+        "output_tokens": 417099
+      }
+    },
+    "unchanged": true
+  }
+}

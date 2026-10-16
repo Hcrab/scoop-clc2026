@@ -1,0 +1,12 @@
+
+Running 6 tests using 1 worker
+
+
+
+[1/6] e2e\tour.spec.ts:14:1 › real-component tour: summer / why / stock
+[2/6] e2e\tour.spec.ts:14:1 › real-component tour: growing / heat / space
+[3/6] e2e\tour.spec.ts:14:1 › real-component tour: unchanged / why / cover
+[4/6] e2e\tour.spec.ts:136:1 › stale source refuses entry; narrow welcome only offers Explore
+[5/6] e2e\tour.spec.ts:145:1 › Esc exits to default Report; top bar starts another clean local tour
+[6/6] e2e\tour.spec.ts:166:1 › Explore preserves existing evidence deep links
+  6 passed (3.4m)
