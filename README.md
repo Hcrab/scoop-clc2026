@@ -38,7 +38,17 @@ python -m scoop.prepare_demo
 
 **`scoop.synth.load` replaces the configured database's demo tables.** Run it only for first setup or an intentional full reset. `scoop.prepare_demo` builds the 27 July plan without an LLM call or another data load. Normal app restarts preserve progress. To explicitly prepare a live AI report as well, configure Gemini as described below and run `python -m scoop.prepare_demo --report`; this can consume provider allowance.
 
-Build the frontend and start the same-origin app:
+After the first-time setup above, build and start the same-origin app with Bash (including Git Bash on Windows):
+
+```sh
+bash start.sh
+# To use another port:
+PORT=8009 bash start.sh
+```
+
+The script uses the repository's Python environment, installs frontend dependencies if missing, builds the frontend and runs the server in the foreground. PostgreSQL must be running. Stop with Ctrl+C; the next start preserves the current demo progress. `bash start.sh --help` lists the environment options.
+
+Equivalent manual commands:
 
 ```sh
 pnpm --dir frontend install --frozen-lockfile
