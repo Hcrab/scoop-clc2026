@@ -8,16 +8,17 @@ import { dashboardPalette as colors, healthAtClock, projectedDay, rankedCover, s
 import { DashboardKpis, CoverList } from './DashboardKpis';
 import { ProductIcon } from './ProductIcon';
 import { ResultsStockChart } from './ResultsStockChart';
+import { OperationalWidget, orderDateLabel, sentenceTitle } from './OperationalWidget';
 import './dashboard.css';
 
 export type HourlyRun = {on_hand:number[][];on_hand_delta:number[][];demand:number[][];shipped:number[][];lost:number[][];arrived:number[][]};
-export type PlayRun = {daily:{pallets_pre_ship:number;pallets:number}[];per_sku:{on_hand:number[][];shipped:number[][];lost:number[][];arrived:number[][]};hourly:HourlyRun;expected?:(number|null)[][]};
+export type PlayRun = {daily:{pallets_pre_ship:number;pallets:number}[];per_sku:{on_hand:number[][];shipped:number[][];lost:number[][];arrived:number[][];placed_cases?:number[][]};hourly:HourlyRun;expected?:(number|null)[][]};
 export type DashboardPlay = {dates:string[];skus:string[];demand:number[][];expected?:(number|null)[][];intraday:{step_minutes:10;minutes:number[];demand_cdf:number[];dispatch_cdf:number[];arrival_minutes:number[][];opening_on_hand:number[]};runs:{scoop:PlayRun;baseline:PlayRun};capacity_pallets:number};
 const metrics:{id:DashboardMetric;label:string}[] = [
   {id:'on_hand',label:'Stock on hand'},{id:'lost_units',label:'Units short'},
   {id:'demand',label:'Store requests'},{id:'fill_rate',label:'Fill rate'},
   {id:'days_cover',label:'Days of cover'},{id:'pallets',label:'Cold store pallets'},
-  {id:'requested_vs_expected',label:'Requested vs expected'},{id:'lowest_cover',label:'Lowest cover products'},
+  {id:'requested_vs_expected',label:'Store requests'},{id:'lowest_cover',label:'Lowest cover'},
 ];
 const format=(value:number|null|undefined,unit:DashboardWidget['unit'])=>unit==='ratio'?pct(value):unit==='days'?`${n(value,1)} ${n(value,1)==='1'?'day':'days'}`:unit==='pallets'?`${n(value,1)} pallets`:`${n(value)} units`;
 const label=(w:DashboardWidget, data:DashboardData)=>data.options.find(o=>o.kind===w.scope.kind&&o.key===w.scope.key)?.label || (w.scope.kind==='warehouse'?'Whole warehouse':w.scope.key||w.scope.kind);
@@ -34,13 +35,13 @@ function widgetTitle(widget:DashboardWidget, data:DashboardData, detail:Detail) 
 }
 const receipt=(value:unknown, name:string):PlanEdit=>({...value as PlanEdit,label:name});
 
-export function WidgetChart({widget,result,day,minute,products,health,recordedHealth,comparison=false}:{widget:DashboardWidget;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];health?:DashboardHealth;recordedHealth?:DashboardHealth;comparison?:boolean}) {
+function ComparisonWidgetChart({widget,result,day,minute,products,health,recordedHealth,comparison=false}:{widget:DashboardWidget;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];health?:DashboardHealth;recordedHealth?:DashboardHealth;comparison?:boolean}) {
   const simulated=!!result&&day>=0, partial=simulated&&projectedDay(minute);
   const demand=widget.metric==='demand'||widget.metric==='requested_vs_expected';
   const stock=widget.metric==='on_hand'||widget.metric==='days_cover';
   const compare=comparison&&!demand&&widget.metric!=='lowest_cover';
   const selected=health?.products.filter(p=>widget.skus.includes(p.sku))||[];
-  const average=selected.reduce((sum,p)=>sum+p.daily_demand,0);
+  const average=selected.every(p=>p.daily_demand!==null)?selected.reduce((sum,p)=>sum+(p.daily_demand??0),0):0;
   const data=useMemo(()=>{
     const past=widget.series.map(point=>{
       const safe=widget.metric==='days_cover'?(point.safe_stock_units!=null&&point.daily_demand?point.safe_stock_units/point.daily_demand:NaN):point.safe_stock_units??NaN;
@@ -75,14 +76,17 @@ export function WidgetChart({widget,result,day,minute,products,health,recordedHe
     <details className="dashboard-evidence"><summary>Source data</summary><p className="muted">{widget.skus.length} products · {metrics.find(m=>m.id===widget.metric)?.label}{simulated?` · Simulated from ${date(result!.dates[0])}`:''}</p><div className="table-wrap"><table><thead><tr><th>Date</th><th style={{color:demand?colors.requested:colors.history}}>Recorded</th>{simulated&&<th style={{color:demand?(comparison?colors.requested:colors.requestedProjected):colors.scoop}}>{demand?'Requested · simulated':'Scoop plan'}</th>}{compare&&<th style={{color:colors.simpleRule}}>Simple rule</th>}{stock&&<><th style={{color:colors.requested}}>Requested ({widget.unit})</th><th>Safety requirement ({widget.unit})</th></>}</tr></thead><tbody>{data.map((row,i)=><tr key={row.date}><th scope="row">{date(row.date)}{partial&&i===data.length-1&&minute!==null&&minute>=720?' · projected':''}</th><td>{cell(row.history)}</td>{simulated&&<td>{cell(row.plan)}</td>}{compare&&<td>{cell(row.rule)}</td>}{stock&&<><td>{cell(row.requested)}</td><td>{cell(row.safe)}</td></>}</tr>)}</tbody></table></div></details></>;
 }
 
+type WidgetChartProps = {widget:DashboardWidget;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];health?:DashboardHealth;recordedHealth?:DashboardHealth;comparison?:boolean;orderDate?:string};
+export function WidgetChart(props:WidgetChartProps) {
+  return props.comparison?<ComparisonWidgetChart {...props}/>:<OperationalWidget {...props} orderDate={props.orderDate||props.result?.dates[0]||props.widget.series.at(-1)?.date||''}/>;
+}
+
 function WidgetCard({widget,index,count,data,detail,result,day,minute,products,health,disabled,readonly,dragged,drop,move,remove,edit,comparison=false}:{widget:DashboardWidget;index:number;count:number;data:DashboardData;detail:Detail;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];health?:DashboardHealth;disabled:boolean;readonly:boolean;dragged:React.RefObject<string|null>;drop:(before?:string)=>void;move:(id:string,delta:number)=>void;remove:(widget:DashboardWidget)=>void;edit:(widget:DashboardWidget)=>void;comparison?:boolean}) {
-  const value=widget.metric==='lowest_cover'?rankedCover(health?.products.filter(p=>widget.skus.includes(p.sku))||[])[0]?.days_cover??null:result&&day>=0?widgetDisplayPoint(result,widget,products,day,minute).value:widget.value;
-  const warning=value!=null&&!!widget.threshold&&(widget.threshold.operator==='lt'?value<widget.threshold.value:value>widget.threshold.value);
-  const title=widgetTitle(widget,data,detail),scopeLabel=label(widget,data);
+  const title=sentenceTitle(widgetTitle(widget,data,detail)),scopeLabel=label(widget,data);
   const scopeRepeated=title.toLocaleLowerCase().includes(scopeLabel.toLocaleLowerCase());
   const subtitle=[!scopeRepeated?scopeLabel:null,widget.threshold?`${widget.threshold.operator==='lt'?'Below':'Above'} ${format(widget.threshold.value,widget.unit)}`:null].filter(Boolean).join(' · ');
   const representative=widget.scope.kind==='warehouse'?null:widget.scope.kind==='cohort'?detail.cohort_cards?.find(card=>card.id===widget.scope.key)?.representative_sku||widget.representative_sku:widget.scope.kind==='sku'?widget.scope.key||widget.representative_sku:widget.representative_sku;
-  return <article className={`dashboard-widget ${warning?'warning':''}`} draggable={!disabled} onDragStart={(e:DragEvent)=>{dragged.current=widget.id;e.dataTransfer.effectAllowed='move'}} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.stopPropagation();drop(widget.id)}}><header>{representative&&<ProductIcon sku={representative} size={48} decorative/>}<div className="dashboard-widget-title"><h3>{title}</h3>{subtitle&&<small>{subtitle}</small>}</div>{warning&&<span className="dashboard-warning">Alert</span>}</header><WidgetChart widget={widget} result={result} day={day} minute={minute} products={products} health={health} recordedHealth={data.health} comparison={comparison}/>{!readonly&&<div className="dashboard-actions"><button className="text-button" disabled={disabled||index===0} aria-label={`Move ${title} up`} onClick={()=>move(widget.id,-1)}>↑</button><button className="text-button" disabled={disabled||index===count-1} aria-label={`Move ${title} down`} onClick={()=>move(widget.id,1)}>↓</button><button className="text-button" disabled={disabled} onClick={()=>edit(widget)}>Edit</button><button className="text-button" disabled={disabled} onClick={()=>remove(widget)}>Remove</button></div>}</article>;
+  return <article className="dashboard-widget" draggable={!disabled} onDragStart={(e:DragEvent)=>{dragged.current=widget.id;e.dataTransfer.effectAllowed='move'}} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.stopPropagation();drop(widget.id)}}><header>{representative&&<ProductIcon sku={representative} size={48} decorative/>}<div className="dashboard-widget-title"><h3>{title}</h3>{comparison&&subtitle&&<small>{subtitle}</small>}</div></header><WidgetChart widget={widget} result={result} day={day} minute={minute} products={products} health={health} recordedHealth={data.health} comparison={comparison} orderDate={detail.plan.week_start}/>{!readonly&&<div className="dashboard-actions"><button className="text-button" disabled={disabled||index===0} aria-label={`Move ${title} up`} onClick={()=>move(widget.id,-1)}>↑</button><button className="text-button" disabled={disabled||index===count-1} aria-label={`Move ${title} down`} onClick={()=>move(widget.id,1)}>↓</button><button className="text-button" disabled={disabled} onClick={()=>edit(widget)}>Edit</button><button className="text-button" disabled={disabled} onClick={()=>remove(widget)}>Remove</button></div>}</article>;
 }
 
 function Editor({item,data,path,close,saved}:{item?:DashboardWidget;data:DashboardData;path:string;close:()=>void;saved:(value:unknown,name:string)=>void}) {
@@ -104,7 +108,7 @@ function Editor({item,data,path,close,saved}:{item?:DashboardWidget;data:Dashboa
     <label className="field">Measure<select value={metric} onChange={e=>{const next=e.target.value as DashboardMetric;setMetric(next);if(!item||title===metrics.find(m=>m.id===metric)?.label)setTitle(metrics.find(m=>m.id===next)!.label)}}>{metrics.map(m=><option key={m.id} value={m.id}>{m.label}</option>)}</select></label>
     <label className="field">Title<input value={title} onChange={e=>setTitle(e.target.value)}/></label>
     <div className="dashboard-threshold"><label className="field">Alert when<select value={operator} onChange={e=>setOperator(e.target.value as 'lt'|'gt'|'')}><option value="">No threshold</option><option value="lt">Below</option><option value="gt">Above</option></select></label>{operator&&<label className="field">Value<input type="number" step="any" value={threshold} onChange={e=>setThreshold(e.target.value)}/></label>}</div>
-    <div className="dashboard-preview"><span>Preview</span>{preview?<><strong>{format(preview.value,preview.unit)}</strong><small>{preview.series.length?`${date(preview.series[0].date)} – ${date(preview.series.at(-1)!.date)}`:'No recorded history yet'}</small></>:<small>{valid?'Loading preview…':'Enter a title and threshold value.'}</small>}</div>
+    <div className="dashboard-preview"><span>Preview</span>{preview?<><strong>{format(preview.value,preview.unit)}</strong><small>{preview.series.length?`${date(preview.series[0].date)} – ${date(preview.series.at(-1)!.date)}`:'No daily history yet'}</small></>:<small>{valid?'Loading preview…':'Enter a title and threshold value.'}</small>}</div>
     {error&&<p role="alert" className="chat-error">{error}</p>}
   </div><div className="modal-actions"><button className="button ghost" onClick={close}>Cancel</button><button className="button primary" disabled={!valid||busy||!preview} onClick={save}>{busy?'Saving…':item?'Save widget':'Add widget'}</button></div></Modal>;
 }
@@ -124,10 +128,10 @@ export function Dashboard({detail,products,path,result,day=-1,minute=null,pendin
   const disabled=readonly||pending||busy;
   const health=useMemo(()=>data?.health?healthAtClock(data.health,result,products,day,minute):undefined,[data?.health,result,products,day,minute]);
   const flowYesterday=!!result&&day>=0&&minute!==null&&minute<1430&&!(result.intraday.dispatch_cdf[Math.min(144,Math.max(0,Math.floor(minute/10)))]>0);
-  return <section className="dashboard" aria-label="Dashboard"><header className="dashboard-heading"><div><h2>Dashboard</h2>{data?.facts_through&&<small>Recorded through {date(data.facts_through)}{result&&day>=0?` · Simulated to ${date(result.dates[day])}`:''}</small>}</div>{!readonly&&<button className="button ghost" disabled={disabled} onClick={()=>setEditing(null)}><Icon name="plus" size={16}/>Add widget</button>}</header>
+  return <section className="dashboard" aria-label="Dashboard"><header className="dashboard-heading"><div><h2>Dashboard</h2>{comparison?data?.facts_through&&<small>Recorded through {date(data.facts_through)}{result&&day>=0?` · Simulated to ${date(result.dates[day])}`:''}</small>:<small>{result&&day>=0?'Since':'Up to'} the order on {orderDateLabel(detail.plan.week_start)}</small>}</div>{!readonly&&<button className="button ghost" disabled={disabled} onClick={()=>setEditing(null)}><Icon name="plus" size={16}/>Add widget</button>}</header>
     {error&&<p role="alert" className="chat-error">{error}</p>}
     {!data&&!error&&<p className="muted">Loading dashboard…</p>}
-    {health&&!comparison&&<DashboardKpis health={health} flowYesterday={flowYesterday}/>}
+    {health&&!comparison&&<DashboardKpis health={health} flowYesterday={flowYesterday} orderDate={detail.plan.week_start} sinceOrder={!!result&&day>=0}/>}
     {comparison&&result&&data&&<ResultsStockChart result={result} history={data.health?.history}/>}
     {data&&!data.widgets.length&&<p className="muted">No widgets yet. Add a measure to follow.</p>}
     <div className="dashboard-grid" onDragOver={e=>e.preventDefault()} onDrop={()=>drop()}>{data?.widgets.map((widget,index)=><WidgetCard key={widget.id} widget={widget} index={index} count={data.widgets.length} data={data} detail={detail} result={result} day={day} minute={minute} products={products} health={health} disabled={disabled} readonly={readonly} dragged={dragged} drop={drop} move={move} remove={remove} edit={setEditing} comparison={comparison}/>)}</div>

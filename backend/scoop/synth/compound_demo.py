@@ -21,8 +21,10 @@ LEGACY_BASELINE_HEATWAVE = {date(2026, 7, 31): 33.6, **{
     date(2026, 8, day): temp for day, temp in
     [(1, 33.5), (2, 33.8), (3, 33.7), (4, 33.5), (5, 33.4),
      (6, 33.6), (7, 33.8), (8, 33.5)]}}
-HEATWAVE = {day - timedelta(days=1): temp
-            for day, temp in LEGACY_BASELINE_HEATWAVE.items()}
+# All targets are within seven days of the Sunday forecast issued for Monday's
+# order. Keep the episode's original mean (33.6 C) and range (33.4–33.8 C).
+HEATWAVE = {date(2026, 7, 30): 33.6, date(2026, 7, 31): 33.4,
+            date(2026, 8, 1): 33.8, date(2026, 8, 2): 33.6}
 
 
 def shift_heat_episode(weather, forecasts, orders, days, *, dairy,
@@ -94,5 +96,5 @@ def inject(orders, days, stores, products, product_tags):
                              rounding='baseline draws multiplied, halves up; no new RNG draws'))))
     rows.append(dict(id='N5D', kind='heatwave', tag_id=None, sku=None,
                      districts=districts, start_date=min(HEATWAVE), end_date=max(HEATWAVE),
-                     expected_label='weather', note='Illustrative 30 July–7 August 33.4–33.8C heat spike; issued forecasts use the ordinary lead-dependent noise.'))
+                     expected_label='weather', note='Illustrative 30 July–2 August 33.4–33.8C heat spike; all targets fall within the issued forecast seven-day skill window.'))
     return pd.DataFrame(rows)

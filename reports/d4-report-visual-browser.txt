@@ -1,0 +1,9 @@
+
+Running 1 test using 1 worker
+
+(node:61936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] e2e\day16-mid-report.spec.ts:5:1 › refreshed Gemini report keeps normal planning-check heading and host-rendered figures
+  1 passed (4.6s)

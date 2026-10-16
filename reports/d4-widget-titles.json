@@ -1,0 +1,30 @@
+{
+  "only_display_titles_changed": true,
+  "widgets": [
+    {
+      "id": "a2c33815d942457685c7e696f51addf4",
+      "before": "Value Strawberry Water Bars: Stock on Hand",
+      "after": "Value strawberry water ices \u00b7 stock"
+    },
+    {
+      "id": "95f8f913dae945c89332a7ea44072fec",
+      "before": "Value Strawberry Water Bars: Service Fill Rate",
+      "after": "Value strawberry water ices \u00b7 fill rate"
+    },
+    {
+      "id": "6e16a15ae2c14fdc83fc7782f9341b51",
+      "before": "Chocolate-coated requests",
+      "after": "Chocolate-coated requests"
+    },
+    {
+      "id": "985a3e18ee134adf8bf2d8b4259561a9",
+      "before": "Warehouse Lowest Days of Cover",
+      "after": "Lowest cover"
+    },
+    {
+      "id": "b66620fbb43e495e9c96396c3dd9f2e8",
+      "before": "Cold-store use",
+      "after": "Cold-store pallets"
+    }
+  ]
+}

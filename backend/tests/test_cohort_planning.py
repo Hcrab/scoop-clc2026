@@ -23,7 +23,9 @@ def _fixtures(monkeypatch):
     model = SimpleNamespace(version="test", trained_through=DAY)
     monthly = SimpleNamespace(model=model, ratio_values={}, metadata={})
     monkeypatch.setattr(planning, "recent_forward_calibration", lambda *args:
-                        ProtectionCalibration(np.linspace(.8, 1.2, 101), pd.DataFrame(), {"method": "fixture"}))
+                        ProtectionCalibration(np.linspace(.8, 1.2, 101),
+                            pd.DataFrame({'forecast':[1.], 'actual':[1.], 'source_model_version':['fixture']}),
+                            {"method": "fixture"}, {'fixture':np.linspace(.8, 1.2, 101)}))
     monkeypatch.setattr(planning, "artifacts", lambda: SimpleNamespace(
         static=static, run_for=lambda day: monthly))
     monkeypatch.setattr(planning, "inventory_position", lambda day: pd.DataFrame(

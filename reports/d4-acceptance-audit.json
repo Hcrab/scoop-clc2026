@@ -1,0 +1,21 @@
+{
+  "accepted": true,
+  "one_physical_replay_verified_by_hash_and_completion": true,
+  "result_sha256": "dcf7b0d9180b433c09df09eb98b1a21a7d8fc10c183909eebe567276fb2ef7af",
+  "same_results_in_browser_measurement_and_report": true,
+  "backend_tests": 101,
+  "frontend_tests": 33,
+  "browser_walkthrough": "passed; cached physical replay reused",
+  "report_visual": "passed",
+  "reviewed_screenshots": [
+    "d4-01-report.png",
+    "d4-02-orders.png",
+    "d4-03-watch.png",
+    "d4-04-midnight.png",
+    "d4-05-noon.png",
+    "d4-06-results.png",
+    "d4-report-checks.png"
+  ],
+  "clean_report_state": true,
+  "no_extra_tuning": true
+}

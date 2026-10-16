@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { gzipSync } from 'node:zlib';
 
-test('N6 real report → orders → watch → timed Play → measured Results', async ({page,request})=>{
+test('D4 real report → orders → Watch → midnight and noon Play → measured Results', async ({page,request})=>{
   test.setTimeout(420_000);
   page.setDefaultTimeout(45_000);
   const endpoint='/api/plans/P20260727',out=path.resolve('..','docs','screenshots');
@@ -13,7 +14,7 @@ test('N6 real report → orders → watch → timed Play → measured Results', 
   page.on('pageerror',error=>record.errors.push(error.message));
   page.on('request',req=>{if(watchEdits&&req.method()==='POST'&&/\/(play|simulation)$/.test(new URL(req.url()).pathname))record.simulation_requests.push(req.url())});
   const read=async(suffix='')=>{const response=await request.get(endpoint+suffix,{timeout:120_000});expect(response.ok(),await response.text()).toBeTruthy();return response.json()};
-  const top=async()=>{await page.evaluate(()=>{window.scrollTo(0,0);document.querySelector('.report-column')?.scrollTo(0,0);document.querySelector('.cohort-panel')?.scrollTo(0,0)});await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))};
+   const top=async()=>{await page.evaluate(()=>{window.scrollTo(0,0);document.querySelector('.report-column')?.scrollTo(0,0);document.querySelector('.cohort-panel')?.scrollTo(0,0)})};
   const shot=async(name:string)=>{
     await expect(page.locator('.inline-refresh')).toHaveCount(0);
     if(await page.locator('.cohort-panel').count()){
@@ -22,13 +23,41 @@ test('N6 real report → orders → watch → timed Play → measured Results', 
       await expect(page.getByRole('slider',{name:'In-stock target'})).toBeEnabled();
     }
     await expect.poll(()=>page.locator('.product-icon img').evaluateAll(nodes=>nodes.every(img=>(img as HTMLImageElement).complete&&(img as HTMLImageElement).naturalWidth===256))).toBeTruthy();
-    await top();const file=`n6-${name}.png`;await page.screenshot({path:path.join(out,file),animations:'disabled'});record.screenshots.push(`docs/screenshots/${file}`)
+    await top();const file=`d4-${name}.png`;await page.screenshot({path:path.join(out,file),fullPage:true,animations:'disabled'});record.screenshots.push(`docs/screenshots/${file}`)
   };
   const quantities=(detail:any)=>detail.orders.map((o:any)=>[o.sku,o.final_cases??Math.max(0,o.suggested_cases-o.capacity_cut_cases)]).sort((a:any,b:any)=>a[0].localeCompare(b[0]));
   const widgetState=(dashboard:any)=>dashboard.widgets.map(({id,title,metric,scope,position,threshold}:any)=>({id,title,metric,scope,position,threshold}));
+  const operationalCheck=async(name:string,sinceOrder:boolean)=>{
+    const dashboard=page.locator('.dashboard');
+    await expect(dashboard.locator('.dashboard-kpi')).toHaveCount(4);
+    await expect(dashboard.locator('.dashboard-heading small')).toHaveText(`${sinceOrder?'Since':'Up to'} the order on Mon 27 Jul`);
+    for(const tile of await dashboard.locator('.dashboard-kpi').all())await expect(tile).toContainText(sinceOrder?'since 27 Jul':'14 days before 27 Jul');
+    const widgets=dashboard.locator('.dashboard-widget');
+    for(const widget of await widgets.all()){
+      await expect(widget.locator('[data-order-marker="2026-07-27"]')).toHaveCount(1);
+      await expect(widget.locator('[data-order-marker] text')).toHaveText('Order placed');
+      const keys=await widget.locator('[data-series]').evaluateAll(nodes=>nodes.map(el=>el.getAttribute('data-series')));
+      expect(keys.every(key=>key==='history'||key==='plan')).toBeTruthy();
+      await expect(widget.locator('[data-band]')).toHaveCount(0);
+      await expect(widget.locator('.dashboard-widget-title small')).toHaveCount(0);
+      const legend=await widget.locator('.legend span').allTextContents();
+      expect(legend.length).toBeLessThanOrEqual(2);
+      expect(legend.every(text=>['Before the order','Since the order'].includes(text))).toBeTruthy();
+      await widget.locator('.dashboard-evidence summary').click();
+    }
+    const text=await page.locator(sinceOrder?'.play':'.dashboard').innerText();
+    expect(text).not.toMatch(/\b(?:Recorded|Simulated|Requested|rule|Decision)\b/i);
+    await writeFile(path.resolve('..','reports',`d4-${name}-ui.txt`),text+'\n');
+    for(const widget of await widgets.all())await widget.locator('.dashboard-evidence summary').click();
+    return {text,tiles:await dashboard.locator('.dashboard-kpis').innerText(),widgets:await widgets.locator('h3').allTextContents()};
+  };
   const settings=await(await request.get('/api/demo-settings')).json();
-  const fresh=await request.post('/api/demo-settings/reset',{data:{scenario_id:settings.scenario_id,week_start:'2026-07-27'},timeout:120_000});
-  expect(fresh.ok()).toBeTruthy();
+  // A UI-only retry may reuse a previously computed real replay after its inputs
+  // have been verified externally. The ordinary walkthrough always starts fresh.
+  if(process.env.SCOOP_WALKTHROUGH_PREPARED!=='1'){
+    const fresh=await request.post('/api/demo-settings/reset',{data:{scenario_id:settings.scenario_id,week_start:'2026-07-27'},timeout:120_000});
+    expect(fresh.ok()).toBeTruthy();
+  }
   const initial=await read(),dashboard=await read('/dashboard');
   expect(initial.flow).toMatchObject({step:'report',max_step:'report'});
   const initialWidgets=widgetState(dashboard);
@@ -83,23 +112,32 @@ test('N6 real report → orders → watch → timed Play → measured Results', 
     const afterWidget=await read('/simulation');
     expect(afterWidget.order_hash).toBe(prepared.order_hash);
     expect(afterWidget.completed_at).toBe(prepared.completed_at);
+    record.watch=await operationalCheck('watch',false);
     await shot('03-watch');watchEdits=false;
 
     record.play_entered_at=new Date().toISOString();
     expect(new Date(prepared.completed_at).getTime()).toBeLessThanOrEqual(new Date(record.play_entered_at).getTime());
+    const now=new Date();await page.clock.install({time:now});await page.clock.pauseAt(new Date(now.getTime()+1000));
     await page.getByRole('button',{name:'Next: Play',exact:true}).click();
     await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible();
-    await expect(page.locator('.play-clock strong')).toContainText(/\d{2}:\d{2}/);
+    const clock=page.locator('.play-clock');await expect(clock).toHaveAttribute('data-minute','0');
+    await page.clock.runFor(1);await page.clock.runFor(4085);
     await page.getByRole('button',{name:'Pause',exact:true}).click();
+    await expect(clock).toHaveAttribute('data-day','2026-07-29');await expect(clock).toHaveAttribute('data-minute','50');
+    await expect(clock.locator('strong')).toHaveText('Wed 29 Jul · 00:50');
+    await expect(clock.locator('span')).toHaveText('Day 3 since the order');
     await expect(page.locator('.play .dashboard-widget')).toHaveCount(initialWidgets.length+1);
-    await shot('04-play');
-    await page.getByRole('button',{name:'Resume',exact:true}).click();
-    await expect(page.locator('.play-event.bad').first()).toBeVisible({timeout:60_000});
+    await expect(page.locator('.play circle[data-partial="true"]')).toHaveCount(0);
+    record.midnight={clock:await clock.innerText(),partial_points:0,...await operationalCheck('midnight',true)};
+    await shot('04-midnight');
+    await page.getByRole('button',{name:'Resume',exact:true}).click();await page.clock.runFor(990);
     await page.getByRole('button',{name:'Pause',exact:true}).click();
-    record.midplay={clock:await page.locator('.play-clock strong').textContent(),event:await page.locator('.play-event.bad').first().textContent()};
-    expect(record.midplay.event).toMatch(/\d{2}:\d{2}/);
-    await shot('05-midplay');
-    await page.getByRole('button',{name:'Resume',exact:true}).click();
+    expect(Number(await clock.getAttribute('data-minute'))).toBeGreaterThanOrEqual(720);
+    expect(Number(await clock.getAttribute('data-minute'))).toBeLessThanOrEqual(780);
+    expect(await page.locator('.play circle[data-partial="true"]').count()).toBeGreaterThan(0);
+    record.noon={clock:await clock.innerText(),partial_points:await page.locator('.play circle[data-partial="true"]').count(),...await operationalCheck('noon',true)};
+    await shot('05-noon');
+    await page.getByRole('button',{name:'Resume',exact:true}).click();await page.clock.runFor(prepared.result.days*2000+300);
     await expect(page.getByRole('button',{name:'See results',exact:true})).toBeVisible({timeout:90_000});
     expect((await read()).flow.step).toBe('play');
     await page.getByRole('button',{name:'See results',exact:true}).click();
@@ -112,7 +150,7 @@ test('N6 real report → orders → watch → timed Play → measured Results', 
     await expect(page.locator('.play-outcomes .result-negative')).toHaveCount(diffs.filter(value=>value<0).length);
     await expect(page.locator('.results-view .dashboard-widget')).toHaveCount(initialWidgets.length+1);
     const peakText=(value:number)=>value.toLocaleString('en-HK',{maximumFractionDigits:1});
-    await expect(page.locator('.results-cold-store')).toHaveText(`Same cold store (${result.capacity_pallets} pallets) · this plan peaks at ${peakText(summary.scoop.peak_pallets)}, the rule at ${peakText(summary.baseline.peak_pallets)}`);
+    await expect(page.locator('.results-cold-store')).toHaveText(`Same cold store (${result.capacity_pallets} pallets) · Scoop plan peaks at ${peakText(summary.scoop.peak_pallets)}, Simple rule at ${peakText(summary.baseline.peak_pallets)}`);
     await shot('06-results');
     await page.getByText('See full comparison',{exact:true}).click();
     await expect(page.getByText('Whole warehouse · actual approved orders',{exact:true})).toBeVisible();
@@ -120,7 +158,9 @@ test('N6 real report → orders → watch → timed Play → measured Results', 
     expect(quantities(await read())).toEqual(quantities(initial));
     record.result={capacity_pallets:result.capacity_pallets,summary,differences:diffs,
       comparison:'Normal policies in the same cold store; no service search or space matching.',
-      outcome_note:'404 fewer units short; 14 extra stockout product-days and HK$6,764.94 extra margin lost. Five-SKU diagnosis is in docs/reports/night3-m1.md.'};
+      outcome_note:`Simple rule minus Scoop: ${diffs[0]} units short, ${diffs[1]} stockout product-days, HK$${diffs[2].toFixed(2)} margin lost.`};
+    if(process.env.SCOOP_WALKTHROUGH_PREPARED!=='1')await writeFile(path.resolve('..','reports','d4-replay.json.gz'),gzipSync(JSON.stringify(result)));
+    record.reused_computed_replay=process.env.SCOOP_WALKTHROUGH_PREPARED==='1';
     expect(record.errors).toEqual([]);
   }finally{
     watchEdits=false;
@@ -132,6 +172,6 @@ test('N6 real report → orders → watch → timed Play → measured Results', 
     expect(restored.ok()).toBeTruthy();
     expect((await read()).flow).toMatchObject({step:'report',max_step:'report'});
     record.clean_initial_state_restored_by_reset=true;
-    await writeFile(path.resolve('..','reports','n6-walkthrough.json'),JSON.stringify(record,null,2)+'\n');
+    await writeFile(path.resolve('..','reports','d4-walkthrough.json'),JSON.stringify(record,null,2)+'\n');
   }
 });

@@ -1,0 +1,79 @@
+Frontend integration checks — captured outputs
+Workspace: C:/Users/ping/Documents/Codex/2026-10-14/new-chat/work/scoop-clc2026/frontend
+These outputs were captured from the successful checks in this agent session, then saved without rerunning.
+
+BUILD
+Initial npm run build attempt: npm was not on PATH. The equivalent package-script stages below were run directly with Node.
+Command:
+node node_modules/typescript/bin/tsc -b
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+node node_modules/vite/bin/vite.js build
+Exit code: 0
+Captured output:
+vite v6.3.6 building for production...
+transforming...
+✓ 69 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.51 kB │ gzip:   0.34 kB
+dist/assets/index-Cnht_6zX.css   95.33 kB │ gzip:  18.56 kB
+dist/assets/index-DKPR3_Lm.js   509.55 kB │ gzip: 158.03 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.71s
+
+NODE TESTS
+Command:
+node --test tests/operational-widget.test.cjs tests/dashboard-health.test.cjs tests/play-clock-feed.test.cjs tests/widget-today.test.cjs tests/results-comparison.test.cjs
+Exit code: 0
+Captured output:
+✔ exact KPI color thresholds are inclusive at each healthy boundary (3.3441ms)
+✔ low cover follows next arrival strictly, includes no promise and excludes unusable demand (0.4321ms)
+✔ first simulated night resets old losses and flows, retaining opening stock without future peaks (1.9638ms)
+✔ completed days accumulate Scoop totals; first night on day two uses completed yesterday (1.0269ms)
+✔ no demand preserves a usable fill ratio and excludes null cover from low stock count (0.3465ms)
+✔ current point is absent before noon, then uses a full-day projection, keys use actual flows (0.2175ms)
+✔ safety stock protects to the next known receipt and uses trailing demand, without policy comparison (0.3075ms)
+✔ same-day receipt uses its arrival minute, then removes delivered stock from pending arrivals (0.3804ms)
+✔ week-two placements enter the pending schedule at 14:00 and never leak from future days (7.05ms)
+✔ overdue unresolved schedules remain unknown instead of shifting by supplier lead (0.6423ms)
+✔ fractional-day cover equality is sufficient without calendar timestamp rounding (0.3019ms)
+✔ early admitted stock is removed from its outstanding scheduled promise (0.3118ms)
+✔ all operational metrics render only one measure and two color labels, never reference or risk series (78.1533ms)
+✔ Watch retains order-date marker without manufacturing a future metric value (3.8008ms)
+✔ current daily point begins at noon, remains disconnected, and settles at closing time (49.5765ms)
+✔ lowest cover follows the minimum individual cover, with rolling product demand (5.2039ms)
+✔ flow keys retain yesterday fallback and only one muted line (3.722ms)
+✔ unknown product demand keeps stock keys in units instead of showing partial cover (7.1828ms)
+✔ sentence titles retain acronyms and order subtitle uses the actual order date (4.7814ms)
+✔ clock shows actual weekday, date and time across month and year rollover (40.3892ms)
+✔ feed retains grouped products, cases and arrival dates without decision captions (4.7413ms)
+✔ normal playback and Results transition controls remain available (9.9439ms)
+✔ warehouse paths use native closing stock totals and share only the last recorded anchor (12.4253ms)
+✔ main Results overlay renders three named colors on one chart and equal values use equal coordinates (26.2498ms)
+✔ default widget mode never accesses baseline across stock, flows, demand and cover list (41.8062ms)
+✔ Results detailed policy widgets share one axis, keep policy colors and stock alert evidence (31.4109ms)
+✔ Results demand and lowest-cover widgets never access baseline (10.1701ms)
+✔ only Results opts into dashboard comparison and retains the three outcomes and full comparison (29.5578ms)
+✔ today uses growing cumulative requests, then closes to raw daily totals (2.3279ms)
+✔ fill rate stays pending before dispatch and uses actual cumulative quantities afterward (0.3396ms)
+✔ cumulative shortage cannot fall when stock arrives (0.3986ms)
+✔ partial last chart value remains a hollow marker outside connected lines (41.6171ms)
+✔ projected stockout points stay hollow and absent before the noon projection (3.6429ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1043.8533
+
+DIFF WHITESPACE CHECK
+Command:
+git diff --check -- frontend/src/Dashboard.tsx frontend/src/OperationalWidget.tsx frontend/tests/operational-widget.test.cjs
+Exit code: 0
+No whitespace errors. Git emitted only its LF-to-CRLF notice for Dashboard.tsx.

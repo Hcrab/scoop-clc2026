@@ -1,0 +1,2281 @@
+{
+  "week": "2026-07-27",
+  "end": "2026-08-11",
+  "job": {
+    "plan_id": "P20260727",
+    "order_hash": "4f0ef23ec55858fbaba41cf3a3ab76e90e1d4eec3ad905392765e98cf67af200",
+    "status": "ready",
+    "queued_at": "2026-10-16 12:54:45.663939",
+    "started_at": "2026-10-16 12:54:45.741218",
+    "completed_at": "2026-10-16 12:55:16.188656",
+    "elapsed_seconds": 30.35899999999674,
+    "error": null,
+    "logic": "same-cold-store-play-v10-upper-tail-short-heat",
+    "result_sha256": "dcf7b0d9180b433c09df09eb98b1a21a7d8fc10c183909eebe567276fb2ef7af"
+  },
+  "normal_settings": {
+    "goal": "margin",
+    "service_level": null,
+    "rule_buffer": 1.25
+  },
+  "capacity_pallets": 66,
+  "before_midcourse": {
+    "scoop": {
+      "fill_rate": 0.963501538046151,
+      "lost_units": 7570.0,
+      "lost_margin": 43279.06,
+      "avg_pallets": 37.473600260416674,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 62,
+      "ending_on_hand": 61959.0,
+      "ordered_cases": 8722
+    },
+    "baseline": {
+      "fill_rate": 0.9414144238835906,
+      "lost_units": 12151.0,
+      "lost_margin": 65343.799999999996,
+      "avg_pallets": 35.960720486111114,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 79,
+      "ending_on_hand": 50288.0,
+      "ordered_cases": 8305
+    }
+  },
+  "after": {
+    "baseline": {
+      "avg_pallets": 37.75508897569444,
+      "days_over_capacity": 0,
+      "ending_on_hand": 52004.0,
+      "fill_rate": 0.9692505097020906,
+      "lost_margin": 30849.110000000004,
+      "lost_units": 6063.0,
+      "ordered_cases": 7917,
+      "peak_pallets": 57.98659722222222,
+      "stockout_sku_days": 39
+    },
+    "scoop": {
+      "avg_pallets": 37.97448567708334,
+      "days_over_capacity": 0,
+      "ending_on_hand": 70564.0,
+      "fill_rate": 0.9678101575258401,
+      "lost_margin": 38125.689999999995,
+      "lost_units": 6347.0,
+      "ordered_cases": 8352,
+      "peak_pallets": 57.98659722222222,
+      "stockout_sku_days": 52
+    }
+  },
+  "differences": {
+    "lost_units": -284.0,
+    "stockout_sku_days": -13,
+    "lost_margin": -7276.579999999991
+  },
+  "top_extra_margin": [
+    {
+      "sku": "IC010",
+      "name": "Mango Sticky Rice Bar",
+      "unit_margin": 4.75,
+      "scoop": {
+        "lost_units": 1068.0,
+        "stockout_days": 2,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 391,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 667.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 447,
+            "lost": 0.0,
+            "arrived": 3800.0,
+            "closing": 4020.0,
+            "placed_cases": 53
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 444,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 3576.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 553,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 3023.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 511,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 2512.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 661,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1851.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 699,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1152.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 477,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 675.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 411,
+            "lost": 0.0,
+            "arrived": 2120.0,
+            "closing": 2384.0,
+            "placed_cases": 167
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 478,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1906.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 561,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1345.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 618,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 727.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 631,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 96.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 744,
+            "lost": 648.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 420,
+            "lost": 420.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 446,
+            "lost": 0.0,
+            "arrived": 6680.0,
+            "closing": 6234.0,
+            "placed_cases": 57
+          }
+        ]
+      },
+      "baseline": {
+        "lost_units": 348.0,
+        "stockout_days": 1,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 391,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 667.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 447,
+            "lost": 0.0,
+            "arrived": 3800.0,
+            "closing": 4020.0,
+            "placed_cases": 71
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 444,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 3576.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 553,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 3023.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 511,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 2512.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 661,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1851.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 699,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1152.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 477,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 675.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 411,
+            "lost": 0.0,
+            "arrived": 2840.0,
+            "closing": 3104.0,
+            "placed_cases": 116
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 478,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 2626.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 561,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 2065.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 618,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1447.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 631,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 816.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 744,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 72.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 420,
+            "lost": 348.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 446,
+            "lost": 0.0,
+            "arrived": 4640.0,
+            "closing": 4194.0,
+            "placed_cases": 101
+          }
+        ]
+      },
+      "extra_margin": 3420.0
+    },
+    {
+      "sku": "IC014",
+      "name": "Green Apple Sorbet Tub",
+      "unit_margin": 20.86,
+      "scoop": {
+        "lost_units": 72.0,
+        "stockout_days": 2,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 40,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 142.0,
+            "placed_cases": 17
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 38,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 104.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 33,
+            "lost": 0.0,
+            "arrived": 492.0,
+            "closing": 563.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 76,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 487.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 45,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 442.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 72,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 370.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 72,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 298.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 36,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 262.0,
+            "placed_cases": 105
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 54,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 208.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 42,
+            "lost": 0.0,
+            "arrived": 102.0,
+            "closing": 268.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 50,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 218.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 58,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 160.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 63,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 97.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 90,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 7.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 48,
+            "lost": 41.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 84
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 31,
+            "lost": 31.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "baseline": {
+        "lost_units": 0.0,
+        "stockout_days": 0,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 40,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 142.0,
+            "placed_cases": 32
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 38,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 104.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 33,
+            "lost": 0.0,
+            "arrived": 492.0,
+            "closing": 563.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 76,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 487.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 45,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 442.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 72,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 370.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 72,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 298.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 36,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 262.0,
+            "placed_cases": 80
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 54,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 208.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 42,
+            "lost": 0.0,
+            "arrived": 192.0,
+            "closing": 358.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 50,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 308.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 58,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 250.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 63,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 187.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 90,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 97.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 48,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 49.0,
+            "placed_cases": 77
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 31,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 18.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "extra_margin": 1501.92
+    },
+    {
+      "sku": "IC064",
+      "name": "Strawberry Puree Sorbet Bar",
+      "unit_margin": 7.34,
+      "scoop": {
+        "lost_units": 280.0,
+        "stockout_days": 1,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 299,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1311.0,
+            "placed_cases": 43
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 249,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1062.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 261,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 801.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 480,
+            "lost": 0.0,
+            "arrived": 2840.0,
+            "closing": 3161.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 481,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 2680.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 684,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1996.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 640,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1356.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 355,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1001.0,
+            "placed_cases": 110
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 339,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 662.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 301,
+            "lost": 0.0,
+            "arrived": 1720.0,
+            "closing": 2081.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 400,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1681.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 413,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1268.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 454,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 814.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 472,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 342.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 273,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 69.0,
+            "placed_cases": 81
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 349,
+            "lost": 280.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "baseline": {
+        "lost_units": 80.0,
+        "stockout_days": 1,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 299,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1311.0,
+            "placed_cases": 48
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 249,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1062.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 261,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 801.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 480,
+            "lost": 0.0,
+            "arrived": 2840.0,
+            "closing": 3161.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 481,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 2680.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 684,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1996.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 640,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1356.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 355,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1001.0,
+            "placed_cases": 97
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 339,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 662.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 301,
+            "lost": 0.0,
+            "arrived": 1920.0,
+            "closing": 2281.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 400,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1881.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 413,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1468.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 454,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1014.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 472,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 542.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 273,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 269.0,
+            "placed_cases": 78
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 349,
+            "lost": 80.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "extra_margin": 1468.0
+    },
+    {
+      "sku": "IC040",
+      "name": "Mango Mochi 6-Pack",
+      "unit_margin": 16.77,
+      "scoop": {
+        "lost_units": 124.0,
+        "stockout_days": 2,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 55,
+            "lost": 0.0,
+            "arrived": 468.0,
+            "closing": 634.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 71,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 563.0,
+            "placed_cases": 24
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 49,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 514.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 104,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 410.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 75,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 335.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 73,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 262.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 106,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 156.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 64,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 92.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 65,
+            "lost": 0.0,
+            "arrived": 288.0,
+            "closing": 315.0,
+            "placed_cases": 100
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 72,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 243.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 63,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 180.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 67,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 113.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 97,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 16.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 76,
+            "lost": 60.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 64,
+            "lost": 64.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 52,
+            "lost": 0.0,
+            "arrived": 1200.0,
+            "closing": 1148.0,
+            "placed_cases": 18
+          }
+        ]
+      },
+      "baseline": {
+        "lost_units": 40.0,
+        "stockout_days": 1,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 55,
+            "lost": 0.0,
+            "arrived": 468.0,
+            "closing": 634.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 71,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 563.0,
+            "placed_cases": 31
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 49,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 514.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 104,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 410.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 75,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 335.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 73,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 262.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 106,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 156.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 64,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 92.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 65,
+            "lost": 0.0,
+            "arrived": 372.0,
+            "closing": 399.0,
+            "placed_cases": 54
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 72,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 327.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 63,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 264.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 67,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 197.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 97,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 100.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 76,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 24.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 64,
+            "lost": 40.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 52,
+            "lost": 0.0,
+            "arrived": 648.0,
+            "closing": 596.0,
+            "placed_cases": 45
+          }
+        ]
+      },
+      "extra_margin": 1408.68
+    },
+    {
+      "sku": "IC075",
+      "name": "Strawberry Reserve Cream Bar",
+      "unit_margin": 8.79,
+      "scoop": {
+        "lost_units": 159.0,
+        "stockout_days": 2,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 169,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 910.0,
+            "placed_cases": 17
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 146,
+            "lost": 0.0,
+            "arrived": 1120.0,
+            "closing": 1884.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 125,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1759.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 235,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1524.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 147,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1377.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 301,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1076.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 254,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 822.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 168,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 654.0,
+            "placed_cases": 60
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 155,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 499.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 170,
+            "lost": 0.0,
+            "arrived": 680.0,
+            "closing": 1009.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 186,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 823.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 197,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 626.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 282,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 344.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 230,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 114.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 149,
+            "lost": 35.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 46
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 124,
+            "lost": 124.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "baseline": {
+        "lost_units": 0.0,
+        "stockout_days": 0,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 169,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 910.0,
+            "placed_cases": 24
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 146,
+            "lost": 0.0,
+            "arrived": 1120.0,
+            "closing": 1884.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 125,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1759.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 235,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1524.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 147,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1377.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 301,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1076.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 254,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 822.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 168,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 654.0,
+            "placed_cases": 39
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 155,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 499.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 170,
+            "lost": 0.0,
+            "arrived": 960.0,
+            "closing": 1289.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 186,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1103.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 197,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 906.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 282,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 624.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 230,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 394.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 149,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 245.0,
+            "placed_cases": 40
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 124,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 121.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "extra_margin": 1397.61
+    }
+  ],
+  "top_benefit": [
+    {
+      "sku": "IC062",
+      "name": "Strawberry Orchard Ice Bar",
+      "unit_margin": 4.37,
+      "scoop": {
+        "lost_units": 936.0,
+        "stockout_days": 2,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 428,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 29.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 364,
+            "lost": 0.0,
+            "arrived": 3360.0,
+            "closing": 3025.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 323,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 2702.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 782,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1920.0,
+            "placed_cases": 100
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 635,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1285.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 719,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 566.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 993,
+            "lost": 427.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 509,
+            "lost": 509.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 509,
+            "lost": 0.0,
+            "arrived": 4000.0,
+            "closing": 3491.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 432,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 3059.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 648,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 2411.0,
+            "placed_cases": 79
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 513,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1898.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 683,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1215.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 683,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 532.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 457,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 75.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 377,
+            "lost": 0.0,
+            "arrived": 3160.0,
+            "closing": 2858.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "baseline": {
+        "lost_units": 1741.0,
+        "stockout_days": 4,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 428,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 29.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 364,
+            "lost": 0.0,
+            "arrived": 3360.0,
+            "closing": 3025.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 323,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 2702.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 782,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1920.0,
+            "placed_cases": 78
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 635,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1285.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 719,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 566.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 993,
+            "lost": 427.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 509,
+            "lost": 509.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 509,
+            "lost": 0.0,
+            "arrived": 3120.0,
+            "closing": 2611.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 432,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 2179.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 648,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1531.0,
+            "placed_cases": 127
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 513,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1018.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 683,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 335.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 683,
+            "lost": 348.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 457,
+            "lost": 457.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 377,
+            "lost": 0.0,
+            "arrived": 5080.0,
+            "closing": 4703.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "extra_margin": -3517.85
+    },
+    {
+      "sku": "IC007",
+      "name": "Mixed Berry Ice Pop 6-Pack",
+      "unit_margin": 14.07,
+      "scoop": {
+        "lost_units": 17.0,
+        "stockout_days": 1,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 97,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 196.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 95,
+            "lost": 0.0,
+            "arrived": 680.0,
+            "closing": 781.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 71,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 710.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 119,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 591.0,
+            "placed_cases": 85
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 80,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 511.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 168,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 343.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 181,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 162.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 88,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 74.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 100,
+            "lost": 0.0,
+            "arrived": 680.0,
+            "closing": 654.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 94,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 560.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 118,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 442.0,
+            "placed_cases": 136
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 112,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 330.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 141,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 189.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 107,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 82.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 99,
+            "lost": 17.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 95,
+            "lost": 0.0,
+            "arrived": 1088.0,
+            "closing": 993.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "baseline": {
+        "lost_units": 89.0,
+        "stockout_days": 1,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 97,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 196.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 95,
+            "lost": 0.0,
+            "arrived": 680.0,
+            "closing": 781.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 71,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 710.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 119,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 591.0,
+            "placed_cases": 76
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 80,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 511.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 168,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 343.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 181,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 162.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 88,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 74.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 100,
+            "lost": 0.0,
+            "arrived": 608.0,
+            "closing": 582.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 94,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 488.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 118,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 370.0,
+            "placed_cases": 126
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 112,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 258.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 141,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 117.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 107,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 10.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 99,
+            "lost": 89.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 95,
+            "lost": 0.0,
+            "arrived": 1008.0,
+            "closing": 913.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "extra_margin": -1013.04
+    },
+    {
+      "sku": "IC066",
+      "name": "Strawberry Coastal Sorbet Bar",
+      "unit_margin": 8.84,
+      "scoop": {
+        "lost_units": 0.0,
+        "stockout_days": 0,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 178,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 814.0,
+            "placed_cases": 24
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 144,
+            "lost": 0.0,
+            "arrived": 1240.0,
+            "closing": 1910.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 110,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1800.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 192,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1608.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 189,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1419.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 335,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1084.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 344,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 740.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 141,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 599.0,
+            "placed_cases": 60
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 150,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 449.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 170,
+            "lost": 0.0,
+            "arrived": 960.0,
+            "closing": 1239.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 232,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1007.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 185,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 822.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 257,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 565.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 228,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 337.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 160,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 177.0,
+            "placed_cases": 47
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 145,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 32.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "baseline": {
+        "lost_units": 88.0,
+        "stockout_days": 1,
+        "daily": [
+          {
+            "date": "2026-07-27",
+            "requests": 178,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 814.0,
+            "placed_cases": 21
+          },
+          {
+            "date": "2026-07-28",
+            "requests": 144,
+            "lost": 0.0,
+            "arrived": 1240.0,
+            "closing": 1910.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-29",
+            "requests": 110,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1800.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-30",
+            "requests": 192,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1608.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-07-31",
+            "requests": 189,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1419.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-01",
+            "requests": 335,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 1084.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-02",
+            "requests": 344,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 740.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-03",
+            "requests": 141,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 599.0,
+            "placed_cases": 47
+          },
+          {
+            "date": "2026-08-04",
+            "requests": 150,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 449.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-05",
+            "requests": 170,
+            "lost": 0.0,
+            "arrived": 840.0,
+            "closing": 1119.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-06",
+            "requests": 232,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 887.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-07",
+            "requests": 185,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 702.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-08",
+            "requests": 257,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 445.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-09",
+            "requests": 228,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 217.0,
+            "placed_cases": 0
+          },
+          {
+            "date": "2026-08-10",
+            "requests": 160,
+            "lost": 0.0,
+            "arrived": 0.0,
+            "closing": 57.0,
+            "placed_cases": 39
+          },
+          {
+            "date": "2026-08-11",
+            "requests": 145,
+            "lost": 88.0,
+            "arrived": 0.0,
+            "closing": 0.0,
+            "placed_cases": 0
+          }
+        ]
+      },
+      "extra_margin": -777.92
+    }
+  ],
+  "one_new_physical_replay": true,
+  "tuning_performed": false,
+  "allowance": {
+    "calls": 175,
+    "estimated_usd": 18.115582,
+    "input_tokens": 6445786,
+    "output_tokens": 402432,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  }
+}

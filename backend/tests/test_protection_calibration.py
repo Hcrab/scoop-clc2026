@@ -13,14 +13,18 @@ from scoop.algorithms import forecast, protection_calibration as calibration, re
 AS_OF = date(2026, 7, 13)
 
 
-def calibrated(values):
-    return calibration.ProtectionCalibration(np.asarray(values), pd.DataFrame(), {"method": "fixture"})
+def calibrated(values, actual=None):
+    values = np.asarray(values)
+    actual = values if actual is None else np.asarray(actual)
+    scores = pd.DataFrame({'forecast': np.ones(len(actual)), 'actual': actual,
+                           'source_model_version': ['fixture'] * len(actual)})
+    return calibration.ProtectionCalibration(values, scores, {"method": "fixture"}, {'fixture': values})
 
 
 @pytest.mark.parametrize("q, expected", [
-    (0., .3), (.1, .3), (.25, .6), (.5, 1.35), (.75, 2.1), (.9, 2.4), (1., 2.4),
+    (0., .3), (.1, .51), (.25, .825), (.5, 1.35), (.75, 1.875), (.9, 2.19), (1., 2.4),
 ])
-def test_finite_ranks_and_empirical_median(q, expected):
+def test_central_interval_and_median_are_unchanged(q, expected):
     scores = calibrated(np.arange(1, 9) * .3)
     assert scores.quantile(q) == pytest.approx(expected)
     assert calibrated([1.2]).quantile(q) == 1.2
@@ -29,19 +33,42 @@ def test_finite_ranks_and_empirical_median(q, expected):
 @pytest.mark.parametrize("values", [[], [np.nan], [np.inf], [-1], [[1, 2]]])
 def test_invalid_calibration_cannot_fabricate_service_levels(values):
     with pytest.raises(ValueError, match="forward scores"):
-        calibrated(values)
+        calibration.ProtectionCalibration(np.asarray(values), pd.DataFrame(), {})
 
 
-def test_uncertainty_uses_same_finite_rank_probabilities_and_recenters():
+def test_uncertainty_retains_base_distribution_and_recentering():
     scores = calibrated(np.arange(1, 9) * .3)
     qs = [.1, .5, .9, .75]
     actual = replenish._uncertain_ratio_quantiles(scores, .16, qs)
-    expected = replenish._uncertain_ratio_quantiles(scores.values, .16, [scores.probability(q) for q in qs])
+    expected = replenish._uncertain_ratio_quantiles(scores.values, .16, qs)
     np.testing.assert_allclose(actual, expected)
     assert actual[1] == pytest.approx(np.median(scores.values))
     plain = replenish._uncertain_ratio_quantiles(scores.values, 0., qs)
     np.testing.assert_allclose(plain, np.quantile(scores.values, qs))
     assert actual[0] < actual[1] < actual[2]
+
+
+def test_one_sided_finite_rank_calibrates_requested_upper_without_shrinking():
+    scores = calibrated([1.], [.9, 1., 1.1, 1.2, 1.3])
+    # ceil((5 + 1) * .8) = 5, so the .3 excess is the upper correction.
+    assert scores.probability(.8) == 1.
+    assert scores.upper_correction(.8) == pytest.approx(.3)
+    assert scores.upper_target(100., 1., .8) == pytest.approx(130.)
+    assert scores.quantile(.1) == scores.quantile(.9) == 1.
+    assert scores.upper_correction(.5) == pytest.approx(.1)
+    over_safe = calibrated([2.], [.8, .9, 1.])
+    assert over_safe.upper_target(100., 2., .8) == 200.
+    assert scores.upper_target(0., 1., .8) == pytest.approx(.3)
+
+
+def test_upper_correction_uses_each_issued_models_base_quantile():
+    scores = calibrated([1.], [1.2, 1.2, 1.2, 1.2, 1.2])
+    scores.scores.loc[0, 'source_model_version'] = 'older'
+    scores.source_distributions['older'] = np.array([.5])
+    assert scores.upper_correction(.8) == pytest.approx(.7)
+    scores.source_distributions.pop('older')
+    with pytest.raises(ValueError, match='Missing then-operational'):
+        scores.upper_target(100., 1., .8)
 
 
 def forward_fixture(monkeypatch):
@@ -92,6 +119,8 @@ def forward_fixture(monkeypatch):
     monkeypatch.setattr(forecast, "forecast_weather", weather)
     monkeypatch.setattr(forecast, "build_features", features)
     monkeypatch.setattr(runs, "monthly_model", monthly)
+    monkeypatch.setattr(runs, "build_monthly_run", lambda effective, st:
+                        SimpleNamespace(model=monthly(effective, st), ratio_values=np.linspace(.8, 1.2, 101)))
     monkeypatch.setattr(calibration, "get_setting", lambda *args: "42")
     return static, actual, calls, monthly
 
@@ -100,13 +129,13 @@ def test_recent_monthly_selection_calendar_windows_and_cutoffs(monkeypatch):
     static, actual, calls, _ = forward_fixture(monkeypatch)
     result = calibration.recent_forward_calibration(static, AS_OF)
     scores = result.scores
-    assert calls["models"] == [date(2026, 5, 1), date(2026, 6, 1), date(2026, 7, 1)]
+    assert set(d.replace(day=1) for d in calls["models"]) == {date(2026, 5, 1), date(2026, 6, 1), date(2026, 7, 1)}
     for row in scores.itertuples():
         effective = (row.issued + timedelta(days=1)).replace(day=1)
         assert row.source_model_version == effective.isoformat()
         assert row.trained_through == effective - timedelta(days=1) <= row.issued
         assert row.issued.weekday() == 6
-        assert AS_OF - timedelta(days=56) <= row.issued < AS_OF
+        assert AS_OF - timedelta(days=56) <= row.issued + timedelta(days=1) < AS_OF
         assert row.outcome_end.date() < AS_OF
     # May 31's next-day operational model is June, trained through May 31.
     assert set(scores.loc[scores.issued == date(2026, 5, 31), "source_model_version"]) == {"2026-06-01"}
@@ -120,7 +149,7 @@ def test_recent_monthly_selection_calendar_windows_and_cutoffs(monkeypatch):
     assert scores.loc[scores.sku == "C", "pdays"].eq(8).all()
     assert date(2026, 7, 12) not in set(scores.issued)
     assert scores.loc[scores.sku == "C", "ratio"].eq(0.).all()
-    assert result.values.min() == .3 and result.values.max() == 3.
+    np.testing.assert_array_equal(result.values, np.linspace(.8, 1.2, 101))
     assert result.metadata["sample_count"] == len(scores)
     assert result.metadata["method"] == calibration.METHOD
     assert result.metadata["actuals_cutoff"] == "2026-07-12"
@@ -180,7 +209,7 @@ def test_zero_forecast_uses_unit_denominator_and_empty_history_is_explicit(monke
         calibration.recent_forward_calibration(static, AS_OF)
 
 
-def test_normal_planning_uses_recent_quantiles_for_targets_and_intervals(monkeypatch):
+def test_normal_planning_calibrates_only_order_target_at_actual_service_level(monkeypatch):
     static, _, _, monthly = forward_fixture(monkeypatch)
     model = monthly(date(2026, 7, 1), static)
     # Historical arrays are poisoned to prove suggestions use the recent calibration.
@@ -196,13 +225,15 @@ def test_normal_planning_uses_recent_quantiles_for_targets_and_intervals(monkeyp
     recent = calibration.recent_forward_calibration(static, AS_OF)
     row = result.set_index("sku").loc["A"]
     mean = 5 * 2 * 6 * 1.25
-    assert row.target_units == pytest.approx(mean * recent.quantile(.75))
+    assert row.target_units == pytest.approx(recent.upper_target(mean, recent.quantile(.75), .75))
     assert row.demand_p10 == pytest.approx(mean * recent.quantile(.1))
     assert row.demand_p50 == pytest.approx(mean * recent.quantile(.5))
     assert row.demand_p90 == pytest.approx(mean * recent.quantile(.9))
     assert row.final_cases == max(3, int(np.ceil(row.target_units / 10)))
-    assert result.set_index("sku").loc["C", "target_units"] == 0.
-    assert result.set_index("sku").loc["C", "final_cases"] == 0
+    # A zero forecast still admits observed upper error, using the unit denominator.
+    zero = result.set_index("sku").loc["C"]
+    assert zero.target_units == pytest.approx(recent.upper_target(0., recent.quantile(.75), .75))
+    assert zero.final_cases == (3 if zero.target_units > 0 else 0)
     assert result.attrs["protection_calibration"] == recent.metadata
     assert result.attrs["cohort_model"] == cohort
     assert row.adjustment == 1.25 and row.trained_through == date(2026, 6, 30)

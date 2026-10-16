@@ -1,0 +1,17 @@
+{
+  "command": [
+    "rg",
+    "-n",
+    "-i",
+    "-e",
+    "\\b(Recorded|Simulated|Requested|rule|Decision)\\b",
+    "reports/d4-watch-ui.txt",
+    "reports/d4-midnight-ui.txt",
+    "reports/d4-noon-ui.txt"
+  ],
+  "exit_code": 1,
+  "matches": 0,
+  "scope": "Real Watch/Play visible text with every Source data section expanded",
+  "operational_widget_and_playweek_source_matches": 0,
+  "results_comparison_is_intentionally_out_of_scope": true
+}

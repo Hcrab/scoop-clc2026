@@ -1,0 +1,71 @@
+{
+  "protected_history_and_capacity_match_before": true,
+  "source_quantities": [
+    1233000,
+    6514029,
+    6479998
+  ],
+  "orders": [
+    75,
+    2172
+  ],
+  "capacity_pallets": 66,
+  "flow": {
+    "step": "report",
+    "max_step": "report",
+    "notice": null
+  },
+  "calibration": {
+    "method": "one_sided_forward_upper_conformal_v2",
+    "seed": "93",
+    "as_of": "2026-07-27",
+    "window_days": 56,
+    "sample_count": 478,
+    "planning_start": "2026-06-01",
+    "issue_start": "2026-05-31",
+    "issue_cutoff": "2026-07-26",
+    "issue_dates": [
+      "2026-05-31",
+      "2026-06-07",
+      "2026-06-14",
+      "2026-06-21",
+      "2026-06-28",
+      "2026-07-05",
+      "2026-07-12",
+      "2026-07-19"
+    ],
+    "scored_issue_start": "2026-05-31",
+    "scored_issue_end": "2026-07-12",
+    "actuals_cutoff": "2026-07-26",
+    "outcome_end": "2026-07-26",
+    "order_calendar": true,
+    "ratio_clip": [
+      0.3,
+      3.0
+    ],
+    "planning_origins": [
+      "2026-06-01",
+      "2026-06-08",
+      "2026-06-15",
+      "2026-06-22",
+      "2026-06-29",
+      "2026-07-06",
+      "2026-07-13",
+      "2026-07-20"
+    ],
+    "calibrates": "Only the ordering upper target, at its actual critical ratio/service target",
+    "score": "max(0, (actual - then_operational_upper_target) / max(forecast, 1))",
+    "coverage_note": "Finite-rank rolling forward calibration; serial dependence and pooling preclude exact coverage guarantees."
+  },
+  "report_status": "complete",
+  "report_model": "gemini-3.8-flash",
+  "allowance": {
+    "calls": 175,
+    "estimated_usd": 18.115582,
+    "input_tokens": 6445786,
+    "output_tokens": 402432,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "remaining_night3_usd": 8.781503
+}

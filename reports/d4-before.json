@@ -1,0 +1,130 @@
+{
+  "revision": "ed1ca44",
+  "backup_bytes": 5337532,
+  "quantities": [
+    1233000,
+    6524261,
+    6485861
+  ],
+  "protected": {
+    "requests_before_heat": {
+      "rows": 1183500,
+      "sha256": "bb9995f9d056e2ebd4ab7b82ddc8a730838051e7efed2b9d7f928f7cdadd0307"
+    },
+    "inventory_before_heat": {
+      "rows": 59175,
+      "sha256": "0eefb0dcc3cfe23ab8557c977316587b712059d3f6ccc92ec04a4031b3e1c298"
+    },
+    "inherited_orders": {
+      "rows": 8449,
+      "sha256": "3012c1f54876ce372235a09c0826134f67767b9fe100a8942664bab229cc8429"
+    },
+    "weather_before_heat": {
+      "rows": 789,
+      "sha256": "59168dcac90ce07125cff0e7a778a7b75d7a46c31bc935aa022b058e255343a4"
+    },
+    "unchanged_forecast_targets": {
+      "rows": 12856,
+      "sha256": "2bf231dcaaf84bbd45df1d8139efd851f72c00c6c54d7e45a6f4b8ee2a1cc427"
+    },
+    "capacity": {
+      "rows": 1,
+      "sha256": "364bb3aa03ccd8827acaa54e76d5e8ff5a041f96f18f58cbbbd26e60a30c537d"
+    }
+  },
+  "plan_settings": [
+    "margin",
+    null,
+    "discover"
+  ],
+  "allowance": {
+    "calls": 173,
+    "estimated_usd": 17.88305,
+    "input_tokens": 6372360,
+    "output_tokens": 386113,
+    "limit_usd": 26.897085,
+    "call_limit": 280
+  },
+  "temperature": [
+    {
+      "date": "2026-07-27",
+      "tmax": 28.9
+    },
+    {
+      "date": "2026-07-28",
+      "tmax": 28.1
+    },
+    {
+      "date": "2026-07-29",
+      "tmax": 28.4
+    },
+    {
+      "date": "2026-07-30",
+      "tmax": 33.6
+    },
+    {
+      "date": "2026-07-31",
+      "tmax": 33.5
+    },
+    {
+      "date": "2026-08-01",
+      "tmax": 33.8
+    },
+    {
+      "date": "2026-08-02",
+      "tmax": 33.7
+    },
+    {
+      "date": "2026-08-03",
+      "tmax": 33.5
+    },
+    {
+      "date": "2026-08-04",
+      "tmax": 33.4
+    },
+    {
+      "date": "2026-08-05",
+      "tmax": 33.6
+    },
+    {
+      "date": "2026-08-06",
+      "tmax": 33.8
+    },
+    {
+      "date": "2026-08-07",
+      "tmax": 33.5
+    },
+    {
+      "date": "2026-08-08",
+      "tmax": 31.9
+    },
+    {
+      "date": "2026-08-09",
+      "tmax": 31.0
+    }
+  ],
+  "policy_summary": {
+    "scoop": {
+      "fill_rate": 0.963501538046151,
+      "lost_units": 7570.0,
+      "lost_margin": 43279.06,
+      "avg_pallets": 37.473600260416674,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 62,
+      "ending_on_hand": 61959.0,
+      "ordered_cases": 8722
+    },
+    "baseline": {
+      "fill_rate": 0.9414144238835906,
+      "lost_units": 12151.0,
+      "lost_margin": 65343.799999999996,
+      "avg_pallets": 35.960720486111114,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 79,
+      "ending_on_hand": 50288.0,
+      "ordered_cases": 8305
+    }
+  }
+}

@@ -55,7 +55,7 @@ def test_approval_edit_and_widget_flow_use_committed_quantities(api, monkeypatch
         first = client.get('/api/plans/TESTAPI/simulation').json()
         assert first['status'] == 'ready' and first['result']['runs']['scoop']['per_sku']['demand']
         assert 'matched' not in first['result']
-        assert simulation_jobs.LOGIC_VERSION == 'same-cold-store-play-v9-conformal-heat'
+        assert simulation_jobs.LOGIC_VERSION == 'same-cold-store-play-v10-upper-tail-short-heat'
         assert client.post('/api/plans/TESTAPI/play', json={}).json() == first['result']
         assert calls == [3]
         assert client.post('/api/plans/TESTAPI/approve-orders').status_code == 200

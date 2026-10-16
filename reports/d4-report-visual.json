@@ -1,0 +1,9 @@
+{
+  "model": "gemini-3.8-flash",
+  "style": {
+    "color": "rgb(23, 56, 41)",
+    "transform": "none",
+    "text": "Merchandising & planning checks"
+  },
+  "host_rendered_figures": true
+}

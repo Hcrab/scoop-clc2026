@@ -77,7 +77,6 @@ def _uncertain_ratio_quantiles(ratios: np.ndarray | ProtectionCalibration, varia
         return [_ratio_quantile(ratios, q) for q in probabilities]
     calibrated = isinstance(ratios, ProtectionCalibration)
     values_in = ratios.values if calibrated else np.asarray(ratios, dtype=float)
-    cdf_probabilities = [ratios.probability(q) for q in probabilities] if calibrated else list(probabilities)
     nodes, weights = np.polynomial.hermite.hermgauss(41)
     factors = np.exp(np.sqrt(2 * variance) * nodes)
     values = (values_in[:, None] * factors[None, :]).ravel()
@@ -86,7 +85,7 @@ def _uncertain_ratio_quantiles(ratios: np.ndarray | ProtectionCalibration, varia
     order = np.argsort(values)
     values, masses = values[order], masses[order]
     cumulative = np.cumsum(masses)
-    quantiles = np.interp(cdf_probabilities + [0.5], cumulative, values)
+    quantiles = np.interp(list(probabilities) + [0.5], cumulative, values)
     center = _ratio_quantile(ratios, .5) / quantiles[-1] if quantiles[-1] > 0 else 1.
     return [float(q * center) for q in quantiles[:-1]]
 
@@ -101,7 +100,8 @@ def plan_orders(items: list[SkuInput], ratios: np.ndarray | ProtectionCalibratio
             raise ValueError("factor_log_variance must be finite and nonnegative")
         q10, q50, q90, qcr = _uncertain_ratio_quantiles(
             ratios, it.factor_log_variance, [.1, .5, .9, cr])
-        target = it.mean * qcr
+        target = (ratios.upper_target(it.mean, qcr, cr)
+                  if isinstance(ratios, ProtectionCalibration) else it.mean * qcr)
         position = it.on_hand + it.on_order
         need = max(0.0, target - position)
         cases = math.ceil(need / it.units_per_case) if need > 0 else 0

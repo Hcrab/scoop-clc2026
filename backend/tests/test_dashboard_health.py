@@ -7,7 +7,7 @@ from sqlalchemy import select
 from test_api_state import api
 from test_dashboard import history, spec
 from scoop import dashboard
-from scoop.models import Plan, WatchItem
+from scoop.models import Plan, WatchItem, PurchaseOrder, PurchaseSuggestion, NodeInventory, StoreOrder
 
 
 def test_fixed_health_uses_only_recorded_period_with_no_widgets(api):
@@ -16,7 +16,7 @@ def test_fixed_health_uses_only_recorded_period_with_no_widgets(api):
     before = client.get('/api/plans/TESTAPI/dashboard').json()
     assert before['widgets'] == []
     health = before['health']
-    assert health['period_start'] == '2026-06-08'
+    assert health['period_start'] == '2026-06-22'
     assert health['through'] == '2026-07-05'
     # The fixture's 12 and 13 July rows must not leak into a 6 July plan.
     assert health['requested_units'] == 63
@@ -56,6 +56,49 @@ def test_stock_widget_evidence_and_ranked_cover_metric(api):
     assert lowest.status_code == 200, lowest.text
     assert lowest.json()['value'] == 3
     assert lowest.json()['unit'] == 'days'
+
+
+def test_watch_fortnight_excludes_older_losses_and_peak_but_keeps_history(api):
+    client, scope, _, _ = api
+    history(scope)
+    with scope() as session:
+        session.add(StoreOrder(date=date(2026, 6, 10), store_id='ST', sku='IC001', ordered_units=999, shipped_units=0))
+        session.add(NodeInventory(date=date(2026, 6, 10), sku='IC001', on_hand_units=900))
+    health = client.get('/api/plans/TESTAPI/dashboard').json()['health']
+    assert health['period_start'] == '2026-06-22'
+    assert health['requested_units'] == 63
+    assert health['stockout_sku_days'] == 8
+    assert health['peak_pallets'] == .21
+    old = next(row for row in health['history'] if row['date'] == '2026-06-10')
+    assert old['lost_units'] == 999
+    assert old['pallets'] == 9
+
+
+def test_known_arrivals_use_pending_schedule_and_effective_week_one_cases(api):
+    client, scope, _, _ = api
+    history(scope)
+    with scope() as session:
+        for identifier, ordered, expected, received, cases in [
+                ('pending', date(2026, 7, 1), date(2026, 7, 7), None, 2),
+                ('overdue', date(2026, 7, 1), date(2026, 7, 3), None, 50),
+                ('received', date(2026, 7, 1), date(2026, 7, 7), date(2026, 7, 5), 50),
+                ('future', date(2026, 7, 7), date(2026, 7, 10), None, 50)]:
+            session.add(PurchaseOrder(id=identifier, sku='IC001', supplier_id='SUP', order_date=ordered,
+                                      expected_date=expected, received_date=received, cases=cases, source='history'))
+        suggestion = session.scalar(select(PurchaseSuggestion).where(PurchaseSuggestion.plan_id == 'TESTAPI'))
+        suggestion.final_cases = 2
+    product = client.get('/api/plans/TESTAPI/dashboard').json()['health']['products'][0]
+    assert product['next_arrivals'] == [{'date': '2026-07-07', 'units': 20}, {'date': '2026-07-09', 'units': 20}]
+    assert product['next_arrival_date'] == '2026-07-07'
+    assert product['days_until_arrival'] == 1
+    with scope() as session:
+        suggestion = session.scalar(select(PurchaseSuggestion).where(PurchaseSuggestion.plan_id == 'TESTAPI'))
+        suggestion.final_cases = 0
+        session.get(PurchaseOrder, 'pending').expected_date = date(2026, 7, 4)
+    product = client.get('/api/plans/TESTAPI/dashboard').json()['health']['products'][0]
+    assert product['next_arrivals'] == []
+    assert product['next_arrival_date'] is None
+    assert product['days_until_arrival'] is None
 
 
 def default_specs():

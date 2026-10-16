@@ -6,7 +6,7 @@ from uuid import uuid4
 from fastapi import HTTPException
 from sqlalchemy import select, func
 
-from .models import Product, Supplier, Node, Store, StoreOrder, NodeInventory, WatchItem, DailyExpectation, ModelRun
+from .models import Product, Supplier, Node, Store, StoreOrder, NodeInventory, WatchItem, DailyExpectation, ModelRun, PurchaseOrder, PurchaseSuggestion
 from .ai.exploration_tools import _groups
 
 METRICS = {'on_hand', 'lost_units', 'demand', 'fill_rate', 'days_cover', 'lowest_cover',
@@ -190,9 +190,28 @@ def historical_facts(session, plan, need_expected=False):
             issued[(run_id, day, sku)] = float(value) if count == store_count else None
     suppliers = {s.id: s for s in session.scalars(select(Supplier))}
     capacity = session.scalar(select(Node.capacity_pallets).where(Node.id == 'DC1')) or 0
+    arrivals = {}
+    def add_arrival(sku, day, units):
+        if day >= end and units > 0:
+            arrivals.setdefault(sku, {}).setdefault(day, 0)
+            arrivals[sku][day] += units
+    # Only promises already known at the order boundary. An overdue unresolved
+    # shipment has no new promised date; future recorded receipt facts stay hidden.
+    for order in session.scalars(select(PurchaseOrder).where(
+            PurchaseOrder.source == 'history', PurchaseOrder.order_date < end)):
+        if order.received_date is None or order.received_date >= end:
+            add_arrival(order.sku, order.expected_date,
+                        order.cases * products[order.sku].units_per_case)
+    for order in session.scalars(select(PurchaseSuggestion).where(
+            PurchaseSuggestion.plan_id == plan.id)):
+        cases = order.final_cases if order.final_cases is not None else max(0, order.suggested_cases - order.capacity_cut_cases)
+        if end <= order.order_date < end + timedelta(days=7):
+            product = products[order.sku]
+            add_arrival(order.sku, order.order_date + timedelta(days=suppliers[product.supplier_id].lead_time_days),
+                        cases * product.units_per_case)
     return {'orders': orders, 'stock': stock, 'issued': issued, 'runs': run_for_day,
             'products': products, 'suppliers': suppliers, 'capacity': capacity,
-            'start': start, 'end': end}
+            'start': start, 'end': end, 'arrivals': arrivals}
 
 
 def _total(facts, day, skus, source):
@@ -212,7 +231,8 @@ def _average_demand(facts, day, skus):
 
 def health_snapshot(facts):
     """Fixed warehouse health, independent of editable widget selection."""
-    end, start = facts['end'], facts['start']
+    end, history_start = facts['end'], facts['start']
+    start = end - timedelta(days=14)
     through = end - timedelta(days=1)
     requested = shipped = sku_days = 0
     ran_out = set()
@@ -230,18 +250,23 @@ def health_snapshot(facts):
         average = sum(recent) / 7 if all(value is not None for value in recent) else None
         stock = facts['stock'].get((through, sku))
         supplier = facts['suppliers'][product.supplier_id]
+        arrivals = [{'date': day.isoformat(), 'units': units}
+                    for day, units in sorted(facts.get('arrivals', {}).get(sku, {}).items())]
+        next_date = arrivals[0]['date'] if arrivals else None
         products.append({'sku': sku, 'name': product.name,
                          'on_hand_units': stock if stock is not None else 0,
-                         'daily_demand': average if average is not None else 0,
+                         'daily_demand': average,
                          'days_cover': stock / average if stock is not None and average and average > 0 else None,
-                         'lead_time_days': supplier.lead_time_days, 'recent_demand': recent})
+                         'lead_time_days': supplier.lead_time_days, 'recent_demand': recent,
+                         'next_arrivals': arrivals, 'next_arrival_date': next_date,
+                         'days_until_arrival': (min(facts['arrivals'][sku]) - end).days if arrivals else None})
         footprint = product.units_per_case * product.cases_per_pallet
         for (day, stock_sku), units in facts['stock'].items():
             if stock_sku == sku:
                 pallets[day] = pallets.get(day, 0) + units / footprint
     history = []
     skus = list(facts['products'])
-    day = start
+    day = history_start
     while day < end:
         demand = _demand(facts, day, skus)
         fulfilled = _demand(facts, day, skus, 1)
@@ -256,7 +281,7 @@ def health_snapshot(facts):
             'requested_units': requested, 'shipped_units': shipped,
             'fill_rate': shipped / requested if requested else 1,
             'stockout_skus': sorted(ran_out), 'stockout_sku_days': sku_days,
-            'pallets': pallets.get(through, 0), 'peak_pallets': max(pallets.values(), default=0),
+            'pallets': pallets.get(through, 0), 'peak_pallets': max((value for day, value in pallets.items() if start <= day < end), default=0),
             'capacity_pallets': facts['capacity'], 'products': products, 'history': history}
 
 

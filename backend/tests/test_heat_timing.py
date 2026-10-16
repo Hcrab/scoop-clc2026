@@ -1,4 +1,4 @@
-"""Couple the same seed93 draws to a one-day-earlier heat episode."""
+"""Couple seed93 draws to a heat episode wholly inside issued forecast skill."""
 from copy import deepcopy
 from datetime import date, timedelta
 
@@ -10,13 +10,14 @@ from scoop.synth import compound_demo as demo
 from scoop.synth import generate as gen
 
 
-def test_episode_preserves_all_nine_temperatures_and_moves_exactly_one_day():
+def test_whole_episode_is_inside_issued_forecast_skill_at_same_intensity():
     assert min(demo.HEATWAVE) == date(2026, 7, 30)
-    assert max(demo.HEATWAVE) == date(2026, 8, 7)
-    assert len(demo.HEATWAVE) == 9
-    assert list(demo.HEATWAVE.values()) == [33.6, 33.5, 33.8, 33.7, 33.5, 33.4, 33.6, 33.8, 33.5]
-    assert demo.HEATWAVE == {d - timedelta(days=1): t
-                             for d, t in demo.LEGACY_BASELINE_HEATWAVE.items()}
+    assert max(demo.HEATWAVE) == date(2026, 8, 2)
+    assert (min(demo.HEATWAVE) - date(2026, 7, 27)).days == 3
+    assert all(1 <= (day - date(2026, 7, 26)).days <= 7 for day in demo.HEATWAVE)
+    assert np.mean(list(demo.HEATWAVE.values())) == pytest.approx(np.mean(list(demo.LEGACY_BASELINE_HEATWAVE.values())))
+    assert min(demo.HEATWAVE.values()) == min(demo.LEGACY_BASELINE_HEATWAVE.values())
+    assert max(demo.HEATWAVE.values()) == max(demo.LEGACY_BASELINE_HEATWAVE.values())
 
 
 def test_shift_couples_units_forecasts_and_background_without_rng():
@@ -39,7 +40,7 @@ def test_shift_couples_units_forecasts_and_background_without_rng():
         np.testing.assert_array_equal(orders[di], expected)
         if day in demo.HEATWAVE:
             assert weather.tmax.iloc[di] == demo.HEATWAVE[day]
-        elif day == date(2026, 8, 8):
+        elif day in demo.LEGACY_BASELINE_HEATWAVE:
             assert weather.tmax.iloc[di] == weather.attrs['background_tmax'][di]
         else:
             pd.testing.assert_series_equal(weather.iloc[di], old_weather.iloc[di])
@@ -96,7 +97,7 @@ def test_generation_preserves_history_opening_stock_pos_and_rng(paired_worlds):
     np.testing.assert_array_equal(merged.ordered_units_new, expected)
     event = shifted.events.set_index('id').loc['N5D']
     assert (event.start_date, event.end_date) == (min(demo.HEATWAVE), max(demo.HEATWAVE))
-    assert '30 July–7 August' in event.note
+    assert '30 July–2 August' in event.note
     assert (merged.ordered_units_old != merged.ordered_units_new).any()
     assert not baseline.node_inventory.equals(shifted.node_inventory)
 

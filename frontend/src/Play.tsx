@@ -1,7 +1,6 @@
 import { useEffect, useMemo, type Dispatch, type SetStateAction } from 'react';
 import { date, fullDate, n, pct } from './api';
 import { Dashboard, type DashboardPlay } from './Dashboard';
-import { evidenceUrl } from './evidence';
 import type { Detail, Product } from './types';
 import { ProductIcon } from './ProductIcon';
 
@@ -13,6 +12,11 @@ export type PlayResult = DashboardPlay & {start:string;end:string;days:number;ev
 export type ReplayState = {planId:string;orderHash:string|null;result:PlayResult|null;day:number;minute:number;running:boolean;unlocked:boolean};
 export const emptyReplay=(planId='',orderHash:string|null=null):ReplayState=>({planId,orderHash,result:null,day:-1,minute:0,running:false,unlocked:false});
 const POLICY_LABEL:Record<Policy,string>={scoop:'Scoop plan',baseline:'Simple rule'};
+export function formatPlayClock(today:string,minute:number){
+  const weekday=new Date(`${today.slice(0,10)}T00:00:00Z`).toLocaleDateString('en-GB',{weekday:'short',timeZone:'UTC'});
+  const time=`${String(Math.floor(minute/60)).padStart(2,'0')}:${String(minute%60).padStart(2,'0')}`;
+  return `${weekday} ${date(today)} · ${time}`;
+}
 
 export function Results({result,detail,products,path,revision=0}:{result:PlayResult;detail:Detail;products:Product[];path:string;revision?:number}){
   const rows:[string,(x:Summary)=>string,((s:Summary,b:Summary)=>number)?][]=[
@@ -48,18 +52,17 @@ export function PlayWeek({detail,products,path,replay,setReplay,revision=0,onSee
   const today=result&&day>=0?result.dates[day]:null;
   const eventCount=result&&today?result.events.filter(event=>event.date<today||(event.date===today&&event.minute<=minute)).length:0;
   const events=useMemo(()=>result?result.events.slice(0,eventCount).reverse():[],[result,eventCount]);
-  const hhmm=`${String(Math.floor(minute/60)).padStart(2,'0')}:${String(minute%60).padStart(2,'0')}`;
   const names=useMemo(()=>new Map(products.map(product=>[product.sku,product.name])),[products]);
   const feed=useMemo(()=>events.map(event=><div key={event.id} className={`play-event ${event.tone}`}>
     {event.sku&&<ProductIcon sku={event.sku} size={32} decorative/>}
     <div><span>{date(event.date)} · {event.time}</span>{event.kind==='order'&&event.lines?<details className="play-order-details">
       <summary>{event.text}</summary>
       {event.automatic&&<p className="muted">Automatic orders for the next week.</p>}
-      <ul>{event.lines.map(line=><li key={line.sku}><strong>{line.name}</strong><p>{n(line.cases)} cases · expected {date(line.expected_arrival)}</p>{line.card_ids.map((id,index)=><a key={id} href={evidenceUrl(detail.plan.id,`Q-cohort-${id}`)} target="_blank" rel="noreferrer">Decision{line.card_ids.length>1?` ${index+1}`:''}</a>)}</li>)}</ul>
-    </details>:<><p>{event.sku&&!event.text.toLowerCase().includes((names.get(event.sku)||'').toLowerCase())?<><strong>{names.get(event.sku)||event.sku}</strong> · </>:null}{event.text}</p>{event.card_ids?.map((id,index)=><a key={id} href={evidenceUrl(detail.plan.id,`Q-cohort-${id}`)} target="_blank" rel="noreferrer">Decision{event.card_ids!.length>1?` ${index+1}`:''}</a>)}</>}</div>
-  </div>),[events,names,detail.plan.id]);
+      <ul>{event.lines.map(line=><li key={line.sku}><strong>{line.name}</strong><p>{n(line.cases)} cases · expected {date(line.expected_arrival)}</p></li>)}</ul>
+    </details>:<p>{event.sku&&!event.text.toLowerCase().includes((names.get(event.sku)||'').toLowerCase())?<><strong>{names.get(event.sku)||event.sku}</strong> · </>:null}{event.text}</p>}</div>
+  </div>),[events,names]);
   const update=(patch:Partial<ReplayState>)=>setReplay(current=>({...current,...patch}));
-  return <section className="play"><div className="play-bar"><div className="play-clock" data-day={today||''} data-minute={today?minute:''}><span>{today?`Day ${day+1} of ${result!.days} · 2×`:'Preparing…'}</span><strong>{today?`${date(today)} ${hhmm}`:`Week of ${fullDate(detail.plan.week_start)}`}</strong></div>{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,minute:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
+  return <section className="play"><div className="play-bar"><div className="play-clock" data-day={today||''} data-minute={today?minute:''}><strong>{today?formatPlayClock(today,minute):`Week of ${fullDate(detail.plan.week_start)}`}</strong><span>{today?`Day ${day+1} since the order`:'Preparing…'}</span></div>{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,minute:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
     <div className="play-body"><div><Dashboard detail={detail} products={products} path={path} result={result} day={day} minute={minute} readonly revision={revision}/></div><aside className="play-events" aria-live="polite"><h3>What happened</h3>{events.length?feed:<p className="muted">{result?'Nothing notable yet.':'Preparing the week…'}</p>}</aside></div>
   </section>;
 }
