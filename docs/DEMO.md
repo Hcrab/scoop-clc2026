@@ -1,6 +1,6 @@
 # Demonstration guide
 
-This walkthrough uses the designed synthetic seed-93 world: 75 products, 20 stores, four districts, one distribution centre, eight suppliers and a 66-pallet cold store. The source has 1,233,000 store-SKU-day rows. The public plan opens on **27 July 2026** (`P20260727`). First-plan preparation may take several minutes. The app does not place real supplier orders.
+This walkthrough uses the designed synthetic seed-93 world: 75 products, 20 stores, four districts, one distribution centre, eight suppliers and a 62-pallet cold store. The source has 1,233,000 store-SKU-day rows. The public plan opens on **27 July 2026** (`P20260727`). First-plan preparation may take several minutes. The app does not place real supplier orders.
 
 ## 1. Report
 
@@ -12,11 +12,11 @@ With Gemini configured, the saved weekly report can include the assistant's inve
 
 ## 2. Orders
 
-Inspect grouped cases, supplier order and arrival dates, protection days, forecast range, available and incoming stock, case size, minimum order and any capacity cut. The default has 2,172 initial cases. Open a product's order evidence. You can edit a case quantity and Undo it. **Export orders** downloads the CSV from this step. Approve when the displayed quantities are ready; approval queues one persisted replay keyed by the effective order inputs. A later committed case edit prepares a new result.
+Inspect grouped cases, supplier order and arrival dates, protection days, forecast range, available and incoming stock, case size, minimum order and any capacity cut. The default has 2,413 initial cases and a 61.3-pallet projected peak within 62 usable positions. Open a product's order evidence. You can edit a case quantity and Undo it. **Export orders** downloads the CSV from this step. Approve when the displayed quantities are ready; approval queues one persisted replay keyed by the effective order inputs. A later committed case edit prepares a new result.
 
 ## 3. Watch
 
-Start with warehouse health for the **14 days before the order**. Open **Low cover** to see products whose recent demand may exhaust stock before their next arrival. Add a widget for a measure and product scope, optionally with an alert threshold. It plots one measure: recorded values in grey, then the Scoop plan in green after the order marker, with no rule overlay or benchmark band. Inspect its source, move or edit it, then reload to see the server-saved layout. These same widgets continue into Play. Widget edits change the view without rerunning the approved-order simulation. Choose **Next: Play**.
+Start with warehouse health for the **14 days before the order**. Open **Low cover** to see products whose recent demand may exhaust stock before their next arrival. Add a widget for a measure and product scope, optionally with an alert threshold. It plots one measure in grey before the order and green since it, with an “Order placed” marker and no demand overlay, safe-zone band or extra risk dots. Titles use sentence case; colour on the key number carries good or bad state. Inspect its source, move or edit it, then reload to see the server-saved layout. These same widgets continue into Play. Widget edits change the view without rerunning the approved-order simulation. Choose **Next: Play**.
 
 ## 4. Play
 
@@ -24,9 +24,11 @@ Play starts automatically once the prepared result is ready. The clock advances 
 
 ## 5. Results
 
-Read the three whole-warehouse outcomes against the unchanged moving-average rule under the same 66-pallet cold-store capacity. The [measured default replay](../reports/d4-replay-measurement.json) has **6,347 versus 6,063 short units** (284 extra for Scoop), **52 versus 39 stockout product-days** (13 extra) and **HK$38,125.69 versus HK$30,849.11 lost margin** (HK$7,276.58 extra). All three differences are adverse and appear as losses. Average closing inventory is **37.974486 versus 37.755089 pallets**. Both policies peak at **57.986597 pallets** with zero days over capacity. The closing-stock chart puts recorded history in grey, Scoop in green and the Simple rule in orange on one shared axis. The approved-order outcome and its final widgets remain available in Results.
+Read the three whole-warehouse outcomes against the unchanged 28-day average +25% rule under the same 62-pallet capacity. The [measured default replay](../reports/tuning/demo-walkthrough.json) has **4,297 versus 6,063 short units**, **36 versus 39 stockout product-days**, and **HK$24,271.33 versus HK$30,849.11 lost margin**. Results shows **1,766 units, 3 product-days and HK$6,577.78 avoided**. Average closing inventory is **38.620401 versus 37.755089 pallets**; both policies peak at **57.986597 pallets**, with zero over-capacity days. Each final widget keeps its single metric with grey history, green Scoop and orange Simple rule lines. The illustrative-scenario sentence remains on Results.
 
-The order target uses a one-sided correction fitted at each product's economic critical ratio or selected service target; the displayed central forecast interval stays unchanged. The frozen 478-window calibration set covers its upper target 96.44% before and 97.07% after correction. In a separate strict rolling-origin check, coverage stays 96.44% before and after; the fitted calibration-set figure is not an independent performance gain. See the [mid-course protocol](reports/day16-midcourse-protocol.md) for the evidence boundary. Present the Results as one illustrative synthetic outcome that underperforms the rule on all three primary outcomes, not a measured real-world saving.
+The first strawberry card and issued heat explain how demand information enters the plan. Initial cases fit without cuts; automatic dated allocation cuts 552, 1,069 and 561 cases on 5–7 August as future arrivals crowd the store. Avoid attributing the whole measured gain to any one component. The selected cycle cost is 1% of unit cost; the service ceiling remains 98%. [Parameter reasons and disclosure](TECHNICAL_DESIGN.md#demonstration-parameters) record the demonstration tuning.
+
+The order target uses a one-sided upper correction at its actual 98% service target. The same 478 historical calibration windows cover the upper target **96.86% before → 98.33% after** (463 → 470), while central intervals remain unchanged. This is fitted historical coverage. At the original 96.8% reference, calibration coverage is still 96.44% → 97.07%; the separate past-only rolling evaluation remains 96.44% → 96.44%. Present the comparison as one illustrative synthetic outcome.
 
 ## Quiet week and reset
 

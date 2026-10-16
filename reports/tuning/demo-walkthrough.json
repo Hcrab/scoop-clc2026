@@ -1,0 +1,494 @@
+{
+  "mocked_responses": false,
+  "plan": "P20260727",
+  "screenshots": [
+    "docs/screenshots/demo-01-report.png",
+    "docs/screenshots/demo-strawberry-drilldown.png",
+    "docs/screenshots/demo-02-orders.png",
+    "docs/screenshots/demo-03-watch.png",
+    "docs/screenshots/demo-04-midnight.png",
+    "docs/screenshots/demo-05-noon.png",
+    "docs/screenshots/demo-06-results.png"
+  ],
+  "errors": [],
+  "simulation_requests": [],
+  "initial": {
+    "stage": "discover",
+    "quantities": [
+      [
+        "IC001",
+        24
+      ],
+      [
+        "IC002",
+        15
+      ],
+      [
+        "IC003",
+        58
+      ],
+      [
+        "IC004",
+        36
+      ],
+      [
+        "IC005",
+        24
+      ],
+      [
+        "IC006",
+        37
+      ],
+      [
+        "IC007",
+        91
+      ],
+      [
+        "IC008",
+        41
+      ],
+      [
+        "IC009",
+        52
+      ],
+      [
+        "IC010",
+        61
+      ],
+      [
+        "IC011",
+        15
+      ],
+      [
+        "IC012",
+        13
+      ],
+      [
+        "IC013",
+        34
+      ],
+      [
+        "IC014",
+        21
+      ],
+      [
+        "IC015",
+        45
+      ],
+      [
+        "IC016",
+        19
+      ],
+      [
+        "IC017",
+        16
+      ],
+      [
+        "IC018",
+        26
+      ],
+      [
+        "IC019",
+        30
+      ],
+      [
+        "IC020",
+        18
+      ],
+      [
+        "IC021",
+        52
+      ],
+      [
+        "IC022",
+        47
+      ],
+      [
+        "IC023",
+        15
+      ],
+      [
+        "IC024",
+        18
+      ],
+      [
+        "IC025",
+        31
+      ],
+      [
+        "IC026",
+        25
+      ],
+      [
+        "IC027",
+        38
+      ],
+      [
+        "IC028",
+        14
+      ],
+      [
+        "IC029",
+        19
+      ],
+      [
+        "IC030",
+        25
+      ],
+      [
+        "IC031",
+        12
+      ],
+      [
+        "IC032",
+        66
+      ],
+      [
+        "IC033",
+        16
+      ],
+      [
+        "IC034",
+        17
+      ],
+      [
+        "IC035",
+        13
+      ],
+      [
+        "IC036",
+        26
+      ],
+      [
+        "IC037",
+        23
+      ],
+      [
+        "IC038",
+        22
+      ],
+      [
+        "IC039",
+        35
+      ],
+      [
+        "IC040",
+        27
+      ],
+      [
+        "IC041",
+        53
+      ],
+      [
+        "IC042",
+        18
+      ],
+      [
+        "IC043",
+        43
+      ],
+      [
+        "IC044",
+        23
+      ],
+      [
+        "IC045",
+        33
+      ],
+      [
+        "IC046",
+        43
+      ],
+      [
+        "IC047",
+        16
+      ],
+      [
+        "IC048",
+        27
+      ],
+      [
+        "IC049",
+        18
+      ],
+      [
+        "IC050",
+        32
+      ],
+      [
+        "IC051",
+        48
+      ],
+      [
+        "IC052",
+        16
+      ],
+      [
+        "IC053",
+        18
+      ],
+      [
+        "IC054",
+        36
+      ],
+      [
+        "IC055",
+        32
+      ],
+      [
+        "IC056",
+        36
+      ],
+      [
+        "IC057",
+        48
+      ],
+      [
+        "IC058",
+        66
+      ],
+      [
+        "IC059",
+        22
+      ],
+      [
+        "IC060",
+        21
+      ],
+      [
+        "IC061",
+        33
+      ],
+      [
+        "IC062",
+        106
+      ],
+      [
+        "IC063",
+        65
+      ],
+      [
+        "IC064",
+        51
+      ],
+      [
+        "IC065",
+        34
+      ],
+      [
+        "IC066",
+        26
+      ],
+      [
+        "IC067",
+        32
+      ],
+      [
+        "IC068",
+        23
+      ],
+      [
+        "IC069",
+        15
+      ],
+      [
+        "IC070",
+        21
+      ],
+      [
+        "IC071",
+        40
+      ],
+      [
+        "IC072",
+        38
+      ],
+      [
+        "IC073",
+        20
+      ],
+      [
+        "IC074",
+        23
+      ],
+      [
+        "IC075",
+        20
+      ]
+    ],
+    "widgets": [
+      {
+        "id": "a2c33815d942457685c7e696f51addf4",
+        "title": "Value strawberry water ices · stock",
+        "metric": "on_hand",
+        "scope": {
+          "kind": "cohort",
+          "key": "C831a53fca012"
+        },
+        "threshold": {
+          "operator": "lt",
+          "value": 1000
+        }
+      },
+      {
+        "id": "95f8f913dae945c89332a7ea44072fec",
+        "title": "Value strawberry water ices · fill rate",
+        "metric": "fill_rate",
+        "scope": {
+          "kind": "cohort",
+          "key": "C831a53fca012"
+        },
+        "threshold": {
+          "operator": "lt",
+          "value": 0.92
+        }
+      },
+      {
+        "id": "6e16a15ae2c14fdc83fc7782f9341b51",
+        "title": "Chocolate-coated requests",
+        "metric": "requested_vs_expected",
+        "scope": {
+          "kind": "cohort",
+          "key": "C6b627a31b52c"
+        },
+        "threshold": null
+      },
+      {
+        "id": "985a3e18ee134adf8bf2d8b4259561a9",
+        "title": "Lowest cover",
+        "metric": "lowest_cover",
+        "scope": {
+          "kind": "warehouse",
+          "key": ""
+        },
+        "threshold": {
+          "operator": "lt",
+          "value": 3
+        }
+      },
+      {
+        "id": "b66620fbb43e495e9c96396c3dd9f2e8",
+        "title": "Cold-store pallets",
+        "metric": "pallets",
+        "scope": {
+          "kind": "warehouse",
+          "key": ""
+        },
+        "threshold": {
+          "operator": "gt",
+          "value": 62
+        }
+      }
+    ]
+  },
+  "report": {
+    "model": "gemini-3.8-flash",
+    "title": "Value strawberry water ices surge while chocolate-coated lines soften",
+    "first_card": "Value price · Strawberry · Water-based"
+  },
+  "compound_path": [
+    {
+      "label": "Strawberry",
+      "effect_pct": 11.203849727416655,
+      "rest_effect_pct": -0.7590673759217217
+    },
+    {
+      "label": "Value price",
+      "effect_pct": 23.641990101140546,
+      "rest_effect_pct": -0.3605296682557742
+    },
+    {
+      "label": "Water-based",
+      "effect_pct": 39.16938370287768,
+      "rest_effect_pct": 0.22878981720010041
+    }
+  ],
+  "orders": {
+    "ready_ms": 973,
+    "capacity_text": "61.3 / 62 pallets"
+  },
+  "preparation": {
+    "status": "ready",
+    "order_hash": "a8ca053adf930b016e76346af923c992c3585c2df74e83b1f31ab5cfcc65e322",
+    "completed_at": "2026-10-16T14:32:30.708020",
+    "elapsed_seconds": 26.359000000011292
+  },
+  "watch": {
+    "text": "Dashboard\nUp to the order on Mon 27 Jul\nAdd widget\nFill rate\n98.4%\n14 days before 27 Jul\nStockouts\n11 products\n21 product-days · 14 days before 27 Jul\nLow cover\n↗\n1 product\nTap to see which\n14 days before 27 Jul\nCold store\n41.8 / 62\nPallets · peak 45.6 · 14 days before 27 Jul\nValue strawberry water ices · stock\n3.3 days\n3,780 units on hand\n0\n2.5k\n5k\n7.5k\nOrder placed\n29 Jun\n27 Jul\nBefore the order\n\n29 Jun to 27 Jul. Before the order: unavailable at the latest observation.\n\nSource data\n\n4 products · on hand\n\nDate\tBefore the order\tSince the order\n29 Jun\t3,167 units\t—\n30 Jun\t4,878 units\t—\n1 Jul\t5,459 units\t—\n2 Jul\t4,942 units\t—\n3 Jul\t6,180 units\t—\n4 Jul\t5,351 units\t—\n5 Jul\t4,624 units\t—\n6 Jul\t4,003 units\t—\n7 Jul\t3,398 units\t—\n8 Jul\t5,953 units\t—\n9 Jul\t5,198 units\t—\n10 Jul\t5,795 units\t—\n11 Jul\t4,892 units\t—\n12 Jul\t3,706 units\t—\n13 Jul\t2,683 units\t—\n14 Jul\t3,596 units\t—\n15 Jul\t2,526 units\t—\n16 Jul\t2,964 units\t—\n17 Jul\t2,949 units\t—\n18 Jul\t2,326 units\t—\n19 Jul\t1,302 units\t—\n20 Jul\t649 units\t—\n21 Jul\t3,101 units\t—\n22 Jul\t2,458 units\t—\n23 Jul\t4,182 units\t—\n24 Jul\t5,104 units\t—\n25 Jul\t4,985 units\t—\n26 Jul\t3,780 units\t—\n27 Jul\t—\t—\n↑\n↓\nEdit\nRemove\nValue strawberry water ices · fill rate\n100%\n0%\n40%\n80%\n120%\nOrder placed\n29 Jun\n27 Jul\nBefore the order\n\n29 Jun to 27 Jul. Before the order: unavailable at the latest observation.\n\nSource data\n\n4 products · fill rate\n\nDate\tBefore the order\tSince the order\n29 Jun\t100%\t—\n30 Jun\t100%\t—\n1 Jul\t100%\t—\n2 Jul\t100%\t—\n3 Jul\t100%\t—\n4 Jul\t100%\t—\n5 Jul\t100%\t—\n6 Jul\t100%\t—\n7 Jul\t100%\t—\n8 Jul\t100%\t—\n9 Jul\t100%\t—\n10 Jul\t100%\t—\n11 Jul\t100%\t—\n12 Jul\t100%\t—\n13 Jul\t100%\t—\n14 Jul\t100%\t—\n15 Jul\t100%\t—\n16 Jul\t95.6%\t—\n17 Jul\t100%\t—\n18 Jul\t100%\t—\n19 Jul\t92.3%\t—\n20 Jul\t47.9%\t—\n21 Jul\t69.8%\t—\n22 Jul\t64.8%\t—\n23 Jul\t76.9%\t—\n24 Jul\t87.2%\t—\n25 Jul\t100%\t—\n26 Jul\t100%\t—\n27 Jul\t—\t—\n↑\n↓\nEdit\nRemove\nChocolate-coated requests\n1,583 units\n0\n1k\n2k\n3k\nOrder placed\n29 Jun\n27 Jul\nBefore the order\n\n29 Jun to 27 Jul. Before the order: unavailable at the latest observation.\n\nSource data\n\n10 products · Store requests\n\nDate\tBefore the order\tSince the order\n29 Jun\t1,344 units\t—\n30 Jun\t1,345 units\t—\n1 Jul\t2,114 units\t—\n2 Jul\t1,592 units\t—\n3 Jul\t1,499 units\t—\n4 Jul\t2,139 units\t—\n5 Jul\t2,085 units\t—\n6 Jul\t1,567 units\t—\n7 Jul\t1,546 units\t—\n8 Jul\t1,481 units\t—\n9 Jul\t1,593 units\t—\n10 Jul\t2,034 units\t—\n11 Jul\t1,921 units\t—\n12 Jul\t2,179 units\t—\n13 Jul\t1,700 units\t—\n14 Jul\t1,549 units\t—\n15 Jul\t1,803 units\t—\n16 Jul\t1,596 units\t—\n17 Jul\t1,995 units\t—\n18 Jul\t2,051 units\t—\n19 Jul\t1,755 units\t—\n20 Jul\t1,764 units\t—\n21 Jul\t1,565 units\t—\n22 Jul\t1,536 units\t—\n23 Jul\t1,351 units\t—\n24 Jul\t1,536 units\t—\n25 Jul\t1,811 units\t—\n26 Jul\t1,583 units\t—\n27 Jul\t—\t—\n↑\n↓\nEdit\nRemove\nLowest cover\n1 day\n0\n1\n2\n3\nOrder placed\n29 Jun\n27 Jul\nBefore the order\n\n29 Jun to 27 Jul. Before the order: unavailable at the latest observation.\n\nSource data\n\n75 products · Lowest cover\n\nDate\tBefore the order\tSince the order\n29 Jun\t2.7 days\t—\n30 Jun\t2.1 days\t—\n1 Jul\t1.3 days\t—\n2 Jul\t1.5 days\t—\n3 Jul\t0.6 days\t—\n4 Jul\t2.8 days\t—\n5 Jul\t1.4 days\t—\n6 Jul\t0.2 days\t—\n7 Jul\t0.2 days\t—\n8 Jul\t0.1 days\t—\n9 Jul\t0.1 days\t—\n10 Jul\t1.7 days\t—\n11 Jul\t0.9 days\t—\n12 Jul\t0.1 days\t—\n13 Jul\t0.1 days\t—\n14 Jul\t0.1 days\t—\n15 Jul\t0.1 days\t—\n16 Jul\t0.1 days\t—\n17 Jul\t0 days\t—\n18 Jul\t0.8 days\t—\n19 Jul\t0 days\t—\n20 Jul\t0 days\t—\n21 Jul\t0 days\t—\n22 Jul\t0 days\t—\n23 Jul\t0 days\t—\n24 Jul\t0 days\t—\n25 Jul\t0.1 days\t—\n26 Jul\t1 day\t—\n27 Jul\t—\t—\n↑\n↓\nEdit\nRemove\nCold-store pallets\n41.8 pallets\n0\n20\n40\n60\nOrder placed\n29 Jun\n27 Jul\nBefore the order\n\n29 Jun to 27 Jul. Before the order: unavailable at the latest observation.\n\nSource data\n\n75 products · pallets\n\nDate\tBefore the order\tSince the order\n29 Jun\t40.4 pallets\t—\n30 Jun\t44 pallets\t—\n1 Jul\t46.8 pallets\t—\n2 Jul\t48 pallets\t—\n3 Jul\t46.5 pallets\t—\n4 Jul\t47 pallets\t—\n5 Jul\t44.4 pallets\t—\n6 Jul\t45.1 pallets\t—\n7 Jul\t44.6 pallets\t—\n8 Jul\t46.6 pallets\t—\n9 Jul\t45.3 pallets\t—\n10 Jul\t43.2 pallets\t—\n11 Jul\t44.5 pallets\t—\n12 Jul\t39.8 pallets\t—\n13 Jul\t40.6 pallets\t—\n14 Jul\t43.9 pallets\t—\n15 Jul\t42.3 pallets\t—\n16 Jul\t41.5 pallets\t—\n17 Jul\t38.1 pallets\t—\n18 Jul\t41.8 pallets\t—\n19 Jul\t40.6 pallets\t—\n20 Jul\t39.1 pallets\t—\n21 Jul\t43 pallets\t—\n22 Jul\t40.8 pallets\t—\n23 Jul\t43.4 pallets\t—\n24 Jul\t41.9 pallets\t—\n25 Jul\t45.6 pallets\t—\n26 Jul\t41.8 pallets\t—\n27 Jul\t—\t—\n↑\n↓\nEdit\nRemove\nStrawberry burst bar stock\n6 days\n1,205 units on hand\n0\n1k\n2k\nOrder placed\n29 Jun\n27 Jul\nBefore the order\n\n29 Jun to 27 Jul. Before the order: unavailable at the latest observation.\n\nSource data\n\n1 products · on hand\n\nDate\tBefore the order\tSince the order\n29 Jun\t819 units\t—\n30 Jun\t702 units\t—\n1 Jul\t573 units\t—\n2 Jul\t490 units\t—\n3 Jul\t1,352 units\t—\n4 Jul\t1,203 units\t—\n5 Jul\t1,067 units\t—\n6 Jul\t944 units\t—\n7 Jul\t815 units\t—\n8 Jul\t703 units\t—\n9 Jul\t545 units\t—\n10 Jul\t1,159 units\t—\n11 Jul\t1,008 units\t—\n12 Jul\t794 units\t—\n13 Jul\t559 units\t—\n14 Jul\t411 units\t—\n15 Jul\t188 units\t—\n16 Jul\t11 units\t—\n17 Jul\t1,147 units\t—\n18 Jul\t920 units\t—\n19 Jul\t658 units\t—\n20 Jul\t401 units\t—\n21 Jul\t237 units\t—\n22 Jul\t82 units\t—\n23 Jul\t8 units\t—\n24 Jul\t1,674 units\t—\n25 Jul\t1,400 units\t—\n26 Jul\t1,205 units\t—\n27 Jul\t—\t—\n↑\n↓\nEdit\nRemove\nWidget added\nUndo",
+    "tiles": "Fill rate\n98.4%\n14 days before 27 Jul\nStockouts\n11 products\n21 product-days · 14 days before 27 Jul\nLow cover\n↗\n1 product\nTap to see which\n14 days before 27 Jul\nCold store\n41.8 / 62\nPallets · peak 45.6 · 14 days before 27 Jul",
+    "widgets": [
+      "Value strawberry water ices · stock",
+      "Value strawberry water ices · fill rate",
+      "Chocolate-coated requests",
+      "Lowest cover",
+      "Cold-store pallets",
+      "Strawberry burst bar stock"
+    ]
+  },
+  "play_entered_at": "2026-10-16T06:32:36.640Z",
+  "midnight": {
+    "clock": "Wed 29 Jul · 00:50\nDay 3 since the order",
+    "partial_points": 0,
+    "text": "Wed 29 Jul · 00:50\nDay 3 since the order\nResume\nDashboard\nSince the order on Mon 27 Jul\nFill rate\n100%\nsince 27 Jul\nStockouts\n0 products\n0 product-days · since 27 Jul\nLow cover\n↗\n2 products\nTap to see which\nsince 27 Jul\nCold store\n51.8 / 62\nPallets · peak 58 · since 27 Jul\nValue strawberry water ices · stock\n7.1 days\n7,804 units on hand\n0\n4k\n8k\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: unavailable Projected full day.\n\nSource data\n\n4 products · on hand\n\nDate\tBefore the order\tSince the order\n29 Jun\t3,167 units\t—\n30 Jun\t4,878 units\t—\n1 Jul\t5,459 units\t—\n2 Jul\t4,942 units\t—\n3 Jul\t6,180 units\t—\n4 Jul\t5,351 units\t—\n5 Jul\t4,624 units\t—\n6 Jul\t4,003 units\t—\n7 Jul\t3,398 units\t—\n8 Jul\t5,953 units\t—\n9 Jul\t5,198 units\t—\n10 Jul\t5,795 units\t—\n11 Jul\t4,892 units\t—\n12 Jul\t3,706 units\t—\n13 Jul\t2,683 units\t—\n14 Jul\t3,596 units\t—\n15 Jul\t2,526 units\t—\n16 Jul\t2,964 units\t—\n17 Jul\t2,949 units\t—\n18 Jul\t2,326 units\t—\n19 Jul\t1,302 units\t—\n20 Jul\t649 units\t—\n21 Jul\t3,101 units\t—\n22 Jul\t2,458 units\t—\n23 Jul\t4,182 units\t—\n24 Jul\t5,104 units\t—\n25 Jul\t4,985 units\t—\n26 Jul\t3,780 units\t—\n27 Jul\t—\t3,813 units\n28 Jul\t—\t7,804 units\n29 Jul\t—\t—\nValue strawberry water ices · fill rate\n100%\nYesterday\n0%\n40%\n80%\n120%\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: unavailable Projected full day.\n\nSource data\n\n4 products · fill rate\n\nDate\tBefore the order\tSince the order\n29 Jun\t100%\t—\n30 Jun\t100%\t—\n1 Jul\t100%\t—\n2 Jul\t100%\t—\n3 Jul\t100%\t—\n4 Jul\t100%\t—\n5 Jul\t100%\t—\n6 Jul\t100%\t—\n7 Jul\t100%\t—\n8 Jul\t100%\t—\n9 Jul\t100%\t—\n10 Jul\t100%\t—\n11 Jul\t100%\t—\n12 Jul\t100%\t—\n13 Jul\t100%\t—\n14 Jul\t100%\t—\n15 Jul\t100%\t—\n16 Jul\t95.6%\t—\n17 Jul\t100%\t—\n18 Jul\t100%\t—\n19 Jul\t92.3%\t—\n20 Jul\t47.9%\t—\n21 Jul\t69.8%\t—\n22 Jul\t64.8%\t—\n23 Jul\t76.9%\t—\n24 Jul\t87.2%\t—\n25 Jul\t100%\t—\n26 Jul\t100%\t—\n27 Jul\t—\t100%\n28 Jul\t—\t100%\n29 Jul\t—\t—\nChocolate-coated requests\n1,281 units\nYesterday\n0\n1k\n2k\n3k\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: unavailable Projected full day.\n\nSource data\n\n10 products · Store requests\n\nDate\tBefore the order\tSince the order\n29 Jun\t1,344 units\t—\n30 Jun\t1,345 units\t—\n1 Jul\t2,114 units\t—\n2 Jul\t1,592 units\t—\n3 Jul\t1,499 units\t—\n4 Jul\t2,139 units\t—\n5 Jul\t2,085 units\t—\n6 Jul\t1,567 units\t—\n7 Jul\t1,546 units\t—\n8 Jul\t1,481 units\t—\n9 Jul\t1,593 units\t—\n10 Jul\t2,034 units\t—\n11 Jul\t1,921 units\t—\n12 Jul\t2,179 units\t—\n13 Jul\t1,700 units\t—\n14 Jul\t1,549 units\t—\n15 Jul\t1,803 units\t—\n16 Jul\t1,596 units\t—\n17 Jul\t1,995 units\t—\n18 Jul\t2,051 units\t—\n19 Jul\t1,755 units\t—\n20 Jul\t1,764 units\t—\n21 Jul\t1,565 units\t—\n22 Jul\t1,536 units\t—\n23 Jul\t1,351 units\t—\n24 Jul\t1,536 units\t—\n25 Jul\t1,811 units\t—\n26 Jul\t1,583 units\t—\n27 Jul\t—\t1,307 units\n28 Jul\t—\t1,281 units\n29 Jul\t—\t—\nLowest cover\n2.5 days\n0\n1\n2\n3\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: unavailable Projected full day.\n\nSource data\n\n75 products · Lowest cover\n\nDate\tBefore the order\tSince the order\n29 Jun\t2.7 days\t—\n30 Jun\t2.1 days\t—\n1 Jul\t1.3 days\t—\n2 Jul\t1.5 days\t—\n3 Jul\t0.6 days\t—\n4 Jul\t2.8 days\t—\n5 Jul\t1.4 days\t—\n6 Jul\t0.2 days\t—\n7 Jul\t0.2 days\t—\n8 Jul\t0.1 days\t—\n9 Jul\t0.1 days\t—\n10 Jul\t1.7 days\t—\n11 Jul\t0.9 days\t—\n12 Jul\t0.1 days\t—\n13 Jul\t0.1 days\t—\n14 Jul\t0.1 days\t—\n15 Jul\t0.1 days\t—\n16 Jul\t0.1 days\t—\n17 Jul\t0 days\t—\n18 Jul\t0.8 days\t—\n19 Jul\t0 days\t—\n20 Jul\t0 days\t—\n21 Jul\t0 days\t—\n22 Jul\t0 days\t—\n23 Jul\t0 days\t—\n24 Jul\t0 days\t—\n25 Jul\t0.1 days\t—\n26 Jul\t1 day\t—\n27 Jul\t—\t0.1 days\n28 Jul\t—\t2.6 days\n29 Jul\t—\t—\nCold-store pallets\n51.8 pallets\n0\n20\n40\n60\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: unavailable Projected full day.\n\nSource data\n\n75 products · pallets\n\nDate\tBefore the order\tSince the order\n29 Jun\t40.4 pallets\t—\n30 Jun\t44 pallets\t—\n1 Jul\t46.8 pallets\t—\n2 Jul\t48 pallets\t—\n3 Jul\t46.5 pallets\t—\n4 Jul\t47 pallets\t—\n5 Jul\t44.4 pallets\t—\n6 Jul\t45.1 pallets\t—\n7 Jul\t44.6 pallets\t—\n8 Jul\t46.6 pallets\t—\n9 Jul\t45.3 pallets\t—\n10 Jul\t43.2 pallets\t—\n11 Jul\t44.5 pallets\t—\n12 Jul\t39.8 pallets\t—\n13 Jul\t40.6 pallets\t—\n14 Jul\t43.9 pallets\t—\n15 Jul\t42.3 pallets\t—\n16 Jul\t41.5 pallets\t—\n17 Jul\t38.1 pallets\t—\n18 Jul\t41.8 pallets\t—\n19 Jul\t40.6 pallets\t—\n20 Jul\t39.1 pallets\t—\n21 Jul\t43 pallets\t—\n22 Jul\t40.8 pallets\t—\n23 Jul\t43.4 pallets\t—\n24 Jul\t41.9 pallets\t—\n25 Jul\t45.6 pallets\t—\n26 Jul\t41.8 pallets\t—\n27 Jul\t—\t43.5 pallets\n28 Jul\t—\t51.8 pallets\n29 Jul\t—\t—\nStrawberry burst bar stock\n3.7 days\n760 units on hand\n0\n1k\n2k\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: unavailable Projected full day.\n\nSource data\n\n1 products · on hand\n\nDate\tBefore the order\tSince the order\n29 Jun\t819 units\t—\n30 Jun\t702 units\t—\n1 Jul\t573 units\t—\n2 Jul\t490 units\t—\n3 Jul\t1,352 units\t—\n4 Jul\t1,203 units\t—\n5 Jul\t1,067 units\t—\n6 Jul\t944 units\t—\n7 Jul\t815 units\t—\n8 Jul\t703 units\t—\n9 Jul\t545 units\t—\n10 Jul\t1,159 units\t—\n11 Jul\t1,008 units\t—\n12 Jul\t794 units\t—\n13 Jul\t559 units\t—\n14 Jul\t411 units\t—\n15 Jul\t188 units\t—\n16 Jul\t11 units\t—\n17 Jul\t1,147 units\t—\n18 Jul\t920 units\t—\n19 Jul\t658 units\t—\n20 Jul\t401 units\t—\n21 Jul\t237 units\t—\n22 Jul\t82 units\t—\n23 Jul\t8 units\t—\n24 Jul\t1,674 units\t—\n25 Jul\t1,400 units\t—\n26 Jul\t1,205 units\t—\n27 Jul\t—\t989 units\n28 Jul\t—\t760 units\n29 Jul\t—\t—\nWhat happened\n28 JUL · 14:00\nPlaced 17 orders, 461 cases\n28 JUL · 09:30\n\nApple Orchard Ice Bar arrived: 1,760 units.\n\n28 JUL · 09:30\n\nStrawberry Orchard Ice Bar arrived: 3,360 units.\n\n28 JUL · 09:30\n\nMini Milk 10-Pack arrived: 328 units.\n\n28 JUL · 09:30\n\nKids Choc Cone 4-Pack arrived: 432 units.\n\n28 JUL · 09:30\n\nMini Choc Bites 8-Pack arrived: 512 units.\n\n28 JUL · 09:30\n\nMixed Berry Ice Pop 6-Pack arrived: 680 units.\n\n28 JUL · 08:30\n\nStrawberry Dairy Ice Bar arrived: 600 units.\n\n28 JUL · 08:30\n\nStrawberry Breeze Ice Bar arrived: 1,600 units.\n\n28 JUL · 07:10\n\nVanilla Choc Dip Bar arrived: 1,200 units.\n\n28 JUL · 07:10\n\nAlmond Choc Coated Bar arrived: 2,000 units.\n\n28 JUL · 07:00\n\nStrawberry Garden Sorbet Bar arrived: 1,680 units.\n\n28 JUL · 07:00\n\nDurian Cream Cup arrived: 1,032 units.\n\n28 JUL · 07:00\n\nHojicha Cone arrived: 984 units.\n\n28 JUL · 07:00\n\nMango Sticky Rice Bar arrived: 3,800 units.\n\n28 JUL · 06:40\n\nStrawberry Reserve Cream Bar arrived: 1,120 units.\n\n28 JUL · 06:40\n\nStrawberry Coastal Sorbet Bar arrived: 1,240 units.\n\n27 JUL · 14:00\nPlaced 23 orders, 559 cases\n27 JUL · 08:10\n\nStrawberry Spring Ice Bar arrived: 1,160 units.\n\n27 JUL · 07:30\n\nOat Milk Vanilla Tub arrived: 486 units.\n\n27 JUL · 07:30\n\nEspresso Gelato Cup arrived: 528 units.\n\n27 JUL · 07:30\n\nPassion Fruit Sorbet Cup arrived: 1,176 units.\n\n27 JUL · 07:10\n\nMango Mochi 6-Pack arrived: 468 units.\n\n27 JUL · 07:10\n\nBlack Sesame Mochi 6-Pack arrived: 516 units.\n\n27 JUL · 07:00\n\nTropical Ice Pop 6-Pack arrived: 480 units.\n\n27 JUL · 06:50\n\nChoc Hazelnut Cone arrived: 912 units.\n\n27 JUL · 06:50\n\nDouble Choc Cone arrived: 1,224 units.\n\n27 JUL · 06:50\n\nClassic Choc Crunch Bar arrived: 920 units.",
+    "tiles": "Fill rate\n100%\nsince 27 Jul\nStockouts\n0 products\n0 product-days · since 27 Jul\nLow cover\n↗\n2 products\nTap to see which\nsince 27 Jul\nCold store\n51.8 / 62\nPallets · peak 58 · since 27 Jul",
+    "widgets": [
+      "Value strawberry water ices · stock",
+      "Value strawberry water ices · fill rate",
+      "Chocolate-coated requests",
+      "Lowest cover",
+      "Cold-store pallets",
+      "Strawberry burst bar stock"
+    ]
+  },
+  "noon": {
+    "clock": "Wed 29 Jul · 12:30\nDay 3 since the order",
+    "partial_points": 6,
+    "text": "Wed 29 Jul · 12:30\nDay 3 since the order\nResume\nDashboard\nSince the order on Mon 27 Jul\nFill rate\n100%\nsince 27 Jul\nStockouts\n0 products\n0 product-days · since 27 Jul\nLow cover\n↗\n9 products\nTap to see which\nsince 27 Jul\nCold store\n56.7 / 62\nPallets · peak 58 · since 27 Jul\nValue strawberry water ices · stock\n7.1 days\n7,804 units on hand\n0\n4k\n8k\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 6,907 Projected full day.\n\nSource data\n\n4 products · on hand\n\nDate\tBefore the order\tSince the order\n29 Jun\t3,167 units\t—\n30 Jun\t4,878 units\t—\n1 Jul\t5,459 units\t—\n2 Jul\t4,942 units\t—\n3 Jul\t6,180 units\t—\n4 Jul\t5,351 units\t—\n5 Jul\t4,624 units\t—\n6 Jul\t4,003 units\t—\n7 Jul\t3,398 units\t—\n8 Jul\t5,953 units\t—\n9 Jul\t5,198 units\t—\n10 Jul\t5,795 units\t—\n11 Jul\t4,892 units\t—\n12 Jul\t3,706 units\t—\n13 Jul\t2,683 units\t—\n14 Jul\t3,596 units\t—\n15 Jul\t2,526 units\t—\n16 Jul\t2,964 units\t—\n17 Jul\t2,949 units\t—\n18 Jul\t2,326 units\t—\n19 Jul\t1,302 units\t—\n20 Jul\t649 units\t—\n21 Jul\t3,101 units\t—\n22 Jul\t2,458 units\t—\n23 Jul\t4,182 units\t—\n24 Jul\t5,104 units\t—\n25 Jul\t4,985 units\t—\n26 Jul\t3,780 units\t—\n27 Jul\t—\t3,813 units\n28 Jul\t—\t7,804 units\n29 Jul · projected\t—\t6,907 units\nValue strawberry water ices · fill rate\n100%\nYesterday\n0%\n40%\n80%\n120%\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 100% Projected full day.\n\nSource data\n\n4 products · fill rate\n\nDate\tBefore the order\tSince the order\n29 Jun\t100%\t—\n30 Jun\t100%\t—\n1 Jul\t100%\t—\n2 Jul\t100%\t—\n3 Jul\t100%\t—\n4 Jul\t100%\t—\n5 Jul\t100%\t—\n6 Jul\t100%\t—\n7 Jul\t100%\t—\n8 Jul\t100%\t—\n9 Jul\t100%\t—\n10 Jul\t100%\t—\n11 Jul\t100%\t—\n12 Jul\t100%\t—\n13 Jul\t100%\t—\n14 Jul\t100%\t—\n15 Jul\t100%\t—\n16 Jul\t95.6%\t—\n17 Jul\t100%\t—\n18 Jul\t100%\t—\n19 Jul\t92.3%\t—\n20 Jul\t47.9%\t—\n21 Jul\t69.8%\t—\n22 Jul\t64.8%\t—\n23 Jul\t76.9%\t—\n24 Jul\t87.2%\t—\n25 Jul\t100%\t—\n26 Jul\t100%\t—\n27 Jul\t—\t100%\n28 Jul\t—\t100%\n29 Jul · projected\t—\t100%\nChocolate-coated requests\n1,281 units\nYesterday\n0\n1k\n2k\n3k\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 1,254 Projected full day.\n\nSource data\n\n10 products · Store requests\n\nDate\tBefore the order\tSince the order\n29 Jun\t1,344 units\t—\n30 Jun\t1,345 units\t—\n1 Jul\t2,114 units\t—\n2 Jul\t1,592 units\t—\n3 Jul\t1,499 units\t—\n4 Jul\t2,139 units\t—\n5 Jul\t2,085 units\t—\n6 Jul\t1,567 units\t—\n7 Jul\t1,546 units\t—\n8 Jul\t1,481 units\t—\n9 Jul\t1,593 units\t—\n10 Jul\t2,034 units\t—\n11 Jul\t1,921 units\t—\n12 Jul\t2,179 units\t—\n13 Jul\t1,700 units\t—\n14 Jul\t1,549 units\t—\n15 Jul\t1,803 units\t—\n16 Jul\t1,596 units\t—\n17 Jul\t1,995 units\t—\n18 Jul\t2,051 units\t—\n19 Jul\t1,755 units\t—\n20 Jul\t1,764 units\t—\n21 Jul\t1,565 units\t—\n22 Jul\t1,536 units\t—\n23 Jul\t1,351 units\t—\n24 Jul\t1,536 units\t—\n25 Jul\t1,811 units\t—\n26 Jul\t1,583 units\t—\n27 Jul\t—\t1,307 units\n28 Jul\t—\t1,281 units\n29 Jul · projected\t—\t1,254 units\nLowest cover\n2.8 days\n0\n1\n2\n3\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 1.9 Projected full day.\n\nSource data\n\n75 products · Lowest cover\n\nDate\tBefore the order\tSince the order\n29 Jun\t2.7 days\t—\n30 Jun\t2.1 days\t—\n1 Jul\t1.3 days\t—\n2 Jul\t1.5 days\t—\n3 Jul\t0.6 days\t—\n4 Jul\t2.8 days\t—\n5 Jul\t1.4 days\t—\n6 Jul\t0.2 days\t—\n7 Jul\t0.2 days\t—\n8 Jul\t0.1 days\t—\n9 Jul\t0.1 days\t—\n10 Jul\t1.7 days\t—\n11 Jul\t0.9 days\t—\n12 Jul\t0.1 days\t—\n13 Jul\t0.1 days\t—\n14 Jul\t0.1 days\t—\n15 Jul\t0.1 days\t—\n16 Jul\t0.1 days\t—\n17 Jul\t0 days\t—\n18 Jul\t0.8 days\t—\n19 Jul\t0 days\t—\n20 Jul\t0 days\t—\n21 Jul\t0 days\t—\n22 Jul\t0 days\t—\n23 Jul\t0 days\t—\n24 Jul\t0 days\t—\n25 Jul\t0.1 days\t—\n26 Jul\t1 day\t—\n27 Jul\t—\t0.1 days\n28 Jul\t—\t2.6 days\n29 Jul · projected\t—\t1.9 days\nCold-store pallets\n56.7 pallets\n0\n20\n40\n60\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 51 Projected full day.\n\nSource data\n\n75 products · pallets\n\nDate\tBefore the order\tSince the order\n29 Jun\t40.4 pallets\t—\n30 Jun\t44 pallets\t—\n1 Jul\t46.8 pallets\t—\n2 Jul\t48 pallets\t—\n3 Jul\t46.5 pallets\t—\n4 Jul\t47 pallets\t—\n5 Jul\t44.4 pallets\t—\n6 Jul\t45.1 pallets\t—\n7 Jul\t44.6 pallets\t—\n8 Jul\t46.6 pallets\t—\n9 Jul\t45.3 pallets\t—\n10 Jul\t43.2 pallets\t—\n11 Jul\t44.5 pallets\t—\n12 Jul\t39.8 pallets\t—\n13 Jul\t40.6 pallets\t—\n14 Jul\t43.9 pallets\t—\n15 Jul\t42.3 pallets\t—\n16 Jul\t41.5 pallets\t—\n17 Jul\t38.1 pallets\t—\n18 Jul\t41.8 pallets\t—\n19 Jul\t40.6 pallets\t—\n20 Jul\t39.1 pallets\t—\n21 Jul\t43 pallets\t—\n22 Jul\t40.8 pallets\t—\n23 Jul\t43.4 pallets\t—\n24 Jul\t41.9 pallets\t—\n25 Jul\t45.6 pallets\t—\n26 Jul\t41.8 pallets\t—\n27 Jul\t—\t43.5 pallets\n28 Jul\t—\t51.8 pallets\n29 Jul · projected\t—\t51 pallets\nStrawberry burst bar stock\n3.7 days\n760 units on hand\n0\n1k\n2k\nOrder placed\n29 Jun\n14 Jul\n29 Jul\nBefore the order\nSince the order\n\n29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 558 Projected full day.\n\nSource data\n\n1 products · on hand\n\nDate\tBefore the order\tSince the order\n29 Jun\t819 units\t—\n30 Jun\t702 units\t—\n1 Jul\t573 units\t—\n2 Jul\t490 units\t—\n3 Jul\t1,352 units\t—\n4 Jul\t1,203 units\t—\n5 Jul\t1,067 units\t—\n6 Jul\t944 units\t—\n7 Jul\t815 units\t—\n8 Jul\t703 units\t—\n9 Jul\t545 units\t—\n10 Jul\t1,159 units\t—\n11 Jul\t1,008 units\t—\n12 Jul\t794 units\t—\n13 Jul\t559 units\t—\n14 Jul\t411 units\t—\n15 Jul\t188 units\t—\n16 Jul\t11 units\t—\n17 Jul\t1,147 units\t—\n18 Jul\t920 units\t—\n19 Jul\t658 units\t—\n20 Jul\t401 units\t—\n21 Jul\t237 units\t—\n22 Jul\t82 units\t—\n23 Jul\t8 units\t—\n24 Jul\t1,674 units\t—\n25 Jul\t1,400 units\t—\n26 Jul\t1,205 units\t—\n27 Jul\t—\t989 units\n28 Jul\t—\t760 units\n29 Jul · projected\t—\t558 units\nWhat happened\n29 JUL · 08:20\n\nCoffee Crunch Bar arrived: 2,240 units.\n\n29 JUL · 08:10\n\nLemon Tea Ice Bar arrived: 840 units.\n\n29 JUL · 08:10\n\nMilk Ice Bar arrived: 720 units.\n\n29 JUL · 08:10\n\nPineapple Bun Ice Cream Sandwich arrived: 360 units.\n\n29 JUL · 06:00\n\nPistachio Gelato Tub arrived: 300 units.\n\n29 JUL · 06:00\n\nDark Choc Truffle Cup arrived: 624 units.\n\n29 JUL · 06:00\n\nGreen Apple Sorbet Tub arrived: 492 units.\n\n29 JUL · 06:00\n\nYuzu Lemon Sorbet Cup arrived: 864 units.\n\n28 JUL · 14:00\nPlaced 17 orders, 461 cases\n28 JUL · 09:30\n\nApple Orchard Ice Bar arrived: 1,760 units.\n\n28 JUL · 09:30\n\nStrawberry Orchard Ice Bar arrived: 3,360 units.\n\n28 JUL · 09:30\n\nMini Milk 10-Pack arrived: 328 units.\n\n28 JUL · 09:30\n\nKids Choc Cone 4-Pack arrived: 432 units.\n\n28 JUL · 09:30\n\nMini Choc Bites 8-Pack arrived: 512 units.\n\n28 JUL · 09:30\n\nMixed Berry Ice Pop 6-Pack arrived: 680 units.\n\n28 JUL · 08:30\n\nStrawberry Dairy Ice Bar arrived: 600 units.\n\n28 JUL · 08:30\n\nStrawberry Breeze Ice Bar arrived: 1,600 units.\n\n28 JUL · 07:10\n\nVanilla Choc Dip Bar arrived: 1,200 units.\n\n28 JUL · 07:10\n\nAlmond Choc Coated Bar arrived: 2,000 units.\n\n28 JUL · 07:00\n\nStrawberry Garden Sorbet Bar arrived: 1,680 units.\n\n28 JUL · 07:00\n\nDurian Cream Cup arrived: 1,032 units.\n\n28 JUL · 07:00\n\nHojicha Cone arrived: 984 units.\n\n28 JUL · 07:00\n\nMango Sticky Rice Bar arrived: 3,800 units.\n\n28 JUL · 06:40\n\nStrawberry Reserve Cream Bar arrived: 1,120 units.\n\n28 JUL · 06:40\n\nStrawberry Coastal Sorbet Bar arrived: 1,240 units.\n\n27 JUL · 14:00\nPlaced 23 orders, 559 cases\n27 JUL · 08:10\n\nStrawberry Spring Ice Bar arrived: 1,160 units.\n\n27 JUL · 07:30\n\nOat Milk Vanilla Tub arrived: 486 units.\n\n27 JUL · 07:30\n\nEspresso Gelato Cup arrived: 528 units.\n\n27 JUL · 07:30\n\nPassion Fruit Sorbet Cup arrived: 1,176 units.\n\n27 JUL · 07:10\n\nMango Mochi 6-Pack arrived: 468 units.\n\n27 JUL · 07:10\n\nBlack Sesame Mochi 6-Pack arrived: 516 units.\n\n27 JUL · 07:00\n\nTropical Ice Pop 6-Pack arrived: 480 units.\n\n27 JUL · 06:50\n\nChoc Hazelnut Cone arrived: 912 units.\n\n27 JUL · 06:50\n\nDouble Choc Cone arrived: 1,224 units.\n\n27 JUL · 06:50\n\nClassic Choc Crunch Bar arrived: 920 units.",
+    "tiles": "Fill rate\n100%\nsince 27 Jul\nStockouts\n0 products\n0 product-days · since 27 Jul\nLow cover\n↗\n9 products\nTap to see which\nsince 27 Jul\nCold store\n56.7 / 62\nPallets · peak 58 · since 27 Jul",
+    "widgets": [
+      "Value strawberry water ices · stock",
+      "Value strawberry water ices · fill rate",
+      "Chocolate-coated requests",
+      "Lowest cover",
+      "Cold-store pallets",
+      "Strawberry burst bar stock"
+    ]
+  },
+  "result": {
+    "capacity_pallets": 62,
+    "summary": {
+      "scoop": {
+        "fill_rate": 0.9782070658403238,
+        "lost_units": 4297,
+        "lost_margin": 24271.33,
+        "avg_pallets": 38.62040147569444,
+        "peak_pallets": 57.98659722222222,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 36,
+        "ending_on_hand": 71592,
+        "ordered_cases": 8066
+      },
+      "baseline": {
+        "fill_rate": 0.9692505097020906,
+        "lost_units": 6063,
+        "lost_margin": 30849.110000000004,
+        "avg_pallets": 37.75508897569444,
+        "peak_pallets": 57.98659722222222,
+        "days_over_capacity": 0,
+        "stockout_sku_days": 39,
+        "ending_on_hand": 52004,
+        "ordered_cases": 7917
+      }
+    },
+    "differences": [
+      1766,
+      3,
+      6577.7800000000025
+    ],
+    "comparison": "Normal policies in the same cold store; no service search or space matching.",
+    "outcome_note": "Simple rule minus Scoop: 1766 units short, 3 stockout product-days, HK$6577.78 margin lost."
+  },
+  "reused_computed_replay": false,
+  "exact_widget_and_quantity_restoration": true,
+  "clean_initial_state_restored_by_reset": true
+}

@@ -1,0 +1,677 @@
+[
+  {
+    "sku": "IC001",
+    "order_date": "2026-07-30",
+    "suggested_cases": 34,
+    "capacity_cut_cases": 0,
+    "cases": 34,
+    "target_units": 3391.359601653272,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC002",
+    "order_date": "2026-07-30",
+    "suggested_cases": 22,
+    "capacity_cut_cases": 0,
+    "cases": 22,
+    "target_units": 2460.225887032134,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC003",
+    "order_date": "2026-07-30",
+    "suggested_cases": 78,
+    "capacity_cut_cases": 0,
+    "cases": 78,
+    "target_units": 7645.30815672569,
+    "critical_ratio": 0.9886691846256388
+  },
+  {
+    "sku": "IC004",
+    "order_date": "2026-07-27",
+    "suggested_cases": 52,
+    "capacity_cut_cases": 0,
+    "cases": 52,
+    "target_units": 3282.040628977833,
+    "critical_ratio": 0.9895649262476517
+  },
+  {
+    "sku": "IC005",
+    "order_date": "2026-07-27",
+    "suggested_cases": 35,
+    "capacity_cut_cases": 0,
+    "cases": 35,
+    "target_units": 2281.414672794796,
+    "critical_ratio": 0.9899038566829461
+  },
+  {
+    "sku": "IC006",
+    "order_date": "2026-07-27",
+    "suggested_cases": 46,
+    "capacity_cut_cases": 0,
+    "cases": 46,
+    "target_units": 3036.5589181661294,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC007",
+    "order_date": "2026-07-30",
+    "suggested_cases": 119,
+    "capacity_cut_cases": 0,
+    "cases": 119,
+    "target_units": 1917.2559799255903,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC008",
+    "order_date": "2026-07-30",
+    "suggested_cases": 55,
+    "capacity_cut_cases": 0,
+    "cases": 55,
+    "target_units": 1005.7731698239712,
+    "critical_ratio": 0.9889890504783697
+  },
+  {
+    "sku": "IC009",
+    "order_date": "2026-07-30",
+    "suggested_cases": 73,
+    "capacity_cut_cases": 0,
+    "cases": 73,
+    "target_units": 7025.25683134389,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC010",
+    "order_date": "2026-07-28",
+    "suggested_cases": 82,
+    "capacity_cut_cases": 24,
+    "cases": 58,
+    "target_units": 8129.854060165604,
+    "critical_ratio": 0.9886821907115909
+  },
+  {
+    "sku": "IC011",
+    "order_date": "2026-07-28",
+    "suggested_cases": 20,
+    "capacity_cut_cases": 6,
+    "cases": 14,
+    "target_units": 1924.4368201078635,
+    "critical_ratio": 0.9897490279250618
+  },
+  {
+    "sku": "IC012",
+    "order_date": "2026-07-31",
+    "suggested_cases": 18,
+    "capacity_cut_cases": 0,
+    "cases": 18,
+    "target_units": 1054.1775929012215,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC013",
+    "order_date": "2026-07-29",
+    "suggested_cases": 45,
+    "capacity_cut_cases": 12,
+    "cases": 33,
+    "target_units": 577.1068576862665,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC014",
+    "order_date": "2026-07-27",
+    "suggested_cases": 38,
+    "capacity_cut_cases": 15,
+    "cases": 23,
+    "target_units": 898.7855073959422,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC015",
+    "order_date": "2026-07-30",
+    "suggested_cases": 60,
+    "capacity_cut_cases": 0,
+    "cases": 60,
+    "target_units": 5801.622326046323,
+    "critical_ratio": 0.9895270864203732
+  },
+  {
+    "sku": "IC016",
+    "order_date": "2026-07-27",
+    "suggested_cases": 25,
+    "capacity_cut_cases": 0,
+    "cases": 25,
+    "target_units": 1198.3076580320908,
+    "critical_ratio": 0.9886899857688564
+  },
+  {
+    "sku": "IC017",
+    "order_date": "2026-07-28",
+    "suggested_cases": 22,
+    "capacity_cut_cases": 7,
+    "cases": 15,
+    "target_units": 2140.863959232714,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC018",
+    "order_date": "2026-07-28",
+    "suggested_cases": 41,
+    "capacity_cut_cases": 0,
+    "cases": 41,
+    "target_units": 3120.7378935916963,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC019",
+    "order_date": "2026-07-28",
+    "suggested_cases": 44,
+    "capacity_cut_cases": 16,
+    "cases": 28,
+    "target_units": 4676.284017703598,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC020",
+    "order_date": "2026-07-27",
+    "suggested_cases": 27,
+    "capacity_cut_cases": 9,
+    "cases": 18,
+    "target_units": 1742.7277582066854,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC021",
+    "order_date": "2026-07-29",
+    "suggested_cases": 69,
+    "capacity_cut_cases": 19,
+    "cases": 50,
+    "target_units": 953.6282219853742,
+    "critical_ratio": 0.9891137580665023
+  },
+  {
+    "sku": "IC022",
+    "order_date": "2026-07-30",
+    "suggested_cases": 67,
+    "capacity_cut_cases": 0,
+    "cases": 67,
+    "target_units": 1355.431144675655,
+    "critical_ratio": 0.9896940563926554
+  },
+  {
+    "sku": "IC023",
+    "order_date": "2026-07-27",
+    "suggested_cases": 20,
+    "capacity_cut_cases": 0,
+    "cases": 20,
+    "target_units": 1049.4021158315581,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC024",
+    "order_date": "2026-07-28",
+    "suggested_cases": 28,
+    "capacity_cut_cases": 0,
+    "cases": 28,
+    "target_units": 2227.4436182329696,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC025",
+    "order_date": "2026-07-27",
+    "suggested_cases": 47,
+    "capacity_cut_cases": 18,
+    "cases": 29,
+    "target_units": 5397.22521307138,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC026",
+    "order_date": "2026-07-29",
+    "suggested_cases": 32,
+    "capacity_cut_cases": 0,
+    "cases": 32,
+    "target_units": 1381.1868749337928,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC027",
+    "order_date": "2026-07-29",
+    "suggested_cases": 48,
+    "capacity_cut_cases": 10,
+    "cases": 38,
+    "target_units": 579.697636471028,
+    "critical_ratio": 0.9888751545117428
+  },
+  {
+    "sku": "IC028",
+    "order_date": "2026-07-28",
+    "suggested_cases": 23,
+    "capacity_cut_cases": 0,
+    "cases": 23,
+    "target_units": 1871.964009042681,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC029",
+    "order_date": "2026-07-31",
+    "suggested_cases": 26,
+    "capacity_cut_cases": 0,
+    "cases": 26,
+    "target_units": 2430.2742403652724,
+    "critical_ratio": 0.9879705438411929
+  },
+  {
+    "sku": "IC030",
+    "order_date": "2026-07-28",
+    "suggested_cases": 35,
+    "capacity_cut_cases": 10,
+    "cases": 25,
+    "target_units": 3321.963434716327,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC031",
+    "order_date": "2026-07-27",
+    "suggested_cases": 16,
+    "capacity_cut_cases": 5,
+    "cases": 11,
+    "target_units": 986.242355530741,
+    "critical_ratio": 0.9892787819051478
+  },
+  {
+    "sku": "IC032",
+    "order_date": "2026-07-29",
+    "suggested_cases": 86,
+    "capacity_cut_cases": 20,
+    "cases": 66,
+    "target_units": 1018.8622817026421,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC033",
+    "order_date": "2026-07-27",
+    "suggested_cases": 24,
+    "capacity_cut_cases": 0,
+    "cases": 24,
+    "target_units": 1659.6574763112844,
+    "critical_ratio": 0.9885644870774516
+  },
+  {
+    "sku": "IC034",
+    "order_date": "2026-07-31",
+    "suggested_cases": 23,
+    "capacity_cut_cases": 0,
+    "cases": 23,
+    "target_units": 1386.3744652989087,
+    "critical_ratio": 0.9879705438411929
+  },
+  {
+    "sku": "IC035",
+    "order_date": "2026-07-27",
+    "suggested_cases": 16,
+    "capacity_cut_cases": 0,
+    "cases": 16,
+    "target_units": 790.6844562540564,
+    "critical_ratio": 0.9887914395042499
+  },
+  {
+    "sku": "IC036",
+    "order_date": "2026-07-27",
+    "suggested_cases": 33,
+    "capacity_cut_cases": 8,
+    "cases": 25,
+    "target_units": 2595.843396483063,
+    "critical_ratio": 0.9889620585409293
+  },
+  {
+    "sku": "IC037",
+    "order_date": "2026-07-28",
+    "suggested_cases": 32,
+    "capacity_cut_cases": 10,
+    "cases": 22,
+    "target_units": 3223.4730767865412,
+    "critical_ratio": 0.9892654178067775
+  },
+  {
+    "sku": "IC038",
+    "order_date": "2026-07-28",
+    "suggested_cases": 29,
+    "capacity_cut_cases": 0,
+    "cases": 29,
+    "target_units": 1709.2412056692704,
+    "critical_ratio": 0.9881887241116625
+  },
+  {
+    "sku": "IC039",
+    "order_date": "2026-07-28",
+    "suggested_cases": 48,
+    "capacity_cut_cases": 14,
+    "cases": 34,
+    "target_units": 1415.817644021642,
+    "critical_ratio": 0.9896793399509103
+  },
+  {
+    "sku": "IC040",
+    "order_date": "2026-07-28",
+    "suggested_cases": 38,
+    "capacity_cut_cases": 12,
+    "cases": 26,
+    "target_units": 1136.6052121819966,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC041",
+    "order_date": "2026-07-31",
+    "suggested_cases": 72,
+    "capacity_cut_cases": 0,
+    "cases": 72,
+    "target_units": 6493.747652040436,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC042",
+    "order_date": "2026-07-31",
+    "suggested_cases": 24,
+    "capacity_cut_cases": 0,
+    "cases": 24,
+    "target_units": 1427.2322125712046,
+    "critical_ratio": 0.9880658313740662
+  },
+  {
+    "sku": "IC043",
+    "order_date": "2026-07-31",
+    "suggested_cases": 60,
+    "capacity_cut_cases": 0,
+    "cases": 60,
+    "target_units": 5718.538807695286,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC044",
+    "order_date": "2026-07-28",
+    "suggested_cases": 35,
+    "capacity_cut_cases": 0,
+    "cases": 35,
+    "target_units": 2586.3556987671054,
+    "critical_ratio": 0.9894382660054427
+  },
+  {
+    "sku": "IC045",
+    "order_date": "2026-07-28",
+    "suggested_cases": 44,
+    "capacity_cut_cases": 4,
+    "cases": 40,
+    "target_units": 2601.1841600683956,
+    "critical_ratio": 0.9894140280713061
+  },
+  {
+    "sku": "IC046",
+    "order_date": "2026-07-28",
+    "suggested_cases": 61,
+    "capacity_cut_cases": 19,
+    "cases": 42,
+    "target_units": 6065.533594926198,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC047",
+    "order_date": "2026-07-27",
+    "suggested_cases": 23,
+    "capacity_cut_cases": 6,
+    "cases": 17,
+    "target_units": 1467.2967707310327,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC048",
+    "order_date": "2026-07-27",
+    "suggested_cases": 42,
+    "capacity_cut_cases": 17,
+    "cases": 25,
+    "target_units": 858.7910311283741,
+    "critical_ratio": 0.9882564729460157
+  },
+  {
+    "sku": "IC049",
+    "order_date": "2026-07-27",
+    "suggested_cases": 24,
+    "capacity_cut_cases": 0,
+    "cases": 24,
+    "target_units": 1280.3582543592927,
+    "critical_ratio": 0.9893847263732867
+  },
+  {
+    "sku": "IC050",
+    "order_date": "2026-07-29",
+    "suggested_cases": 42,
+    "capacity_cut_cases": 0,
+    "cases": 42,
+    "target_units": 2099.9217706987206,
+    "critical_ratio": 0.989986936822558
+  },
+  {
+    "sku": "IC051",
+    "order_date": "2026-07-27",
+    "suggested_cases": 73,
+    "capacity_cut_cases": 27,
+    "cases": 46,
+    "target_units": 1259.477382672365,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC052",
+    "order_date": "2026-07-28",
+    "suggested_cases": 23,
+    "capacity_cut_cases": 8,
+    "cases": 15,
+    "target_units": 2216.9425454316124,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC053",
+    "order_date": "2026-07-27",
+    "suggested_cases": 23,
+    "capacity_cut_cases": 5,
+    "cases": 18,
+    "target_units": 1256.314352086233,
+    "critical_ratio": 0.9889472507460848
+  },
+  {
+    "sku": "IC054",
+    "order_date": "2026-07-29",
+    "suggested_cases": 46,
+    "capacity_cut_cases": 11,
+    "cases": 35,
+    "target_units": 3606.7909053409408,
+    "critical_ratio": 0.9892428106393175
+  },
+  {
+    "sku": "IC055",
+    "order_date": "2026-07-30",
+    "suggested_cases": 41,
+    "capacity_cut_cases": 0,
+    "cases": 41,
+    "target_units": 3467.4146486510094,
+    "critical_ratio": 0.9880658313740662
+  },
+  {
+    "sku": "IC056",
+    "order_date": "2026-07-30",
+    "suggested_cases": 51,
+    "capacity_cut_cases": 0,
+    "cases": 51,
+    "target_units": 1001.8869687616509,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC057",
+    "order_date": "2026-07-30",
+    "suggested_cases": 64,
+    "capacity_cut_cases": 0,
+    "cases": 64,
+    "target_units": 1073.6576901924725,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC058",
+    "order_date": "2026-07-29",
+    "suggested_cases": 84,
+    "capacity_cut_cases": 0,
+    "cases": 84,
+    "target_units": 910.6241705980271,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC059",
+    "order_date": "2026-07-31",
+    "suggested_cases": 30,
+    "capacity_cut_cases": 0,
+    "cases": 30,
+    "target_units": 2623.2630596316712,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC060",
+    "order_date": "2026-07-27",
+    "suggested_cases": 28,
+    "capacity_cut_cases": 9,
+    "cases": 19,
+    "target_units": 2897.58462452599,
+    "critical_ratio": 0.9887984444007737
+  },
+  {
+    "sku": "IC061",
+    "order_date": "2026-07-30",
+    "suggested_cases": 44,
+    "capacity_cut_cases": 0,
+    "cases": 44,
+    "target_units": 3803.8156045609544,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC062",
+    "order_date": "2026-07-30",
+    "suggested_cases": 132,
+    "capacity_cut_cases": 0,
+    "cases": 132,
+    "target_units": 9080.961890211749,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC063",
+    "order_date": "2026-07-31",
+    "suggested_cases": 83,
+    "capacity_cut_cases": 15,
+    "cases": 68,
+    "target_units": 6131.205405406132,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC064",
+    "order_date": "2026-07-27",
+    "suggested_cases": 71,
+    "capacity_cut_cases": 24,
+    "cases": 47,
+    "target_units": 7251.560425707158,
+    "critical_ratio": 0.9882261072104155
+  },
+  {
+    "sku": "IC065",
+    "order_date": "2026-07-28",
+    "suggested_cases": 45,
+    "capacity_cut_cases": 14,
+    "cases": 31,
+    "target_units": 4228.111588307938,
+    "critical_ratio": 0.9884052461509218
+  },
+  {
+    "sku": "IC066",
+    "order_date": "2026-07-27",
+    "suggested_cases": 37,
+    "capacity_cut_cases": 13,
+    "cases": 24,
+    "target_units": 3692.8646216679663,
+    "critical_ratio": 0.9897886062343245
+  },
+  {
+    "sku": "IC067",
+    "order_date": "2026-07-29",
+    "suggested_cases": 41,
+    "capacity_cut_cases": 0,
+    "cases": 41,
+    "target_units": 3074.1413302895344,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC068",
+    "order_date": "2026-07-27",
+    "suggested_cases": 31,
+    "capacity_cut_cases": 7,
+    "cases": 24,
+    "target_units": 2627.2290679032867,
+    "critical_ratio": 0.989879589273842
+  },
+  {
+    "sku": "IC069",
+    "order_date": "2026-07-31",
+    "suggested_cases": 20,
+    "capacity_cut_cases": 0,
+    "cases": 20,
+    "target_units": 1759.1387870171986,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC070",
+    "order_date": "2026-07-30",
+    "suggested_cases": 30,
+    "capacity_cut_cases": 0,
+    "cases": 30,
+    "target_units": 3276.8175052018296,
+    "critical_ratio": 0.9899322336965676
+  },
+  {
+    "sku": "IC071",
+    "order_date": "2026-07-30",
+    "suggested_cases": 54,
+    "capacity_cut_cases": 13,
+    "cases": 41,
+    "target_units": 4798.1943233999245,
+    "critical_ratio": 0.9898362820663141
+  },
+  {
+    "sku": "IC072",
+    "order_date": "2026-07-31",
+    "suggested_cases": 50,
+    "capacity_cut_cases": 0,
+    "cases": 50,
+    "target_units": 4223.35669596197,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC073",
+    "order_date": "2026-07-29",
+    "suggested_cases": 26,
+    "capacity_cut_cases": 8,
+    "cases": 18,
+    "target_units": 2035.9652758960551,
+    "critical_ratio": 0.99
+  },
+  {
+    "sku": "IC074",
+    "order_date": "2026-07-27",
+    "suggested_cases": 29,
+    "capacity_cut_cases": 8,
+    "cases": 21,
+    "target_units": 2239.679476160753,
+    "critical_ratio": 0.9894955723658266
+  },
+  {
+    "sku": "IC075",
+    "order_date": "2026-07-27",
+    "suggested_cases": 30,
+    "capacity_cut_cases": 12,
+    "cases": 18,
+    "target_units": 3387.3625142478754,
+    "critical_ratio": 0.9896893287508127
+  }
+]

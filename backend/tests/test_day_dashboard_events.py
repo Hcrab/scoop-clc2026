@@ -139,7 +139,7 @@ def test_approve_watch_play_results_flow_in_disposable_schema(api, monkeypatch):
         assert detail['flow']['step'] == 'watch'
         simulation = client.get('/api/plans/TESTAPI/simulation').json()
         assert simulation['status'] == 'ready'
-        assert simulation_jobs.LOGIC_VERSION == 'same-cold-store-play-v10-upper-tail-short-heat'
+        assert simulation_jobs.LOGIC_VERSION == 'same-cold-store-play-v11-demo-carry-cost'
         assert client.put('/api/plans/TESTAPI/flow', json={'step': 'play'}).status_code == 200
         assert client.post('/api/plans/TESTAPI/play', json={}).json() == simulation['result']
         completed = client.post('/api/plans/TESTAPI/play-complete').json()

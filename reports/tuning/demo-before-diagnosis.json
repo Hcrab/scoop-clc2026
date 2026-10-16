@@ -1,0 +1,2309 @@
+{
+  "scope": "Read-only diagnosis of frozen d4 normal demo, no new simulation/provider/API mutation. Only these diagnosis files written.",
+  "baseline": {
+    "week": "2026-07-27",
+    "end": "2026-08-11",
+    "days": 16,
+    "settings": {
+      "goal": "margin",
+      "service_level": null,
+      "rule_buffer": 1.25
+    },
+    "capacity_pallets": 66.0,
+    "summary": {
+      "baseline": {
+        "avg_pallets": 37.75508897569444,
+        "days_over_capacity": 0,
+        "ending_on_hand": 52004.0,
+        "fill_rate": 0.9692505097020906,
+        "lost_margin": 30849.110000000004,
+        "lost_units": 6063.0,
+        "ordered_cases": 7917,
+        "peak_pallets": 57.98659722222222,
+        "stockout_sku_days": 39
+      },
+      "scoop": {
+        "avg_pallets": 37.97448567708334,
+        "days_over_capacity": 0,
+        "ending_on_hand": 70564.0,
+        "fill_rate": 0.9678101575258401,
+        "lost_margin": 38125.689999999995,
+        "lost_units": 6347.0,
+        "ordered_cases": 8352,
+        "peak_pallets": 57.98659722222222,
+        "stockout_sku_days": 52
+      }
+    },
+    "scoop_minus_baseline": {
+      "avg_pallets": 0.2193967013888951,
+      "days_over_capacity": 0,
+      "ending_on_hand": 18560.0,
+      "fill_rate": -0.0014403521762504923,
+      "lost_margin": 7276.579999999991,
+      "lost_units": 284.0,
+      "ordered_cases": 435,
+      "peak_pallets": 0.0,
+      "stockout_sku_days": 13
+    },
+    "demand_units": 197174
+  },
+  "space": {
+    "initial_projection_peak": 61.304556505468874,
+    "initial_inherited_projection_peak": 61.304556505468874,
+    "physical_peak": 57.98659722222222,
+    "initial_capacity_cut_cases": 0,
+    "deferred_units": {
+      "scoop": 0.0,
+      "baseline": 0.0
+    },
+    "daily": {
+      "scoop": [
+        {
+          "date": "2026-07-27",
+          "pallets_pre_ship": 49.98319444444445,
+          "pallets": 43.535763888888894,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-07-28",
+          "pallets_pre_ship": 57.98659722222222,
+          "pallets": 51.82951388888888,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-07-29",
+          "pallets_pre_ship": 56.66701388888888,
+          "pallets": 50.9915625,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-07-30",
+          "pallets_pre_ship": 57.5790625,
+          "pallets": 48.89715277777778,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-07-31",
+          "pallets_pre_ship": 53.82215277777778,
+          "pallets": 45.71666666666666,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-01",
+          "pallets_pre_ship": 52.474999999999994,
+          "pallets": 41.62208333333333,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-02",
+          "pallets_pre_ship": 41.62208333333333,
+          "pallets": 30.014861111111113,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-03",
+          "pallets_pre_ship": 33.64819444444444,
+          "pallets": 27.221423611111113,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-04",
+          "pallets_pre_ship": 39.11642361111111,
+          "pallets": 32.69027777777778,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-05",
+          "pallets_pre_ship": 42.58611111111111,
+          "pallets": 35.362881944444446,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-06",
+          "pallets_pre_ship": 35.362881944444446,
+          "pallets": 27.605347222222225,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-07",
+          "pallets_pre_ship": 39.91368055555556,
+          "pallets": 31.771805555555552,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-08",
+          "pallets_pre_ship": 44.04680555555556,
+          "pallets": 33.925625000000004,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-09",
+          "pallets_pre_ship": 33.925625000000004,
+          "pallets": 24.783611111111107,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-10",
+          "pallets_pre_ship": 35.350277777777784,
+          "pallets": 29.915069444444445,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-11",
+          "pallets_pre_ship": 57.20840277777778,
+          "pallets": 51.708125,
+          "deferred_units": 0.0
+        }
+      ],
+      "baseline": [
+        {
+          "date": "2026-07-27",
+          "pallets_pre_ship": 49.98319444444445,
+          "pallets": 43.535763888888894,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-07-28",
+          "pallets_pre_ship": 57.98659722222222,
+          "pallets": 51.82951388888888,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-07-29",
+          "pallets_pre_ship": 56.66701388888888,
+          "pallets": 50.9915625,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-07-30",
+          "pallets_pre_ship": 57.5790625,
+          "pallets": 48.89715277777778,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-07-31",
+          "pallets_pre_ship": 54.74298611111111,
+          "pallets": 46.6375,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-01",
+          "pallets_pre_ship": 53.77916666666667,
+          "pallets": 42.926249999999996,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-02",
+          "pallets_pre_ship": 42.926249999999996,
+          "pallets": 31.319027777777784,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-03",
+          "pallets_pre_ship": 36.12736111111111,
+          "pallets": 29.70059027777778,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-04",
+          "pallets_pre_ship": 42.45725694444445,
+          "pallets": 36.03486111111111,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-05",
+          "pallets_pre_ship": 47.251527777777774,
+          "pallets": 40.09121527777777,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-06",
+          "pallets_pre_ship": 40.09121527777777,
+          "pallets": 32.25083333333333,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-07",
+          "pallets_pre_ship": 42.33833333333334,
+          "pallets": 34.14645833333333,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-08",
+          "pallets_pre_ship": 42.64645833333334,
+          "pallets": 32.467777777777776,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-09",
+          "pallets_pre_ship": 32.467777777777776,
+          "pallets": 23.136041666666667,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-10",
+          "pallets_pre_ship": 28.102708333333336,
+          "pallets": 22.708263888888887,
+          "deferred_units": 0.0
+        },
+        {
+          "date": "2026-08-11",
+          "pallets_pre_ship": 43.219097222222224,
+          "pallets": 37.40861111111111,
+          "deferred_units": 0.0
+        }
+      ]
+    }
+  },
+  "critical_ratios": {
+    "minimum": 0.9609965890553166,
+    "maximum": 0.9735326849566942,
+    "ceiling": 0.98,
+    "at_ceiling_count": 0,
+    "holding_rate": 0.025
+  },
+  "calibration": {
+    "same_frozen_478_windows": true,
+    "role": "Calibration windows disjoint from base-model training; coverage here is calibration-set coverage, not a held-out rolling score.",
+    "method": {
+      "method": "one_sided_forward_upper_conformal_v2",
+      "seed": "93",
+      "as_of": "2026-07-27",
+      "window_days": 56,
+      "sample_count": 478,
+      "planning_start": "2026-06-01",
+      "issue_start": "2026-05-31",
+      "issue_cutoff": "2026-07-26",
+      "issue_dates": [
+        "2026-05-31",
+        "2026-06-07",
+        "2026-06-14",
+        "2026-06-21",
+        "2026-06-28",
+        "2026-07-05",
+        "2026-07-12",
+        "2026-07-19"
+      ],
+      "scored_issue_start": "2026-05-31",
+      "scored_issue_end": "2026-07-12",
+      "actuals_cutoff": "2026-07-26",
+      "outcome_end": "2026-07-26",
+      "order_calendar": true,
+      "ratio_clip": [
+        0.3,
+        3.0
+      ],
+      "planning_origins": [
+        "2026-06-01",
+        "2026-06-08",
+        "2026-06-15",
+        "2026-06-22",
+        "2026-06-29",
+        "2026-07-06",
+        "2026-07-13",
+        "2026-07-20"
+      ],
+      "calibrates": "Only the ordering upper target, at its actual critical ratio/service target",
+      "score": "max(0, (actual - then_operational_upper_target) / max(forecast, 1))",
+      "coverage_note": "Finite-rank rolling forward calibration; serial dependence and pooling preclude exact coverage guarantees."
+    },
+    "windows": 478,
+    "mean_target": 0.9677028698936266,
+    "before": 0.9644351464435147,
+    "after": 0.9707112970711297,
+    "before_968": 0.9644351464435147,
+    "after_968": 0.9707112970711297,
+    "correction_968": 0.02162551589437613
+  },
+  "top_excess_loss_traces": [
+    {
+      "sku": "IC010",
+      "name": "Mango Sticky Rice Bar",
+      "extra_lost_margin_hkd": 3420.0,
+      "unit_margin_hkd": 4.75,
+      "catalog": {
+        "name": "Mango Sticky Rice Bar",
+        "price_hkd": 12.0,
+        "cost_hkd": 7.25,
+        "units_per_case": 40,
+        "cases_per_pallet": 60,
+        "moq_cases": 3,
+        "lead_time_days": 7,
+        "order_weekday": 1,
+        "review_days": 7
+      },
+      "initial_order": {
+        "sku": "IC010",
+        "order_date": "2026-07-28T00:00:00.000",
+        "protection_days": 15,
+        "demand_p10": 5993.7023149305,
+        "demand_p50": 6382.8914397103,
+        "demand_p90": 6744.7255151823,
+        "adjustment": 1.0037464725,
+        "critical_ratio": 0.9632446134,
+        "target_units": 6940.1179293715,
+        "on_hand_units": 1058,
+        "on_order_units": 3800,
+        "inventory_position": 4858,
+        "suggested_cases": 53,
+        "capacity_cut_cases": 0,
+        "final_cases": null
+      },
+      "frozen_first_order": {
+        "sku": "IC010",
+        "order_date": "2026-07-28",
+        "cases": 53,
+        "target_units": 6940.117929371486
+      },
+      "protection_window_start": "2026-07-27",
+      "protection_window_end": "2026-08-10",
+      "observed_protection_demand": 8046,
+      "actual_over_p50": 1.2605572374210994,
+      "actual_minus_target": 1105.8820706284996,
+      "policies": {
+        "scoop": {
+          "daily": [
+            {
+              "date": "2026-07-27",
+              "demand": 391,
+              "arrived": 0.0,
+              "on_hand": 667.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-28",
+              "demand": 447,
+              "arrived": 3800.0,
+              "on_hand": 4020.0,
+              "lost": 0.0,
+              "placed_cases": 53,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-29",
+              "demand": 444,
+              "arrived": 0.0,
+              "on_hand": 3576.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-30",
+              "demand": 553,
+              "arrived": 0.0,
+              "on_hand": 3023.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-31",
+              "demand": 511,
+              "arrived": 0.0,
+              "on_hand": 2512.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-01",
+              "demand": 661,
+              "arrived": 0.0,
+              "on_hand": 1851.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-02",
+              "demand": 699,
+              "arrived": 0.0,
+              "on_hand": 1152.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-03",
+              "demand": 477,
+              "arrived": 0.0,
+              "on_hand": 675.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-04",
+              "demand": 411,
+              "arrived": 2120.0,
+              "on_hand": 2384.0,
+              "lost": 0.0,
+              "placed_cases": 167,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-05",
+              "demand": 478,
+              "arrived": 0.0,
+              "on_hand": 1906.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-06",
+              "demand": 561,
+              "arrived": 0.0,
+              "on_hand": 1345.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-07",
+              "demand": 618,
+              "arrived": 0.0,
+              "on_hand": 727.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-08",
+              "demand": 631,
+              "arrived": 0.0,
+              "on_hand": 96.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-09",
+              "demand": 744,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 648.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-10",
+              "demand": 420,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 420.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-11",
+              "demand": 446,
+              "arrived": 6680.0,
+              "on_hand": 6234.0,
+              "lost": 0.0,
+              "placed_cases": 57,
+              "deferred": 0.0
+            }
+          ],
+          "orders": [
+            {
+              "date": "2026-07-28",
+              "cases": 53,
+              "expected_arrival": "2026-08-04"
+            },
+            {
+              "date": "2026-08-04",
+              "cases": 167,
+              "expected_arrival": "2026-08-11"
+            },
+            {
+              "date": "2026-08-11",
+              "cases": 57,
+              "expected_arrival": "2026-08-18"
+            }
+          ],
+          "pending_after": {
+            "2026-08-18": 2280.0
+          }
+        },
+        "baseline": {
+          "daily": [
+            {
+              "date": "2026-07-27",
+              "demand": 391,
+              "arrived": 0.0,
+              "on_hand": 667.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-28",
+              "demand": 447,
+              "arrived": 3800.0,
+              "on_hand": 4020.0,
+              "lost": 0.0,
+              "placed_cases": 71,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-29",
+              "demand": 444,
+              "arrived": 0.0,
+              "on_hand": 3576.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-30",
+              "demand": 553,
+              "arrived": 0.0,
+              "on_hand": 3023.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-31",
+              "demand": 511,
+              "arrived": 0.0,
+              "on_hand": 2512.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-01",
+              "demand": 661,
+              "arrived": 0.0,
+              "on_hand": 1851.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-02",
+              "demand": 699,
+              "arrived": 0.0,
+              "on_hand": 1152.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-03",
+              "demand": 477,
+              "arrived": 0.0,
+              "on_hand": 675.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-04",
+              "demand": 411,
+              "arrived": 2840.0,
+              "on_hand": 3104.0,
+              "lost": 0.0,
+              "placed_cases": 116,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-05",
+              "demand": 478,
+              "arrived": 0.0,
+              "on_hand": 2626.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-06",
+              "demand": 561,
+              "arrived": 0.0,
+              "on_hand": 2065.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-07",
+              "demand": 618,
+              "arrived": 0.0,
+              "on_hand": 1447.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-08",
+              "demand": 631,
+              "arrived": 0.0,
+              "on_hand": 816.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-09",
+              "demand": 744,
+              "arrived": 0.0,
+              "on_hand": 72.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-10",
+              "demand": 420,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 348.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-11",
+              "demand": 446,
+              "arrived": 4640.0,
+              "on_hand": 4194.0,
+              "lost": 0.0,
+              "placed_cases": 101,
+              "deferred": 0.0
+            }
+          ],
+          "orders": [
+            {
+              "date": "2026-07-28",
+              "cases": 71,
+              "expected_arrival": "2026-08-04"
+            },
+            {
+              "date": "2026-08-04",
+              "cases": 116,
+              "expected_arrival": "2026-08-11"
+            },
+            {
+              "date": "2026-08-11",
+              "cases": 101,
+              "expected_arrival": "2026-08-18"
+            }
+          ],
+          "pending_after": {
+            "2026-08-18": 4040.0
+          }
+        }
+      }
+    },
+    {
+      "sku": "IC014",
+      "name": "Green Apple Sorbet Tub",
+      "extra_lost_margin_hkd": 1501.92,
+      "unit_margin_hkd": 20.86,
+      "catalog": {
+        "name": "Green Apple Sorbet Tub",
+        "price_hkd": 48.0,
+        "cost_hkd": 27.14,
+        "units_per_case": 6,
+        "cases_per_pallet": 80,
+        "moq_cases": 2,
+        "lead_time_days": 9,
+        "order_weekday": 0,
+        "review_days": 7
+      },
+      "initial_order": {
+        "sku": "IC014",
+        "order_date": "2026-07-27T00:00:00.000",
+        "protection_days": 16,
+        "demand_p10": 654.7001766548,
+        "demand_p50": 697.1558697871,
+        "demand_p90": 736.6308882953,
+        "adjustment": 1.0039873719,
+        "critical_ratio": 0.9684982705,
+        "target_units": 770.9478052265,
+        "on_hand_units": 182,
+        "on_order_units": 492,
+        "inventory_position": 674,
+        "suggested_cases": 17,
+        "capacity_cut_cases": 0,
+        "final_cases": null
+      },
+      "frozen_first_order": {
+        "sku": "IC014",
+        "order_date": "2026-07-27",
+        "cases": 17,
+        "target_units": 770.9478052264751
+      },
+      "protection_window_start": "2026-07-27",
+      "protection_window_end": "2026-08-11",
+      "observed_protection_demand": 848,
+      "actual_over_p50": 1.2163707382381581,
+      "actual_minus_target": 77.05219477349999,
+      "policies": {
+        "scoop": {
+          "daily": [
+            {
+              "date": "2026-07-27",
+              "demand": 40,
+              "arrived": 0.0,
+              "on_hand": 142.0,
+              "lost": 0.0,
+              "placed_cases": 17,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-28",
+              "demand": 38,
+              "arrived": 0.0,
+              "on_hand": 104.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-29",
+              "demand": 33,
+              "arrived": 492.0,
+              "on_hand": 563.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-30",
+              "demand": 76,
+              "arrived": 0.0,
+              "on_hand": 487.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-31",
+              "demand": 45,
+              "arrived": 0.0,
+              "on_hand": 442.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-01",
+              "demand": 72,
+              "arrived": 0.0,
+              "on_hand": 370.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-02",
+              "demand": 72,
+              "arrived": 0.0,
+              "on_hand": 298.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-03",
+              "demand": 36,
+              "arrived": 0.0,
+              "on_hand": 262.0,
+              "lost": 0.0,
+              "placed_cases": 105,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-04",
+              "demand": 54,
+              "arrived": 0.0,
+              "on_hand": 208.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-05",
+              "demand": 42,
+              "arrived": 102.0,
+              "on_hand": 268.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-06",
+              "demand": 50,
+              "arrived": 0.0,
+              "on_hand": 218.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-07",
+              "demand": 58,
+              "arrived": 0.0,
+              "on_hand": 160.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-08",
+              "demand": 63,
+              "arrived": 0.0,
+              "on_hand": 97.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-09",
+              "demand": 90,
+              "arrived": 0.0,
+              "on_hand": 7.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-10",
+              "demand": 48,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 41.0,
+              "placed_cases": 84,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-11",
+              "demand": 31,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 31.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            }
+          ],
+          "orders": [
+            {
+              "date": "2026-07-27",
+              "cases": 17,
+              "expected_arrival": "2026-08-05"
+            },
+            {
+              "date": "2026-08-03",
+              "cases": 105,
+              "expected_arrival": "2026-08-12"
+            },
+            {
+              "date": "2026-08-10",
+              "cases": 84,
+              "expected_arrival": "2026-08-19"
+            }
+          ],
+          "pending_after": {
+            "2026-08-12": 630.0,
+            "2026-08-19": 504.0
+          }
+        },
+        "baseline": {
+          "daily": [
+            {
+              "date": "2026-07-27",
+              "demand": 40,
+              "arrived": 0.0,
+              "on_hand": 142.0,
+              "lost": 0.0,
+              "placed_cases": 32,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-28",
+              "demand": 38,
+              "arrived": 0.0,
+              "on_hand": 104.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-29",
+              "demand": 33,
+              "arrived": 492.0,
+              "on_hand": 563.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-30",
+              "demand": 76,
+              "arrived": 0.0,
+              "on_hand": 487.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-31",
+              "demand": 45,
+              "arrived": 0.0,
+              "on_hand": 442.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-01",
+              "demand": 72,
+              "arrived": 0.0,
+              "on_hand": 370.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-02",
+              "demand": 72,
+              "arrived": 0.0,
+              "on_hand": 298.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-03",
+              "demand": 36,
+              "arrived": 0.0,
+              "on_hand": 262.0,
+              "lost": 0.0,
+              "placed_cases": 80,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-04",
+              "demand": 54,
+              "arrived": 0.0,
+              "on_hand": 208.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-05",
+              "demand": 42,
+              "arrived": 192.0,
+              "on_hand": 358.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-06",
+              "demand": 50,
+              "arrived": 0.0,
+              "on_hand": 308.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-07",
+              "demand": 58,
+              "arrived": 0.0,
+              "on_hand": 250.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-08",
+              "demand": 63,
+              "arrived": 0.0,
+              "on_hand": 187.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-09",
+              "demand": 90,
+              "arrived": 0.0,
+              "on_hand": 97.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-10",
+              "demand": 48,
+              "arrived": 0.0,
+              "on_hand": 49.0,
+              "lost": 0.0,
+              "placed_cases": 77,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-11",
+              "demand": 31,
+              "arrived": 0.0,
+              "on_hand": 18.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            }
+          ],
+          "orders": [
+            {
+              "date": "2026-07-27",
+              "cases": 32,
+              "expected_arrival": "2026-08-05"
+            },
+            {
+              "date": "2026-08-03",
+              "cases": 80,
+              "expected_arrival": "2026-08-12"
+            },
+            {
+              "date": "2026-08-10",
+              "cases": 77,
+              "expected_arrival": "2026-08-19"
+            }
+          ],
+          "pending_after": {
+            "2026-08-12": 480.0,
+            "2026-08-19": 462.0
+          }
+        }
+      }
+    },
+    {
+      "sku": "IC064",
+      "name": "Strawberry Puree Sorbet Bar",
+      "extra_lost_margin_hkd": 1468.0,
+      "unit_margin_hkd": 7.34,
+      "catalog": {
+        "name": "Strawberry Puree Sorbet Bar",
+        "price_hkd": 19.0,
+        "cost_hkd": 11.66,
+        "units_per_case": 40,
+        "cases_per_pallet": 60,
+        "moq_cases": 3,
+        "lead_time_days": 9,
+        "order_weekday": 0,
+        "review_days": 7
+      },
+      "initial_order": {
+        "sku": "IC064",
+        "order_date": "2026-07-27T00:00:00.000",
+        "protection_days": 16,
+        "demand_p10": 5265.2054305548,
+        "demand_p50": 5639.5325335931,
+        "demand_p90": 6007.9606769802,
+        "adjustment": 0.9989082025,
+        "critical_ratio": 0.9618030531,
+        "target_units": 6148.7852679585,
+        "on_hand_units": 1610,
+        "on_order_units": 2840,
+        "inventory_position": 4450,
+        "suggested_cases": 43,
+        "capacity_cut_cases": 0,
+        "final_cases": null
+      },
+      "frozen_first_order": {
+        "sku": "IC064",
+        "order_date": "2026-07-27",
+        "cases": 43,
+        "target_units": 6148.785267958507
+      },
+      "protection_window_start": "2026-07-27",
+      "protection_window_end": "2026-08-11",
+      "observed_protection_demand": 6450,
+      "actual_over_p50": 1.143711816818003,
+      "actual_minus_target": 301.2147320414997,
+      "policies": {
+        "scoop": {
+          "daily": [
+            {
+              "date": "2026-07-27",
+              "demand": 299,
+              "arrived": 0.0,
+              "on_hand": 1311.0,
+              "lost": 0.0,
+              "placed_cases": 43,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-28",
+              "demand": 249,
+              "arrived": 0.0,
+              "on_hand": 1062.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-29",
+              "demand": 261,
+              "arrived": 0.0,
+              "on_hand": 801.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-30",
+              "demand": 480,
+              "arrived": 2840.0,
+              "on_hand": 3161.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-31",
+              "demand": 481,
+              "arrived": 0.0,
+              "on_hand": 2680.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-01",
+              "demand": 684,
+              "arrived": 0.0,
+              "on_hand": 1996.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-02",
+              "demand": 640,
+              "arrived": 0.0,
+              "on_hand": 1356.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-03",
+              "demand": 355,
+              "arrived": 0.0,
+              "on_hand": 1001.0,
+              "lost": 0.0,
+              "placed_cases": 110,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-04",
+              "demand": 339,
+              "arrived": 0.0,
+              "on_hand": 662.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-05",
+              "demand": 301,
+              "arrived": 1720.0,
+              "on_hand": 2081.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-06",
+              "demand": 400,
+              "arrived": 0.0,
+              "on_hand": 1681.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-07",
+              "demand": 413,
+              "arrived": 0.0,
+              "on_hand": 1268.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-08",
+              "demand": 454,
+              "arrived": 0.0,
+              "on_hand": 814.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-09",
+              "demand": 472,
+              "arrived": 0.0,
+              "on_hand": 342.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-10",
+              "demand": 273,
+              "arrived": 0.0,
+              "on_hand": 69.0,
+              "lost": 0.0,
+              "placed_cases": 81,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-11",
+              "demand": 349,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 280.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            }
+          ],
+          "orders": [
+            {
+              "date": "2026-07-27",
+              "cases": 43,
+              "expected_arrival": "2026-08-05"
+            },
+            {
+              "date": "2026-08-03",
+              "cases": 110,
+              "expected_arrival": "2026-08-12"
+            },
+            {
+              "date": "2026-08-10",
+              "cases": 81,
+              "expected_arrival": "2026-08-19"
+            }
+          ],
+          "pending_after": {
+            "2026-08-12": 4400.0,
+            "2026-08-19": 3240.0
+          }
+        },
+        "baseline": {
+          "daily": [
+            {
+              "date": "2026-07-27",
+              "demand": 299,
+              "arrived": 0.0,
+              "on_hand": 1311.0,
+              "lost": 0.0,
+              "placed_cases": 48,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-28",
+              "demand": 249,
+              "arrived": 0.0,
+              "on_hand": 1062.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-29",
+              "demand": 261,
+              "arrived": 0.0,
+              "on_hand": 801.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-30",
+              "demand": 480,
+              "arrived": 2840.0,
+              "on_hand": 3161.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-31",
+              "demand": 481,
+              "arrived": 0.0,
+              "on_hand": 2680.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-01",
+              "demand": 684,
+              "arrived": 0.0,
+              "on_hand": 1996.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-02",
+              "demand": 640,
+              "arrived": 0.0,
+              "on_hand": 1356.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-03",
+              "demand": 355,
+              "arrived": 0.0,
+              "on_hand": 1001.0,
+              "lost": 0.0,
+              "placed_cases": 97,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-04",
+              "demand": 339,
+              "arrived": 0.0,
+              "on_hand": 662.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-05",
+              "demand": 301,
+              "arrived": 1920.0,
+              "on_hand": 2281.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-06",
+              "demand": 400,
+              "arrived": 0.0,
+              "on_hand": 1881.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-07",
+              "demand": 413,
+              "arrived": 0.0,
+              "on_hand": 1468.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-08",
+              "demand": 454,
+              "arrived": 0.0,
+              "on_hand": 1014.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-09",
+              "demand": 472,
+              "arrived": 0.0,
+              "on_hand": 542.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-10",
+              "demand": 273,
+              "arrived": 0.0,
+              "on_hand": 269.0,
+              "lost": 0.0,
+              "placed_cases": 78,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-11",
+              "demand": 349,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 80.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            }
+          ],
+          "orders": [
+            {
+              "date": "2026-07-27",
+              "cases": 48,
+              "expected_arrival": "2026-08-05"
+            },
+            {
+              "date": "2026-08-03",
+              "cases": 97,
+              "expected_arrival": "2026-08-12"
+            },
+            {
+              "date": "2026-08-10",
+              "cases": 78,
+              "expected_arrival": "2026-08-19"
+            }
+          ],
+          "pending_after": {
+            "2026-08-12": 3880.0,
+            "2026-08-19": 3120.0
+          }
+        }
+      }
+    },
+    {
+      "sku": "IC040",
+      "name": "Mango Mochi 6-Pack",
+      "extra_lost_margin_hkd": 1408.68,
+      "unit_margin_hkd": 16.77,
+      "catalog": {
+        "name": "Mango Mochi 6-Pack",
+        "price_hkd": 36.0,
+        "cost_hkd": 19.23,
+        "units_per_case": 12,
+        "cases_per_pallet": 60,
+        "moq_cases": 2,
+        "lead_time_days": 7,
+        "order_weekday": 1,
+        "review_days": 7
+      },
+      "initial_order": {
+        "sku": "IC040",
+        "order_date": "2026-07-28T00:00:00.000",
+        "protection_days": 15,
+        "demand_p10": 827.9311675662,
+        "demand_p50": 881.6216241551,
+        "demand_p90": 931.5425752386,
+        "adjustment": 1.0031356329,
+        "critical_ratio": 0.9721316465,
+        "target_units": 973.316567787,
+        "on_hand_units": 221,
+        "on_order_units": 468,
+        "inventory_position": 689,
+        "suggested_cases": 24,
+        "capacity_cut_cases": 0,
+        "final_cases": null
+      },
+      "frozen_first_order": {
+        "sku": "IC040",
+        "order_date": "2026-07-28",
+        "cases": 24,
+        "target_units": 973.3165677869542
+      },
+      "protection_window_start": "2026-07-27",
+      "protection_window_end": "2026-08-10",
+      "observed_protection_demand": 1101,
+      "actual_over_p50": 1.2488350669201662,
+      "actual_minus_target": 127.68343221299995,
+      "policies": {
+        "scoop": {
+          "daily": [
+            {
+              "date": "2026-07-27",
+              "demand": 55,
+              "arrived": 468.0,
+              "on_hand": 634.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-28",
+              "demand": 71,
+              "arrived": 0.0,
+              "on_hand": 563.0,
+              "lost": 0.0,
+              "placed_cases": 24,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-29",
+              "demand": 49,
+              "arrived": 0.0,
+              "on_hand": 514.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-30",
+              "demand": 104,
+              "arrived": 0.0,
+              "on_hand": 410.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-31",
+              "demand": 75,
+              "arrived": 0.0,
+              "on_hand": 335.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-01",
+              "demand": 73,
+              "arrived": 0.0,
+              "on_hand": 262.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-02",
+              "demand": 106,
+              "arrived": 0.0,
+              "on_hand": 156.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-03",
+              "demand": 64,
+              "arrived": 0.0,
+              "on_hand": 92.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-04",
+              "demand": 65,
+              "arrived": 288.0,
+              "on_hand": 315.0,
+              "lost": 0.0,
+              "placed_cases": 100,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-05",
+              "demand": 72,
+              "arrived": 0.0,
+              "on_hand": 243.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-06",
+              "demand": 63,
+              "arrived": 0.0,
+              "on_hand": 180.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-07",
+              "demand": 67,
+              "arrived": 0.0,
+              "on_hand": 113.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-08",
+              "demand": 97,
+              "arrived": 0.0,
+              "on_hand": 16.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-09",
+              "demand": 76,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 60.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-10",
+              "demand": 64,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 64.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-11",
+              "demand": 52,
+              "arrived": 1200.0,
+              "on_hand": 1148.0,
+              "lost": 0.0,
+              "placed_cases": 18,
+              "deferred": 0.0
+            }
+          ],
+          "orders": [
+            {
+              "date": "2026-07-28",
+              "cases": 24,
+              "expected_arrival": "2026-08-04"
+            },
+            {
+              "date": "2026-08-04",
+              "cases": 100,
+              "expected_arrival": "2026-08-11"
+            },
+            {
+              "date": "2026-08-11",
+              "cases": 18,
+              "expected_arrival": "2026-08-18"
+            }
+          ],
+          "pending_after": {
+            "2026-08-18": 216.0
+          }
+        },
+        "baseline": {
+          "daily": [
+            {
+              "date": "2026-07-27",
+              "demand": 55,
+              "arrived": 468.0,
+              "on_hand": 634.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-28",
+              "demand": 71,
+              "arrived": 0.0,
+              "on_hand": 563.0,
+              "lost": 0.0,
+              "placed_cases": 31,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-29",
+              "demand": 49,
+              "arrived": 0.0,
+              "on_hand": 514.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-30",
+              "demand": 104,
+              "arrived": 0.0,
+              "on_hand": 410.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-31",
+              "demand": 75,
+              "arrived": 0.0,
+              "on_hand": 335.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-01",
+              "demand": 73,
+              "arrived": 0.0,
+              "on_hand": 262.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-02",
+              "demand": 106,
+              "arrived": 0.0,
+              "on_hand": 156.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-03",
+              "demand": 64,
+              "arrived": 0.0,
+              "on_hand": 92.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-04",
+              "demand": 65,
+              "arrived": 372.0,
+              "on_hand": 399.0,
+              "lost": 0.0,
+              "placed_cases": 54,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-05",
+              "demand": 72,
+              "arrived": 0.0,
+              "on_hand": 327.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-06",
+              "demand": 63,
+              "arrived": 0.0,
+              "on_hand": 264.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-07",
+              "demand": 67,
+              "arrived": 0.0,
+              "on_hand": 197.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-08",
+              "demand": 97,
+              "arrived": 0.0,
+              "on_hand": 100.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-09",
+              "demand": 76,
+              "arrived": 0.0,
+              "on_hand": 24.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-10",
+              "demand": 64,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 40.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-11",
+              "demand": 52,
+              "arrived": 648.0,
+              "on_hand": 596.0,
+              "lost": 0.0,
+              "placed_cases": 45,
+              "deferred": 0.0
+            }
+          ],
+          "orders": [
+            {
+              "date": "2026-07-28",
+              "cases": 31,
+              "expected_arrival": "2026-08-04"
+            },
+            {
+              "date": "2026-08-04",
+              "cases": 54,
+              "expected_arrival": "2026-08-11"
+            },
+            {
+              "date": "2026-08-11",
+              "cases": 45,
+              "expected_arrival": "2026-08-18"
+            }
+          ],
+          "pending_after": {
+            "2026-08-18": 540.0
+          }
+        }
+      }
+    },
+    {
+      "sku": "IC075",
+      "name": "Strawberry Reserve Cream Bar",
+      "extra_lost_margin_hkd": 1397.61,
+      "unit_margin_hkd": 8.79,
+      "catalog": {
+        "name": "Strawberry Reserve Cream Bar",
+        "price_hkd": 21.0,
+        "cost_hkd": 12.21,
+        "units_per_case": 40,
+        "cases_per_pallet": 60,
+        "moq_cases": 3,
+        "lead_time_days": 9,
+        "order_weekday": 0,
+        "review_days": 7
+      },
+      "initial_order": {
+        "sku": "IC075",
+        "order_date": "2026-07-27T00:00:00.000",
+        "protection_days": 16,
+        "demand_p10": 2422.1126465158,
+        "demand_p50": 2599.1019347232,
+        "demand_p90": 2773.0684600207,
+        "adjustment": 0.9776495623,
+        "critical_ratio": 0.9664385256,
+        "target_units": 2874.1212158952,
+        "on_hand_units": 1079,
+        "on_order_units": 1120,
+        "inventory_position": 2199,
+        "suggested_cases": 17,
+        "capacity_cut_cases": 0,
+        "final_cases": null
+      },
+      "frozen_first_order": {
+        "sku": "IC075",
+        "order_date": "2026-07-27",
+        "cases": 17,
+        "target_units": 2874.121215895233
+      },
+      "protection_window_start": "2026-07-27",
+      "protection_window_end": "2026-08-11",
+      "observed_protection_demand": 3038,
+      "actual_over_p50": 1.1688652758913598,
+      "actual_minus_target": 163.87878410480016,
+      "policies": {
+        "scoop": {
+          "daily": [
+            {
+              "date": "2026-07-27",
+              "demand": 169,
+              "arrived": 0.0,
+              "on_hand": 910.0,
+              "lost": 0.0,
+              "placed_cases": 17,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-28",
+              "demand": 146,
+              "arrived": 1120.0,
+              "on_hand": 1884.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-29",
+              "demand": 125,
+              "arrived": 0.0,
+              "on_hand": 1759.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-30",
+              "demand": 235,
+              "arrived": 0.0,
+              "on_hand": 1524.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-31",
+              "demand": 147,
+              "arrived": 0.0,
+              "on_hand": 1377.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-01",
+              "demand": 301,
+              "arrived": 0.0,
+              "on_hand": 1076.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-02",
+              "demand": 254,
+              "arrived": 0.0,
+              "on_hand": 822.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-03",
+              "demand": 168,
+              "arrived": 0.0,
+              "on_hand": 654.0,
+              "lost": 0.0,
+              "placed_cases": 60,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-04",
+              "demand": 155,
+              "arrived": 0.0,
+              "on_hand": 499.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-05",
+              "demand": 170,
+              "arrived": 680.0,
+              "on_hand": 1009.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-06",
+              "demand": 186,
+              "arrived": 0.0,
+              "on_hand": 823.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-07",
+              "demand": 197,
+              "arrived": 0.0,
+              "on_hand": 626.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-08",
+              "demand": 282,
+              "arrived": 0.0,
+              "on_hand": 344.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-09",
+              "demand": 230,
+              "arrived": 0.0,
+              "on_hand": 114.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-10",
+              "demand": 149,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 35.0,
+              "placed_cases": 46,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-11",
+              "demand": 124,
+              "arrived": 0.0,
+              "on_hand": 0.0,
+              "lost": 124.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            }
+          ],
+          "orders": [
+            {
+              "date": "2026-07-27",
+              "cases": 17,
+              "expected_arrival": "2026-08-05"
+            },
+            {
+              "date": "2026-08-03",
+              "cases": 60,
+              "expected_arrival": "2026-08-12"
+            },
+            {
+              "date": "2026-08-10",
+              "cases": 46,
+              "expected_arrival": "2026-08-19"
+            }
+          ],
+          "pending_after": {
+            "2026-08-12": 2400.0,
+            "2026-08-19": 1840.0
+          }
+        },
+        "baseline": {
+          "daily": [
+            {
+              "date": "2026-07-27",
+              "demand": 169,
+              "arrived": 0.0,
+              "on_hand": 910.0,
+              "lost": 0.0,
+              "placed_cases": 24,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-28",
+              "demand": 146,
+              "arrived": 1120.0,
+              "on_hand": 1884.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-29",
+              "demand": 125,
+              "arrived": 0.0,
+              "on_hand": 1759.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-30",
+              "demand": 235,
+              "arrived": 0.0,
+              "on_hand": 1524.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-07-31",
+              "demand": 147,
+              "arrived": 0.0,
+              "on_hand": 1377.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-01",
+              "demand": 301,
+              "arrived": 0.0,
+              "on_hand": 1076.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-02",
+              "demand": 254,
+              "arrived": 0.0,
+              "on_hand": 822.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-03",
+              "demand": 168,
+              "arrived": 0.0,
+              "on_hand": 654.0,
+              "lost": 0.0,
+              "placed_cases": 39,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-04",
+              "demand": 155,
+              "arrived": 0.0,
+              "on_hand": 499.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-05",
+              "demand": 170,
+              "arrived": 960.0,
+              "on_hand": 1289.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-06",
+              "demand": 186,
+              "arrived": 0.0,
+              "on_hand": 1103.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-07",
+              "demand": 197,
+              "arrived": 0.0,
+              "on_hand": 906.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-08",
+              "demand": 282,
+              "arrived": 0.0,
+              "on_hand": 624.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-09",
+              "demand": 230,
+              "arrived": 0.0,
+              "on_hand": 394.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-10",
+              "demand": 149,
+              "arrived": 0.0,
+              "on_hand": 245.0,
+              "lost": 0.0,
+              "placed_cases": 40,
+              "deferred": 0.0
+            },
+            {
+              "date": "2026-08-11",
+              "demand": 124,
+              "arrived": 0.0,
+              "on_hand": 121.0,
+              "lost": 0.0,
+              "placed_cases": 0,
+              "deferred": 0.0
+            }
+          ],
+          "orders": [
+            {
+              "date": "2026-07-27",
+              "cases": 24,
+              "expected_arrival": "2026-08-05"
+            },
+            {
+              "date": "2026-08-03",
+              "cases": 39,
+              "expected_arrival": "2026-08-12"
+            },
+            {
+              "date": "2026-08-10",
+              "cases": 40,
+              "expected_arrival": "2026-08-19"
+            }
+          ],
+          "pending_after": {
+            "2026-08-12": 1560.0,
+            "2026-08-19": 1600.0
+          }
+        }
+      }
+    }
+  ],
+  "global_hypotheses": [
+    {
+      "axis": "holding_rate",
+      "baseline": 0.025,
+      "candidate": 0.01,
+      "business_rationale": "Treat one-cycle excess as storage/financing only when summer stock can still sell, removing the additional 1.5% markdown provision.",
+      "expected_mechanism": "Raises margin-derived critical ratios to the existing .98 cap; may increase first orders before irreversible lead-time gaps.",
+      "status": "unmeasured; compare losses, stock and capacity, including the later automatic orders"
+    },
+    {
+      "axis": "global_forecast_mean_multiplier",
+      "baseline": 1.0,
+      "candidate": 1.05,
+      "business_rationale": "A modest common allowance for recent demand growth is consistent with the fully observed July 6 calibration origin averaging actual/forecast 1.061.",
+      "expected_mechanism": "Apply to forecast mean consistently in targets and capacity consumption, rather than inserting SKU-specific cases; only if parent chooses a calibrated global bias experiment.",
+      "status": "hypothesis; pooled recent bias is not proof of a persistent global error"
+    },
+    {
+      "axis": "upper_calibration_lookback_days",
+      "baseline": 56,
+      "candidate": 28,
+      "business_rationale": "Give the last month of trading more weight when earlier quiet weeks dominate a summer demand calibration.",
+      "expected_mechanism": "Same past-only finite-rank correction, newer origins; assess mature-window counts and supplier/lead-time skew.",
+      "status": "unmeasured; July 13 has only28 mature SKUs, so shorter lookback can overrepresent shorter leads"
+    }
+  ],
+  "separation_audit": {
+    "method": "Text search of planning/play/algorithm/investigator/exploration-tools source; no answer-key content opened.",
+    "finding": "No answer-key reads/imports found in inspected operational decision paths. Search hits are confined to synth generators/challenges or a tool-scope prohibition; this is a static audit, not proof against all possible indirect dependencies."
+  },
+  "evidence": {
+    "files": {
+      "d4-results.json": {
+        "path": "C:\\Users\\ping\\Documents\\Codex\\2026-10-14\\new-chat\\work\\scoop-clc2026\\reports\\d4-results.json",
+        "sha256": "6988d285d943ff96b96fea915cfe97f4419e928d888754a36a3e5c91385246b6"
+      },
+      "d4-replay.json.gz": {
+        "path": "C:\\Users\\ping\\Documents\\Codex\\2026-10-14\\new-chat\\work\\scoop-clc2026\\reports\\d4-replay.json.gz",
+        "sha256": "ee503adec1a54ad52083d1856e296c9e35af0cd4a82cf973a29ebc4f9a746a83"
+      },
+      "d4-orders.json": {
+        "path": "C:\\Users\\ping\\Documents\\Codex\\2026-10-14\\new-chat\\work\\scoop-clc2026\\reports\\d4-orders.json",
+        "sha256": "0701310562b0e08d4d17f46ace69e7be7a0f234798d45a26b01a04d4cde9de35"
+      },
+      "d4-upper-calibration.json": {
+        "path": "C:\\Users\\ping\\Documents\\Codex\\2026-10-14\\new-chat\\work\\scoop-clc2026\\reports\\d4-upper-calibration.json",
+        "sha256": "82c53f3761e53a067e234386fe6d70924006015d7c27928b1e40ae8e78207cd4"
+      },
+      "d4-upper-calibration-windows.csv": {
+        "path": "C:\\Users\\ping\\Documents\\Codex\\2026-10-14\\new-chat\\work\\scoop-clc2026\\reports\\d4-upper-calibration-windows.csv",
+        "sha256": "092792bc4a74f83bea243446fcdd79f8aacaaf731ab4420e39cbb3d176818560"
+      },
+      "d4-walkthrough.json": {
+        "path": "C:\\Users\\ping\\Documents\\Codex\\2026-10-14\\new-chat\\work\\scoop-clc2026\\reports\\d4-walkthrough.json",
+        "sha256": "c7a984b888ee7b927f10afe7b95ab08e5e1a3a256606e139a790f9859ac0d267"
+      }
+    },
+    "read_only_database": "Public PostgreSQL catalog/supplier/purchase_suggestions and plans.summary SELECTs via scoop.db.read_sql. All75 current first targets and cases exactly checked against frozen d4-orders after_rows. Relevant catalog and plan rows captured in this JSON.",
+    "source_files": [
+      "backend/scoop/algorithms/replenish.py",
+      "backend/scoop/algorithms/protection_calibration.py",
+      "backend/scoop/algorithms/forecast.py",
+      "backend/scoop/planning.py",
+      "backend/scoop/play.py",
+      "backend/scoop/intraday.py"
+    ]
+  },
+  "candidate_results": null
+}

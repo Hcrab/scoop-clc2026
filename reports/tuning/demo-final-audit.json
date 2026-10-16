@@ -1,0 +1,79 @@
+{
+  "accepted": true,
+  "measured_by": "Normal approval \u2192 persisted API simulation job, once, without response mocks.",
+  "job": {
+    "status": "ready",
+    "order_hash": "a8ca053adf930b016e76346af923c992c3585c2df74e83b1f31ab5cfcc65e322",
+    "completed_at": "2026-10-16T14:32:30.708020",
+    "elapsed_seconds": 26.359000000011292
+  },
+  "result_sha256": "cf2364b47d3d6c96a8d3a0ef4d193e429e4cb86f55421ca79b3bfe64d75b7075",
+  "before": {
+    "baseline": {
+      "avg_pallets": 37.75508897569444,
+      "days_over_capacity": 0,
+      "ending_on_hand": 52004.0,
+      "fill_rate": 0.9692505097020906,
+      "lost_margin": 30849.110000000004,
+      "lost_units": 6063.0,
+      "ordered_cases": 7917,
+      "peak_pallets": 57.98659722222222,
+      "stockout_sku_days": 39
+    },
+    "scoop": {
+      "avg_pallets": 37.97448567708334,
+      "days_over_capacity": 0,
+      "ending_on_hand": 70564.0,
+      "fill_rate": 0.9678101575258401,
+      "lost_margin": 38125.689999999995,
+      "lost_units": 6347.0,
+      "ordered_cases": 8352,
+      "peak_pallets": 57.98659722222222,
+      "stockout_sku_days": 52
+    }
+  },
+  "after": {
+    "scoop": {
+      "fill_rate": 0.9782070658403238,
+      "lost_units": 4297,
+      "lost_margin": 24271.33,
+      "avg_pallets": 38.62040147569444,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 36,
+      "ending_on_hand": 71592,
+      "ordered_cases": 8066
+    },
+    "baseline": {
+      "fill_rate": 0.9692505097020906,
+      "lost_units": 6063,
+      "lost_margin": 30849.110000000004,
+      "avg_pallets": 37.75508897569444,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 39,
+      "ending_on_hand": 52004,
+      "ordered_cases": 7917
+    }
+  },
+  "differences": {
+    "lost_units": 1766.0,
+    "stockout_sku_days": 3,
+    "lost_margin": 6577.7800000000025
+  },
+  "same_as_selected_isolated_trial": true,
+  "no_banned_watch_play_ui_matches": true,
+  "midnight_points": 0,
+  "noon_hollow_points": 6,
+  "screenshots": [
+    "docs/screenshots/demo-01-report.png",
+    "docs/screenshots/demo-strawberry-drilldown.png",
+    "docs/screenshots/demo-02-orders.png",
+    "docs/screenshots/demo-03-watch.png",
+    "docs/screenshots/demo-04-midnight.png",
+    "docs/screenshots/demo-05-noon.png",
+    "docs/screenshots/demo-06-results.png"
+  ],
+  "all_screenshots_personally_reviewed": true,
+  "clean_default_restored": true
+}

@@ -31,7 +31,7 @@ from scipy.stats import norm
 
 from .protection_calibration import ProtectionCalibration
 
-HOLDING_RATE = 0.025  # per cycle: 1% storage/financing + 1.5% summer carryover/markdown provision
+HOLDING_RATE = 0.01  # per cycle: storage/financing for saleable frozen stock
 CR_BOUNDS = (0.5, 0.98)
 
 
@@ -118,7 +118,7 @@ def plan_orders(items: list[SkuInput], ratios: np.ndarray | ProtectionCalibratio
             "adjustment": it.adjustment,
             "critical_ratio": cr,
             "excess_unit_cost_rate": HOLDING_RATE,
-            "excess_unit_cost_basis": "Per cycle: 1% storage/financing + 1.5% summer carryover/markdown provision, applied to unit cost.",
+            "excess_unit_cost_basis": "Per cycle: 1% storage/financing on saleable frozen stock, applied to unit cost.",
             "target_units": target,
             "on_hand_units": it.on_hand,
             "on_order_units": it.on_order,

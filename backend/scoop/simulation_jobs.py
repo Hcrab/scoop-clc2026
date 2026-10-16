@@ -14,7 +14,7 @@ from sqlalchemy.dialects.postgresql import insert
 from .db import engine, session_scope
 from .models import Plan, PurchaseSuggestion, Setting, SimulationRun
 
-LOGIC_VERSION = 'same-cold-store-play-v10-upper-tail-short-heat'
+LOGIC_VERSION = 'same-cold-store-play-v11-demo-carry-cost'
 _executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix='scoop-simulation')
 _dispatch_lock = Lock()
 _dispatched: set[tuple[str, str]] = set()

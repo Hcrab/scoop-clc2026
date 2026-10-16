@@ -1,0 +1,467 @@
+Wed 29 Jul · 12:30
+Day 3 since the order
+Resume
+Dashboard
+Since the order on Mon 27 Jul
+Fill rate
+100%
+since 27 Jul
+Stockouts
+0 products
+0 product-days · since 27 Jul
+Low cover
+↗
+9 products
+Tap to see which
+since 27 Jul
+Cold store
+56.7 / 62
+Pallets · peak 58 · since 27 Jul
+Value strawberry water ices · stock
+7.1 days
+7,804 units on hand
+0
+4k
+8k
+Order placed
+29 Jun
+14 Jul
+29 Jul
+Before the order
+Since the order
+
+29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 6,907 Projected full day.
+
+Source data
+
+4 products · on hand
+
+Date	Before the order	Since the order
+29 Jun	3,167 units	—
+30 Jun	4,878 units	—
+1 Jul	5,459 units	—
+2 Jul	4,942 units	—
+3 Jul	6,180 units	—
+4 Jul	5,351 units	—
+5 Jul	4,624 units	—
+6 Jul	4,003 units	—
+7 Jul	3,398 units	—
+8 Jul	5,953 units	—
+9 Jul	5,198 units	—
+10 Jul	5,795 units	—
+11 Jul	4,892 units	—
+12 Jul	3,706 units	—
+13 Jul	2,683 units	—
+14 Jul	3,596 units	—
+15 Jul	2,526 units	—
+16 Jul	2,964 units	—
+17 Jul	2,949 units	—
+18 Jul	2,326 units	—
+19 Jul	1,302 units	—
+20 Jul	649 units	—
+21 Jul	3,101 units	—
+22 Jul	2,458 units	—
+23 Jul	4,182 units	—
+24 Jul	5,104 units	—
+25 Jul	4,985 units	—
+26 Jul	3,780 units	—
+27 Jul	—	3,813 units
+28 Jul	—	7,804 units
+29 Jul · projected	—	6,907 units
+Value strawberry water ices · fill rate
+100%
+Yesterday
+0%
+40%
+80%
+120%
+Order placed
+29 Jun
+14 Jul
+29 Jul
+Before the order
+Since the order
+
+29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 100% Projected full day.
+
+Source data
+
+4 products · fill rate
+
+Date	Before the order	Since the order
+29 Jun	100%	—
+30 Jun	100%	—
+1 Jul	100%	—
+2 Jul	100%	—
+3 Jul	100%	—
+4 Jul	100%	—
+5 Jul	100%	—
+6 Jul	100%	—
+7 Jul	100%	—
+8 Jul	100%	—
+9 Jul	100%	—
+10 Jul	100%	—
+11 Jul	100%	—
+12 Jul	100%	—
+13 Jul	100%	—
+14 Jul	100%	—
+15 Jul	100%	—
+16 Jul	95.6%	—
+17 Jul	100%	—
+18 Jul	100%	—
+19 Jul	92.3%	—
+20 Jul	47.9%	—
+21 Jul	69.8%	—
+22 Jul	64.8%	—
+23 Jul	76.9%	—
+24 Jul	87.2%	—
+25 Jul	100%	—
+26 Jul	100%	—
+27 Jul	—	100%
+28 Jul	—	100%
+29 Jul · projected	—	100%
+Chocolate-coated requests
+1,281 units
+Yesterday
+0
+1k
+2k
+3k
+Order placed
+29 Jun
+14 Jul
+29 Jul
+Before the order
+Since the order
+
+29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 1,254 Projected full day.
+
+Source data
+
+10 products · Store requests
+
+Date	Before the order	Since the order
+29 Jun	1,344 units	—
+30 Jun	1,345 units	—
+1 Jul	2,114 units	—
+2 Jul	1,592 units	—
+3 Jul	1,499 units	—
+4 Jul	2,139 units	—
+5 Jul	2,085 units	—
+6 Jul	1,567 units	—
+7 Jul	1,546 units	—
+8 Jul	1,481 units	—
+9 Jul	1,593 units	—
+10 Jul	2,034 units	—
+11 Jul	1,921 units	—
+12 Jul	2,179 units	—
+13 Jul	1,700 units	—
+14 Jul	1,549 units	—
+15 Jul	1,803 units	—
+16 Jul	1,596 units	—
+17 Jul	1,995 units	—
+18 Jul	2,051 units	—
+19 Jul	1,755 units	—
+20 Jul	1,764 units	—
+21 Jul	1,565 units	—
+22 Jul	1,536 units	—
+23 Jul	1,351 units	—
+24 Jul	1,536 units	—
+25 Jul	1,811 units	—
+26 Jul	1,583 units	—
+27 Jul	—	1,307 units
+28 Jul	—	1,281 units
+29 Jul · projected	—	1,254 units
+Lowest cover
+2.8 days
+0
+1
+2
+3
+Order placed
+29 Jun
+14 Jul
+29 Jul
+Before the order
+Since the order
+
+29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 1.9 Projected full day.
+
+Source data
+
+75 products · Lowest cover
+
+Date	Before the order	Since the order
+29 Jun	2.7 days	—
+30 Jun	2.1 days	—
+1 Jul	1.3 days	—
+2 Jul	1.5 days	—
+3 Jul	0.6 days	—
+4 Jul	2.8 days	—
+5 Jul	1.4 days	—
+6 Jul	0.2 days	—
+7 Jul	0.2 days	—
+8 Jul	0.1 days	—
+9 Jul	0.1 days	—
+10 Jul	1.7 days	—
+11 Jul	0.9 days	—
+12 Jul	0.1 days	—
+13 Jul	0.1 days	—
+14 Jul	0.1 days	—
+15 Jul	0.1 days	—
+16 Jul	0.1 days	—
+17 Jul	0 days	—
+18 Jul	0.8 days	—
+19 Jul	0 days	—
+20 Jul	0 days	—
+21 Jul	0 days	—
+22 Jul	0 days	—
+23 Jul	0 days	—
+24 Jul	0 days	—
+25 Jul	0.1 days	—
+26 Jul	1 day	—
+27 Jul	—	0.1 days
+28 Jul	—	2.6 days
+29 Jul · projected	—	1.9 days
+Cold-store pallets
+56.7 pallets
+0
+20
+40
+60
+Order placed
+29 Jun
+14 Jul
+29 Jul
+Before the order
+Since the order
+
+29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 51 Projected full day.
+
+Source data
+
+75 products · pallets
+
+Date	Before the order	Since the order
+29 Jun	40.4 pallets	—
+30 Jun	44 pallets	—
+1 Jul	46.8 pallets	—
+2 Jul	48 pallets	—
+3 Jul	46.5 pallets	—
+4 Jul	47 pallets	—
+5 Jul	44.4 pallets	—
+6 Jul	45.1 pallets	—
+7 Jul	44.6 pallets	—
+8 Jul	46.6 pallets	—
+9 Jul	45.3 pallets	—
+10 Jul	43.2 pallets	—
+11 Jul	44.5 pallets	—
+12 Jul	39.8 pallets	—
+13 Jul	40.6 pallets	—
+14 Jul	43.9 pallets	—
+15 Jul	42.3 pallets	—
+16 Jul	41.5 pallets	—
+17 Jul	38.1 pallets	—
+18 Jul	41.8 pallets	—
+19 Jul	40.6 pallets	—
+20 Jul	39.1 pallets	—
+21 Jul	43 pallets	—
+22 Jul	40.8 pallets	—
+23 Jul	43.4 pallets	—
+24 Jul	41.9 pallets	—
+25 Jul	45.6 pallets	—
+26 Jul	41.8 pallets	—
+27 Jul	—	43.5 pallets
+28 Jul	—	51.8 pallets
+29 Jul · projected	—	51 pallets
+Strawberry burst bar stock
+3.7 days
+760 units on hand
+0
+1k
+2k
+Order placed
+29 Jun
+14 Jul
+29 Jul
+Before the order
+Since the order
+
+29 Jun to 29 Jul. Before the order: unavailable Projected full day. Since the order: 558 Projected full day.
+
+Source data
+
+1 products · on hand
+
+Date	Before the order	Since the order
+29 Jun	819 units	—
+30 Jun	702 units	—
+1 Jul	573 units	—
+2 Jul	490 units	—
+3 Jul	1,352 units	—
+4 Jul	1,203 units	—
+5 Jul	1,067 units	—
+6 Jul	944 units	—
+7 Jul	815 units	—
+8 Jul	703 units	—
+9 Jul	545 units	—
+10 Jul	1,159 units	—
+11 Jul	1,008 units	—
+12 Jul	794 units	—
+13 Jul	559 units	—
+14 Jul	411 units	—
+15 Jul	188 units	—
+16 Jul	11 units	—
+17 Jul	1,147 units	—
+18 Jul	920 units	—
+19 Jul	658 units	—
+20 Jul	401 units	—
+21 Jul	237 units	—
+22 Jul	82 units	—
+23 Jul	8 units	—
+24 Jul	1,674 units	—
+25 Jul	1,400 units	—
+26 Jul	1,205 units	—
+27 Jul	—	989 units
+28 Jul	—	760 units
+29 Jul · projected	—	558 units
+What happened
+29 JUL · 08:20
+
+Coffee Crunch Bar arrived: 2,240 units.
+
+29 JUL · 08:10
+
+Lemon Tea Ice Bar arrived: 840 units.
+
+29 JUL · 08:10
+
+Milk Ice Bar arrived: 720 units.
+
+29 JUL · 08:10
+
+Pineapple Bun Ice Cream Sandwich arrived: 360 units.
+
+29 JUL · 06:00
+
+Pistachio Gelato Tub arrived: 300 units.
+
+29 JUL · 06:00
+
+Dark Choc Truffle Cup arrived: 624 units.
+
+29 JUL · 06:00
+
+Green Apple Sorbet Tub arrived: 492 units.
+
+29 JUL · 06:00
+
+Yuzu Lemon Sorbet Cup arrived: 864 units.
+
+28 JUL · 14:00
+Placed 17 orders, 461 cases
+28 JUL · 09:30
+
+Apple Orchard Ice Bar arrived: 1,760 units.
+
+28 JUL · 09:30
+
+Strawberry Orchard Ice Bar arrived: 3,360 units.
+
+28 JUL · 09:30
+
+Mini Milk 10-Pack arrived: 328 units.
+
+28 JUL · 09:30
+
+Kids Choc Cone 4-Pack arrived: 432 units.
+
+28 JUL · 09:30
+
+Mini Choc Bites 8-Pack arrived: 512 units.
+
+28 JUL · 09:30
+
+Mixed Berry Ice Pop 6-Pack arrived: 680 units.
+
+28 JUL · 08:30
+
+Strawberry Dairy Ice Bar arrived: 600 units.
+
+28 JUL · 08:30
+
+Strawberry Breeze Ice Bar arrived: 1,600 units.
+
+28 JUL · 07:10
+
+Vanilla Choc Dip Bar arrived: 1,200 units.
+
+28 JUL · 07:10
+
+Almond Choc Coated Bar arrived: 2,000 units.
+
+28 JUL · 07:00
+
+Strawberry Garden Sorbet Bar arrived: 1,680 units.
+
+28 JUL · 07:00
+
+Durian Cream Cup arrived: 1,032 units.
+
+28 JUL · 07:00
+
+Hojicha Cone arrived: 984 units.
+
+28 JUL · 07:00
+
+Mango Sticky Rice Bar arrived: 3,800 units.
+
+28 JUL · 06:40
+
+Strawberry Reserve Cream Bar arrived: 1,120 units.
+
+28 JUL · 06:40
+
+Strawberry Coastal Sorbet Bar arrived: 1,240 units.
+
+27 JUL · 14:00
+Placed 23 orders, 559 cases
+27 JUL · 08:10
+
+Strawberry Spring Ice Bar arrived: 1,160 units.
+
+27 JUL · 07:30
+
+Oat Milk Vanilla Tub arrived: 486 units.
+
+27 JUL · 07:30
+
+Espresso Gelato Cup arrived: 528 units.
+
+27 JUL · 07:30
+
+Passion Fruit Sorbet Cup arrived: 1,176 units.
+
+27 JUL · 07:10
+
+Mango Mochi 6-Pack arrived: 468 units.
+
+27 JUL · 07:10
+
+Black Sesame Mochi 6-Pack arrived: 516 units.
+
+27 JUL · 07:00
+
+Tropical Ice Pop 6-Pack arrived: 480 units.
+
+27 JUL · 06:50
+
+Choc Hazelnut Cone arrived: 912 units.
+
+27 JUL · 06:50
+
+Double Choc Cone arrived: 1,224 units.
+
+27 JUL · 06:50
+
+Classic Choc Crunch Bar arrived: 920 units.

@@ -1,0 +1,36 @@
+{
+  "flow": {
+    "step": "report",
+    "max_step": "report",
+    "order_hash": "a8ca053adf930b016e76346af923c992c3585c2df74e83b1f31ab5cfcc65e322",
+    "notice": null
+  },
+  "orders": [
+    75,
+    2413
+  ],
+  "widgets": 5,
+  "job": "not_started",
+  "report": {
+    "status": "complete",
+    "model": "gemini-3.8-flash",
+    "title": "Value strawberry water ices surge while chocolate-coated lines soften"
+  },
+  "capacity": 62,
+  "planned_peak": 61.304556505468874,
+  "first_cohort": "Value price \u00b7 Strawberry \u00b7 Water-based",
+  "first_path": [
+    {
+      "id": "flavour:strawberry",
+      "included": true
+    },
+    {
+      "id": "band:price_hkd:0",
+      "included": true
+    },
+    {
+      "id": "band:dairy:0",
+      "included": true
+    }
+  ]
+}

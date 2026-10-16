@@ -1,0 +1,19 @@
+{
+  "unchanged_play_source_from": "e3597ef",
+  "play_source_sha256": "7d15c78b62706b01b82637edd9b6bd1285e1896474f703bfd6803f90ffd90cfa",
+  "rule_formula": "28-day average \u00d7 (lead + review) \u00d7 1.25; pre-dispatch stock and pipeline subtracted, packs/MOQ unchanged.",
+  "same_demand_weather_stock_pipeline_fingerprint": "b0b624c6c0c11649e955a5bf58de2b5e8126cb5ec661fb905d9b6218af1913d3",
+  "all_trial_baseline_summaries_identical": true,
+  "runtime_paths_audited": [
+    "backend/scoop/planning.py",
+    "backend/scoop/algorithms/replenish.py",
+    "backend/scoop/algorithms/protection_calibration.py",
+    "backend/scoop/algorithms/cohort_model.py",
+    "backend/scoop/algorithms/forecast.py",
+    "backend/scoop/algorithms/runs.py",
+    "backend/scoop/play.py"
+  ],
+  "oracle_identifier_matches": 0,
+  "private_experiment_schema_has_no_oracle_table": true,
+  "chosen": "one-cap98-tight62"
+}

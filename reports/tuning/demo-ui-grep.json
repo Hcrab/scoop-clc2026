@@ -1,0 +1,15 @@
+{
+  "command": [
+    "rg",
+    "-n",
+    "-i",
+    "\\b(Recorded|Simulated|Requested|rule|Decision)\\b",
+    "reports/tuning/demo-watch-ui.txt",
+    "reports/tuning/demo-midnight-ui.txt",
+    "reports/tuning/demo-noon-ui.txt"
+  ],
+  "captured_scope": "Rendered Watch and Play text, with all Source data sections expanded. Results intentionally retains its scenario sentence and policy comparison.",
+  "exit_code": 1,
+  "matches": 0,
+  "stdout": ""
+}

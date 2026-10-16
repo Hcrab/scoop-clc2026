@@ -1,0 +1,13 @@
+{
+  "files": [
+    "README.md",
+    "docs/TECHNICAL_DESIGN.md",
+    "docs/DEMO.md",
+    "docs/overnight-report.md",
+    "docs/reports/day16.md",
+    "reports/tuning/final.md"
+  ],
+  "missing_relative_links": [],
+  "exact_disclosure": true,
+  "current_cost_and_capacity_documented": true
+}

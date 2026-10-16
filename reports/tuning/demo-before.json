@@ -1,0 +1,45 @@
+{
+  "base_revision": "e3597ef",
+  "backup_bytes": 5336575,
+  "source_quantities": [
+    1233000,
+    6514029,
+    6479998
+  ],
+  "source_schema": "public",
+  "experiment_schema": "demo_tuning_20261016",
+  "excluded_tables": [
+    "ground_truth_events",
+    "simulation_runs"
+  ],
+  "before": {
+    "baseline": {
+      "avg_pallets": 37.75508897569444,
+      "days_over_capacity": 0,
+      "ending_on_hand": 52004.0,
+      "fill_rate": 0.9692505097020906,
+      "lost_margin": 30849.110000000004,
+      "lost_units": 6063.0,
+      "ordered_cases": 7917,
+      "peak_pallets": 57.98659722222222,
+      "stockout_sku_days": 39
+    },
+    "scoop": {
+      "avg_pallets": 37.97448567708334,
+      "days_over_capacity": 0,
+      "ending_on_hand": 70564.0,
+      "fill_rate": 0.9678101575258401,
+      "lost_margin": 38125.689999999995,
+      "lost_units": 6347.0,
+      "ordered_cases": 8352,
+      "peak_pallets": 57.98659722222222,
+      "stockout_sku_days": 52
+    }
+  },
+  "before_flow": {
+    "step": "report",
+    "max_step": "report",
+    "notice": null
+  },
+  "before_initial_cases": 2172
+}

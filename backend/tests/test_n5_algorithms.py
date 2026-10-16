@@ -1,4 +1,4 @@
-"""Focused checks for weather features, cohort uncertainty/trace, and summer cost."""
+"""Focused checks for weather features, cohort uncertainty/trace, and cycle cost."""
 from datetime import date, timedelta
 from types import SimpleNamespace
 
@@ -113,9 +113,10 @@ def test_normal_fit_to_card_projects_saved_drilldown_without_rescoring():
     assert all(len(card['drilldown']['steps']) == len(card['tag_path']) for card in cards)
 
 
-def test_summer_cost_and_marginal_allocation_use_same_excess_cost(monkeypatch):
-    assert replenish.HOLDING_RATE == .025
-    assert replenish.critical_ratio(10, 6) == pytest.approx(4 / (4 + .025 * 6))
+def test_cycle_cost_and_marginal_allocation_use_same_excess_cost(monkeypatch):
+    assert replenish.HOLDING_RATE == .01
+    assert replenish.critical_ratio(10, 6) == .98
+    assert replenish.critical_ratio(8, 6) == pytest.approx(2 / (2 + .01 * 6))
     assert replenish.critical_ratio(10, 6, .8) == .8
     seen = []
     original_cdf = replenish.norm.cdf
@@ -126,5 +127,5 @@ def test_summer_cost_and_marginal_allocation_use_same_excess_cost(monkeypatch):
     items = [replenish.SkuInput('A', 100, 9, 10, 6, 10, 10, 1, 0, 0, 2)]
     plan = replenish.plan_orders(items, np.linspace(.8, 1.2, 21), 0)
     assert seen and plan.iloc[0].capacity_cut_cases > 0
-    assert plan.iloc[0].excess_unit_cost_rate == .025
-    assert 'summer carryover/markdown' in plan.iloc[0].excess_unit_cost_basis
+    assert plan.iloc[0].excess_unit_cost_rate == .01
+    assert 'storage/financing' in plan.iloc[0].excess_unit_cost_basis

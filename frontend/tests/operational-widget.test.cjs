@@ -91,6 +91,7 @@ test('sentence titles retain acronyms and order subtitle uses the actual order d
   assert.equal(sentenceTitle('Chocolate-Coated · Requests'),'Chocolate-coated · requests');
   assert.equal(sentenceTitle('APAC SKU123 · Vanilla Availability'),'APAC SKU123 · vanilla availability');
   assert.equal(sentenceTitle('new seasonal availability'),'New seasonal availability');
+  assert.equal(sentenceTitle('STOCK ON HAND'),'Stock on hand');
   assert.equal(orderDateLabel(order),'Mon 27 Jul');
   const props={detail:{plan:{week_start:order}},products,path:'/test'};
   const watch=renderToStaticMarkup(React.createElement(Dashboard,props));

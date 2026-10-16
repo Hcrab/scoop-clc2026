@@ -1,0 +1,43 @@
+✔ exact KPI color thresholds are inclusive at each healthy boundary (2.1843ms)
+✔ low cover follows next arrival strictly, includes no promise and excludes unusable demand (0.2675ms)
+✔ first simulated night resets old losses and flows, retaining opening stock without future peaks (1.1556ms)
+✔ completed days accumulate Scoop totals; first night on day two uses completed yesterday (0.6176ms)
+✔ no demand preserves a usable fill ratio and excludes null cover from low stock count (0.2441ms)
+✔ current point is absent before noon, then uses a full-day projection, keys use actual flows (0.1638ms)
+✔ safety stock protects to the next known receipt and uses trailing demand, without policy comparison (0.2291ms)
+✔ same-day receipt uses its arrival minute, then removes delivered stock from pending arrivals (0.2622ms)
+✔ week-two placements enter the pending schedule at 14:00 and never leak from future days (1.8779ms)
+✔ overdue unresolved schedules remain unknown instead of shifting by supplier lead (0.2237ms)
+✔ fractional-day cover equality is sufficient without calendar timestamp rounding (0.1347ms)
+✔ early admitted stock is removed from its outstanding scheduled promise (0.1925ms)
+✔ all operational metrics render only one measure and two color labels, never reference or risk series (75.5638ms)
+✔ Watch retains order-date marker without manufacturing a future metric value (2.0127ms)
+✔ current daily point begins at noon, remains disconnected, and settles at closing time (28.9617ms)
+✔ lowest cover follows the minimum individual cover, with rolling product demand (2.7391ms)
+✔ flow keys retain yesterday fallback and only one muted line (1.9972ms)
+✔ unknown product demand keeps stock keys in units instead of showing partial cover (2.1812ms)
+✔ sentence titles retain acronyms and order subtitle uses the actual order date (2.5874ms)
+✔ clock shows actual weekday, date and time across month and year rollover (34.6369ms)
+✔ feed retains grouped products, cases and arrival dates without decision captions (6.2371ms)
+✔ normal playback and Results transition controls remain available (16.7092ms)
+✔ warehouse paths use native closing stock totals and share only the last recorded anchor (6.7464ms)
+✔ main Results overlay renders three named colors on one chart and equal values use equal coordinates (13.7715ms)
+✔ Watch and Play never access baseline for any metric (31.2266ms)
+✔ every Results metric uses the operational chart with only history and two policies (19.3802ms)
+✔ Results lowest cover uses actual stock for each policy and rolling per-product demand (0.3782ms)
+✔ comparison charts retain missing history, morning gaps and hollow noon projections for both policies (41.8577ms)
+✔ fill tile keeps only its period line with unchanged numeric value (2.4343ms)
+✔ only Results opts into dashboard comparison and retains the three outcomes and full comparison (16.4717ms)
+✔ today uses growing cumulative requests, then closes to raw daily totals (2.0594ms)
+✔ fill rate stays pending before dispatch and uses actual cumulative quantities afterward (0.1811ms)
+✔ cumulative shortage cannot fall when stock arrives (0.1256ms)
+✔ partial last chart value remains a hollow marker outside connected lines (30.6892ms)
+✔ projected stockout points stay hollow and absent before the noon projection (3.7686ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 760.5107

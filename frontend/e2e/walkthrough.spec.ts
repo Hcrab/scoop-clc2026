@@ -3,7 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { gzipSync } from 'node:zlib';
 
-test('D4 real report → orders → Watch → midnight and noon Play → measured Results', async ({page,request})=>{
+test('tuned real report → orders → Watch → midnight and noon Play → measured Results', async ({page,request})=>{
   test.setTimeout(420_000);
   page.setDefaultTimeout(45_000);
   const endpoint='/api/plans/P20260727',out=path.resolve('..','docs','screenshots');
@@ -23,7 +23,7 @@ test('D4 real report → orders → Watch → midnight and noon Play → measure
       await expect(page.getByRole('slider',{name:'In-stock target'})).toBeEnabled();
     }
     await expect.poll(()=>page.locator('.product-icon img').evaluateAll(nodes=>nodes.every(img=>(img as HTMLImageElement).complete&&(img as HTMLImageElement).naturalWidth===256))).toBeTruthy();
-    await top();const file=`d4-${name}.png`;await page.screenshot({path:path.join(out,file),fullPage:true,animations:'disabled'});record.screenshots.push(`docs/screenshots/${file}`)
+    await top();const file=`demo-${name}.png`;await page.screenshot({path:path.join(out,file),fullPage:true,animations:'disabled'});record.screenshots.push(`docs/screenshots/${file}`)
   };
   const quantities=(detail:any)=>detail.orders.map((o:any)=>[o.sku,o.final_cases??Math.max(0,o.suggested_cases-o.capacity_cut_cases)]).sort((a:any,b:any)=>a[0].localeCompare(b[0]));
   const widgetState=(dashboard:any)=>dashboard.widgets.map(({id,title,metric,scope,position,threshold}:any)=>({id,title,metric,scope,position,threshold}));
@@ -47,7 +47,7 @@ test('D4 real report → orders → Watch → midnight and noon Play → measure
     }
     const text=await page.locator(sinceOrder?'.play':'.dashboard').innerText();
     expect(text).not.toMatch(/\b(?:Recorded|Simulated|Requested|rule|Decision)\b/i);
-    await writeFile(path.resolve('..','reports',`d4-${name}-ui.txt`),text+'\n');
+    await writeFile(path.resolve('..','reports','tuning',`demo-${name}-ui.txt`),text+'\n');
     for(const widget of await widgets.all())await widget.locator('.dashboard-evidence summary').click();
     return {text,tiles:await dashboard.locator('.dashboard-kpis').innerText(),widgets:await widgets.locator('h3').allTextContents()};
   };
@@ -65,6 +65,10 @@ test('D4 real report → orders → Watch → midnight and noon Play → measure
   expect(initial.review.status).toBe('complete');
   expect(initial.review.model).toBe('gemini-3.8-flash');
   expect(initial.review.presentation.html).not.toMatch(/<svg\b/i);
+  expect(quantities(initial).reduce((total:number,row:any)=>total+row[1],0)).toBe(2413);
+  expect([...initial.cohort_cards[0].skus].sort()).toEqual(['IC006','IC061','IC062','IC063']);
+  expect(initial.cohort_cards[0].capacity_pallets).toBe(62);
+  expect(initial.cohort_cards[0].peak_capacity).toBeLessThanOrEqual(62);
   try{
     const reset=await request.put(endpoint+'/flow',{data:{step:'report'}});expect(reset.ok()).toBeTruthy();
     await page.goto('/');
@@ -79,6 +83,21 @@ test('D4 real report → orders → Watch → midnight and noon Play → measure
     await expect(page.getByText('Loading changes…',{exact:true})).toHaveCount(0);
     await shot('01-report');
     record.report={model:initial.review.model,title:initial.review.presentation.title,first_card:initial.cohort_cards[0].name};
+
+    const firstCard=page.locator('.cohort-card').first();
+    await firstCard.getByText('How we found it',{exact:true}).click();
+    const drill=firstCard.locator('.cohort-drilldown');
+    await expect(drill.locator('.drill-row')).toHaveCount(initial.cohort_cards[0].tag_path.length+1);
+    const chartBefore=await drill.locator('svg').innerHTML();
+    await drill.locator('.drill-row').last().click();
+    await expect(drill.locator('.drill-chart-head strong')).toContainText(initial.cohort_cards[0].drilldown.steps.at(-1).label);
+    expect(await drill.locator('svg').innerHTML()).not.toBe(chartBefore);
+    await drill.getByRole('combobox').selectOption('70');
+    await firstCard.scrollIntoViewIfNeeded();
+    await page.screenshot({path:path.join(out,'demo-strawberry-drilldown.png'),animations:'disabled'});
+    record.screenshots.push('docs/screenshots/demo-strawberry-drilldown.png');
+    record.compound_path=initial.cohort_cards[0].drilldown.steps.map(({label,effect_pct,rest_effect_pct}:any)=>({label,effect_pct,rest_effect_pct}));
+    await firstCard.getByText('How we found it',{exact:true}).click();
 
     const ordersStarted=Date.now();
     await page.getByRole('button',{name:'Review orders',exact:true}).click();
@@ -147,8 +166,18 @@ test('D4 real report → orders → Watch → midnight and noon Play → measure
     const result=(await read('/simulation')).result,summary=result.summary;
     expect(result).not.toHaveProperty('matched');
     const diffs=['lost_units','stockout_sku_days','lost_margin'].map(key=>summary.baseline[key]-summary.scoop[key]);
+    expect(diffs.every(value=>value>0)).toBeTruthy();
+    expect([summary.scoop.lost_units,summary.scoop.stockout_sku_days,summary.scoop.lost_margin]).toEqual([4297,36,24271.33]);
+    expect([summary.baseline.lost_units,summary.baseline.stockout_sku_days]).toEqual([6063,39]);
+    expect(summary.baseline.lost_margin).toBeCloseTo(30849.11,6);
     await expect(page.locator('.play-outcomes .result-negative')).toHaveCount(diffs.filter(value=>value<0).length);
     await expect(page.locator('.results-view .dashboard-widget')).toHaveCount(initialWidgets.length+1);
+    for(const widget of await page.locator('.results-view .dashboard-widget').all()){
+      const keys=await widget.locator('[data-series]').evaluateAll(nodes=>nodes.map(el=>el.getAttribute('data-series')));
+      expect(keys).toEqual(['history','plan','rule']);
+      await expect(widget.locator('[data-band]')).toHaveCount(0);
+      expect(await widget.locator('.legend span').allTextContents()).toEqual(['Before the order','Scoop plan','Simple rule']);
+    }
     const peakText=(value:number)=>value.toLocaleString('en-HK',{maximumFractionDigits:1});
     await expect(page.locator('.results-cold-store')).toHaveText(`Same cold store (${result.capacity_pallets} pallets) · Scoop plan peaks at ${peakText(summary.scoop.peak_pallets)}, Simple rule at ${peakText(summary.baseline.peak_pallets)}`);
     await shot('06-results');
@@ -159,7 +188,7 @@ test('D4 real report → orders → Watch → midnight and noon Play → measure
     record.result={capacity_pallets:result.capacity_pallets,summary,differences:diffs,
       comparison:'Normal policies in the same cold store; no service search or space matching.',
       outcome_note:`Simple rule minus Scoop: ${diffs[0]} units short, ${diffs[1]} stockout product-days, HK$${diffs[2].toFixed(2)} margin lost.`};
-    if(process.env.SCOOP_WALKTHROUGH_PREPARED!=='1')await writeFile(path.resolve('..','reports','d4-replay.json.gz'),gzipSync(JSON.stringify(result)));
+    if(process.env.SCOOP_WALKTHROUGH_PREPARED!=='1')await writeFile(path.resolve('..','reports','tuning','demo-replay.json.gz'),gzipSync(JSON.stringify(result)));
     record.reused_computed_replay=process.env.SCOOP_WALKTHROUGH_PREPARED==='1';
     expect(record.errors).toEqual([]);
   }finally{
@@ -172,6 +201,6 @@ test('D4 real report → orders → Watch → midnight and noon Play → measure
     expect(restored.ok()).toBeTruthy();
     expect((await read()).flow).toMatchObject({step:'report',max_step:'report'});
     record.clean_initial_state_restored_by_reset=true;
-    await writeFile(path.resolve('..','reports','d4-walkthrough.json'),JSON.stringify(record,null,2)+'\n');
+    await writeFile(path.resolve('..','reports','tuning','demo-walkthrough.json'),JSON.stringify(record,null,2)+'\n');
   }
 });
