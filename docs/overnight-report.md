@@ -2,7 +2,7 @@
 
 ## One-page summary
 
-**R0 and the guided-tour phase are accepted.** R0 was pushed as `b6505cf`; the accepted tour is ready for its phase commit/push on `claude/scoop-prototype`. The previous report is archived at [pre-tour-20261016.md](reports/pre-tour-20261016.md). Final copy and requirements: [night4-protocol.md](reports/night4-protocol.md).
+**R0 and the guided-tour phase are accepted and pushed.** R0 was pushed as `b6505cf`; the tour implementation and acceptance evidence were pushed as `bbde87e` on `claude/scoop-prototype`, with the remote HEAD verified. The previous report is archived at [pre-tour-20261016.md](reports/pre-tour-20261016.md). Final copy and requirements: [night4-protocol.md](reports/night4-protocol.md).
 
 | Check | Status | Evidence |
 |---|---|---|
