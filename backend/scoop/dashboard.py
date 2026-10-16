@@ -239,12 +239,25 @@ def health_snapshot(facts):
         for (day, stock_sku), units in facts['stock'].items():
             if stock_sku == sku:
                 pallets[day] = pallets.get(day, 0) + units / footprint
+    history = []
+    skus = list(facts['products'])
+    day = start
+    while day < end:
+        demand = _demand(facts, day, skus)
+        fulfilled = _demand(facts, day, skus, 1)
+        stock = _total(facts, day, skus, 'stock')
+        history.append({'date': day.isoformat(), 'requested_units': demand,
+                        'shipped_units': fulfilled,
+                        'lost_units': demand - fulfilled if demand is not None and fulfilled is not None else None,
+                        'on_hand_units': stock,
+                        'pallets': pallets.get(day) if stock is not None else None})
+        day += timedelta(days=1)
     return {'period_start': start.isoformat(), 'through': through.isoformat(),
             'requested_units': requested, 'shipped_units': shipped,
             'fill_rate': shipped / requested if requested else 1,
             'stockout_skus': sorted(ran_out), 'stockout_sku_days': sku_days,
             'pallets': pallets.get(through, 0), 'peak_pallets': max(pallets.values(), default=0),
-            'capacity_pallets': facts['capacity'], 'products': products}
+            'capacity_pallets': facts['capacity'], 'products': products, 'history': history}
 
 
 def representative_sku(plan, spec, skus, products):

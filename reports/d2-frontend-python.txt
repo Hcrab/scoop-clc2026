@@ -1,0 +1,26 @@
+✔ exact KPI color thresholds are inclusive at each healthy boundary (0.909ms)
+✔ low cover uses strict supplier comparison, zero stock qualifies, null demand does not (0.1711ms)
+✔ first simulated night keeps historical flows and numeric current stock without future peaks (0.6866ms)
+✔ completed days accumulate Scoop totals; first night on day two uses completed yesterday (0.3145ms)
+✔ no demand preserves a usable fill ratio and excludes null cover from low stock count (0.1653ms)
+✔ current point is absent before noon, then uses a full-day projection, keys use actual flows (0.1315ms)
+✔ safety stock protects to the next known receipt and uses trailing demand, without policy comparison (0.2428ms)
+✔ warehouse paths use native closing stock totals and share only the last recorded anchor (6.9985ms)
+✔ main Results overlay renders three named colors on one chart and equal values use equal coordinates (14.2977ms)
+✔ default widget mode never accesses baseline across stock, flows, demand and cover list (16.6881ms)
+✔ Results detailed policy widgets share one axis, keep policy colors and stock alert evidence (19.8814ms)
+✔ Results demand and lowest-cover widgets never access baseline (4.2332ms)
+✔ only Results opts into dashboard comparison and retains the three outcomes and full comparison (25.312ms)
+✔ today uses growing cumulative requests, then closes to raw daily totals (0.8822ms)
+✔ fill rate stays pending before dispatch and uses actual cumulative quantities afterward (0.1471ms)
+✔ cumulative shortage cannot fall when stock arrives (0.1168ms)
+✔ partial last chart value remains a hollow marker outside connected lines (42.1556ms)
+✔ projected stockout points stay hollow and absent before the noon projection (8.9157ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 693.6666

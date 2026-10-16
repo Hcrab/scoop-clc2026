@@ -27,6 +27,11 @@ def test_fixed_health_uses_only_recorded_period_with_no_widgets(api):
     assert health['pallets'] == .21
     assert health['peak_pallets'] == .21
     assert health['capacity_pallets'] == 10
+    assert len(health['history']) == 28
+    assert health['history'][0]['requested_units'] is None
+    assert health['history'][0]['on_hand_units'] is None
+    assert health['history'][-1] == {'date':'2026-07-05','requested_units':14,'shipped_units':10,
+                                     'lost_units':4,'on_hand_units':21,'pallets':.21}
     product = health['products'][0]
     assert product['recent_demand'] == [7] * 6 + [14]
     assert product['daily_demand'] == 8

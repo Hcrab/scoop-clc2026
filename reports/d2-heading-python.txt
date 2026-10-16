@@ -1,0 +1,10 @@
+{
+  "title": "Merchandising & planning checks",
+  "source": "Existing AI-authored structured questions",
+  "question_count": 2,
+  "new_provider_calls": 0,
+  "claims_unchanged": true,
+  "queries_unchanged": true,
+  "widget_specs_unchanged": true,
+  "reset_template_refreshed": true
+}

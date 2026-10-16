@@ -7,6 +7,7 @@ import { widgetPoint, widgetChartPoint, widgetDisplayPoint } from './replayData'
 import { dashboardPalette as colors, healthAtClock, projectedDay, rankedCover, stockEvidence } from './dashboardHealth';
 import { DashboardKpis, CoverList } from './DashboardKpis';
 import { ProductIcon } from './ProductIcon';
+import { ResultsStockChart } from './ResultsStockChart';
 import './dashboard.css';
 
 export type HourlyRun = {on_hand:number[][];on_hand_delta:number[][];demand:number[][];shipped:number[][];lost:number[][];arrived:number[][]};
@@ -33,16 +34,17 @@ function widgetTitle(widget:DashboardWidget, data:DashboardData, detail:Detail) 
 }
 const receipt=(value:unknown, name:string):PlanEdit=>({...value as PlanEdit,label:name});
 
-function WidgetChart({widget,result,day,minute,products,health,recordedHealth}:{widget:DashboardWidget;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];health?:DashboardHealth;recordedHealth?:DashboardHealth}) {
+export function WidgetChart({widget,result,day,minute,products,health,recordedHealth,comparison=false}:{widget:DashboardWidget;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];health?:DashboardHealth;recordedHealth?:DashboardHealth;comparison?:boolean}) {
   const simulated=!!result&&day>=0, partial=simulated&&projectedDay(minute);
   const demand=widget.metric==='demand'||widget.metric==='requested_vs_expected';
   const stock=widget.metric==='on_hand'||widget.metric==='days_cover';
+  const compare=comparison&&!demand&&widget.metric!=='lowest_cover';
   const selected=health?.products.filter(p=>widget.skus.includes(p.sku))||[];
   const average=selected.reduce((sum,p)=>sum+p.daily_demand,0);
   const data=useMemo(()=>{
     const past=widget.series.map(point=>{
       const safe=widget.metric==='days_cover'?(point.safe_stock_units!=null&&point.daily_demand?point.safe_stock_units/point.daily_demand:NaN):point.safe_stock_units??NaN;
-      return {date:point.date,history:point.value??NaN,plan:NaN,planColor:colors.scoop as string,requested:stock?(widget.metric==='days_cover'?(point.requested_units?1:NaN):point.requested_units??NaN):NaN,safe:stock?safe:NaN,warning:stock&&point.value!=null&&point.value<safe?point.value:NaN,stockout:stock&&point.value===0&&(point.requested_units||0)>0?0:NaN};
+      return {date:point.date,history:point.value??NaN,plan:NaN,rule:NaN,planColor:colors.scoop as string,requested:stock?(widget.metric==='days_cover'?(point.requested_units?1:NaN):point.requested_units??NaN):NaN,safe:stock?safe:NaN,warning:stock&&point.value!=null&&point.value<safe?point.value:NaN,stockout:stock&&point.value===0&&(point.requested_units||0)>0?0:NaN};
     });
     const future=simulated?result!.dates.slice(0,day+1).map((at,i)=>{
       const m=i===day?minute:null, point=widgetChartPoint(result!,widget,products,i,m), value=point.value??NaN;
@@ -50,16 +52,19 @@ function WidgetChart({widget,result,day,minute,products,health,recordedHealth}:{
       const evidence=stockEvidence(recordedHealth,result!,widget.skus,i,null);
       const safe=widget.metric==='days_cover'?(evidence.dailyDemand>0?evidence.safeUnits/evidence.dailyDemand:NaN):evidence.safeUnits;
       const loss=widgetPoint(result!,{...widget,metric:'lost_units'},'scoop',products,i,null).value||0;
-      return {date:at,history:NaN,plan:value,planColor:stock&&loss>0?colors.coral:stock&&value<safe?colors.amber:colors.scoop,requested:stock&&Number.isFinite(value)?(widget.metric==='days_cover'?1:requested):NaN,safe:stock&&Number.isFinite(value)?safe:NaN,warning:stock&&value<safe?value:NaN,stockout:stock&&loss>0&&Number.isFinite(value)?value:NaN};
+      return {date:at,history:NaN,plan:value,rule:compare?widgetPoint(result!,widget,'baseline',products,i,m).value??NaN:NaN,planColor:stock&&loss>0?colors.coral:stock&&value<safe?colors.amber:colors.scoop,requested:stock&&Number.isFinite(value)?(widget.metric==='days_cover'?1:requested):NaN,safe:stock&&Number.isFinite(value)?safe:NaN,warning:stock&&value<safe?value:NaN,stockout:stock&&loss>0&&Number.isFinite(value)?value:NaN};
     }):[];
     // Join recorded to simulated using only the last recorded anchor.
-    if(future.length&&past.length&&!demand)past[past.length-1].plan=past[past.length-1].history;
+    if(future.length&&past.length&&!demand){
+      const anchor=[...past].reverse().find(point=>Number.isFinite(point.history));
+      if(anchor){anchor.plan=anchor.history;if(compare)anchor.rule=anchor.history}
+    }
     return [...past,...future];
-  },[widget,result,day,minute,products,recordedHealth,stock,demand,simulated]);
+  },[widget,result,day,minute,products,recordedHealth,stock,demand,simulated,compare]);
   const live=simulated?widgetDisplayPoint(result!,widget,products,day,minute):null;
   let value=live?live.value:widget.value,unit=widget.unit;
   if(widget.metric==='on_hand'&&average>0){value=value==null?null:value/average;unit='days'}
-  const lines=demand?[{key:'history',label:'Requested · recorded',color:colors.requested},{key:'plan',label:'Requested · simulated',color:colors.requestedProjected}]:[{key:'history',label:'Recorded',color:colors.history},{key:'plan',label:'Scoop plan',color:colors.scoop,colorKey:stock?'planColor':undefined},...(stock?[{key:'requested',label:widget.metric==='days_cover'?'Requested · 1 day':'Requested · units',color:colors.requested,dashed:true},{key:'warning',label:'Below safety requirement',color:colors.amber,dots:true},{key:'stockout',label:'Stockout',color:colors.coral,dots:true}]:[])];
+  const lines=demand?[{key:'history',label:'Requested · recorded',color:colors.requested},{key:'plan',label:'Requested · simulated',color:colors.requestedProjected}]:[{key:'history',label:'Recorded',color:colors.history},{key:'plan',label:'Scoop plan',color:colors.scoop,colorKey:stock&&!comparison?'planColor':undefined},...(compare?[{key:'rule',label:'Simple rule',color:colors.simpleRule}]:[]),...(stock?[{key:'requested',label:widget.metric==='days_cover'?'Requested · 1 day':'Requested · units',color:colors.requested,dashed:true},{key:'warning',label:'Below safety requirement',color:colors.amber,dots:true},{key:'stockout',label:'Stockout',color:colors.coral,dots:true}]:[])];
   if(widget.metric==='lowest_cover'){
     const rows=rankedCover(selected).slice(0,5);
     return <><div className="dashboard-value"><strong>{rows.length?format(rows[0].days_cover,'days'):'—'}</strong><small>Lowest cover · current stock</small></div><CoverList products={rows} limit={5}/></>;
@@ -67,17 +72,17 @@ function WidgetChart({widget,result,day,minute,products,health,recordedHealth}:{
   const cell=(v:number)=>Number.isFinite(v)?format(v,widget.unit):'—';
   return <><div className="dashboard-value"><strong>{value==null?'—':format(value,unit)}</strong>{live?.yesterday&&<small>Yesterday</small>}{simulated&&!live?.yesterday&&partial&&!stock&&<small>Today so far</small>}{widget.metric==='on_hand'&&average>0&&<small>of cover · {format(live?live.value:widget.value,'units')} on hand</small>}</div>
     <Chart small data={data} partialLast={partial} partialLabel="Projected full day" percent={widget.unit==='ratio'} lines={lines} bands={stock?[{key:'safe',label:'Safe zone · until next arrival',color:colors.safe}]:[]}/>
-    <details className="dashboard-evidence"><summary>Source data</summary><p className="muted">{widget.skus.length} products · {metrics.find(m=>m.id===widget.metric)?.label}{simulated?` · Simulated from ${date(result!.dates[0])}`:''}</p><div className="table-wrap"><table><thead><tr><th>Date</th><th style={{color:demand?colors.requested:colors.history}}>Recorded</th>{simulated&&<th style={{color:demand?colors.requestedProjected:colors.scoop}}>{demand?'Requested · simulated':'Scoop plan'}</th>}{stock&&<><th style={{color:colors.requested}}>Requested ({widget.unit})</th><th>Safety requirement ({widget.unit})</th></>}</tr></thead><tbody>{data.map((row,i)=><tr key={row.date}><th scope="row">{date(row.date)}{partial&&i===data.length-1&&minute!==null&&minute>=720?' · projected':''}</th><td>{cell(row.history)}</td>{simulated&&<td>{cell(row.plan)}</td>}{stock&&<><td>{cell(row.requested)}</td><td>{cell(row.safe)}</td></>}</tr>)}</tbody></table></div></details></>;
+    <details className="dashboard-evidence"><summary>Source data</summary><p className="muted">{widget.skus.length} products · {metrics.find(m=>m.id===widget.metric)?.label}{simulated?` · Simulated from ${date(result!.dates[0])}`:''}</p><div className="table-wrap"><table><thead><tr><th>Date</th><th style={{color:demand?colors.requested:colors.history}}>Recorded</th>{simulated&&<th style={{color:demand?(comparison?colors.requested:colors.requestedProjected):colors.scoop}}>{demand?'Requested · simulated':'Scoop plan'}</th>}{compare&&<th style={{color:colors.simpleRule}}>Simple rule</th>}{stock&&<><th style={{color:colors.requested}}>Requested ({widget.unit})</th><th>Safety requirement ({widget.unit})</th></>}</tr></thead><tbody>{data.map((row,i)=><tr key={row.date}><th scope="row">{date(row.date)}{partial&&i===data.length-1&&minute!==null&&minute>=720?' · projected':''}</th><td>{cell(row.history)}</td>{simulated&&<td>{cell(row.plan)}</td>}{compare&&<td>{cell(row.rule)}</td>}{stock&&<><td>{cell(row.requested)}</td><td>{cell(row.safe)}</td></>}</tr>)}</tbody></table></div></details></>;
 }
 
-function WidgetCard({widget,index,count,data,detail,result,day,minute,products,health,disabled,readonly,dragged,drop,move,remove,edit}:{widget:DashboardWidget;index:number;count:number;data:DashboardData;detail:Detail;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];health?:DashboardHealth;disabled:boolean;readonly:boolean;dragged:React.RefObject<string|null>;drop:(before?:string)=>void;move:(id:string,delta:number)=>void;remove:(widget:DashboardWidget)=>void;edit:(widget:DashboardWidget)=>void}) {
+function WidgetCard({widget,index,count,data,detail,result,day,minute,products,health,disabled,readonly,dragged,drop,move,remove,edit,comparison=false}:{widget:DashboardWidget;index:number;count:number;data:DashboardData;detail:Detail;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];health?:DashboardHealth;disabled:boolean;readonly:boolean;dragged:React.RefObject<string|null>;drop:(before?:string)=>void;move:(id:string,delta:number)=>void;remove:(widget:DashboardWidget)=>void;edit:(widget:DashboardWidget)=>void;comparison?:boolean}) {
   const value=widget.metric==='lowest_cover'?rankedCover(health?.products.filter(p=>widget.skus.includes(p.sku))||[])[0]?.days_cover??null:result&&day>=0?widgetDisplayPoint(result,widget,products,day,minute).value:widget.value;
   const warning=value!=null&&!!widget.threshold&&(widget.threshold.operator==='lt'?value<widget.threshold.value:value>widget.threshold.value);
   const title=widgetTitle(widget,data,detail),scopeLabel=label(widget,data);
   const scopeRepeated=title.toLocaleLowerCase().includes(scopeLabel.toLocaleLowerCase());
   const subtitle=[!scopeRepeated?scopeLabel:null,widget.threshold?`${widget.threshold.operator==='lt'?'Below':'Above'} ${format(widget.threshold.value,widget.unit)}`:null].filter(Boolean).join(' · ');
   const representative=widget.scope.kind==='warehouse'?null:widget.scope.kind==='cohort'?detail.cohort_cards?.find(card=>card.id===widget.scope.key)?.representative_sku||widget.representative_sku:widget.scope.kind==='sku'?widget.scope.key||widget.representative_sku:widget.representative_sku;
-  return <article className={`dashboard-widget ${warning?'warning':''}`} draggable={!disabled} onDragStart={(e:DragEvent)=>{dragged.current=widget.id;e.dataTransfer.effectAllowed='move'}} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.stopPropagation();drop(widget.id)}}><header>{representative&&<ProductIcon sku={representative} size={48} decorative/>}<div className="dashboard-widget-title"><h3>{title}</h3>{subtitle&&<small>{subtitle}</small>}</div>{warning&&<span className="dashboard-warning">Alert</span>}</header><WidgetChart widget={widget} result={result} day={day} minute={minute} products={products} health={health} recordedHealth={data.health}/>{!readonly&&<div className="dashboard-actions"><button className="text-button" disabled={disabled||index===0} aria-label={`Move ${title} up`} onClick={()=>move(widget.id,-1)}>↑</button><button className="text-button" disabled={disabled||index===count-1} aria-label={`Move ${title} down`} onClick={()=>move(widget.id,1)}>↓</button><button className="text-button" disabled={disabled} onClick={()=>edit(widget)}>Edit</button><button className="text-button" disabled={disabled} onClick={()=>remove(widget)}>Remove</button></div>}</article>;
+  return <article className={`dashboard-widget ${warning?'warning':''}`} draggable={!disabled} onDragStart={(e:DragEvent)=>{dragged.current=widget.id;e.dataTransfer.effectAllowed='move'}} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.stopPropagation();drop(widget.id)}}><header>{representative&&<ProductIcon sku={representative} size={48} decorative/>}<div className="dashboard-widget-title"><h3>{title}</h3>{subtitle&&<small>{subtitle}</small>}</div>{warning&&<span className="dashboard-warning">Alert</span>}</header><WidgetChart widget={widget} result={result} day={day} minute={minute} products={products} health={health} recordedHealth={data.health} comparison={comparison}/>{!readonly&&<div className="dashboard-actions"><button className="text-button" disabled={disabled||index===0} aria-label={`Move ${title} up`} onClick={()=>move(widget.id,-1)}>↑</button><button className="text-button" disabled={disabled||index===count-1} aria-label={`Move ${title} down`} onClick={()=>move(widget.id,1)}>↓</button><button className="text-button" disabled={disabled} onClick={()=>edit(widget)}>Edit</button><button className="text-button" disabled={disabled} onClick={()=>remove(widget)}>Remove</button></div>}</article>;
 }
 
 function Editor({item,data,path,close,saved}:{item?:DashboardWidget;data:DashboardData;path:string;close:()=>void;saved:(value:unknown,name:string)=>void}) {
@@ -104,7 +109,7 @@ function Editor({item,data,path,close,saved}:{item?:DashboardWidget;data:Dashboa
   </div><div className="modal-actions"><button className="button ghost" onClick={close}>Cancel</button><button className="button primary" disabled={!valid||busy||!preview} onClick={save}>{busy?'Saving…':item?'Save widget':'Add widget'}</button></div></Modal>;
 }
 
-export function Dashboard({detail,products,path,result,day=-1,minute=null,pending=false,readonly=false,revision=0,onChanged}:{detail:Detail;products:Product[];path:string;result?:DashboardPlay|null;day?:number;minute?:number|null;pending?:boolean;readonly?:boolean;revision?:number;onChanged?:()=>void}) {
+export function Dashboard({detail,products,path,result,day=-1,minute=null,pending=false,readonly=false,revision=0,onChanged,comparison=false}:{detail:Detail;products:Product[];path:string;result?:DashboardPlay|null;day?:number;minute?:number|null;pending?:boolean;readonly?:boolean;revision?:number;onChanged?:()=>void;comparison?:boolean}) {
   const [data,setData]=useState<DashboardData|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false);
   const [editing,setEditing]=useState<DashboardWidget|null|undefined>(),[edit,setEdit]=useState<PlanEdit|null>(null);
   const dragged=useRef<string|null>(null);
@@ -122,9 +127,10 @@ export function Dashboard({detail,products,path,result,day=-1,minute=null,pendin
   return <section className="dashboard" aria-label="Dashboard"><header className="dashboard-heading"><div><h2>Dashboard</h2>{data?.facts_through&&<small>Recorded through {date(data.facts_through)}{result&&day>=0?` · Simulated to ${date(result.dates[day])}`:''}</small>}</div>{!readonly&&<button className="button ghost" disabled={disabled} onClick={()=>setEditing(null)}><Icon name="plus" size={16}/>Add widget</button>}</header>
     {error&&<p role="alert" className="chat-error">{error}</p>}
     {!data&&!error&&<p className="muted">Loading dashboard…</p>}
-    {health&&<DashboardKpis health={health} flowYesterday={flowYesterday}/>}
+    {health&&!comparison&&<DashboardKpis health={health} flowYesterday={flowYesterday}/>}
+    {comparison&&result&&data&&<ResultsStockChart result={result} history={data.health?.history}/>}
     {data&&!data.widgets.length&&<p className="muted">No widgets yet. Add a measure to follow.</p>}
-    <div className="dashboard-grid" onDragOver={e=>e.preventDefault()} onDrop={()=>drop()}>{data?.widgets.map((widget,index)=><WidgetCard key={widget.id} widget={widget} index={index} count={data.widgets.length} data={data} detail={detail} result={result} day={day} minute={minute} products={products} health={health} disabled={disabled} readonly={readonly} dragged={dragged} drop={drop} move={move} remove={remove} edit={setEditing}/>)}</div>
+    <div className="dashboard-grid" onDragOver={e=>e.preventDefault()} onDrop={()=>drop()}>{data?.widgets.map((widget,index)=><WidgetCard key={widget.id} widget={widget} index={index} count={data.widgets.length} data={data} detail={detail} result={result} day={day} minute={minute} products={products} health={health} disabled={disabled} readonly={readonly} dragged={dragged} drop={drop} move={move} remove={remove} edit={setEditing} comparison={comparison}/>)}</div>
     {edit&&<EditReceipt key={edit.edit_id} edit={edit} detail={detail} path={path} onChanged={()=>{void refresh();onChanged?.()}} disabled={disabled}/>}
     {editing!==undefined&&data&&<Editor item={editing?{...editing,title:widgetTitle(editing,data,detail)}:undefined} data={data} path={path} close={()=>setEditing(undefined)} saved={changed}/>}
   </section>;

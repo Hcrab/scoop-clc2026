@@ -1,7 +1,6 @@
 import { useEffect, useMemo, type Dispatch, type SetStateAction } from 'react';
 import { date, fullDate, n, pct } from './api';
 import { Dashboard, type DashboardPlay } from './Dashboard';
-import { Chart } from './ui';
 import { evidenceUrl } from './evidence';
 import type { Detail, Product } from './types';
 import { ProductIcon } from './ProductIcon';
@@ -31,21 +30,14 @@ export function Results({result,detail,products,path,revision=0}:{result:PlayRes
   const daysAvoided=summary.baseline.stockout_sku_days-summary.scoop.stockout_sku_days;
   const marginAvoided=summary.baseline.lost_margin-summary.scoop.lost_margin;
   const names=new Map(products.map(product=>[product.sku,product.name]));
-  let planShort=0,ruleShort=0;
-  const comparison=result.dates.map((at,day)=>{
-    planShort+=(result.runs.scoop.per_sku.lost[day]||[]).reduce((sum,lost)=>sum+lost,0);
-    ruleShort+=(result.runs.baseline.per_sku.lost[day]||[]).reduce((sum,lost)=>sum+lost,0);
-    return {date:at,plan:planShort,rule:ruleShort};
-  });
   return <section className="results-view"><div className="play-comparison"><h2>Results · {fullDate(result.start)} – {fullDate(result.end)}</h2>
     <div className="play-outcomes"><div className={unitsAvoided<0?'result-negative':undefined}><span>{unitsAvoided<0?'Extra units short':'Units short avoided'}</span><strong>{n(Math.abs(unitsAvoided))}</strong></div><div className={daysAvoided<0?'result-negative':undefined}><span>{daysAvoided<0?'Extra stockout product-days':'Stockout product-days avoided'}</span><strong>{n(Math.abs(daysAvoided))}</strong></div><div className={marginAvoided<0?'result-negative':undefined}><span>{marginAvoided<0?'Extra margin lost':'Lost margin avoided'}</span><strong>HK${n(Math.abs(marginAvoided))}</strong></div></div>
     <p className="results-cold-store">Same cold store ({n(result.capacity_pallets)} pallets) · Scoop plan peaks at {n(summary.scoop.peak_pallets,1)}, Simple rule at {n(summary.baseline.peak_pallets,1)}</p>
     <p className="results-rule muted">Simple rule · 28-day average + 25%</p>
     <p className="results-scenario">Illustrative scenario · simulated warehouse and store outcomes.</p>
-    <div className="results-chart"><h3>Cumulative units short · whole warehouse</h3><Chart data={comparison} lines={[{key:'plan',label:'Scoop plan',color:'#205a4e'},{key:'rule',label:'Simple rule',color:'#b77d36'}]}/></div>
     <details><summary>Affected products · {result.affected_skus.length}</summary><ul>{result.affected_skus.map(sku=><li key={sku}>{names.get(sku)||sku}</li>)}</ul></details>
     <details><summary>See full comparison</summary>{table}</details>
-  </div><Dashboard detail={detail} products={products} path={path} result={result} day={result.days-1} readonly revision={revision}/></section>;
+  </div><Dashboard detail={detail} products={products} path={path} result={result} day={result.days-1} readonly comparison revision={revision}/></section>;
 }
 
 export function PlayWeek({detail,products,path,replay,setReplay,revision=0,onSeeResults}:{detail:Detail;products:Product[];path:string;replay:ReplayState;setReplay:Dispatch<SetStateAction<ReplayState>>;revision?:number;onSeeResults:()=>void}){

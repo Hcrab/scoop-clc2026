@@ -6,8 +6,8 @@ Branch `claude/scoop-prototype`, starting revision `a9786c42c022029d4cd490a35b9f
 
 | Phase | Status | Evidence |
 |---|---|---|
-| D1 Watch / Play dashboard | Accepted | 81 backend + 12 frontend tests; real browser flow; four reviewed captures. [Evidence](reports/day16-d1.md). |
-| D2 Small UI fixes | Pending | Starts after D1 acceptance. |
+| D1 Watch / Play dashboard | Accepted · `03fa6c9` | 81 backend + 12 frontend tests; real browser flow; four reviewed captures. [Evidence](reports/day16-d1.md). |
+| D2 Small UI fixes | Accepted | 12 backend + 18 frontend tests; real browser flow; both required captures reviewed. [Evidence](reports/day16-d2.md). |
 | D3 Calibration and illustrative heat | Pending | Two authorised changes; normal policies and the same 66-pallet cold store. |
 | D4 Walkthrough and docs | Pending | Starts after D3 acceptance. |
 
@@ -24,8 +24,8 @@ Use only the remaining Night 3 Gemini allowance, and only if the report must be 
 
 ## D2 — Small UI fixes
 
-- ❌ Pending — Report heading: sentence case, normal heading colour; screenshot.
-- ❌ Pending — Results: grey history, green Scoop plan, orange Simple rule on one axis; three key numbers and See full comparison; screenshot.
+- ✅ Report heading — `Merchandising & planning checks`, computed colour `rgb(27, 56, 43)`, `text-transform: none`. Screenshot `docs/screenshots/d2-report-checks.png`, personally reviewed. Existing AI-authored questions are displayed under this normal heading; future report guidance uses sentence case. No new provider calls (`reports/d2-report-heading.json`).
+- ✅ Results — Real browser **1 passed (1.5 min)** (`reports/d2-browser.txt/json`); screenshot `docs/screenshots/d2-results.png`, personally reviewed. One shared stock axis: 28 recorded grey dates through 26 July, green Scoop and orange Simple rule from the same 63,335-unit opening anchor. Three outcome numbers and See full comparison remain. Detailed policy widgets compare both runs only in Results; demand stays blue. **12 backend + 18 frontend tests**, production build pass (`d2-history-tests.txt`, `d2-frontend-python.txt`, `d2-build.txt`). All outcomes remain 11,160 vs 11,564 short units, 89 vs 75 product-days and HK$68,203.72 vs HK$61,438.78 lost margin. [Detailed record](reports/day16-d2.md).
 
 ## D3 — Calibration and illustrative heat
 
