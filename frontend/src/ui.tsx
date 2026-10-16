@@ -29,7 +29,7 @@ export function DataView({ value }: { value: unknown }) {
   if (typeof value === 'object') return <dl className="data-grid">{Object.entries(value).map(([key, v]) => <div key={key}><dt>{key.replaceAll('_', ' ')}</dt><dd><DataView value={v}/></dd></div>)}</dl>;
   return <span>{typeof value === 'number' ? n(value, 4) : typeof value === 'boolean' ? value ? 'Yes' : 'No' : String(value)}</span>;
 }
-export function Chart({ data, lines, percent = false, small = false, plotWidth, partialLast = false }: { data: Record<string, string | number>[]; lines: { key: string; label: string; color: string; dashed?: boolean; dots?: boolean }[]; percent?: boolean; small?: boolean; plotWidth?: number; partialLast?: boolean }) {
+export function Chart({ data, lines, percent = false, small = false, plotWidth, partialLast = false, partialLabel = 'today so far, incomplete', bands = [], orderMarker }: { orderMarker?:{date:string;label:string}; data: Record<string, string | number>[]; lines: { key: string; label: string; color: string; colorKey?:string; dashed?: boolean; dots?: boolean }[]; percent?: boolean; small?: boolean; plotWidth?: number; partialLast?: boolean; partialLabel?: string; bands?: {key:string;label:string;color:string}[] }) {
   const container = useRef<HTMLDivElement>(null);
   const [measuredWidth, setMeasuredWidth] = useState(320);
   const visibleLines = lines.filter(line => data.some(row => typeof row[line.key] === 'number' && Number.isFinite(row[line.key])));
@@ -44,21 +44,37 @@ export function Chart({ data, lines, percent = false, small = false, plotWidth, 
   }, [plotWidth, data.length, visibleLines.length]);
   if (!data.length || !visibleLines.length) return <div className="chart-empty">No daily values available.</div>;
   const width = Math.max(200, plotWidth ?? measuredWidth), height = small ? 150 : 260, right = 18, top = 20, bottom = 36;
-  const values = data.flatMap(d => visibleLines.map(l => d[l.key])).filter((v): v is number => typeof v === 'number' && Number.isFinite(v));
+  const values = data.flatMap(d => [...visibleLines,...bands].map(l => d[l.key])).filter((v): v is number => typeof v === 'number' && Number.isFinite(v));
   const scale = chartTicks(values, percent);
   const lo = scale.minimum, hi = scale.maximum;
   const left = Math.min(width / 2, Math.max(48, ...scale.ticks.map(value=>scale.label(value).length * 7 + 14)));
   const times=data.map(row=>Date.parse(String(row.date)));
   const first=times[0],duration=times.at(-1)!-first;
   const x = (i: number) => left + (Number.isFinite(duration)&&duration>0?(times[i]-first)/duration:i/Math.max(1,data.length-1)) * (width - left - right);
+  const markerIndex=orderMarker?data.findIndex(row=>row.date===orderMarker.date):-1;
   const y = (v: number) => top + (hi - v) / (hi - lo) * (height - top - bottom);
-  const segments=(key:string)=>{const paths:string[][]=[];let current:string[]=[];data.forEach((row,i)=>{const value=row[key];if(partialLast&&i===data.length-1)return;if(typeof value==='number'&&Number.isFinite(value))current.push(`${x(i)},${y(value)}`);else if(current.length){paths.push(current);current=[]}});if(current.length)paths.push(current);return paths};
-  const summary = `${date(String(data[0].date))} to ${date(String(data.at(-1)!.date))}. ${visibleLines.map(l=>{const value = data.at(-1)?.[l.key];return `${l.label}: ${typeof value!=='number'||!Number.isFinite(value)?'unavailable':percent?pct(value):n(value,1)} ${partialLast?'today so far, incomplete':'at the latest observation'}`}).join('. ')}.`;
+  const lineColor=(line:typeof lines[number],row:Record<string,string|number>)=>line.colorKey&&typeof row[line.colorKey]==='string'?String(row[line.colorKey]):line.color;
+  const segments=(line:typeof lines[number])=>{
+    const paths:{points:string[];color:string}[]=[];let current:string[]=[],color=line.color;
+    data.forEach((row,i)=>{
+      if(partialLast&&i===data.length-1)return;
+      const value=row[line.key];
+      if(typeof value==='number'&&Number.isFinite(value)){
+        const next=lineColor(line,row);
+        if(current.length&&next!==color){paths.push({points:current,color});current=[current.at(-1)!]}
+        color=next;current.push(`${x(i)},${y(value)}`);
+      }else if(current.length){paths.push({points:current,color});current=[]}
+    });
+    if(current.length)paths.push({points:current,color});return paths;
+  };
+  const summary = `${date(String(data[0].date))} to ${date(String(data.at(-1)!.date))}. ${visibleLines.map(l=>{const value = data.at(-1)?.[l.key];return `${l.label}: ${typeof value!=='number'||!Number.isFinite(value)?'unavailable':percent?pct(value):n(value,1)} ${partialLast?partialLabel:'at the latest observation'}`}).join('. ')}.`;
   return <div ref={container} className={`chart ${small ? 'small' : ''}`}><svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={summary}>
     {scale.ticks.map(val => <g key={val}><line x1={left} x2={width - right} y1={y(val)} y2={y(val)} stroke="#e4e9e3"/><text x={left - 10} y={y(val) + 4} textAnchor="end">{scale.label(val)}</text></g>)}
-    {visibleLines.map(l => l.dots?<g key={l.key} data-series={l.key}>{data.map((d,i)=>({i,v:d[l.key]})).filter((point): point is {i:number;v:number}=>typeof point.v==='number'&&Number.isFinite(point.v)).map(d=><circle key={d.i} cx={x(d.i)} cy={y(d.v)} r="3.8" fill={l.color}/>)}</g>:<g key={l.key} data-series={l.key}>{segments(l.key).map((points,i)=><polyline key={i} fill="none" stroke={l.color} strokeWidth="2.8" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinejoin="round" strokeLinecap="round" points={points.join(' ')}/>) }{partialLast&&typeof data.at(-1)?.[l.key]==='number'&&Number.isFinite(data.at(-1)?.[l.key])&&<circle data-partial="true" cx={x(data.length-1)} cy={y(data.at(-1)![l.key] as number)} r="4.5" fill="var(--paper, #fff)" stroke={l.color} strokeWidth="2.5"/>}</g>)}
+    {bands.map(b=><g key={b.key} data-band={b.key}>{data.slice(0,-1).map((row,i)=>{const a=row[b.key],c=data[i+1][b.key];return typeof a==='number'&&Number.isFinite(a)&&typeof c==='number'&&Number.isFinite(c)?<polygon key={i} fill={b.color} points={`${x(i)},${top} ${x(i+1)},${top} ${x(i+1)},${y(c)} ${x(i)},${y(a)}`}/>:null})}</g>)}
+    {markerIndex>=0&&<g data-order-marker={orderMarker!.date}><line x1={x(markerIndex)} x2={x(markerIndex)} y1={top} y2={height-bottom} stroke="#9aa6a0" strokeDasharray="3 4"/><text x={x(markerIndex)} y={11} textAnchor={markerIndex===data.length-1?'end':markerIndex===0?'start':'middle'}>{orderMarker!.label}</text></g>}
+    {visibleLines.map(l => l.dots?<g key={l.key} data-series={l.key}>{data.map((d,i)=>({i,v:d[l.key]})).filter((point): point is {i:number;v:number}=>typeof point.v==='number'&&Number.isFinite(point.v)).map(d=><circle key={d.i} data-partial={partialLast&&d.i===data.length-1?true:undefined} cx={x(d.i)} cy={y(d.v)} r="3.8" fill={partialLast&&d.i===data.length-1?'var(--paper, #fff)':l.color} stroke={l.color} strokeWidth={partialLast&&d.i===data.length-1?2:0}/>)}</g>:<g key={l.key} data-series={l.key}>{segments(l).map(({points,color},i)=>points.length===1?<circle key={i} cx={points[0].split(',')[0]} cy={points[0].split(',')[1]} r="3" fill={color}/>:<polyline key={i} fill="none" stroke={color} strokeWidth="2.8" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinejoin="round" strokeLinecap="round" points={points.join(' ')}/>) }{partialLast&&typeof data.at(-1)?.[l.key]==='number'&&Number.isFinite(data.at(-1)?.[l.key])&&<circle data-partial="true" cx={x(data.length-1)} cy={y(data.at(-1)![l.key] as number)} r="4.5" fill="var(--paper, #fff)" stroke={lineColor(l,data.at(-1)!)} strokeWidth="2.5"/>}</g>)}
     {[0, ...(width >= 360 ? [Math.floor((data.length - 1) / 2)] : []), data.length - 1].filter((v, i, a) => a.indexOf(v) === i).map(i => <text key={i} x={x(i)} y={height - 10} textAnchor={i === 0 ? 'start' : i === data.length - 1 ? 'end' : 'middle'}>{date(String(data[i].date))}</text>)}
-  </svg><div className="legend">{visibleLines.map(l => <span key={l.key}><i style={{ background:l.dashed?'none':l.color,borderTop:l.dashed?`2px dashed ${l.color}`:undefined }}/>{l.label}</span>)}</div><p className="chart-summary sr-only">{summary}</p></div>;
+  </svg><div className="legend">{visibleLines.map(l => <span key={l.key}><i style={{ background:l.dashed?'none':l.color,borderTop:l.dashed?`2px dashed ${l.color}`:undefined }}/>{l.label}</span>)}{bands.filter(b=>data.some(d=>typeof d[b.key]==='number'&&Number.isFinite(d[b.key]))).map(b=><span key={b.key}><i style={{background:b.color,border:'1px solid #9aa6a0'}}/>{b.label}</span>)}</div><p className="chart-summary sr-only">{summary}</p></div>;
 }
 
 export function Metric({ label, value, unit }: { label: string; value: string; unit: string }) { return <div className="metric"><span>{label}</span><strong>{value}</strong><small>{unit}</small></div>; }

@@ -216,11 +216,11 @@ def test_default_widgets_are_seeded_once_by_creation_and_never_restored_by_read(
                                      'effect_pct':12,'interval_pct':[8,16],'case_change':3,'pallet_change':.3}]}
         dashboard.seed_defaults(session,plan)
     first=client.get('/api/plans/TESTAPI/dashboard').json()
-    assert len(first['widgets'])==4
+    assert [w['metric'] for w in first['widgets']]==['on_hand','pallets','lowest_cover']
     assert first['widgets'][0]['scope']=={'kind':'cohort','key':'fruit'}
     removed=first['widgets'][0]['id']
     assert client.delete('/api/plans/TESTAPI/dashboard/'+removed).status_code==200
     with scope() as session:dashboard.seed_defaults(session,session.get(Plan,'TESTAPI'))
     second=client.get('/api/plans/TESTAPI').json()['dashboard']
     assert removed not in [w['id'] for w in second['widgets']]
-    assert len(second['widgets'])==3
+    assert [w['id'] for w in second['widgets']]==[w['id'] for w in first['widgets'] if w['id']!=removed]

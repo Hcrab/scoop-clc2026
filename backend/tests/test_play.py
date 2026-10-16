@@ -158,7 +158,7 @@ def test_autopilot_refits_each_week_even_without_monday_orders(played_week, monk
         assert sum(placed[8]) > 0
     assert all(kwargs['goal'] == 'margin' and kwargs['service_level'] is None for _, kwargs in calls)
     assert any(event['date'] == (START + timedelta(days=8)).isoformat() and
-               event['kind'] == 'order' and 'Automatically' in event['text'] for event in result['events'])
+               event['kind'] == 'order' and event['automatic'] for event in result['events'])
 
 
 def test_default_window_covers_arrival_and_caps_at_calendar(played_week, monkeypatch):
@@ -403,7 +403,7 @@ def test_expected_evidence_keeps_missing_cells_unknown(played_week, monkeypatch)
 def test_events_reference_orders_and_match_arrival_quantities(played_week):
     result = played_week
     orders = [event for event in result['events'] if event['kind'] == 'order']
-    assert {(event['date'], event['sku'], event['cases']) for event in orders} == {
+    assert {(event['date'], line['sku'], line['cases']) for event in orders for line in event['lines']} == {
         (START.isoformat(), 'A', 1), ((START + timedelta(days=1)).isoformat(), 'B', 2)}
     arrivals = [event for event in result['events'] if event['kind'] == 'arrival']
     assert {(event['date'], event['sku'], event['cases']) for event in arrivals if event['cases']} == {
@@ -412,8 +412,8 @@ def test_events_reference_orders_and_match_arrival_quantities(played_week):
     assert any(event['date'] == START.isoformat() and event['sku'] == 'B' for event in arrivals)
     assert all(event['order_dates'] and event['card_ids'] == [] for event in arrivals if event['cases'])
     for event in result['events']:
-        if event['kind'] in {'stockout', 'kept'}:
-            assert 'order_dates' in event and 'rule_order_dates' in event and 'card_ids' in event
+        if event['kind'] == 'stockout':
+            assert 'order_dates' in event and 'card_ids' in event
 
 
 def test_whole_and_affected_summaries_derive_from_daily_sku_rows(played_week):

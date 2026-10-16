@@ -4,6 +4,20 @@ import type { DashboardPlay } from './Dashboard';
 export type Policy = 'scoop' | 'baseline';
 export type SeriesPoint = { values:(number|null)[]; expected?:(number|null)[] };
 
+// Keys may show elapsed flows after dispatch; charts show a full-day projection only from noon.
+export function widgetDisplayPoint(result:DashboardPlay,widget:DashboardWidget,products:Product[],day:number,minute:number|null) {
+  const flow=['demand','lost_units','requested_vs_expected','fill_rate'].includes(widget.metric);
+  const slot=Math.min(144,Math.max(0,Math.floor((minute??1440)/10)));
+  const yesterday=flow&&minute!==null&&minute<1430&&!(result.intraday.dispatch_cdf[slot]>0);
+  if(yesterday)return {value:day>0?widgetPoint(result,widget,'scoop',products,day-1,null).value:widget.series.at(-1)?.value??widget.value,yesterday:true};
+  return {...widgetPoint(result,widget,'scoop',products,day,minute),yesterday:false};
+}
+
+export function widgetChartPoint(result:DashboardPlay,widget:DashboardWidget,products:Product[],day:number,minute:number|null) {
+  if(minute!==null&&minute<720)return {value:null};
+  return widgetPoint(result,widget,'scoop',products,day,null);
+}
+
 const sum = (row:number[]|undefined, indexes:number[]) => indexes.reduce((total,i)=>total+(row?.[i]||0),0);
 const indexesFor = (result:DashboardPlay, widget:DashboardWidget) => {
   const selected=new Set(widget.skus);

@@ -12,6 +12,7 @@ from ..config import settings
 from . import gemini
 from .report_design import Presentation, GUIDANCE, validate as validate_presentation, compact_result
 from .grounding import mismatches, visible_report_claims
+from .tools import WidgetSpec
 
 _LOCK=threading.Lock()
 MAX_ROUNDS=7
@@ -35,8 +36,19 @@ class Report(BaseModel):
     presentation:Presentation
     claims:list[Claim]=Field(min_length=1)
     questions:list[ReviewQuestion]=Field(default_factory=list,max_length=8)
+    dashboard_widgets:list[WidgetSpec]|None=Field(default=None,min_length=3,max_length=5)
 
 SYSTEM='''You are Scoop's weekly purchasing analyst. Mechanical monitoring has already run.
+Choose 3–5 useful Watch widgets in dashboard_widgets. Base them on the observations you actually
+investigated: stock for a relevant cohort, cold-store use, or the lowest product cover.
+Use exact scopes from dashboard_options and canonical metrics. The four fixed health tiles already
+show fill rate, stockouts, low cover and cold-store occupancy; detailed widgets should add evidence.
+Prefer on_hand for a cohort stock chart, pallets for cold-store use and lowest_cover for a minimum
+cover curve. Each widget shows one metric, grey before the order and green since the order.
+Use short sentence-case titles, such as "Value strawberry water ices · stock".
+The planner can later add, edit or remove these detailed widgets.
+Demand widgets plot store requests alone; name them for requests rather than an expectation comparison.
+The pallets metric is current cold-store occupancy over time, not a standalone peak measurement.
 The supplied cohort_cards are the backbone of this report. Each Q-cohort ID cites a complete
 measured card with effect, interval and purchasing implications. Include All observations,
 including leaves without a card, when choosing what deserves closer investigation. Supplied cards do not
@@ -116,8 +128,10 @@ def finding_evidence(session,plan):
 
 def _context(session,plan):
     from ..api.service import cohort_observations
+    from ..dashboard import options as dashboard_options
     findings=list(session.scalars(select(Finding).where(Finding.plan_id==plan.id).order_by(Finding.id)))
     return {'week_start':str(plan.week_start),'goal':plan.goal,'stage':plan.stage,
+            'dashboard_options':dashboard_options(session,plan),
             'all_observations':[{k:v for k,v in observation.items() if k not in {'method','daily'}} for observation in
                                 ((plan.summary or {}).get('cohort_observations') or cohort_observations(session,plan))],
             'cohort_cards':[{**q,'result':{**{k:v for k,v in compact_result(q['result']).items() if k not in {'method','sku_factors'}},
@@ -141,6 +155,17 @@ def _finish(session,plan,report,queries):
     errors+=mismatches(visible_report_claims(report,cited),evidence)
     if errors:raise GroundingError(errors)
     result=report.model_dump()
+    if result.get('dashboard_widgets'):
+        from ..dashboard import canonical, resolve
+        from fastapi import HTTPException
+        try:
+            specs=[canonical(spec) for spec in result['dashboard_widgets']]
+            if len({spec['title'] for spec in specs}) != len(specs):
+                raise ValueError('Dashboard widget titles must be distinct.')
+            for spec in specs:resolve(session,plan,spec)
+            result['dashboard_widgets']=specs
+        except HTTPException as exc:
+            raise ValueError(exc.detail) from exc
     result['presentation']=validate_presentation(result['presentation'],ids,evidence)
     return result
 
@@ -365,6 +390,9 @@ def run(session,plan):
                           'note':'','managed':True,'review_seed':True})
         _save(plan,items)
     plan.summary={**(plan.summary or {}),'weekly_review':result}
+    if result.get('status')=='complete':
+        from ..dashboard import apply_report_defaults
+        apply_report_defaults(session,plan,result)
     return result
 
 def prepare(pid):

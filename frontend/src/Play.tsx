@@ -1,18 +1,23 @@
 import { useEffect, useMemo, type Dispatch, type SetStateAction } from 'react';
 import { date, fullDate, n, pct } from './api';
 import { Dashboard, type DashboardPlay } from './Dashboard';
-import { Chart } from './ui';
-import { palletsFor } from './replayData';
 import type { Detail, Product } from './types';
 import { ProductIcon } from './ProductIcon';
+import { resultsMetrics } from './resultsMetrics';
 
 type Policy = 'scoop'|'baseline';
 type Summary = {fill_rate:number;lost_units:number;lost_margin:number;avg_pallets:number;peak_pallets:number;days_over_capacity:number;stockout_sku_days:number;ending_on_hand:number;ordered_cases:number};
-type PlayEvent = {id:string;date:string;minute:number;time:string;at:string;kind:string;tone:'good'|'bad'|'warn'|'neutral';text:string;sku?:string;order_date?:string;cases?:number;card_ids?:string[]};
+type OrderEventLine = {sku:string;name:string;cases:number;order_date:string;expected_arrival:string;card_ids:string[]};
+type PlayEvent = {id:string;date:string;minute:number;time:string;at:string;kind:string;tone:'good'|'bad'|'warn'|'neutral';text:string;sku?:string;order_date?:string;cases?:number;card_ids?:string[];lines?:OrderEventLine[];automatic?:boolean};
 export type PlayResult = DashboardPlay & {start:string;end:string;days:number;events:PlayEvent[];summary:Record<Policy,Summary>;notes:Record<string,string|null>;affected_skus:string[]};
 export type ReplayState = {planId:string;orderHash:string|null;result:PlayResult|null;day:number;minute:number;running:boolean;unlocked:boolean};
 export const emptyReplay=(planId='',orderHash:string|null=null):ReplayState=>({planId,orderHash,result:null,day:-1,minute:0,running:false,unlocked:false});
-const POLICY_LABEL:Record<Policy,string>={scoop:'This plan',baseline:'Moving-average rule'};
+const POLICY_LABEL:Record<Policy,string>={scoop:'Scoop plan',baseline:'Simple rule'};
+export function formatPlayClock(today:string,minute:number){
+  const weekday=new Date(`${today.slice(0,10)}T00:00:00Z`).toLocaleDateString('en-GB',{weekday:'short',timeZone:'UTC'});
+  const time=`${String(Math.floor(minute/60)).padStart(2,'0')}:${String(minute%60).padStart(2,'0')}`;
+  return `${weekday} ${date(today)} · ${time}`;
+}
 
 export function Results({result,detail,products,path,revision=0}:{result:PlayResult;detail:Detail;products:Product[];path:string;revision?:number}){
   const rows:[string,(x:Summary)=>string,((s:Summary,b:Summary)=>number)?][]=[
@@ -26,24 +31,19 @@ export function Results({result,detail,products,path,revision=0}:{result:PlayRes
   ];
   const summary=result.summary;
   const table=<div className="results-table-wrap"><table><caption>Whole warehouse · actual approved orders</caption><thead><tr><th/><th>{POLICY_LABEL.scoop}</th><th>{POLICY_LABEL.baseline}</th></tr></thead><tbody>{rows.map(([name,format,compare])=>{const better=compare?.(summary.scoop,summary.baseline)??0;return <tr key={name}><th scope="row">{name}</th><td className={better>1e-9?'better':better< -1e-9?'worse':''}>{format(summary.scoop)}</td><td>{format(summary.baseline)}</td></tr>})}</tbody></table></div>;
-  const unitsAvoided=summary.baseline.lost_units-summary.scoop.lost_units;
-  const daysAvoided=summary.baseline.stockout_sku_days-summary.scoop.stockout_sku_days;
-  const marginAvoided=summary.baseline.lost_margin-summary.scoop.lost_margin;
+  const metrics=resultsMetrics(summary);
   const names=new Map(products.map(product=>[product.sku,product.name]));
-  let planShort=0,ruleShort=0;
-  const comparison=result.dates.map((at,day)=>{
-    planShort+=(result.runs.scoop.per_sku.lost[day]||[]).reduce((sum,lost)=>sum+lost,0);
-    ruleShort+=(result.runs.baseline.per_sku.lost[day]||[]).reduce((sum,lost)=>sum+lost,0);
-    return {date:at,plan:planShort,rule:ruleShort};
-  });
   return <section className="results-view"><div className="play-comparison"><h2>Results · {fullDate(result.start)} – {fullDate(result.end)}</h2>
-    <div className="play-outcomes"><div className={unitsAvoided<0?'result-negative':undefined}><span>{unitsAvoided<0?'Extra units short':'Units short avoided'}</span><strong>{n(Math.abs(unitsAvoided))}</strong></div><div className={daysAvoided<0?'result-negative':undefined}><span>{daysAvoided<0?'Extra stockout product-days':'Stockout product-days avoided'}</span><strong>{n(Math.abs(daysAvoided))}</strong></div><div className={marginAvoided<0?'result-negative':undefined}><span>{marginAvoided<0?'Extra margin lost':'Lost margin avoided'}</span><strong>HK${n(Math.abs(marginAvoided))}</strong></div></div>
-    <p className="results-cold-store">Same cold store ({n(result.capacity_pallets)} pallets) · this plan peaks at {n(summary.scoop.peak_pallets,1)}, the rule at {n(summary.baseline.peak_pallets,1)}</p>
-    <p className="results-scenario">Illustrative scenario · simulated warehouse and store outcomes.</p>
-    <div className="results-chart"><h3>Cumulative units short · whole warehouse</h3><Chart data={comparison} lines={[{key:'plan',label:'This plan',color:'#205a4e'},{key:'rule',label:'Moving-average rule',color:'#b28a5a'}]}/></div>
+    <div className="play-outcomes">{metrics.map(metric=><article className="result-metric" key={metric.title}>
+      <h3>{metric.title}</h3>
+      <div className="result-rule"><span>Simple rule</span><span>{metric.currency?'HK$':''}{n(metric.rule)}</span></div>
+      <div className="result-scoop"><span>Scoop</span><strong>{metric.currency?'HK$':''}{n(metric.scoop)}</strong></div>
+      {metric.badge!==null&&<span className={`result-badge${metric.worse?' result-badge-worse':''}`}>{metric.badge}</span>}
+    </article>)}</div>
+    <p className="results-cold-store">Same cold store ({n(result.capacity_pallets)} pallets) · same store demand · Simple rule = 28-day average + 25%</p>
     <details><summary>Affected products · {result.affected_skus.length}</summary><ul>{result.affected_skus.map(sku=><li key={sku}>{names.get(sku)||sku}</li>)}</ul></details>
     <details><summary>See full comparison</summary>{table}</details>
-  </div><Dashboard detail={detail} products={products} path={path} result={result} day={result.days-1} readonly revision={revision}/></section>;
+  </div><Dashboard detail={detail} products={products} path={path} result={result} day={result.days-1} readonly comparison revision={revision}/></section>;
 }
 
 export function PlayWeek({detail,products,path,replay,setReplay,revision=0,onSeeResults}:{detail:Detail;products:Product[];path:string;replay:ReplayState;setReplay:Dispatch<SetStateAction<ReplayState>>;revision?:number;onSeeResults:()=>void}){
@@ -54,13 +54,17 @@ export function PlayWeek({detail,products,path,replay,setReplay,revision=0,onSee
   const today=result&&day>=0?result.dates[day]:null;
   const eventCount=result&&today?result.events.filter(event=>event.date<today||(event.date===today&&event.minute<=minute)).length:0;
   const events=useMemo(()=>result?result.events.slice(0,eventCount).reverse():[],[result,eventCount]);
-  const hhmm=`${String(Math.floor(minute/60)).padStart(2,'0')}:${String(minute%60).padStart(2,'0')}`;
-  const used=result&&day>=0?palletsFor(result,products,day,minute):0;
-  const usage=result?used/result.capacity_pallets:0;
   const names=useMemo(()=>new Map(products.map(product=>[product.sku,product.name])),[products]);
-  const feed=useMemo(()=>events.map(event=><div key={event.id} className={`play-event ${event.tone}`}>{event.sku&&<ProductIcon sku={event.sku} size={32} decorative/>}<div><span>{date(event.date)} · {event.time}</span><p>{event.sku&&!event.text.toLowerCase().includes((names.get(event.sku)||'').toLowerCase())?<><strong>{names.get(event.sku)||event.sku}</strong> · </>:null}{event.text}</p></div></div>),[events,names]);
+  const feed=useMemo(()=>events.map(event=><div key={event.id} className={`play-event ${event.tone}`}>
+    {event.sku&&<ProductIcon sku={event.sku} size={32} decorative/>}
+    <div><span>{date(event.date)} · {event.time}</span>{event.kind==='order'&&event.lines?<details className="play-order-details">
+      <summary>{event.text}</summary>
+      {event.automatic&&<p className="muted">Automatic orders for the next week.</p>}
+      <ul>{event.lines.map(line=><li key={line.sku}><strong>{line.name}</strong><p>{n(line.cases)} cases · expected {date(line.expected_arrival)}</p></li>)}</ul>
+    </details>:<p>{event.sku&&!event.text.toLowerCase().includes((names.get(event.sku)||'').toLowerCase())?<><strong>{names.get(event.sku)||event.sku}</strong> · </>:null}{event.text}</p>}</div>
+  </div>),[events,names]);
   const update=(patch:Partial<ReplayState>)=>setReplay(current=>({...current,...patch}));
-  return <section className="play"><div className="play-bar"><div className="play-clock" data-day={today||''} data-minute={today?minute:''}><span>{today?`Day ${day+1} of ${result!.days} · 2×`:'Preparing…'}</span><strong>{today?`${date(today)} ${hhmm}`:`Week of ${fullDate(detail.plan.week_start)}`}</strong></div>{ready&&<div className={`play-capacity ${usage>1?'over-limit':''}`} aria-label={`Cold store ${used.toFixed(1)} of ${result.capacity_pallets.toFixed(1)} pallets`}><div className="play-capacity-line"><span>Cold store</span><strong>{used.toFixed(1)} <small>/ {result.capacity_pallets.toFixed(1)} pallets</small></strong></div><div className="play-capacity-track"><div style={{width:`${Math.min(100,Math.max(0,usage*100))}%`}}/></div></div>}{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,minute:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
+  return <section className="play"><div className="play-bar"><div className="play-clock" data-day={today||''} data-minute={today?minute:''}><strong>{today?formatPlayClock(today,minute):`Week of ${fullDate(detail.plan.week_start)}`}</strong><span>{today?`Day ${day+1} since the order`:'Preparing…'}</span></div>{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,minute:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
     <div className="play-body"><div><Dashboard detail={detail} products={products} path={path} result={result} day={day} minute={minute} readonly revision={revision}/></div><aside className="play-events" aria-live="polite"><h3>What happened</h3>{events.length?feed:<p className="muted">{result?'Nothing notable yet.':'Preparing the week…'}</p>}</aside></div>
   </section>;
 }

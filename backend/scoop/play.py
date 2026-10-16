@@ -266,34 +266,39 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
 
     intraday_data = {'dates': [x['date'] for x in runs['scoop']['daily']], 'skus': skus, 'runs': runs}
     intraday.enrich(intraday_data, suppliers)
-    # events, written from the data of both runs
+    # Presentation events follow Scoop only; comparison data remains in both runs.
     events = []
     dates = [x["date"] for x in runs["scoop"]["daily"]]
     lost_s = np.array(runs["scoop"]["per_sku"]["lost"])
-    lost_b = np.array(runs["baseline"]["per_sku"]["lost"])
     arrived_s = np.array(runs["scoop"]["per_sku"]["arrived"])
-    arrived_b = np.array(runs["baseline"]["per_sku"]["arrived"])
     card_by_sku = {s: [card["id"] for card in cards if s in card.get("skus", []) and card.get("id")]
                    for s in skus}
 
-    def event_links(policy: str, selected: list[str], through: int) -> dict:
-        placed = runs[policy]["per_sku"]["placed_cases"]
+    def event_links(selected: list[str], through: int, minute: int) -> dict:
+        placed = runs["scoop"]["per_sku"]["placed_cases"]
         return {
             "card_ids": sorted({cid for s in selected for cid in card_by_sku[s]}),
             "order_dates": sorted({dates[k] for k in range(through + 1) for s in selected
-                                   if placed[k][skus.index(s)] > 0}),
+                                   if placed[k][skus.index(s)] > 0 and (k < through or minute >= ORDER_CUTOFF_MINUTE)}),
         }
 
     for i, day in enumerate(dates):
         dt = date.fromisoformat(day)
         placed = runs["scoop"]["per_sku"]["placed_cases"][i]
-        for j, cases in enumerate(placed):
-            if cases:
-                sku = skus[j]
-                events.append({"date": day, "kind": "order", "tone": "neutral", "sku": sku,
-                               "order_date": day, "cases": cases, "card_ids": card_by_sku[sku],
-                               "text": (f"Ordered {cases:,} cases of {names[sku]} under this plan." if i < 7 else
-                                        f"Automatically ordered {cases:,} cases of {names[sku]} for the next week.")})
+        lines = [
+            {"sku": skus[j], "name": names[skus[j]], "cases": int(cases),
+             "order_date": day,
+             "expected_arrival": (dt + timedelta(days=int(prod.loc[skus[j], "lead_time_days"]))).isoformat(),
+             "card_ids": card_by_sku[skus[j]]}
+            for j, cases in enumerate(placed) if cases > 0
+        ]
+        if lines:
+            cases = sum(line["cases"] for line in lines)
+            events.append({"date": day, "kind": "order", "tone": "neutral", "policy": "scoop",
+                           "order_date": day, "cases": cases, "order_count": len(lines), "lines": lines,
+                           "automatic": i >= 7,
+                           "card_ids": sorted({cid for line in lines for cid in line["card_ids"]}),
+                           "text": f"Placed {len(lines):,} orders, {cases:,} cases"})
         t = tmax.get(dt)
         if t is not None and t >= HOT_DAY_C:
             events.append({"date": day, "kind": "weather", "tone": "neutral",
@@ -310,30 +315,18 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
         dt = date.fromisoformat(day)
         for j, sku in enumerate(skus):
             minute = arrival_minutes[i][j]
-            for policy in ('scoop', 'baseline'):
-                amount = runs[policy]['per_sku']['arrived'][i][j]
-                # A baseline-only receipt is relevant to the comparison; other
-                # rule receipts are stated on the plan receipt for that SKU.
-                if not amount or (policy == 'baseline' and arrived_s[i, j]):
-                    continue
-                other = arrived_b[i, j] if policy == 'scoop' else arrived_s[i, j]
-                delta = amount - other
-                comparison = (f" {abs(delta):,.0f} {'more' if delta > 0 else 'fewer'} units than under the "
-                              f"{'rule' if policy == 'scoop' else 'plan'}." if delta else '')
-                first_week_order = (policy == 'scoop' and week_cases[sku] > 0 and
-                                    not pd.isna(week_dates[sku]) and
+            amount = arrived_s[i, j]
+            if amount:
+                first_week_order = (week_cases[sku] > 0 and not pd.isna(week_dates[sku]) and
                                     week_dates[sku] + timedelta(days=int(prod.loc[sku, 'lead_time_days'])) == dt)
-                fully_received = runs[policy]['per_sku']['deferred'][i][j] == 0
+                fully_received = runs['scoop']['per_sku']['deferred'][i][j] == 0
                 cases = int(week_cases[sku]) if first_week_order and fully_received else None
-                links = event_links(policy, [sku], i)
-                events.append({'date': day, 'kind': 'arrival', 'tone': 'good', 'policy': policy,
+                events.append({'date': day, 'kind': 'arrival', 'tone': 'good', 'policy': 'scoop',
                                'sku': sku, 'skus': [sku], 'name': names[sku], 'units': amount,
-                               'cases': cases, 'order_dates': links['order_dates'],
-                               'card_ids': links['card_ids'], 'minute': minute,
-                               'text': f"{names[sku]} arrived: {amount:,.0f} units." + comparison})
+                               'cases': cases, **event_links([sku], i, minute), 'minute': minute,
+                               'text': f"{names[sku]} arrived: {amount:,.0f} units."})
 
             scoop_loss = lost_s[i, j]
-            rule_loss = lost_b[i, j]
             prior_s = lost_s[i - 1, j] if i else 0
             if scoop_loss > 0 and (prior_s == 0 or arrived_s[i, j] > 0):
                 opening = (intraday_data['intraday']['opening_on_hand'][j] if i == 0 else
@@ -343,18 +336,7 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
                 events.append({'date': day, 'kind': 'stockout', 'tone': 'bad', 'policy': 'scoop',
                                'sku': sku, 'skus': [{'sku': sku, 'name': names[sku], 'units': int(round(scoop_loss))}],
                                'minute': minute, 'text': f"{names[sku]} ran out.",
-                               **event_links('scoop', [sku], i),
-                               'rule_order_dates': event_links('baseline', [sku], i)['order_dates']})
-            if rule_loss > 0 and scoop_loss == 0:
-                opening = (intraday_data['intraday']['opening_on_hand'][j] if i == 0 else
-                           runs['baseline']['per_sku']['on_hand'][i - 1][j])
-                minute = intraday.first_shortage_minute(
-                    runs['baseline']['per_sku']['demand'][i][j], opening, arrived_b[i, j], arrival_minutes[i][j])
-                events.append({'date': day, 'kind': 'kept', 'tone': 'good', 'policy': 'baseline',
-                               'sku': sku, 'skus': [{'sku': sku, 'name': names[sku], 'units': int(round(rule_loss))}],
-                               'minute': minute, 'text': f"{names[sku]} remains in stock; the rule has run out.",
-                               **event_links('scoop', [sku], i),
-                               'rule_order_dates': event_links('baseline', [sku], i)['order_dates']})
+                               **event_links([sku], i, minute)})
         for event in events:
             if event['date'] != day or 'minute' in event:
                 continue
@@ -436,7 +418,7 @@ def simulate(pid: str, week_start: date, days: int | None = None) -> dict:
         "affected_skus": affected_skus, "affected_summary": affected_summary,
         "affected_comparison": affected_comparison,
         "notes": {
-            "baseline": "Moving-average rule: order up to 28-day average demand x (lead time + review days) x 1.25.",
+            "baseline": "Simple rule: order up to 28-day average demand x (lead time + review days) x 1.25.",
             "lead_time": "New orders arrive after the supplier's mean lead time; orders placed late in the week may land after the played period.",
             "autopilot": "After the first week, Scoop refits cohort effects and places future orders automatically." if days > 7 else None,
         },

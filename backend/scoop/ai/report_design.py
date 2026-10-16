@@ -95,6 +95,9 @@ give that finding its own card and comparison rather than leaving its discovery 
 
 VISUAL DIRECTION
 Warm off-white background, white cards, dark green text, muted green / coral / violet accents.
+Use sentence case and the normal dark-green heading colour for section headings, including
+merchandising and planning checks. Reserve accent colours for data and graphics.
+When you raise useful human checks, include them briefly in the report before the final actions.
 Use restrained typography, generous but purposeful spacing, equal-width cards and aligned metrics.
 Let card widths and column counts follow the content and available space, stacking on a narrow screen.
 Arrange native action rows in a compact list that can wrap within the available width.

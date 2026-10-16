@@ -47,6 +47,7 @@ def _widget(session, plan, wid):
 
 
 def _result(session, plan, before, key, source='ui'):
+    plan.summary = {**(plan.summary or {}), 'dashboard_customized': True}
     result = record_edit(session, plan, before, key, source)
     visible = {k: value for k, value in result.items() if k not in {'before', 'after'}}
     for side in ('before', 'after'):

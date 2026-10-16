@@ -6,9 +6,9 @@
   recent-sales lags on purpose: the model describes "normal patterns", so a new preference
   shift shows up as a residual for CUSUM instead of being absorbed by the forecast.
 * One version retrains at each month boundary and stays frozen for procurement and detection.
-* Protection-period intervals (lead time + review period) are bottom-up sums of the daily
-  expectation, widened with empirical actual/forecast ratios measured in a backtest that used
-  issued weather forecasts (not observed weather), so the interval includes forecast error.
+* Protection-period intervals are bottom-up sums of the daily expectation, calibrated using
+  recent complete forward actual/forecast ratios and finite-sample ranks. Operational
+  windows include lead, review and calendar wait; weather uses issued forecasts.
 """
 
 from __future__ import annotations
@@ -281,22 +281,48 @@ def issued_daily_weather(static: Static, dates: pd.DatetimeIndex) -> pd.DataFram
     return out[['date', 'tmax', 'rain_mm']]
 
 
-def calibrate_ratios(model: DemandModel, static: Static, issue_dates: list[date]) -> pd.DataFrame:
-    """Backtest: actual / forecast protection-period demand per SKU and issue date."""
+def calibrate_ratios(model: DemandModel, static: Static, issue_dates: list[date], *,
+                     order_calendar: bool = False, as_of: date | None = None) -> pd.DataFrame:
+    """Forward errors; with ``as_of``, score only fully observed past outcomes.
+
+    Missing daily store observations exclude a window rather than becoming zero
+    demand. The no-cutoff path preserves the historical monthly baseline artifacts.
+    """
+    columns = ["issued", "sku", "forecast", "actual", "pdays", "outcome_end", "ratio"]
+    if not issue_dates:
+        return pd.DataFrame(columns=columns)
+    if any(model.trained_through > issued for issued in issue_dates):
+        raise ValueError("Forecast calibration issue predates model training cutoff")
     rows = []
-    actual = read_sql("SELECT date, sku, SUM(ordered_units) AS units FROM store_orders WHERE date BETWEEN :a AND :b GROUP BY date, sku",
-                      a=min(issue_dates)+timedelta(days=1), b=max(issue_dates)+timedelta(days=int(protection_days(static.products).max())))
+    max_days = int(protection_days(static.products).max()) + (6 if order_calendar else 0)
+    start = min(issue_dates) + timedelta(days=1)
+    end = max(issue_dates) + timedelta(days=max_days)
+    if as_of is not None:
+        end = min(end, as_of - timedelta(days=1))
+    if end < start:
+        return pd.DataFrame(columns=columns)
+    actual = read_sql("SELECT date, sku, SUM(ordered_units) AS units, COUNT(DISTINCT store_id) AS stores "
+                      "FROM store_orders WHERE date BETWEEN :a AND :b GROUP BY date, sku", a=start, b=end)
     actual["date"] = pd.to_datetime(actual.date)
-    pdays = protection_days(static.products)
+    # Also enforce the bound in memory, including for supplied read-only fixtures.
+    actual = actual[actual.date.between(pd.Timestamp(start), pd.Timestamp(end))]
     for issued in issue_dates:
-        if model.trained_through > issued:
-            raise ValueError("Forecast calibration issue predates model training cutoff")
-        fc, _ = protection_forecast(model, static, issued)
+        fc, _ = protection_forecast(model, static, issued, order_calendar=order_calendar)
         for r in fc.itertuples():
-            end = pd.Timestamp(issued) + pd.Timedelta(days=int(r.pdays))
-            a = actual[(actual.sku == r.sku) & (actual.date > pd.Timestamp(issued)) & (actual.date <= end)].units.sum()
-            rows.append({"issued": issued, "sku": r.sku, "forecast": r.mean, "actual": float(a), "pdays": int(pdays[r.sku])})
-    out = pd.DataFrame(rows)
+            outcome_end = pd.Timestamp(issued) + pd.Timedelta(days=int(r.pdays))
+            if as_of is not None and outcome_end >= pd.Timestamp(as_of):
+                continue
+            window = actual[(actual.sku == r.sku) & (actual.date > pd.Timestamp(issued)) & (actual.date <= outcome_end)]
+            if as_of is not None and (len(window) != int(r.pdays)
+                    or window.date.nunique() != int(r.pdays)
+                    or not window.stores.eq(len(static.stores)).all()):
+                continue
+            a = window.units.sum()
+            if not np.isfinite(r.mean) or r.mean < 0 or not np.isfinite(a) or a < 0 or window.units.isna().any():
+                raise ValueError("Calibration demand must be finite and nonnegative")
+            rows.append({"issued": issued, "sku": r.sku, "forecast": r.mean, "actual": float(a),
+                         "pdays": int(r.pdays), "outcome_end": outcome_end})
+    out = pd.DataFrame(rows, columns=columns)
     out["ratio"] = out.actual / out.forecast.clip(lower=1.0)
     return out
 

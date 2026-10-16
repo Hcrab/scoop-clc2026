@@ -7,6 +7,6 @@ DEMO_SCENARIO = "fresh-week"
 # Authorized illustrative-demo exception after the corrected .05 tree stopped
 # at root p=0.0502512563. Other worlds and pure statistical fixtures retain .05.
 DEMO_COHORT_ALPHA = .10
-# Start-state correction: default projected peak ~61.3 / 66 = 92.9%.
-# This changes physical demo capacity, leaving both policies' settings unchanged.
-DEMO_CAPACITY_PALLETS = 66
+# Usable demo pallet positions: the unchanged rule peaks at 58 / 62 = 93.5%.
+# Both policies share this physical limit; the opening plan also fits it.
+DEMO_CAPACITY_PALLETS = 62

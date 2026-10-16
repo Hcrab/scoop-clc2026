@@ -105,7 +105,7 @@ class WidgetThreshold(Parameters):
 class WidgetSpec(Parameters):
     title:str=Field(min_length=1,max_length=160)
     scope:WidgetScope
-    metric:Literal['on_hand','lost_units','demand','fill_rate','days_cover','pallets','requested_vs_expected']
+    metric:Literal['on_hand','lost_units','demand','fill_rate','days_cover','lowest_cover','pallets','requested_vs_expected']
     threshold:WidgetThreshold|None=None
 
 

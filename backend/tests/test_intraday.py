@@ -123,4 +123,4 @@ def test_stockout_events_use_first_strict_exceedance(played_week):
         exceeding = [minute for k, minute in enumerate(profile['minutes'][:-1])
                      if demand * profile['demand_cdf'][k] > opening + (arrival if minute >= receipt else 0) + 1e-9]
         assert exceeding and event['minute'] == exceeding[0]
-        assert event['order_dates'] is not None and event['rule_order_dates'] is not None
+        assert event['order_dates'] is not None

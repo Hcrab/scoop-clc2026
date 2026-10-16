@@ -25,7 +25,7 @@ def quoted(value):
     return '"'+value+'"'
 
 def clear_runtime_caches():
-    for name in ['scoop.algorithms.runs','scoop.monitoring']:
+    for name in ['scoop.algorithms.runs','scoop.monitoring','scoop.algorithms.protection_calibration']:
         module=sys.modules.get(name)
         if module and hasattr(module,'reset_cache'): module.reset_cache()
     planning=sys.modules.get('scoop.planning')

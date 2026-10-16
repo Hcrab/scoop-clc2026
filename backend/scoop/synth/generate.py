@@ -223,11 +223,13 @@ def build_weather(rng: np.random.Generator, days: list[date], *, heatwave=None):
     for i in range(1, n):
         anomaly[i] = 0.7 * anomaly[i - 1] + rng.normal(0, 1.3)
     tmax = np.minimum(clim + anomaly, 33.8)
+    background_tmax = np.round(tmax, 1).copy()
     for d, t in (HEATWAVE if heatwave is None else heatwave).items():
         tmax[days.index(d)] = t
     wet_prob = 0.22 + 0.25 * (np.sin(2 * np.pi * (doy - 100) / 365.25) > 0)
     rain = np.where(rng.random(n) < wet_prob, rng.exponential(11.0, n), 0.0)
     weather = pd.DataFrame({"date": days, "tmax": np.round(tmax, 1), "rain_mm": np.round(rain, 1)})
+    weather.attrs['background_tmax'] = background_tmax
 
     rows = []
     for i, issued in enumerate(days):
@@ -430,7 +432,7 @@ def generate(seed: int = 42) -> World:
     days = _dates()
     stores, suppliers, products, nutrition, tag_dimensions, tags, product_tags = build_catalog(rng, seed=seed)
     if seed == 93:
-        from .compound_demo import HEATWAVE as demo_heatwave
+        from .compound_demo import LEGACY_BASELINE_HEATWAVE as demo_heatwave
         weather, forecasts, _ = build_weather(rng, days, heatwave=demo_heatwave)
         orders, promotions, events = build_demand(rng, days, stores, products, product_tags, weather,
                                                  planted=False)
@@ -444,10 +446,13 @@ def generate(seed: int = 42) -> World:
         from .combination_challenge import inject
         events = pd.concat([events, inject(orders, days, stores, products, nutrition, product_tags)], ignore_index=True)
     if seed == 93:
-        from .compound_demo import inject
+        from .compound_demo import inject, shift_heat_episode
         # Baseline demand has none of the older planted drifts or bulk orders.
         # Keep its real promotions, but replace their obsolete private answer key.
         events = inject(orders, days, stores, products, product_tags)
+        dairy = product_tags[product_tags.tag_id == 'dairy'].set_index('sku').value_num.reindex(products.sku).to_numpy()
+        shift_heat_episode(weather, forecasts, orders, days, dairy=dairy,
+                           weather_total=WEATHER_TOTAL, weather_pref=WEATHER_PREF)
     shipped, inventory, purchase_orders = simulate_dc(rng, days, stores, products, suppliers, orders)
 
     n_d, n_s, n_i = orders.shape
