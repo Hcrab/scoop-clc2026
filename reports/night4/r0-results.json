@@ -1,0 +1,38 @@
+{
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "summary": {
+    "scoop": {
+      "fill_rate": 0.9782070658403238,
+      "lost_units": 4297,
+      "lost_margin": 24271.33,
+      "avg_pallets": 38.62040147569444,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 36,
+      "ending_on_hand": 71592,
+      "ordered_cases": 8066
+    },
+    "baseline": {
+      "fill_rate": 0.9692505097020906,
+      "lost_units": 6063,
+      "lost_margin": 30849.110000000004,
+      "avg_pallets": 37.75508897569444,
+      "peak_pallets": 57.98659722222222,
+      "days_over_capacity": 0,
+      "stockout_sku_days": 39,
+      "ending_on_hand": 52004,
+      "ordered_cases": 7917
+    }
+  },
+  "cards": [
+    "Units shortSimple rule6,063Scoop4,29729% fewer",
+    "Stockout product-daysSimple rule39Scoop368% fewer",
+    "Lost marginSimple ruleHK$30,849ScoopHK$24,27121% less"
+  ],
+  "footer": "Same cold store (62 pallets) · same store demand · Simple rule = 28-day average + 25%",
+  "screenshot": "docs/screenshots/r0-results.png",
+  "passed": true
+}

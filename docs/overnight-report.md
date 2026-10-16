@@ -1,55 +1,24 @@
-# Scoop: acceptance report
+# Scoop: Results and guided tour — 17 October 2026
 
-## Current phase — Demo tuning, with mid-course A–D
+R0 is accepted. Tour work starts after the R0 push. The previous full report is archived at [pre-tour-20261016.md](reports/pre-tour-20261016.md). Requirements and final copy: [night4-protocol.md](reports/night4-protocol.md).
 
-**Accepted.** Branch `claude/scoop-prototype`, base `e3597ef`. Current demonstration-tuning authorisation supersedes older tuning restrictions. The latest mid-course instruction keeps the illustrative-scenario sentence on Results. All checks passed before the phase push. [Full evidence](../reports/tuning/final.md).
+## One-page status
 
-| Default 27 Jul–11 Aug | Scoop before | Scoop now | Unchanged Simple rule | Current avoided |
-|---|---:|---:|---:|---:|
-| Units short | 6,347 | **4,297** | 6,063 | **1,766** |
-| Stockout product-days | 52 | **36** | 39 | **3** |
-| Lost margin, HK$ | 38,125.69 | **24,271.33** | 30,849.11 | **6,577.78** |
+| Phase | Status | Evidence |
+|---|---|---|
+| R0 Results | ✅ Accepted | 18 focused checks, build, real 1440×900 screenshot |
+| T1 Tour entry and coach | ❌ Not started | R0 first |
+| T2 Isolated fixture bundle | ❌ Not started | R0 first |
+| T3 Context branches | ❌ Not started | R0 first |
+| T4 Recorded Gemini answers | ❌ Not started | Recording only; existing night-3 allowance |
+| T5–T6 Verbatim tour and controls | ❌ Not started | R0 first |
+| T7 Three-run browser acceptance/docs | ❌ Not started | R0 first |
 
-### A — Ordering upper tail and heat
+The local LOGFLOWS PDF stays local and is excluded from this phase’s published history. App copy from the handoff is final. No tuning is authorised by this handoff.
 
-- ✅ **A1.** One-sided upper correction at the actual order target, never shrinking an upper bound; central intervals unchanged. At the selected **98%** target, the exact same **478** frozen past windows cover **463/478 = 96.86% → 470/478 = 98.33%**, matching finite rank `ceil(479 × .98) = 470`. At the original 96.8% reference: 96.44% → 97.07%. Fitted calibration coverage, not a held-out gain. Evidence: `reports/tuning/demo-upper-calibration.json`, `demo-upper-windows.csv`; `test_one_sided_finite_rank_calibrates_requested_upper_without_shrinking`, `test_normal_planning_calibrates_only_order_target_at_actual_service_level`, future-poison/training-boundary checks in **72 passed**, `final-tests.txt`.
-- ✅ **A2.** Heat **30 Jul–2 Aug**, **33.6 / 33.4 / 33.8 / 33.6°C**, starts three days after the order and ends within seven days of the actual 26 Jul issue. Same intensity and identical pre-30-Jul history. Evidence: `test_whole_episode_is_inside_issued_forecast_skill_at_same_intensity`, `test_generation_preserves_history_opening_stock_pos_and_rng`, `reports/d4-heat.json`. This tuning makes no further weather, request, opening-stock or pipeline edits (`demo-fairness-audit.json`).
-- ✅ **One normal default replay.** Actual approval → persisted API job, once, without mocked responses. Hash `a8ca053adf930b016e76346af923c992c3585c2df74e83b1f31ab5cfcc65e322`. Browser and saved replay match the selected isolated trial on all policy summary fields. Three Results gains **1,766 / 3 / HK$6,577.78** (`demo-walkthrough.json`, `demo-replay.json.gz`, `demo-final-audit.json`).
+## R0 — accepted
 
-### B — Before and since the order
-
-- ✅ Watch: **Up to the order on Mon 27 Jul**, four tiles **14 days before 27 Jul**. Play: **Since the order on Mon 27 Jul**, all four tiles **since 27 Jul**, using elapsed order-period flows. Fill rate has only the period below the number. Evidence: browser `operationalCheck`; `dashboard-health.test.cjs` boundaries; `results-comparison.test.cjs` fill-period check.
-- ✅ Clock: **Wed 29 Jul · 00:50** / **Wed 29 Jul · 12:30**, muted **Day 3 since the order** (`demo-walkthrough.json`, `demo-04-midnight.png`, `demo-05-noon.png`, `play-clock-feed.test.cjs`).
-- ✅ Low cover compares recent seven-day cover with time to the next outstanding arrival. Receipts reconcile and missing promises appear explicitly. Tests cover equality, fractional/same-day/early arrivals, missing demand and week-two order time (`dashboard-health.test.cjs`, `test_dashboard_health.py`).
-- ✅ Watch/Play have no Recorded/Simulated wording. The illustrative-scenario sentence stays on Results and synthetic context stays in docs; see rendered-text grep below.
-
-### C — One metric per widget
-
-- ✅ Watch/Play show one metric: grey **Before the order**, green **Since the order**, **Order placed** at 27 Jul. No extra demand line, safe band, safety dots or rule text. Results adds one orange Simple rule line for that same metric (`operational-widget.test.cjs`, `results-comparison.test.cjs`, browser marker/series/legend checks).
-- ✅ Short sentence-case titles, including all-caps input normalisation and retained SKU/region acronyms. No repeated scope/threshold subtitle; at most one muted key note. Warning colour stays on the key number (markup/title tests and reviewed screenshots).
-- ✅ In-progress day: **zero** current projected points at **00:50**, **six separate hollow** points at **12:30** (`demo-walkthrough.json`, midnight/noon screenshots and projection unit tests).
-
-### D — Events, screenshots and wording
-
-- ✅ Coffee Crunch Bar's 08:20 arrival is visible without a **Decision** caption; widget titles are sentence case (`demo-05-noon.png`, `play-clock-feed.test.cjs`, `operational-widget.test.cjs`).
-- ✅ Required screenshots, personally reviewed: [Watch](screenshots/demo-03-watch.png), [00:50](screenshots/demo-04-midnight.png), [12:30](screenshots/demo-05-noon.png). All five screens plus compound drilldown refreshed. Five litmus answers per capture: [visual review](../reports/tuning/final.md#visual-review).
-- ✅ Expanded Watch/midnight/noon UI text: `rg -n -i '\b(Recorded|Simulated|Requested|rule|Decision)\b' reports/tuning/demo-watch-ui.txt reports/tuning/demo-midnight-ui.txt reports/tuning/demo-noon-ui.txt` → **exit 1, zero matches** (`demo-ui-grep.json`). Scope is operational UI text, not AI prose.
-
-### Tuning guardrails and final checks
-
-- ✅ Values and one-line reasons: **1% cycle cost**, **62 shared pallet positions**, retained **98% ceiling**; exact requested disclosure in [TECHNICAL_DESIGN](TECHNICAL_DESIGN.md#demonstration-parameters). Forecast/cohort settings, trends, prices, suppliers, opening and pipeline unchanged.
-- ✅ Rule source matches `e3597ef` after newline normalisation: 28-day history +25%, stock convention, calendars and packs/MOQ intact. Inputs have one unchanged fingerprint; both policies share capacity. Rule summary identical in every trial. No answer-key table in the experiment, zero answer-key references in audited operational paths (`demo-fairness-audit.json`).
-- ✅ All candidate outcomes retained, including failures; two uncommitted-capacity trials explicitly excluded and corrected retest recorded (`demo-candidates.jsonl`, `demo-selection.json`).
-- ✅ Default fits: **75 lines / 2,413 cases**, **61.3046 / 62 pallets** planned. First card remains the four strawberry/value/water SKUs; interactive compound path works. Dated automatic cuts on 5–7 Aug are real; physical peaks **57.9866**, no deferred receipts (`demo-orders.json`, `demo-selection.json`, `demo-strawberry-drilldown.png`, browser).
-- ✅ Grounded **Gemini 3.8 Flash** report refreshed; model HTML has no SVG, figures render from host data. Two calls cost **US$0.210555**, ledger **177 calls / US$18.326137**, remaining separate Night 3 allowance **US$8.570948**. Reset template refreshed (`demo-report-refresh.json`).
-- ✅ **72 backend**, **35 frontend** checks; TypeScript/Vite build; real five-step walkthrough **1 passed (2.0 min)**, zero page errors. Logs in `reports/tuning/final-tests.txt`, `final-frontend.txt`, `final-build.txt`, `final-browser.txt`. One initial test command named a nonexistent test file and ran none; corrected command is the successful 72-test run. Widget addition caused no new replay/hash change; exact Undo and clean Reset passed.
-- ✅ Current README/design/demo, before/after outcomes and seven reviewed captures are consistent. Final API: clean **Report**, **five default widgets**, **2,413 cases**, no prepared replay after Reset (`demo-final-state.json`, `demo-final-audit.json`).
-
-## Earlier acceptance records
-
-- [Day 16 D1–D4, including adverse untuned result](reports/day16.md)
-- [Night 3](reports/night3.md)
-- [Night 2](reports/night2.md)
-- [Night 1 P1–P8, including explicitly blocked historical checks](reports/night1.md)
-
-These retain original requirements and measurements; the current phase supersedes changed parameters and presentation details.
+- ✅ Three real comparison cards: Units short **Simple rule 6,063 / Scoop 4,297 / 29% fewer**; Stockout product-days **39 / 36 / 8% fewer**; Lost margin **HK$30,849 / HK$24,271 / 21% less**. Evidence: [stored replay and rendered values](../../reports/night4/r0-results.json), [1440×900 screenshot](screenshots/r0-results.png), personally reviewed.
+- ✅ The muted footer matches the handoff verbatim. `rg -n -i avoided reports/night4/r0-results-ui.txt` → exit **1**, no matches. Removed the Results Illustrative scenario line and old duplicate footer paragraphs.
+- ✅ `node --test frontend/tests/results-metrics.test.cjs frontend/tests/results-comparison.test.cjs frontend/tests/report-product-icons.test.cjs` → **18 passed**; `pnpm --dir frontend build` passed. Equal and worse badges use coral `more`; a positive Scoop loss against a zero rule has no fabricated finite percentage. The default replay has no zero denominator.
+- ✅ No algorithms, thresholds, costs, buffers, stored orders or replay values changed. Local PDF and its rebuild assets remain excluded from published history; the original local commit is retained on `local/logflows-overview-20261016`. Gemini before recording: **177 calls / $18.326137** against the night-3 cumulative cap **$26.897085** (remaining **$8.570948**).

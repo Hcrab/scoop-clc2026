@@ -19,6 +19,7 @@ export function sentenceTitle(title:string) {
 export const orderDateLabel=(value:string)=>new Date(`${value.slice(0,10)}T00:00:00Z`).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'});
 const metricLabel=(widget:DashboardWidget)=>widget.metric==='requested_vs_expected'?'Store requests':widget.metric==='lowest_cover'?'Lowest cover':widget.metric.replaceAll('_',' ');
 const format=(value:number|null|undefined,unit:DashboardWidget['unit'])=>unit==='ratio'?pct(value):unit==='days'?`${n(value,1)} ${n(value,1)==='1'?'day':'days'}`:unit==='pallets'?`${n(value,1)} pallets`:`${n(value)} units`;
+const comparesPolicies=(widget:DashboardWidget,comparison:boolean)=>comparison&&widget.metric!=='demand'&&widget.metric!=='requested_vs_expected';
 
 export function operationalPoint(result:DashboardPlay,widget:DashboardWidget,products:Product[],health:DashboardHealth|undefined,day:number,minute:number|null,policy:Policy='scoop'):number|null {
   if(widget.metric!=='lowest_cover')return widgetPoint(result,widget,policy,products,day,minute).value;
@@ -27,11 +28,12 @@ export function operationalPoint(result:DashboardPlay,widget:DashboardWidget,pro
 }
 
 export function operationalData(widget:DashboardWidget,result:DashboardPlay|null|undefined,products:Product[],health:DashboardHealth|undefined,day:number,minute:number|null,orderDate:string,comparison=false) {
+  const policyComparison=comparesPolicies(widget,comparison);
   const past=widget.series.filter(point=>point.date<orderDate).map(point=>({date:point.date,history:point.value??NaN,plan:NaN,rule:NaN}));
   const future=result&&day>=0?result.dates.slice(0,day+1).map((at,i)=>{
     const clock=i===day?minute:null;
     const point=(policy:Policy)=>clock!==null&&clock<720?NaN:operationalPoint(result,widget,products,health,i,null,policy)??NaN;
-    return {date:at,history:NaN,plan:point('scoop'),rule:comparison?point('baseline'):NaN};
+    return {date:at,history:NaN,plan:point('scoop'),rule:policyComparison?point('baseline'):NaN};
   }):[];
   // The boundary is shared by the two colors, never by two different measures.
   if(future.length&&!(future.length===1&&projectedDay(minute)))future[0].history=future[0].plan;
@@ -41,6 +43,7 @@ export function operationalData(widget:DashboardWidget,result:DashboardPlay|null
 }
 
 export function OperationalWidget({widget,result,day,minute,products,health,recordedHealth,orderDate,comparison=false}:{widget:DashboardWidget;result?:DashboardPlay|null;day:number;minute:number|null;products:Product[];health?:DashboardHealth;recordedHealth?:DashboardHealth;orderDate:string;comparison?:boolean}) {
+  const policyComparison=comparesPolicies(widget,comparison);
   const active=!!result&&day>=0;
   const live=active?widget.metric==='lowest_cover'?{value:operationalPoint(result!,widget,products,recordedHealth,day,minute),yesterday:false}:widgetDisplayPoint(result!,widget,products,day,minute):null;
   const raw=live?live.value:widget.value;
@@ -52,10 +55,10 @@ export function OperationalWidget({widget,result,day,minute,products,health,reco
   const tone=warning?colors.coral:colors.scoop;
   const note=live?.yesterday?'Yesterday':cover?`${format(raw,'units')} on hand`:null;
   const rows=operationalData(widget,result,products,recordedHealth,day,minute,orderDate,comparison);
-  const planLabel=comparison?'Scoop plan':'Since the order';
-  const lines=[{key:'history',label:'Before the order',color:colors.history},{key:'plan',label:planLabel,color:colors.scoop},...(comparison?[{key:'rule',label:'Simple rule',color:colors.simpleRule}]:[])];
+  const planLabel=policyComparison?'Scoop plan':'Since the order';
+  const lines=[{key:'history',label:'Before the order',color:colors.history},{key:'plan',label:planLabel,color:colors.scoop},...(policyComparison?[{key:'rule',label:'Simple rule',color:colors.simpleRule}]:[])];
   const cell=(value:number)=>Number.isFinite(value)?format(value,widget.unit):'—';
   return <><div className="dashboard-value"><strong style={{color:tone}}>{value===null?'—':format(value,unit)}</strong>{note&&<small>{note}</small>}</div>
     <Chart small data={rows} partialLast={active&&projectedDay(minute)} partialLabel="Projected full day" percent={widget.unit==='ratio'} orderMarker={{date:orderDate,label:'Order placed'}} lines={lines}/>
-    <details className="dashboard-evidence"><summary>Source data</summary><p className="muted">{widget.skus.length} products · {metricLabel(widget)}</p><div className="table-wrap"><table><thead><tr><th>Date</th><th>Before the order</th><th>{planLabel}</th>{comparison&&<th>Simple rule</th>}</tr></thead><tbody>{rows.map(row=><tr key={row.date}><th scope="row">{date(row.date)}{active&&projectedDay(minute)&&row.date===result!.dates[day]&&minute!==null&&minute>=720?' · projected':''}</th><td>{row.date<orderDate?cell(row.history):'—'}</td><td>{cell(row.plan)}</td>{comparison&&<td>{cell(row.rule)}</td>}</tr>)}</tbody></table></div></details></>;
+    <details className="dashboard-evidence"><summary>Source data</summary><p className="muted">{widget.skus.length} products · {metricLabel(widget)}</p><div className="table-wrap"><table><thead><tr><th>Date</th><th>Before the order</th><th>{planLabel}</th>{policyComparison&&<th>Simple rule</th>}</tr></thead><tbody>{rows.map(row=><tr key={row.date}><th scope="row">{date(row.date)}{active&&projectedDay(minute)&&row.date===result!.dates[day]&&minute!==null&&minute>=720?' · projected':''}</th><td>{row.date<orderDate?cell(row.history):'—'}</td><td>{cell(row.plan)}</td>{policyComparison&&<td>{cell(row.rule)}</td>}</tr>)}</tbody></table></div></details></>;
 }

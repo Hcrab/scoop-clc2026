@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Detail, ReviewPresentation } from './types';
-import { nativeCohortMarkup } from './nativeReportCards';
+import { decorateReportProductIcons, nativeCohortMarkup } from './nativeReportCards';
 import { evidenceSources } from './evidence';
 import { interactionStyles, reportInteractionScript } from './reportInteractions';
 import { fullDate } from './api';
@@ -27,6 +27,7 @@ function isolatedDocument(presentation: ReviewPresentation, detail: Detail, chan
     if(card)node.innerHTML=nativeCohortMarkup(card);
     else node.remove();
   });
+  decorateReportProductIcons(parsed,detail);
   const css = presentation.css.replace(/<\/style/gi, '<\\/style');
   const policy = `default-src 'none'; script-src 'nonce-${channel}'; style-src 'unsafe-inline'; img-src ${window.location.origin}/products/ data:; connect-src 'none'; font-src 'none'; media-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'`;
   const specs=[...parsed.querySelectorAll<HTMLElement>('figure[data-chart="line"]')].map(node=>({id:node.dataset.evidenceId||'',series:node.dataset.series||'actual,expected'}));

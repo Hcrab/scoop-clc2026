@@ -1,0 +1,119 @@
+Results · 27 Jul 2026 – 11 Aug 2026
+Units short
+Simple rule
+6,063
+Scoop
+4,297
+29% fewer
+Stockout product-days
+Simple rule
+39
+Scoop
+36
+8% fewer
+Lost margin
+Simple rule
+HK$30,849
+Scoop
+HK$24,271
+21% less
+
+Same cold store (62 pallets) · same store demand · Simple rule = 28-day average + 25%
+
+Affected products · 73
+See full comparison
+Dashboard
+Warehouse closing stock · units
+0
+25k
+50k
+75k
+Order placed
+29 Jun
+20 Jul
+11 Aug
+Before the order
+Scoop plan
+Simple rule
+
+29 Jun to 11 Aug. Before the order: unavailable at the latest observation. Scoop plan: 71,592 at the latest observation. Simple rule: 52,004 at the latest observation.
+
+Value strawberry water ices · stock
+2.4 days
+3,469 units on hand
+0
+4k
+8k
+Order placed
+29 Jun
+11 Aug
+Before the order
+Scoop plan
+Simple rule
+
+29 Jun to 11 Aug. Before the order: unavailable at the latest observation. Scoop plan: 3,469 at the latest observation. Simple rule: 5,944 at the latest observation.
+
+Source data
+Value strawberry water ices · fill rate
+96.2%
+0%
+40%
+80%
+120%
+Order placed
+29 Jun
+11 Aug
+Before the order
+Scoop plan
+Simple rule
+
+29 Jun to 11 Aug. Before the order: unavailable at the latest observation. Scoop plan: 96.2% at the latest observation. Simple rule: 69.6% at the latest observation.
+
+Source data
+Chocolate-coated requests
+1,373 units
+0
+1k
+2k
+3k
+Order placed
+29 Jun
+11 Aug
+Before the order
+Since the order
+
+29 Jun to 11 Aug. Before the order: unavailable at the latest observation. Since the order: 1,373 at the latest observation.
+
+Source data
+Lowest cover
+0 days
+0
+1
+2
+3
+Order placed
+29 Jun
+11 Aug
+Before the order
+Scoop plan
+Simple rule
+
+29 Jun to 11 Aug. Before the order: unavailable at the latest observation. Scoop plan: 0 at the latest observation. Simple rule: 0 at the latest observation.
+
+Source data
+Cold-store pallets
+44.9 pallets
+0
+20
+40
+60
+Order placed
+29 Jun
+11 Aug
+Before the order
+Scoop plan
+Simple rule
+
+29 Jun to 11 Aug. Before the order: unavailable at the latest observation. Scoop plan: 44.9 at the latest observation. Simple rule: 37.4 at the latest observation.
+
+Source data

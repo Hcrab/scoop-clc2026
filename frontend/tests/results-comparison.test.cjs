@@ -60,8 +60,8 @@ test('Watch and Play never access baseline for any metric',()=>{
   }
 });
 
-test('every Results metric uses the operational chart with only history and two policies',()=>{
-  for(const metric of ['on_hand','days_cover','pallets','fill_rate','lost_units','demand','requested_vs_expected','lowest_cover']){
+test('Results policy metrics use the operational chart with history and two policies',()=>{
+  for(const metric of ['on_hand','days_cover','pallets','fill_rate','lost_units','lowest_cover']){
     const health={products:products.map(p=>({...p,daily_demand:2,recent_demand:Array(7).fill(2)}))};
     const html=renderToStaticMarkup(React.createElement(WidgetChart,{widget:widget(metric),result:result(),day:1,minute:null,products,health,recordedHealth:health,comparison:true}));
     assert.equal((html.match(/<svg/g)||[]).length,1);
@@ -70,7 +70,33 @@ test('every Results metric uses the operational chart with only history and two 
     for(const label of ['Before the order','Scoop plan','Simple rule','Source data','Order placed'])assert.ok(html.includes(label));
     assert.doesNotMatch(html,/Recorded|Simulated|Requested|risk|Safety|Safe zone|Stockout|data-band|cover-list/);
     for(const color of ['#9aa6a0','#205a4e','#b77d36'])assert.ok(svg.includes(color));
+    assert.equal((html.match(/<thead><tr>([^]*?)<\/tr><\/thead>/)[1].match(/<th>/g)||[]).length,4);
     assert.ok((html.match(/<small>/g)||[]).length<=1);
+  }
+});
+
+test('Results demand metrics share one since-order source without accessing baseline',()=>{
+  for(const metric of ['demand','requested_vs_expected']){
+    const replay=result();
+    Object.defineProperty(replay.runs,'baseline',{get(){throw Error('baseline accessed for shared demand')}});
+    const rows=operationalData(widget(metric),replay,products,undefined,1,null,replay.dates[0],true);
+    assert.deepEqual(rows.slice(1).map(row=>row.plan),[4,6]);
+    assert.ok(rows.every(row=>Number.isNaN(row.rule)));
+    assert.deepEqual(rows.map(row=>row.history),[15,4,NaN]);
+    for(const day of [-1,1]){
+      for(const minute of [710,720,null]){
+        const html=renderToStaticMarkup(React.createElement(WidgetChart,{widget:widget(metric),result:replay,day,minute,products,comparison:true}));
+        assert.equal((html.match(/<svg/g)||[]).length,1);
+        const svg=html.match(/<svg[^]*?<\/svg>/)[0];
+        assert.deepEqual([...svg.matchAll(/data-series="([^"]+)"/g)].map(m=>m[1]),day<0?['history']:['history','plan']);
+        for(const label of ['Before the order','Since the order','Source data','Order placed'])assert.ok(html.includes(label));
+        assert.doesNotMatch(html,/Simple rule|Scoop plan|data-series="rule"|#b77d36/);
+        for(const color of ['#9aa6a0','#205a4e'])assert.ok(html.includes(color));
+        const headings=html.match(/<thead><tr>([^]*?)<\/tr><\/thead>/)[1];
+        assert.equal((headings.match(/<th>/g)||[]).length,3);
+        for(const row of html.match(/<tbody>([^]*?)<\/tbody>/)[1].matchAll(/<tr[^>]*>([^]*?)<\/tr>/g))assert.equal((row[1].match(/<td>/g)||[]).length,2);
+      }
+    }
   }
 });
 
@@ -94,7 +120,7 @@ test('comparison charts retain missing history, morning gaps and hollow noon pro
     const morning=renderToStaticMarkup(React.createElement(WidgetChart,{...props,minute:710}));
     const noon=renderToStaticMarkup(React.createElement(WidgetChart,{...props,minute:720}));
     assert.doesNotMatch(morning,/data-partial="true"/);
-    assert.equal((noon.match(/data-partial="true"/g)||[]).length,2);
+    assert.equal((noon.match(/data-partial="true"/g)||[]).length,['demand','requested_vs_expected'].includes(metric)?1:2);
     assert.match(noon,/fill="var\(--paper, #fff\)"/);
   }
 });
@@ -121,7 +147,7 @@ test('only Results opts into dashboard comparison and retains the three outcomes
     const props={result:replay,detail:{plan:{id:'test',week_start:'2026-10-16'}},products,path:'/test'};
     const html=renderToStaticMarkup(React.createElement(Results,props));
     assert.deepEqual(seen,[true]);
-    for(const label of ['Units short avoided','Stockout product-days avoided','Lost margin avoided','See full comparison'])assert.ok(html.includes(label));
+    for(const label of ['Units short','Stockout product-days','Lost margin','Simple rule','Scoop','See full comparison'])assert.ok(html.includes(label));
     renderToStaticMarkup(React.createElement(PlayWeek,{...props,replay:{result:replay,day:0,minute:0,running:false,unlocked:false},setReplay:()=>{},onSeeResults:()=>{}}));
     assert.deepEqual(seen,[true,undefined]);
   }finally{dashboard.Dashboard=original}

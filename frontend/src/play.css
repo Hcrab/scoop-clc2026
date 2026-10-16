@@ -55,14 +55,22 @@
 .results-view .dashboard{margin-top:28px}
 .results-view .play-comparison{margin-top:0;padding:26px}
 .results-view .play-outcomes{gap:24px;margin:24px 0 12px}
-.results-view .play-outcomes strong{font-size:var(--type-key)}
+.results-view .result-metric{min-width:0;border:1px solid var(--line);border-radius:12px;padding:16px}
+.results-view .result-metric h3{font-size:var(--type-label);color:var(--ink);font-weight:600;margin:0 0 14px}
+.results-view .result-metric>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border:0;padding:0}
+.results-view .result-metric .result-rule{margin-bottom:8px}
+.results-view .result-rule span{font-size:var(--type-label);color:var(--muted);font-variant-numeric:tabular-nums}
+.results-view .result-rule span:first-child::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:#b77d36;margin-right:7px}
+.results-view .result-scoop span,.results-view .result-scoop strong{color:#205a4e}
+.results-view .result-scoop strong{font-size:var(--type-key);margin:0;line-height:1.2;white-space:nowrap}
+.results-view .result-metric .result-badge{display:inline-block;margin-top:12px;border-radius:999px;padding:3px 8px;background:var(--mint);color:#205a4e;font-size:var(--type-label)}
+.results-view .result-metric .result-badge-worse{background:#faeae5;color:#b7483c}
 .results-view .results-cold-store{font-size:var(--type-label);line-height:1.5;color:var(--muted);margin:0}
 .results-table-wrap{max-width:100%;overflow-x:auto}
 .results-table-wrap table{min-width:520px}
 .results-chart{min-width:0;border-top:1px solid var(--line);padding:20px 0 16px;margin-bottom:10px}
 .results-chart h3{font-size:var(--type-label);font-weight:600;color:var(--ink);margin:0 0 12px}
 .results-chart .chart{width:100%}
-.results-view .results-scenario{color:var(--muted);font-size:var(--type-label);margin:8px 0 12px}
 @media(max-width:620px){.flow-primary{justify-content:stretch}.flow-primary .button{width:100%}.results-view .play-comparison{padding:18px}}
 .play-event{display:flex;align-items:flex-start;gap:8px}.play-event>div{min-width:0}
 .play-outcomes .result-negative strong,.play-outcomes .result-negative span{color:#b7483c}
@@ -72,4 +80,3 @@
 .play-order-details ul{padding-left:16px;margin:10px 0 0;font-size:var(--type-label)}
 .play-order-details li+li{margin-top:10px}
 .play-event a{display:inline-block;color:#205a4e;font-size:var(--type-label);margin:4px 8px 0 0;text-underline-offset:2px}
-.results-view .results-rule{color:var(--muted);font-size:var(--type-label);margin:8px 0}

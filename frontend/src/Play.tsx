@@ -3,6 +3,7 @@ import { date, fullDate, n, pct } from './api';
 import { Dashboard, type DashboardPlay } from './Dashboard';
 import type { Detail, Product } from './types';
 import { ProductIcon } from './ProductIcon';
+import { resultsMetrics } from './resultsMetrics';
 
 type Policy = 'scoop'|'baseline';
 type Summary = {fill_rate:number;lost_units:number;lost_margin:number;avg_pallets:number;peak_pallets:number;days_over_capacity:number;stockout_sku_days:number;ending_on_hand:number;ordered_cases:number};
@@ -30,15 +31,16 @@ export function Results({result,detail,products,path,revision=0}:{result:PlayRes
   ];
   const summary=result.summary;
   const table=<div className="results-table-wrap"><table><caption>Whole warehouse · actual approved orders</caption><thead><tr><th/><th>{POLICY_LABEL.scoop}</th><th>{POLICY_LABEL.baseline}</th></tr></thead><tbody>{rows.map(([name,format,compare])=>{const better=compare?.(summary.scoop,summary.baseline)??0;return <tr key={name}><th scope="row">{name}</th><td className={better>1e-9?'better':better< -1e-9?'worse':''}>{format(summary.scoop)}</td><td>{format(summary.baseline)}</td></tr>})}</tbody></table></div>;
-  const unitsAvoided=summary.baseline.lost_units-summary.scoop.lost_units;
-  const daysAvoided=summary.baseline.stockout_sku_days-summary.scoop.stockout_sku_days;
-  const marginAvoided=summary.baseline.lost_margin-summary.scoop.lost_margin;
+  const metrics=resultsMetrics(summary);
   const names=new Map(products.map(product=>[product.sku,product.name]));
   return <section className="results-view"><div className="play-comparison"><h2>Results · {fullDate(result.start)} – {fullDate(result.end)}</h2>
-    <div className="play-outcomes"><div className={unitsAvoided<0?'result-negative':undefined}><span>{unitsAvoided<0?'Extra units short':'Units short avoided'}</span><strong>{n(Math.abs(unitsAvoided))}</strong></div><div className={daysAvoided<0?'result-negative':undefined}><span>{daysAvoided<0?'Extra stockout product-days':'Stockout product-days avoided'}</span><strong>{n(Math.abs(daysAvoided))}</strong></div><div className={marginAvoided<0?'result-negative':undefined}><span>{marginAvoided<0?'Extra margin lost':'Lost margin avoided'}</span><strong>HK${n(Math.abs(marginAvoided))}</strong></div></div>
-    <p className="results-cold-store">Same cold store ({n(result.capacity_pallets)} pallets) · Scoop plan peaks at {n(summary.scoop.peak_pallets,1)}, Simple rule at {n(summary.baseline.peak_pallets,1)}</p>
-    <p className="results-rule muted">Simple rule · 28-day average + 25%</p>
-    <p className="results-scenario">Illustrative scenario · simulated warehouse and store outcomes.</p>
+    <div className="play-outcomes">{metrics.map(metric=><article className="result-metric" key={metric.title}>
+      <h3>{metric.title}</h3>
+      <div className="result-rule"><span>Simple rule</span><span>{metric.currency?'HK$':''}{n(metric.rule)}</span></div>
+      <div className="result-scoop"><span>Scoop</span><strong>{metric.currency?'HK$':''}{n(metric.scoop)}</strong></div>
+      {metric.badge!==null&&<span className={`result-badge${metric.worse?' result-badge-worse':''}`}>{metric.badge}</span>}
+    </article>)}</div>
+    <p className="results-cold-store">Same cold store ({n(result.capacity_pallets)} pallets) · same store demand · Simple rule = 28-day average + 25%</p>
     <details><summary>Affected products · {result.affected_skus.length}</summary><ul>{result.affected_skus.map(sku=><li key={sku}>{names.get(sku)||sku}</li>)}</ul></details>
     <details><summary>See full comparison</summary>{table}</details>
   </div><Dashboard detail={detail} products={products} path={path} result={result} day={result.days-1} readonly comparison revision={revision}/></section>;
