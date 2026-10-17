@@ -1,6 +1,7 @@
 // Final user copy: docs/reports/tour-v2-protocol.md.
 export const TOUR_COPY = {
-  takeTour:'Take the tour',skip:'Skip tour',next:'Next',recorded:'Recorded example',
+  takeTour:'Take the tour',skip:'Skip tour',next:'Next',recorded:'Recorded example',addSelected:'Add selected',
+  futureNotice:'In this tour, the next two weeks follow the context you chose.',
   welcome:{title:'Monday, 27 July',body:"You plan stock for the **Tsing Yi cold store**: 75 products, **{capacity} pallets** of space, and this week's orders are due by 2 pm. This tour walks you through **one weekly cycle** in Scoop.",start:'Start the tour',explore:'Explore on my own'},
   steps:{
     1:{title:'Read the weekly report',body:"The left side is the **weekly report**. Every Monday, Scoop's AI writes it from recent store orders: **what changed**, and the evidence behind it. You can open any chart or source to check the numbers."},
@@ -13,7 +14,7 @@ export const TOUR_COPY = {
     8:{title:'Review the orders',body:"Click **Review orders** to see this week's full order."},
     9:{title:'Check the order lines',body:"This page lists **every order line** for this week. Open a line to see how its quantity was calculated: the **forecast**, stock **on hand and on the way**, and any **adjustment**. The bar at the top shows the cold store's **projected peak**."},
     10:{title:'Approve the orders',body:'When the order looks right, click **Approve orders**.'},
-    11:{title:'Choose what to follow',body:'This page is where you **follow stock after the order is placed**. The tiles at the top track the **overall health** of the warehouse; the cards below follow **specific products**. Add one more card to follow.'},
+    11:{title:'Choose what to follow',body:'This page is where you **follow stock after the order is placed**. The tiles at the top track the **overall health** of the warehouse; the cards below follow **specific products**. Choose the cards to add.'},
     12:{title:'Start the next two weeks',body:'Click **Next: Play** to see how the next two weeks unfold.'},
     13:{title:'Follow the two weeks',body:'This view plays the next two weeks **hour by hour**. The cards update as stock **arrives and sells**; the list on the right records **each event**. You can speed it up with **4×** or **8×**.'},
     14:{title:'Compare the results',body:"This page compares your plan with a **common rule**: order the **28-day average plus 25%**. Both use the **same cold store** and the **same store demand**. Each card shows the rule's result, Scoop's result and the difference."},

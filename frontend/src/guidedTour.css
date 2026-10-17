@@ -56,6 +56,11 @@
 .tour-coach p{font-size:15px!important;font-weight:400!important}
 .tour-coach p strong{font-weight:600}
 .tour-coach .tour-event{margin-top:14px}
+.tour-coach .tour-future-notice{margin-top:12px;color:#73816f;font-size:13px!important}
+.tour-widget-choices{gap:8px;margin-top:14px}
+.tour-widget-choices .tour-choice{height:44px;padding:8px 12px;gap:10px}
+.tour-widget-choices .tour-choice:before{content:'';flex:none;width:16px;height:16px;border:1px solid #607563;border-radius:4px;background:#fffdf7}
+.tour-widget-choices .tour-choice[aria-pressed=true]:before{content:'✓';display:grid;place-items:center;background:#205a4e;border-color:#205a4e;color:white;font-size:13px}
 .tour-choice{height:52px}
 .tour-active .tour-recalculation{display:flex;flex-wrap:wrap;gap:16px;flex-basis:100%;padding-top:10px;font-size:20px}
 .tour-active .tour-recalculation-peak{display:block;font-size:20px;white-space:nowrap}

@@ -4,13 +4,14 @@ import { evidenceSections, evidenceUrl, type EvidenceSource } from './evidence';
 import { CohortDrilldown } from './CohortDrilldown';
 import type { CohortDrilldownData } from './types';
 import './evidence.css';
+import { dataLabel, labelledEvidence } from './dataLabels';
 
 function cell(value:unknown):string{if(value==null)return '—';if(typeof value==='number')return value.toLocaleString('en-HK',{maximumFractionDigits:3});if(typeof value==='string'||typeof value==='boolean')return String(value);if(Array.isArray(value))return value.length>5?`${value.length} items`:value.map(cell).join(', ');return Object.entries(value).filter(([,v])=>v==null||typeof v!=='object').slice(0,5).map(([k,v])=>`${label(k)}: ${cell(v)}`).join(' · ')||'Details'}
-const label=(value:string)=>value.replaceAll('_',' ').replace(/\b\w/g,match=>match.toUpperCase());
+const label=(value:string)=>dataLabel(value).replace(/\b\w/g,match=>match.toUpperCase());
 export function EvidenceModal({source,planId,onClose}:{source:EvidenceSource;planId:string;onClose:()=>void}){
  const dialog=useRef<HTMLElement>(null);
  const sections=useMemo(()=>evidenceSections(source.result),[source.result]);
- const savedResult=useMemo(()=>JSON.stringify(source.result,null,2),[source.result]);
+ const savedResult=useMemo(()=>JSON.stringify(labelledEvidence(source.result),null,2),[source.result]);
  const drilldown=source.id.startsWith('Q-cohort-')&&source.result&&typeof source.result==='object'?'drilldown' in source.result?(source.result as {drilldown?:CohortDrilldownData}).drilldown:undefined:undefined;
  const [section,setSection]=useState(0),[search,setSearch]=useState(''),[sort,setSort]=useState(''),[descending,setDescending]=useState(false),[page,setPage]=useState(0);
  useEffect(()=>{setSection(0);setSearch('');setSort('');setPage(0)},[source.id]);

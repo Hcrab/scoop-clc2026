@@ -1,0 +1,13 @@
+warning: in the working copy of 'backend/scoop/ai/narrator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/scoop/api/service.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/ui-copy.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/ActionList.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/guidedTour.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/tour/copy.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/tour/runtime.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/tour/types.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/types.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/ui.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/tests/tour-copy.test.cjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/tests/tour-runtime.test.cjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/export-ui-copy.cjs', LF will be replaced by CRLF the next time Git touches it

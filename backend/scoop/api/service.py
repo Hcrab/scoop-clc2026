@@ -19,6 +19,7 @@ from ..db import session_scope, get_setting, set_setting
 from ..config import ROOT, settings
 from ..ai.chat import provider_info
 from ..models import *
+from ..order_ledger import present_order
 
 router = APIRouter(prefix='/api')
 creation_lock = Lock()
@@ -232,7 +233,7 @@ def get_plan(pid:str):
                     item['text']=question_for({'display':f.evidence.get('display',f.tag_id),'districts':f.evidence.get('districts',f.district.split(', ')),'direction':f.direction,'classification':f.classification})['text']
             item['options']={'options':[{'id':o.get('id',o.get('value')),'label':o.get('label',o.get('value'))} for o in options.get('options',[])],'recommended':options.get('recommended','unsure')}; questions.append(item)
         orders=query(s,'SELECT ps.*, p.name,p.brand,p.units_per_case,p.moq_cases,s.name AS supplier_name FROM purchase_suggestions ps JOIN products p USING(sku) JOIN suppliers s ON s.id=p.supplier_id WHERE ps.plan_id=:pid ORDER BY ps.order_date,p.name',pid=pid)
-        for order in orders: order['effective_cases']=order['final_cases'] if order['final_cases'] is not None else max(0,order['suggested_cases']-order['capacity_cut_cases'])
+        orders=[present_order(order,p.summary) for order in orders]
         from ..ai.weekly import display_view
         from .flow import state as flow_state
         return clean({'raw_trends':(p.summary or {}).get('raw_trends'),'review':display_view(p),'discussion':discussion_view(s,p),'plan':row(p),'flow':flow_state(s,p),'assistant':provider_info(),'metrics':plan_metrics(s,p.week_start),'findings':findings,'questions':questions,'directions':[row(d) for d in objects(s,DirectionItem,pid)],'orders':orders,'cohort_cards':(p.summary or {}).get('cohort_cards',[]),'cohort_observations':(p.summary or {}).get('cohort_observations') or cohort_observations(s,p),'dashboard':dashboard.view(s,p),'decisions':decision_history(s,pid),'messages':[row(x) for x in s.scalars(select(ChatMessage).where(ChatMessage.plan_id==pid).order_by(ChatMessage.id))],'metadata':{'inventory_provenance':PROVENANCE,'facts_through':cutoff-timedelta(days=1)}})
@@ -442,9 +443,9 @@ def confirm(pid:str,sku:str,body:Confirm):
 @router.get('/plans/{pid}/orders.csv')
 def export(pid:str):
     with session_scope() as s:
-        plan_for(s,pid)
-        rows=query(s,'SELECT ps.sku,p.name,ps.order_date,ps.suggested_cases,ps.capacity_cut_cases,COALESCE(ps.final_cases,GREATEST(ps.suggested_cases-ps.capacity_cut_cases,0)) AS effective_cases,ps.final_cases,ps.status,ps.reason FROM purchase_suggestions ps JOIN products p USING(sku) WHERE plan_id=:pid ORDER BY order_date,sku',pid=pid)
-    output=io.StringIO(); writer=csv.DictWriter(output,fieldnames=['sku','name','order_date','suggested_cases','capacity_cut_cases','effective_cases','final_cases','status','reason']);writer.writeheader();writer.writerows(rows)
+        p=plan_for(s,pid)
+        rows=[present_order(order,p.summary) for order in query(s,'SELECT ps.*,p.name,p.units_per_case,p.moq_cases FROM purchase_suggestions ps JOIN products p USING(sku) WHERE plan_id=:pid ORDER BY order_date,sku',pid=pid)]
+    output=io.StringIO(); writer=csv.DictWriter(output,fieldnames=['sku','name','order_date','suggested_cases','capacity_cut_cases','effective_cases','final_cases','status','reason'],extrasaction='ignore');writer.writeheader();writer.writerows(rows)
     return Response(output.getvalue(),media_type='text/csv',headers={'Content-Disposition':f'attachment; filename="{pid}-orders.csv"'})
 
 class WatchEdit(BaseModel):

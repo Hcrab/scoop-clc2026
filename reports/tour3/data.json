@@ -1,0 +1,213 @@
+{
+  "version": 3,
+  "source_hash": "a8ca053adf930b016e76346af923c992c3585c2df74e83b1f31ab5cfcc65e322",
+  "public_unchanged": true,
+  "provider_calls": 0,
+  "build_seconds": 388.6658389568329,
+  "branches": {
+    "unchanged": {
+      "recalculation": {
+        "f_before": 1.381551970913412,
+        "f_after": 1.381551970913412,
+        "before": 241,
+        "after": 241,
+        "p_before": 61.304556505468874,
+        "p_after": 61.304556505468874,
+        "n": 0,
+        "trimmed_products": []
+      },
+      "summary": {
+        "scoop": {
+          "fill_rate": 0.9782070658403238,
+          "lost_units": 4297.0,
+          "lost_margin": 24271.33,
+          "avg_pallets": 38.62040147569444,
+          "peak_pallets": 57.98659722222222,
+          "days_over_capacity": 0,
+          "stockout_sku_days": 36,
+          "ending_on_hand": 71592.0,
+          "ordered_cases": 8066
+        },
+        "baseline": {
+          "fill_rate": 0.9692505097020906,
+          "lost_units": 6063.0,
+          "lost_margin": 30849.110000000004,
+          "avg_pallets": 37.75508897569444,
+          "peak_pallets": 57.98659722222222,
+          "days_over_capacity": 0,
+          "stockout_sku_days": 39,
+          "ending_on_hand": 52004.0,
+          "ordered_cases": 7917
+        }
+      },
+      "future": {
+        "branch": "unchanged",
+        "start": "2026-07-27",
+        "summer_end": "2026-08-10",
+        "growth_end": "2026-08-11",
+        "matched_skus": [
+          "IC006",
+          "IC061",
+          "IC062",
+          "IC063"
+        ],
+        "basis": "same seed93 store-SKU-day realization scaled by planted multiplier / 1.5",
+        "rounding": "nonnegative half-up at store-SKU-day",
+        "changed_rows": 0,
+        "history_hash": "fa4ec9a3c1999f5ba9277715c71e0a9946678b2a3ae3289804680d63faa7196c",
+        "outside_cohort_hash": "ed9bba202edc6493c0a624bcb5babcb9a5fb59716ee3530644a751bbabb541bb",
+        "original_demand_hash": "20d56ff048c9253a8310ae7686669732fcb89015d43b54b86436ceab0b8baf28",
+        "demand_hash": "20d56ff048c9253a8310ae7686669732fcb89015d43b54b86436ceab0b8baf28",
+        "weather_hash": "ac565dd53a10d0adc7e4e8ac76cbf8596ec695aa26cc2daec6239cca665cca2e",
+        "multipliers": {
+          "2026-07-27": "1.5",
+          "2026-08-10": "1.5",
+          "2026-08-11": "1.5"
+        },
+        "persisted_replays_cleared": true,
+        "policy_demand_equal": true,
+        "replay_demand_hash": "c0764d1fd81ab301397311fea18c2fba4d4666bcc810acd8f02dc71e9975d9e1",
+        "baseline_context_blind": true,
+        "baseline_context_control_hash": "413c54ca76365e8b0e7393fbbd7711f6b96d066d3cc764db55b1ef158632c656",
+        "unchanged_physical_equal": true
+      },
+      "ledger_rows": 75
+    },
+    "summer": {
+      "recalculation": {
+        "f_before": 1.381551970913412,
+        "f_after": 1.2990046766249463,
+        "before": 241,
+        "after": 209,
+        "p_before": 61.304556505468874,
+        "p_after": 61.357214581204545,
+        "n": 0,
+        "trimmed_products": []
+      },
+      "summary": {
+        "scoop": {
+          "fill_rate": 0.9752676208040564,
+          "lost_units": 4868.0,
+          "lost_margin": 26802.02,
+          "avg_pallets": 38.511182725694454,
+          "peak_pallets": 57.98659722222222,
+          "days_over_capacity": 0,
+          "stockout_sku_days": 40,
+          "ending_on_hand": 71374.0,
+          "ordered_cases": 8058
+        },
+        "baseline": {
+          "fill_rate": 0.9699279062323767,
+          "lost_units": 5919.0,
+          "lost_margin": 30206.15,
+          "avg_pallets": 37.76037543402778,
+          "peak_pallets": 57.98659722222222,
+          "days_over_capacity": 0,
+          "stockout_sku_days": 39,
+          "ending_on_hand": 52207.0,
+          "ordered_cases": 7917
+        }
+      },
+      "future": {
+        "branch": "summer",
+        "start": "2026-07-27",
+        "summer_end": "2026-08-10",
+        "growth_end": "2026-08-11",
+        "matched_skus": [
+          "IC006",
+          "IC061",
+          "IC062",
+          "IC063"
+        ],
+        "basis": "same seed93 store-SKU-day realization scaled by planted multiplier / 1.5",
+        "rounding": "nonnegative half-up at store-SKU-day",
+        "changed_rows": 1655,
+        "history_hash": "fa4ec9a3c1999f5ba9277715c71e0a9946678b2a3ae3289804680d63faa7196c",
+        "outside_cohort_hash": "ed9bba202edc6493c0a624bcb5babcb9a5fb59716ee3530644a751bbabb541bb",
+        "original_demand_hash": "20d56ff048c9253a8310ae7686669732fcb89015d43b54b86436ceab0b8baf28",
+        "demand_hash": "56ec07645ee994cafcdb8492c2d7a9dc1d0754f3fbf1ff035b35343cf04b227b",
+        "weather_hash": "ac565dd53a10d0adc7e4e8ac76cbf8596ec695aa26cc2daec6239cca665cca2e",
+        "multipliers": {
+          "2026-07-27": "1.5",
+          "2026-08-10": "1.5",
+          "2026-08-11": "1"
+        },
+        "persisted_replays_cleared": true,
+        "policy_demand_equal": true,
+        "replay_demand_hash": "c026614ebc0d018e1a80df6cba9cd7e982d31b47ad2166ec881fd26293ebbcf7",
+        "baseline_context_blind": true,
+        "baseline_context_control_hash": "d44269d61afb76df1997d31e44318af947a20c9456723b1e955edeb2044778c6",
+        "unchanged_physical_equal": null
+      },
+      "ledger_rows": 75
+    },
+    "growing": {
+      "recalculation": {
+        "f_before": 1.381551970913412,
+        "f_after": 1.3929164795623683,
+        "before": 241,
+        "after": 246,
+        "p_before": 61.304556505468874,
+        "p_after": 61.29728913749731,
+        "n": 0,
+        "trimmed_products": []
+      },
+      "summary": {
+        "scoop": {
+          "fill_rate": 0.9748464713580993,
+          "lost_units": 4997.0,
+          "lost_margin": 27475.13,
+          "avg_pallets": 38.55303168402778,
+          "peak_pallets": 57.98659722222222,
+          "days_over_capacity": 0,
+          "stockout_sku_days": 39,
+          "ending_on_hand": 71192.0,
+          "ordered_cases": 8079
+        },
+        "baseline": {
+          "fill_rate": 0.9631984294774992,
+          "lost_units": 7311.0,
+          "lost_margin": 36394.79,
+          "avg_pallets": 37.70844835069445,
+          "peak_pallets": 57.98659722222222,
+          "days_over_capacity": 0,
+          "stockout_sku_days": 42,
+          "ending_on_hand": 52086.0,
+          "ordered_cases": 7934
+        }
+      },
+      "future": {
+        "branch": "growing",
+        "start": "2026-07-27",
+        "summer_end": "2026-08-10",
+        "growth_end": "2026-08-11",
+        "matched_skus": [
+          "IC006",
+          "IC061",
+          "IC062",
+          "IC063"
+        ],
+        "basis": "same seed93 store-SKU-day realization scaled by planted multiplier / 1.5",
+        "rounding": "nonnegative half-up at store-SKU-day",
+        "changed_rows": 2211,
+        "history_hash": "fa4ec9a3c1999f5ba9277715c71e0a9946678b2a3ae3289804680d63faa7196c",
+        "outside_cohort_hash": "ed9bba202edc6493c0a624bcb5babcb9a5fb59716ee3530644a751bbabb541bb",
+        "original_demand_hash": "20d56ff048c9253a8310ae7686669732fcb89015d43b54b86436ceab0b8baf28",
+        "demand_hash": "c37b5e12d9d5cee9e5d351980c1e6e8f01497f21c9cccfe2b21dc664bb588034",
+        "weather_hash": "ac565dd53a10d0adc7e4e8ac76cbf8596ec695aa26cc2daec6239cca665cca2e",
+        "multipliers": {
+          "2026-07-27": "1.5",
+          "2026-08-10": "1.686666666666666666666666667",
+          "2026-08-11": "1.7"
+        },
+        "persisted_replays_cleared": true,
+        "policy_demand_equal": true,
+        "replay_demand_hash": "7d0a38f837ecc5374a8cd80ed9bcd9a468351bdc9153427d864d74906158ee49",
+        "baseline_context_blind": true,
+        "baseline_context_control_hash": "686b414af4490b6ee02cc847c54684a2b0b62a756c708b7cd5ffb6c9cf4bd21d",
+        "unchanged_physical_equal": null
+      },
+      "ledger_rows": 75
+    }
+  }
+}

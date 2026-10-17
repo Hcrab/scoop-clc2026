@@ -121,7 +121,7 @@ def chat_reply(message: str, context: dict) -> str:
         hot = context.get("heat_scenario")
         if hot:
             return (
-                f"If next week averages {hot['tmax']:.0f}C, demand over the protection period rises about {hot['total_pct']:+.0%} overall "
+                f"If next week averages {hot['tmax']:.0f}C, demand over the planning window rises about {hot['total_pct']:+.0%} overall "
                 f"and {hot['water_pct']:+.0%} for water-based lines. That adds about {hot['extra_cases']:,} cases, "
                 f"and {hot['capacity_note']}"
             )
@@ -130,7 +130,7 @@ def chat_reply(message: str, context: dict) -> str:
         return "Added a watch card for that. It compares the actual share each day with the expected range and turns amber when it drifts."
     if any(k in m for k in ("order", "how much", "cases", "buy")):
         n = context.get("orders_due", 0)
-        return f"{n} SKUs are due for ordering this week. Each line shows the protection-period demand, the target level and why it changed."
+        return f"{n} SKUs are due for ordering this week. Each line shows expected sales, the stock needed and why it changed."
     if top:
         return f"This week Scoop found {len(findings)} changes. The largest: {top['explanation']}"
     return "Nothing unusual this week. Orders follow the normal forecast."

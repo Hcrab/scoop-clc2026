@@ -1,0 +1,43 @@
+✔ human-facing evidence labels and saved-result keys use business terms without changing values (15.2521ms)
+✔ field display names do not filter or rewrite free natural-language answers (1.8102ms)
+✔ renders aligned whole-unit ledger with plain labels and conditional trend (26.6582ms)
+✔ shows only applied case changes, preserves surplus and explains stale edits (5.5111ms)
+✔ new replays default to 2× with the required native clock rates (2.5488ms)
+✔ every ten-minute frame has identical dashboard time, events and captions at all speeds (34.9134ms)
+✔ speed switches reanchor without jumping, including midnight and final frame (0.18ms)
+✔ native control exposes all three speeds and keeps pause, resume and Results flow (2.3679ms)
+✔ warehouse paths use native closing stock totals and share only the last recorded anchor (9.0826ms)
+✔ main Results overlay renders three named colors on one chart and equal values use equal coordinates (15.2448ms)
+✔ Watch and Play never access baseline for any metric (33.2541ms)
+✔ Results policy metrics use the operational chart with history and two policies (21.1289ms)
+✔ Results demand metrics share one since-order source without accessing baseline (24.5085ms)
+✔ Results lowest cover uses actual stock for each policy and rolling per-product demand (0.3076ms)
+✔ comparison charts retain missing history, morning gaps and hollow noon projections for both policies (37.4694ms)
+✔ fill tile keeps only its period line with unchanged numeric value (1.911ms)
+✔ only Results opts into dashboard comparison and retains the three outcomes and full comparison (24.4349ms)
+✔ stored replay outcomes show both policies and rounded relative leads (19.2493ms)
+✔ equal and worse outcomes use nonnegative more badges and the coral class (1.5782ms)
+✔ zero rule with positive Scoop loss never fabricates a finite percentage (1.202ms)
+✔ all fourteen title/body entries match the supplied protocol verbatim, including bold (1.3054ms)
+✔ welcome/end and question, context and widget choices preserve final copy (0.2188ms)
+✔ branch copy only omits the explicitly optional no-capacity-cut sentence (0.259ms)
+✔ tour revision adds the exact future notice and multi-select action without changing branch arithmetic copy (0.1381ms)
+✔ all contexts and widgets run the native App flow without any network request or bundle mutation (8.7067ms)
+✔ fixture adapter returns stored edit responses and rejects unsupported controls and routes (1.187ms)
+✔ only genuine stored answers are served and assistant never falls back to HTTP (1.8707ms)
+✔ loading uses two GETs and explicitly rejects a stale default order hash (0.7784ms)
+✔ refresh events fire for context, widget and view changes; ending fully restores live transport (1.4071ms)
+✔ every nonempty widget subset adds real cards atomically and preserves branch dashboard metadata (5.0098ms)
+✔ empty, invalid and premature multi-selection are rejected without refresh or partial additions; replay/context reset clears cards (0.8135ms)
+✔ v2 recordings are explicitly rejected by the v3 loader (0.193ms)
+✔ actual step 11 JSX toggles aria-pressed, requires selection, and adds only on Add selected (91.2147ms)
+✔ actual step 7 JSX renders the exact muted future notice for every context (58.1226ms)
+✔ real stored branch recordings merge every subset with original widget IDs, titles and health (7139.5575ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8003.4363

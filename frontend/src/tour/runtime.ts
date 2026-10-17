@@ -5,7 +5,7 @@ const steps: FlowStep[] = ['report', 'orders', 'watch', 'play', 'results'];
 const contexts: ContextId[] = ['summer', 'growing', 'unchanged'];
 const widgets: WidgetId[] = ['stock', 'space', 'cover'];
 const clone = <T,>(value: T): T => structuredClone(value);
-type Session = { bundle: TourBundle; branch: ContextId; chosenContext: boolean; widget: WidgetId | null; stage: Stage; step: FlowStep; maximum: FlowStep };
+type Session = { bundle: TourBundle; branch: ContextId; chosenContext: boolean; widgets: WidgetId[]; stage: Stage; step: FlowStep; maximum: FlowStep };
 let session: Session | null = null;
 function current(): Session { if (!session) throw new Error('The tour is not active.'); return session; }
 function refresh() { if (typeof window !== 'undefined') window.dispatchEvent(new Event('scoop:tour-refresh')); }
@@ -32,11 +32,11 @@ async function readJSON<T>(path: string): Promise<T> {
 }
 export async function loadTourBundle(): Promise<TourBundle> {
   const [bundle, source] = await Promise.all([readJSON<TourBundle>('/tour-bundle.json'), readJSON<TourSource>('/api/tour/source')]);
-  if (bundle.version !== 2 || !bundle.default_order_hash || bundle.default_order_hash !== source.default_order_hash || bundle.default_week !== source.default_week || bundle.plan_id !== source.plan_id) throw new Error('The tour bundle is stale. Rebuild it for the current default week.');
+  if (bundle.version !== 3 || !bundle.default_order_hash || bundle.default_order_hash !== source.default_order_hash || bundle.default_week !== source.default_week || bundle.plan_id !== source.plan_id) throw new Error('The tour bundle is stale. Rebuild it for the current default week.');
   return bundle;
 }
 export function beginTour(bundle: TourBundle): void {
-  session = { bundle: clone(bundle), branch: 'unchanged', chosenContext: false, widget: null, stage: 'discover', step: 'report', maximum: 'report' };
+  session = { bundle: clone(bundle), branch: 'unchanged', chosenContext: false, widgets: [], stage: 'discover', step: 'report', maximum: 'report' };
   refresh();
 }
 export function endTour(): void { session = null; refresh(); }
@@ -47,14 +47,27 @@ export function selectContext(id: ContextId): Branch {
   const s = current();
   if (!contexts.includes(id)) throw new Error('Unknown tour context.');
   if (s.stage !== 'discover' || s.step !== 'report') throw new Error('Choose context in Report.');
-  s.branch = id; s.chosenContext = true; s.widget = null;
+  s.branch = id; s.chosenContext = true; s.widgets = [];
   refresh(); return clone(s.bundle.branches[id]);
 }
-export function selectWidget(id: WidgetId): void {
+export function selectWidgets(ids: WidgetId[]): void {
   const s = current();
-  if (!widgets.includes(id)) throw new Error('Unknown tour widget.');
+  if (!ids.length) throw new Error('Choose at least one tour widget.');
+  if (ids.some(id => !widgets.includes(id))) throw new Error('Unknown tour widget.');
   if (s.step !== 'watch') throw new Error('Choose a widget in Watch.');
-  s.widget = id; refresh();
+  s.widgets = [...new Set([...s.widgets, ...ids])]; refresh();
+}
+export function selectWidget(id: WidgetId): void { selectWidgets([id]); }
+function dashboard(s = current()) {
+  const result = clone(snapshot(s).dashboard), seen = new Set(result.widgets.map(widget => widget.id));
+  for (const id of s.widgets) {
+    const choice = s.bundle.branches[s.branch].widgets[id];
+    // Reuse the actual added card; keep health, options and existing cards from this branch.
+    for (const widget of choice.dashboard.widgets) if (widget.title === choice.spec.title && !seen.has(widget.id)) {
+      result.widgets.push(clone(widget)); seen.add(widget.id);
+    }
+  }
+  return result;
 }
 export function setTourView(step: FlowStep): void {
   const s = current();
@@ -88,7 +101,7 @@ export async function tourRequest<T>(path: string, method = 'GET', body?: unknow
         case '': result = detail(s); break;
         case '/cohorts': result = snap.cohorts; break;
         case '/overrides': result = snap.cohorts.overrides; break;
-        case '/dashboard': result = s.widget ? s.bundle.branches[s.branch].widgets[s.widget].dashboard : snap.dashboard; break;
+        case '/dashboard': result = dashboard(s); break;
         case '/order-summary': result = snap.order_summary; break;
         case '/simulation': result = snap.simulation; break;
         default: throw new Error(`Unsupported tour request: ${verb} ${path}`);

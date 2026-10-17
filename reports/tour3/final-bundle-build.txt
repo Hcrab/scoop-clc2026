@@ -1,0 +1,4 @@
+Private schema: tour_recording_4e2b5aeef23a4936 strawberry: C831a53fca012
+unchanged 241 241 2413 {'fill_rate': 0.9782070658403238, 'lost_units': 4297.0, 'lost_margin': 24271.33, 'avg_pallets': 38.62040147569444, 'peak_pallets': 57.98659722222222, 'days_over_capacity': 0, 'stockout_sku_days': 36, 'ending_on_hand': 71592.0, 'ordered_cases': 8066}
+summer 241 209 2381 {'fill_rate': 0.9752676208040564, 'lost_units': 4868.0, 'lost_margin': 26802.02, 'avg_pallets': 38.511182725694454, 'peak_pallets': 57.98659722222222, 'days_over_capacity': 0, 'stockout_sku_days': 40, 'ending_on_hand': 71374.0, 'ordered_cases': 8058}
+growing 241 246 2418 {'fill_rate': 0.9748464713580993, 'lost_units': 4997.0, 'lost_margin': 27475.13, 'avg_pallets': 38.55303168402778, 'peak_pallets': 57.98659722222222, 'days_over_capacity': 0, 'stockout_sku_days': 39, 'ending_on_hand': 71192.0, 'ordered_cases': 8079}

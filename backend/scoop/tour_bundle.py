@@ -41,7 +41,7 @@ def source_identity(db_engine=None, schema='public'):
 
 
 def verify_bundle(bundle, source):
-    if bundle.get('version') != 2:
+    if bundle.get('version') != 3:
         raise ValueError('Unsupported tour bundle version')
     for key in ('default_week','default_order_hash','plan_id'):
         if bundle.get(key) != source.get(key): raise ValueError('Stale tour bundle: '+key)
@@ -66,3 +66,37 @@ def verify_bundle(bundle, source):
             snapshot['simulation']['result']['summary']['scoop'])))
     if any(len({s[index] for s in signatures}) != 3 for index in range(3)):
         raise ValueError('The three context branches must have distinct orders, replay and results')
+    from .tour_worlds import multiplier, digest, historical_evidence, prove_replay
+    if set(bundle['branches']) != {'unchanged','summer','growing'}:
+        raise ValueError('Three named tour futures are required')
+    unchanged = bundle['branches']['unchanged']['future']
+    for name, branch in bundle['branches'].items():
+        future = branch.get('future', {})
+        if future.get('branch') != name or future.get('matched_skus') != sorted(bundle['meta']['strawberry_skus']):
+            raise ValueError('Missing matched future metadata')
+        if not all(future.get(key) == unchanged.get(key) and future.get(key) for key in
+                   ('history_hash','outside_cohort_hash','original_demand_hash','weather_hash')):
+            raise ValueError('Tour prior history or outside-cohort demand changed')
+        if future.get('multipliers') != {day: str(multiplier(name,day)) for day in
+                                         ('2026-07-27','2026-08-10','2026-08-11')}:
+            raise ValueError('Incorrect tour future multiplier curve')
+        proof = prove_replay(branch['snapshot']['simulation']['result'])
+        if not all(future.get(key) == value for key,value in proof.items()):
+            raise ValueError('Tour policies did not consume the recorded demand')
+        if future.get('persisted_replays_cleared') is not True:
+            raise ValueError('Future replay cache was not cleared')
+        if future.get('baseline_context_control_hash') != digest(branch['snapshot']['simulation']['result']['runs']['baseline']):
+            raise ValueError('Baseline context control does not match actual replay')
+        if historical_evidence(branch['snapshot']) != historical_evidence(bundle['base']):
+            raise ValueError('Historical tour observations changed')
+    if unchanged.get('demand_hash') != unchanged.get('original_demand_hash') or unchanged.get('unchanged_physical_equal') is not True:
+        raise ValueError('Unchanged future must reproduce original physical outcome')
+    if bundle['branches']['unchanged']['snapshot']['simulation']['result'] != bundle['base']['simulation']['result']:
+        raise ValueError('Unchanged replay differs from original physical outcome')
+    evidence=bundle.get('question_evidence',bundle['base'])
+    if historical_evidence(evidence) != historical_evidence(bundle['base']):
+        raise ValueError('Question evidence history changed')
+    for answer in bundle.get('questions',{}).values():
+        if answer and (answer['snapshot_hash'] != digest(evidence) or
+                       answer['source_order_hash'] != evidence['simulation']['order_hash']):
+            raise ValueError('Question recording no longer matches original evidence')

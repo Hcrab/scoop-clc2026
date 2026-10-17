@@ -16,7 +16,7 @@ const ts = require(path.join(root, 'frontend/node_modules/typescript'));
 const rows = new Map();
 const screens = {
   App: 'Workspace / Plans / Stores / Catalog / Evaluation / Settings',
-  PlanSections: 'Discover / Discussion / Recap', ActionList: 'Orders', EditReceipt: 'Orders / edit receipt',
+  PlanSections: 'Discover / Discussion / Recap', ActionList: 'Orders', OrderLedger:'Orders / calculation', dataLabels:'Evidence / field labels', EditReceipt: 'Orders / edit receipt',
   Play: 'Play / Results', Dashboard: 'Watch', DashboardKpis: 'Watch / warehouse metrics',
   OperationalWidget: 'Watch / widgets', CohortCards: 'Discover / demand groups', CohortDrilldown: 'Demand group details',
   GeneratedReport: 'Discover / AI report', nativeReportCards: 'Discover / AI report actions',

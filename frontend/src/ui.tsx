@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { n, pct, date } from './api';
 import { chartTicks } from './chartTicks';
+import { dataLabel } from './dataLabels';
 export function Icon({ name, size = 20 }: { name: string; size?: number }) {
   const paths: Record<string, ReactNode> = {
     settings: <><circle cx="12" cy="12" r="3"/><path d="m9 3 1-1h4l1 1 1 3 3 1 2 3-1 3-2 2-1 3-3 2-3-1-2-2-3-1-2-3 1-3 2-2 1-3Z"/></>,
@@ -26,7 +27,7 @@ export function Badge({ children, tone = '' }: { children: ReactNode; tone?: str
 export function DataView({ value }: { value: unknown }) {
   if (value == null) return <span className="muted">Not available</span>;
   if (Array.isArray(value)) return <div className="data-list">{value.map((v, i) => <div key={i}><DataView value={v}/></div>)}</div>;
-  if (typeof value === 'object') return <dl className="data-grid">{Object.entries(value).map(([key, v]) => <div key={key}><dt>{key.replaceAll('_', ' ')}</dt><dd><DataView value={v}/></dd></div>)}</dl>;
+  if (typeof value === 'object') return <dl className="data-grid">{Object.entries(value).map(([key, v]) => <div key={key}><dt>{dataLabel(key)}</dt><dd><DataView value={v}/></dd></div>)}</dl>;
   return <span>{typeof value === 'number' ? n(value, 4) : typeof value === 'boolean' ? value ? 'Yes' : 'No' : String(value)}</span>;
 }
 export function Chart({ data, lines, percent = false, small = false, plotWidth, partialLast = false, partialLabel = 'today so far, incomplete', bands = [], orderMarker }: { orderMarker?:{date:string;label:string}; data: Record<string, string | number>[]; lines: { key: string; label: string; color: string; colorKey?:string; dashed?: boolean; dots?: boolean }[]; percent?: boolean; small?: boolean; plotWidth?: number; partialLast?: boolean; partialLabel?: string; bands?: {key:string;label:string;color:string}[] }) {

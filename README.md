@@ -96,19 +96,19 @@ The [current measured default replay](reports/tuning/demo-walkthrough.json) give
 
 On first visit, choose **Start the tour** or **Explore on my own**. **Take the tour** in the top bar opens it again. Fourteen desktop coach steps use the same Report, Orders, Watch, Play and Results components, with optional questions and context/widget choices. The welcome and end modals are unnumbered. Skip or Esc returns to Explore at the default Report. Below 1280 px the welcome offers Explore only.
 
-The tour reads the checked-in version-2 `frontend/public/tour-bundle.json`. All tour changes stay in browser memory: no HTTP writes, provider calls or changes to Explore's database. Five genuine Gemini answers remain bundled; the two optional question replies are shown with **Recorded example**. The three context choices contain distinct real orders and complete replays. Step 7 shows four 1.5-second beats: context, expected lift, cohort cases and projected peak; Nothing to add shows only the first beat. All Play views default to **2×** (two seconds per day), with **4×** and **8×** changing only the replay clock. The tour has no pause control.
+The tour reads the checked-in version-3 `frontend/public/tour-bundle.json`. All choices stay in browser memory: no HTTP writes, provider calls or changes to Explore. The two genuine Gemini question replies retain their original evidence and appear as **Recorded example**. Before 27 July all branches have identical history; afterwards summer returns strawberry demand to its normal level after 10 August, growing reaches the planted +70% multiplier on 11 August, and unchanged keeps the default world. Both policies face the same branch demand. Step 7 shows four 1.5-second beats; Nothing to add shows one. Watch supports several choices with **Add selected**. Play defaults to **2×**, with **4×** and **8×** changing only the clock.
 
-To rebuild after changing the default week, prepare its initial template first, then run these commands from the repository root with the backend environment active:
+To rebuild from the clean default-week template, with the backend environment active:
 
 ```sh
-python scripts/build-tour-bundle.py
-# Requires Gemini credentials and provider allowance for the five recordings.
-python scripts/record-tour-answers.py
+python scripts/rebuild-tour-worlds.py
 pnpm --dir frontend build
-SCOOP_TEST_URL=http://127.0.0.1:8008 pnpm --dir frontend exec playwright test tour.spec.ts play-speed.spec.ts
+SCOOP_TEST_URL=http://127.0.0.1:8008 pnpm --dir frontend exec playwright test tour.spec.ts
+# Paced rehearsal (200 English words/minute plus inspection):
+SCOOP_TEST_URL=http://127.0.0.1:8008 pnpm --dir frontend exec playwright test tour-duration.spec.ts
 ```
 
-The builder copies source data into a private PostgreSQL schema, excludes the evaluation-only ground-truth table, and calls the real API there. It retains that schema for the separate answer-recording command. Rebuild both data and answers before publishing a refreshed tour. A read-only `/api/tour/source` fingerprint rejects stale bundles; missing recordings are not replaced with fabricated answers. For unchanged recordings, `python scripts/enrich-tour-bundle.py` appends version-2 recalculation metadata and actual heat-day temperature using read-only data; it neither generates plans nor calls Gemini. Original build/recording evidence is in `reports/night4/`; v2 acceptance is in `reports/tour2/` and `docs/screenshots/tour2-*.png`.
+The builder runs the real API and replay in a private PostgreSQL schema, excluding evaluation-only ground truth. It changes only future strawberry demand, preserving original noise, weather and every other SKU. Unchanged historical evidence allows reuse of the two original question recordings without calls or altered grounding hashes. `/api/tour/source` rejects stale bundles. Original evidence is in `reports/night4/`; current acceptance and walkthrough measurements are in `reports/tour3/`. Every order has a plain-word ledger of forecast, safety, stock, arrivals, case rounding and applied minimum or capacity changes.
 
 The current parameters are optimised for the demonstration scenario. Once real operational data is available, they will be re-optimised on that data.
 

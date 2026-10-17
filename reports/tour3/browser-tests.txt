@@ -1,0 +1,15 @@
+
+Running 7 tests using 1 worker
+
+
+
+(node:72040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/7] e2e\tour.spec.ts:15:1 › real-component tour v3: summer / why / stock+space
+[2/7] e2e\tour.spec.ts:15:1 › real-component tour v3: growing / heat / space+cover
+[3/7] e2e\tour.spec.ts:15:1 › real-component tour v3: unchanged / skip / stock+cover
+[4/7] e2e\tour.spec.ts:125:1 › Orders show an unadjusted group ledger without a trend note
+[5/7] e2e\tour.spec.ts:140:1 › stale source refuses entry; narrow welcome only offers Explore
+[6/7] e2e\tour.spec.ts:146:1 › Esc and Skip exit cleanly; top bar, back and keyboard actions work
+[7/7] e2e\tour.spec.ts:155:1 › Explore preserves existing evidence deep links
+  7 passed (2.9m)

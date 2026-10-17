@@ -1,7 +1,8 @@
 import type { Detail } from './types';
+import { dataLabel } from './dataLabels';
 
 export type EvidenceSource = {id:string;kind:'query'|'finding';title:string;summary:string;args?:unknown;method?:unknown;result:unknown;finding?:Detail['findings'][number]};
-const titleCase=(text:string)=>text.replaceAll('_',' ').replace(/\b\w/g,match=>match.toUpperCase());
+const titleCase=(text:string)=>dataLabel(text).replace(/\b\w/g,match=>match.toUpperCase());
 const plain=(name:string)=>({catalog_groups:'Which product groups exist',query_group:'How this product group changed',query_operations:'What changed in warehouse and stores',preview_group_orders:'How proposed orders would change',cohort_card:'How this demand group was identified',cohort_observation:'How this demand group changed'} as Record<string,string>)[name]||titleCase(name);
 export function evidenceSources(detail:Detail):EvidenceSource[]{
   const queries=(detail.review?.queries||[]).map((query,index)=>{

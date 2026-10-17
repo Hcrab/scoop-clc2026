@@ -11,12 +11,12 @@ const number=(v:number,digits=0)=>new Intl.NumberFormat('en-US',{maximumFraction
 const plain=(v:string)=>v.replace(/\*\*/g,'');
 const date=(v:string)=>new Date(v+'T00:00:00Z').toLocaleDateString('en-GB',{day:'numeric',month:'short',timeZone:'UTC'});
 
-for(const [context,question,widget] of [['summer','why','stock'],['growing','heat','space'],['unchanged','skip','cover']] as const){
-test(`real-component tour v2: ${context} / ${question} / ${widget}`,async({page})=>{
+for(const [context,question,widgets] of [['summer','why',['stock','space']],['growing','heat',['space','cover']],['unchanged','skip',['stock','cover']]] as const){
+test(`real-component tour v3: ${context} / ${question} / ${widgets.join('+')}`,async({page})=>{
   test.setTimeout(150_000);
   const bundle=JSON.parse(await readFile(path.join(root,'frontend/public/tour-bundle.json'),'utf8'));
   const branch=bundle.branches[context],meta=bundle.meta,values=branch.recalculation,before=integrity();
-  const record:any={context,question,widget,screenshots:[],geometry:[],copy:[],requests:[],errors:[],moments:[],beats:[]};
+  const record:any={context,question,widgets,screenshots:[],geometry:[],copy:[],requests:[],errors:[],moments:[],beats:[]};
   page.on('request',r=>{if(r.method()!=='GET')record.requests.push({method:r.method(),url:r.url()})});
   page.on('pageerror',e=>record.errors.push(e.message));
   await page.addInitScript(()=>{
@@ -28,7 +28,7 @@ test(`real-component tour v2: ${context} / ${question} / ${widget}`,async({page}
       }requestAnimationFrame(sample);
     }requestAnimationFrame(sample);
   });
-  await mkdir(output,{recursive:true});await mkdir(path.join(root,'reports/tour2'),{recursive:true});
+  await mkdir(output,{recursive:true});await mkdir(path.join(root,'reports/tour3'),{recursive:true});
   const coach=page.locator('.tour-coach');
   const next=()=>coach.getByRole('button',{name:copy.next,exact:true}).click();
   async function rich(locator:any,text:string){
@@ -46,7 +46,7 @@ test(`real-component tour v2: ${context} / ${question} / ${widget}`,async({page}
     expect(overlap,'Coach must not cover its target').toBe(0);
     expect(c.x).toBeGreaterThanOrEqual(0);expect(c.y).toBeGreaterThanOrEqual(0);expect(c.x+c.width).toBeLessThanOrEqual(1441);expect(c.y+c.height).toBeLessThanOrEqual(901);
   }
-  async function shot(name:string){const file=`tour2-${context}-${name}.png`;await page.screenshot({path:path.join(output,file),animations:'disabled'});record.screenshots.push('docs/screenshots/'+file)}
+  async function shot(name:string){const file=`tour3-${context}-${name}.png`;await page.screenshot({path:path.join(output,file),animations:'disabled'});record.screenshots.push('docs/screenshots/'+file)}
   async function check(step:number,body=copy.steps[step as keyof typeof copy.steps].body,suffix=''){
     const entry=copy.steps[step as keyof typeof copy.steps];
     await expect(coach).toHaveAttribute('data-tour-step',String(step));await expect(coach.locator('h2')).toHaveText(entry.title);
@@ -72,7 +72,7 @@ test(`real-component tour v2: ${context} / ${question} / ${widget}`,async({page}
     if(question!=='skip'){await expect(page.locator('.tour-recorded p')).toHaveText(bundle.questions[question].reply);await expect(page.locator('.tour-recorded>span')).toHaveText(copy.recorded);await geometry();await shot('05-answer')}
     await next();await check(6);await expect(coach.locator('.tour-choice')).toHaveText(Object.values(copy.contexts));await coach.getByRole('button',{name:copy.contexts[context],exact:true}).click();
     const body=fill(context==='unchanged'?copy.recalculation.unchanged:context==='growing'&&values.n>0?copy.recalculation.growingWithCut:copy.recalculation[context],{f_before:values.f_before.toFixed(2),f_after:values.f_after.toFixed(2),before:number(values.before),after:number(values.after),p_before:values.p_before.toFixed(1),p_after:values.p_after.toFixed(1),n:number(values.n)});
-    await check(7,body,'-beat-1');record.beats.push({beat:1,context:await card.locator('[data-tour-context]').allTextContents()});
+    await check(7,body,'-beat-1');await expect(coach.getByText('In this tour, the next two weeks follow the context you chose.',{exact:true})).toBeVisible();record.beats.push({beat:1,context:await card.locator('[data-tour-context]').allTextContents()});
     await expect(coach.getByRole('button',{name:copy.next,exact:true})).toHaveCount(0);
     if(context!=='unchanged'){
       await expect(card.locator('[data-tour-context]')).toHaveText(copy.contexts[context]);
@@ -83,11 +83,20 @@ test(`real-component tour v2: ${context} / ${question} / ${widget}`,async({page}
     await next();await check(8);await page.getByRole('button',{name:'Review orders',exact:true}).click();await check(9);
     await expect(page.locator('.action-capacity')).toContainText(`${number(values.p_after,1)} / ${number(branch.capacity)} pallets`);
     const group=page.locator('.action-group').filter({hasText:'Value price · Strawberry · Water-based'}).first();
-    await expect(group).toHaveAttribute('open','');await expect(group.locator('details[open] summary').filter({hasText:'Order evidence'}).first()).toBeVisible();
+    await expect(group).toHaveAttribute('open','');await expect(group.locator('.order-ledger[open] summary').first()).toBeVisible();
+    await expect(group.locator('.order-ledger[open]')).toContainText('incl.');await shot('09-ledger-with-trend');
     const actualCases=await group.locator('input').evaluateAll(nodes=>nodes.reduce((sum,node)=>sum+Number((node as HTMLInputElement).value),0));expect(actualCases).toBe(values.after);
     await next();await check(10);await page.getByRole('button',{name:'Approve orders',exact:true}).click();await check(11);await noScroll();
-    await expect(page.locator('.dashboard-kpi')).toHaveCount(4);await expect(coach.locator('.tour-choice')).toHaveText(Object.values(copy.widgets));await coach.getByRole('button',{name:copy.widgets[widget],exact:true}).click();
-    await check(12);await expect(page.locator('.dashboard-widget h3').filter({hasText:branch.widgets[widget].spec.title})).toBeInViewport();await noScroll();await page.getByRole('button',{name:'Next: Play',exact:true}).click();
+    await expect(page.locator('.dashboard-kpi')).toHaveCount(4);await expect(coach.locator('.tour-choice')).toHaveText(Object.values(copy.widgets));
+    const addSelected=coach.getByRole('button',{name:'Add selected',exact:true});await expect(addSelected).toBeDisabled();
+    for(const id of widgets){await coach.getByRole('button',{name:copy.widgets[id],exact:true}).click();await expect(coach.getByRole('button',{name:copy.widgets[id],exact:true})).toHaveAttribute('aria-pressed','true')}
+    await expect(addSelected).toBeEnabled();await geometry();await shot('11-two-selected');
+    for(const id of widgets)await coach.getByRole('button',{name:copy.widgets[id],exact:true}).click();
+    await expect(addSelected).toBeDisabled();await expect(coach).toHaveAttribute('data-tour-step','11');
+    for(const id of widgets)await coach.getByRole('button',{name:copy.widgets[id],exact:true}).click();
+    await addSelected.click();await check(12);
+    for(const id of widgets)await expect(page.locator('.dashboard-widget h3').filter({hasText:branch.widgets[id].spec.title})).toHaveCount(1);
+    await expect(page.locator('.dashboard-widget h3').filter({hasText:branch.widgets[widgets[widgets.length-1]].spec.title})).toBeInViewport();await noScroll();await page.getByRole('button',{name:'Next: Play',exact:true}).click();
     await check(13);await expect(page.getByRole('button',{name:'2×',exact:true})).toHaveAttribute('aria-pressed','true');await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeHidden();
     const expected=[fill(copy.events.heat,{date:date(branch.moments.heat_date),temp:meta.heat_temp.toFixed(1)})];
     for(const kind of ['strawberry_arrival','stockout'] as const){const e=branch.moments[kind];if(e)expected.push(fill(kind==='stockout'?copy.events.stockout:copy.events.arrival,{date:date(e.date),time:e.time,units:number(e.units),product:e.product}))}
@@ -109,9 +118,24 @@ test(`real-component tour v2: ${context} / ${question} / ${widget}`,async({page}
     record.motion=await page.evaluate(()=>(window as any).__tourGeometry);expect(record.motion.frames).toBeGreaterThan(0);expect(record.motion.overlaps).toEqual([]);
     expect(record.requests).toEqual([]);expect(record.errors).toEqual([]);const after=integrity();expect(after.database).toEqual(before.database);expect(after.provider).toEqual(before.provider);record.integrity={before,after,unchanged:true};
     if(context==='unchanged'){await page.getByRole('button',{name:copy.end.replay,exact:true}).click();await expect(coach).toHaveAttribute('data-tour-step','1');expect(integrity()).toEqual(before)}
-  }finally{await writeFile(path.join(root,`reports/tour2/tour-${context}.json`),JSON.stringify(record,null,2)+'\n')}
+  }finally{await writeFile(path.join(root,`reports/tour3/tour-${context}.json`),JSON.stringify(record,null,2)+'\n')}
 });
 }
+
+test('Orders show an unadjusted group ledger without a trend note',async({page})=>{
+  await page.goto('/');await page.getByRole('button',{name:copy.welcome.start,exact:true}).click();
+  const coach=page.locator('.tour-coach'),next=()=>coach.getByRole('button',{name:copy.next,exact:true}).click();
+  await next();await next();await page.locator('.cohort-card .cohort-how>summary').first().click();await next();await next();
+  await coach.getByRole('button',{name:copy.questions.skip,exact:true}).click();await next();
+  await coach.getByRole('button',{name:copy.contexts.unchanged,exact:true}).click();await next();
+  await page.getByRole('button',{name:'Review orders',exact:true}).click();
+  for(const group of await page.locator('.action-group').all())if(!(await group.getAttribute('open')!==null))await group.locator(':scope>summary').click();
+  const row=page.locator('tr').filter({hasText:'IC023'}),ledger=row.locator('xpath=following-sibling::tr[1]').locator('.order-ledger');
+  await ledger.locator('summary').click();await ledger.scrollIntoViewIfNeeded();
+  await expect(ledger).toContainText('Expected sales over the next');await expect(ledger).not.toContainText('incl.');
+  const rendered=await page.locator('.action-list').innerText();expect(rendered).not.toMatch(/\bp50\b|protection period|service point|\bposition\b/i);
+  await mkdir(output,{recursive:true});await page.screenshot({path:path.join(output,'tour3-ledger-without-trend.png'),animations:'disabled'});
+});
 
 test('stale source refuses entry; narrow welcome only offers Explore',async({page})=>{
   await page.route('**/api/tour/source',async route=>{const response=await route.fetch();await route.fulfill({json:{...await response.json(),default_order_hash:'changed'}})});

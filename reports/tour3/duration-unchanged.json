@@ -1,0 +1,183 @@
+{
+  "scenario": {
+    "context": "unchanged",
+    "question": "skip",
+    "widgets": [
+      "stock"
+    ],
+    "speed": 8
+  },
+  "reading_model_words_per_minute": 200,
+  "wall_seconds": 269.479,
+  "entries": [
+    {
+      "label": "entry-loading",
+      "wall_seconds": 0.86
+    },
+    {
+      "label": "welcome",
+      "words": 44,
+      "reading_seconds": 13.2,
+      "inspection_seconds": 0,
+      "at_seconds": 0.863
+    },
+    {
+      "label": "step-1",
+      "words": 39,
+      "reading_seconds": 11.700000000000001,
+      "inspection_seconds": 4,
+      "at_seconds": 14.847
+    },
+    {
+      "label": "step-2",
+      "words": 17,
+      "reading_seconds": 5.1000000000000005,
+      "inspection_seconds": 4,
+      "at_seconds": 30.618
+    },
+    {
+      "label": "step-3",
+      "words": 66,
+      "reading_seconds": 19.8,
+      "inspection_seconds": 0,
+      "at_seconds": 39.797
+    },
+    {
+      "label": "expanded-trend-evidence",
+      "words": 88,
+      "reading_seconds": 26.4,
+      "inspection_seconds": 4,
+      "at_seconds": 59.707
+    },
+    {
+      "label": "step-4",
+      "words": 53,
+      "reading_seconds": 15.9,
+      "inspection_seconds": 5,
+      "at_seconds": 90.184
+    },
+    {
+      "label": "step-5",
+      "words": 22,
+      "reading_seconds": 6.6,
+      "inspection_seconds": 0,
+      "at_seconds": 111.254
+    },
+    {
+      "label": "step-6",
+      "words": 28,
+      "reading_seconds": 8.4,
+      "inspection_seconds": 0,
+      "at_seconds": 118.064
+    },
+    {
+      "label": "context-choices",
+      "words": 16,
+      "reading_seconds": 4.8,
+      "inspection_seconds": 0,
+      "at_seconds": 126.479
+    },
+    {
+      "label": "step-7",
+      "words": 31,
+      "reading_seconds": 9.3,
+      "inspection_seconds": 3,
+      "at_seconds": 132.089
+    },
+    {
+      "label": "step-8",
+      "words": 12,
+      "reading_seconds": 3.5999999999999996,
+      "inspection_seconds": 0,
+      "at_seconds": 144.476
+    },
+    {
+      "label": "step-9",
+      "words": 46,
+      "reading_seconds": 13.8,
+      "inspection_seconds": 5,
+      "at_seconds": 148.673
+    },
+    {
+      "label": "order-ledger",
+      "words": 57,
+      "reading_seconds": 17.099999999999998,
+      "inspection_seconds": 3,
+      "at_seconds": 167.488
+    },
+    {
+      "label": "step-10",
+      "words": 11,
+      "reading_seconds": 3.3,
+      "inspection_seconds": 0,
+      "at_seconds": 187.722
+    },
+    {
+      "label": "step-11",
+      "words": 39,
+      "reading_seconds": 11.700000000000001,
+      "inspection_seconds": 5,
+      "at_seconds": 191.519
+    },
+    {
+      "label": "widget-choices",
+      "words": 9,
+      "reading_seconds": 2.6999999999999997,
+      "inspection_seconds": 0,
+      "at_seconds": 208.227
+    },
+    {
+      "label": "step-12",
+      "words": 16,
+      "reading_seconds": 4.8,
+      "inspection_seconds": 4,
+      "at_seconds": 211.211
+    },
+    {
+      "label": "step-13",
+      "words": 39,
+      "reading_seconds": 11.700000000000001,
+      "inspection_seconds": 0,
+      "at_seconds": 220.448
+    },
+    {
+      "label": "playback",
+      "wall_seconds": 11.935,
+      "actual_replay_seconds": 8.22,
+      "speed": 8,
+      "overlaps_reading": true
+    },
+    {
+      "label": "step-14",
+      "words": 40,
+      "reading_seconds": 12,
+      "inspection_seconds": 6,
+      "at_seconds": 232.437
+    },
+    {
+      "label": "results-comparison",
+      "words": 27,
+      "reading_seconds": 8.100000000000001,
+      "inspection_seconds": 0,
+      "at_seconds": 250.515
+    },
+    {
+      "label": "end",
+      "words": 36,
+      "reading_seconds": 10.799999999999999,
+      "inspection_seconds": 0,
+      "at_seconds": 258.661
+    },
+    {
+      "label": "complete",
+      "wall_seconds": 269.479,
+      "metrics": [
+        "Units short\nSimple rule\n6,063\nScoop\n4,297\n29% fewer",
+        "Stockout product-days\nSimple rule\n39\nScoop\n36\n8% fewer",
+        "Lost margin\nSimple rule\nHK$30,849\nScoop\nHK$24,271\n21% less"
+      ]
+    }
+  ],
+  "errors": [],
+  "writes": []
+}

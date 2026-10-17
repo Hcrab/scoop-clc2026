@@ -1,11 +1,11 @@
 {
-  "schema_name": "tour_recording_58f6720b8e9343bc",
-  "started_at": 1792172084.9639292,
+  "schema_name": "tour_recording_4e2b5aeef23a4936",
+  "started_at": 1792237815.2783988,
   "public_before": {
     "chat_messages": "d41d8cd98f00b204e9800998ecf8427e",
     "cusum_series": "d41d8cd98f00b204e9800998ecf8427e",
     "daily_expectations": "d41d8cd98f00b204e9800998ecf8427e",
-    "decisions": "4f6a34190869bf2b5468f64207f0fd09",
+    "decisions": "d41d8cd98f00b204e9800998ecf8427e",
     "direction_items": "d41d8cd98f00b204e9800998ecf8427e",
     "findings": "023fb52513bd28c85e858d91b50ca532",
     "ground_truth_events": "e78554349043c664c2172cbc970f9e13",
@@ -13,16 +13,16 @@
     "model_runs": "4354cb556e22e7f69fb38d2ca423e72a",
     "node_inventory": "9efd7bcbf66ed8136bd416195f298a0c",
     "nodes": "387675b6e29289ec3d0f7308ba914a7c",
-    "plans": "fe3f4f7215bca970aed903b1454e660c",
+    "plans": "bf430fb2a62ada8fc9ad9918887c50d7",
     "product_nutrition": "fe30da75aa81900fd9293c7499ad4e9e",
     "product_tags": "1b12d4afd9960f2fcd72e4cab8f52c55",
     "products": "3c7be6a75bf1fc8861add18bd84c7e29",
     "promotions": "8a03359a2a7f21b9e596a7db74a9aeeb",
     "purchase_orders": "1bc1586d5c728d1ca0c57a464a712ef6",
-    "purchase_suggestions": "ef5a651128124c07373e392f376372fb",
+    "purchase_suggestions": "64949507e427a790a24566ba1cd65e37",
     "questions": "d41d8cd98f00b204e9800998ecf8427e",
     "settings": "e5f8b16216e37ebf81eae030f5fdfce8",
-    "simulation_runs": "fca40ed7cf6c94075eea57fa1c75eb01",
+    "simulation_runs": "d41d8cd98f00b204e9800998ecf8427e",
     "store_orders": "8a212ad5ac2bd34d7528849118954f7b",
     "stores": "dbea5b138018d3b6532cb46934b54dc5",
     "suppliers": "d78a74f324fc60ac734729594672e25e",
@@ -38,19 +38,19 @@
       "method": "POST",
       "route": "/api/demo-settings/reset",
       "status": 200,
-      "seconds": 0.172
+      "seconds": 0.157
     },
     {
       "method": "GET",
       "route": "/api/tour/source",
       "status": 200,
-      "seconds": 0.062
+      "seconds": 0.047
     },
     {
       "method": "GET",
       "route": "/api/bootstrap",
       "status": 200,
-      "seconds": 0.282
+      "seconds": 0.547
     },
     {
       "method": "GET",
@@ -62,31 +62,31 @@
       "method": "GET",
       "route": "/api/plans/P20260727",
       "status": 200,
-      "seconds": 1.938
+      "seconds": 2.266
     },
     {
       "method": "POST",
       "route": "/api/plans/P20260727/advance",
       "status": 200,
-      "seconds": 0.094
+      "seconds": 0.11
     },
     {
       "method": "POST",
       "route": "/api/plans/P20260727/approve-orders",
       "status": 200,
-      "seconds": 1.375
+      "seconds": 2.125
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.172
+      "seconds": 0.218
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.062
+      "seconds": 0.047
     },
     {
       "method": "GET",
@@ -110,13 +110,235 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.062
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
       "seconds": 0.031
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.375
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.125
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.156
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.079
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.031
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.094
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.031
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.141
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.046
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.078
     },
     {
       "method": "GET",
@@ -140,7 +362,61 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.485
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.328
     },
     {
       "method": "GET",
@@ -152,7 +428,235 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
+      "seconds": 0.078
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.453
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.453
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727",
+      "status": 200,
+      "seconds": 0.687
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/cohorts",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/direction-preview",
+      "status": 200,
+      "seconds": 2.094
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/order-summary",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.39
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.578
+    },
+    {
+      "method": "POST",
+      "route": "/api/demo-settings/reset",
+      "status": 200,
+      "seconds": 0.125
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727",
+      "status": 200,
+      "seconds": 1.531
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727",
+      "status": 200,
+      "seconds": 0.562
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/advance",
+      "status": 200,
+      "seconds": 0.094
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/approve-orders",
+      "status": 200,
+      "seconds": 1.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.094
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.657
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.093
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.078
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.078
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
       "seconds": 0.046
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.172
     },
     {
       "method": "GET",
@@ -170,61 +674,31 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.063
+      "seconds": 0.047
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.109
+      "seconds": 0.125
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.031
+      "seconds": 0.047
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.094
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
+      "seconds": 0.047
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
       "seconds": 0.062
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.094
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.046
     },
     {
       "method": "GET",
@@ -242,19 +716,13 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
       "seconds": 0.047
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.062
+      "seconds": 0.063
     },
     {
       "method": "GET",
@@ -278,13 +746,85 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.109
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.094
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
       "seconds": 0.031
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
       "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.031
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.032
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.093
     },
     {
       "method": "GET",
@@ -302,7 +842,67 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.141
+      "seconds": 0.203
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.046
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.844
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.125
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.36
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
     },
     {
       "method": "GET",
@@ -320,7 +920,277 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.046
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.078
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.343
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.407
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727",
+      "status": 200,
+      "seconds": 0.687
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/cohorts",
+      "status": 200,
+      "seconds": 0.078
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/direction-preview",
+      "status": 200,
+      "seconds": 1.688
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/order-summary",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.344
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.468
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.391
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.938
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.234
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/edits/5/undo",
+      "status": 200,
+      "seconds": 0.813
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.454
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.329
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.656
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.25
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/edits/6/undo",
+      "status": 200,
+      "seconds": 0.735
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.453
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.406
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.671
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.438
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/edits/7/undo",
+      "status": 200,
+      "seconds": 0.562
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.453
+    },
+    {
+      "method": "POST",
+      "route": "/api/demo-settings/reset",
+      "status": 200,
+      "seconds": 0.156
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727",
+      "status": 200,
+      "seconds": 1.328
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/overrides",
+      "status": 200,
+      "seconds": 18.172
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727",
+      "status": 200,
+      "seconds": 0.5
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/advance",
+      "status": 200,
+      "seconds": 0.079
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/approve-orders",
+      "status": 200,
+      "seconds": 0.125
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.078
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.078
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.328
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.125
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.187
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
     },
     {
       "method": "GET",
@@ -333,6 +1203,216 @@
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
       "seconds": 0.141
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.172
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.046
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.11
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.094
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.094
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.078
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.125
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.343
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.438
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.125
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.422
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.046
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.157
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
     },
     {
       "method": "GET",
@@ -356,649 +1436,7 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.046
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.656
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.093
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.11
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.046
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.313
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727",
-      "status": 200,
-      "seconds": 0.546
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/cohorts",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/direction-preview",
-      "status": 200,
-      "seconds": 1.921
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/order-summary",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.282
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.375
-    },
-    {
-      "method": "POST",
-      "route": "/api/demo-settings/reset",
-      "status": 200,
-      "seconds": 0.187
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727",
-      "status": 200,
-      "seconds": 1.406
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727",
-      "status": 200,
-      "seconds": 0.547
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/advance",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/approve-orders",
-      "status": 200,
-      "seconds": 1.0
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.094
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.343
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727",
-      "status": 200,
-      "seconds": 0.562
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/cohorts",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/direction-preview",
-      "status": 200,
-      "seconds": 11.766
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/order-summary",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.312
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.329
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.313
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.5
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.25
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/edits/5/undo",
-      "status": 200,
-      "seconds": 0.563
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.344
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.297
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.593
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.282
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/edits/6/undo",
-      "status": 200,
-      "seconds": 0.421
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.297
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
       "seconds": 0.359
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.484
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.266
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/edits/7/undo",
-      "status": 200,
-      "seconds": 0.406
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.312
-    },
-    {
-      "method": "POST",
-      "route": "/api/demo-settings/reset",
-      "status": 200,
-      "seconds": 0.11
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727",
-      "status": 200,
-      "seconds": 1.406
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/overrides",
-      "status": 200,
-      "seconds": 18.641
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727",
-      "status": 200,
-      "seconds": 0.578
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/advance",
-      "status": 200,
-      "seconds": 0.14
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/approve-orders",
-      "status": 200,
-      "seconds": 0.266
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.062
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.094
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.046
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.031
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.296
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.141
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.157
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.031
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.046
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.172
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.062
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.125
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.203
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.062
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.062
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.281
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.141
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.031
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.14
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.156
     },
     {
       "method": "GET",
@@ -1008,81 +1446,105 @@
     },
     {
       "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.391
-    },
-    {
-      "method": "GET",
       "route": "/api/plans/P20260727",
       "status": 200,
-      "seconds": 0.687
+      "seconds": 0.797
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/cohorts",
       "status": 200,
-      "seconds": 0.046
+      "seconds": 0.063
     },
     {
       "method": "POST",
       "route": "/api/plans/P20260727/direction-preview",
       "status": 200,
-      "seconds": 0.203
+      "seconds": 0.219
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/order-summary",
       "status": 200,
-      "seconds": 0.047
+      "seconds": 0.062
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/dashboard",
       "status": 200,
-      "seconds": 0.313
+      "seconds": 0.407
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.296
+      "seconds": 0.406
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.344
+      "seconds": 0.422
     },
     {
       "method": "POST",
       "route": "/api/plans/P20260727/dashboard",
       "status": 200,
-      "seconds": 0.625
+      "seconds": 0.719
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/dashboard",
       "status": 200,
-      "seconds": 0.359
+      "seconds": 0.453
     },
     {
       "method": "POST",
       "route": "/api/plans/P20260727/edits/11/undo",
       "status": 200,
-      "seconds": 0.469
+      "seconds": 0.797
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.343
+      "seconds": 0.359
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.438
+      "seconds": 0.297
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.719
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.281
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/edits/12/undo",
+      "status": 200,
+      "seconds": 0.578
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.562
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.422
     },
     {
       "method": "POST",
@@ -1094,11 +1556,11 @@
       "method": "GET",
       "route": "/api/plans/P20260727/dashboard",
       "status": 200,
-      "seconds": 0.235
+      "seconds": 0.25
     },
     {
       "method": "POST",
-      "route": "/api/plans/P20260727/edits/12/undo",
+      "route": "/api/plans/P20260727/edits/13/undo",
       "status": 200,
       "seconds": 0.609
     },
@@ -1106,379 +1568,43 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.328
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.375
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.578
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.328
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/edits/13/undo",
-      "status": 200,
-      "seconds": 0.469
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.375
+      "seconds": 0.297
     },
     {
       "method": "POST",
       "route": "/api/demo-settings/reset",
       "status": 200,
-      "seconds": 0.141
+      "seconds": 0.265
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727",
       "status": 200,
-      "seconds": 1.781
+      "seconds": 1.406
     },
     {
       "method": "POST",
       "route": "/api/plans/P20260727/overrides",
       "status": 200,
-      "seconds": 20.406
+      "seconds": 17.844
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727",
       "status": 200,
-      "seconds": 0.688
+      "seconds": 0.5
     },
     {
       "method": "POST",
       "route": "/api/plans/P20260727/advance",
       "status": 200,
-      "seconds": 0.078
+      "seconds": 0.125
     },
     {
       "method": "POST",
       "route": "/api/plans/P20260727/approve-orders",
       "status": 200,
-      "seconds": 0.141
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.234
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.062
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.031
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.046
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.438
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.11
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.046
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.156
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.141
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.125
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.062
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.032
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.062
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.125
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.125
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.078
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.125
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.219
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.031
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.047
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.062
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.406
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.11
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.125
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.031
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.156
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.094
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.062
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.063
+      "seconds": 0.172
     },
     {
       "method": "GET",
@@ -1490,25 +1616,307 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.031
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.031
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.516
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.109
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.046
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.125
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.032
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.125
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.031
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.11
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
       "seconds": 0.078
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.094
+      "seconds": 0.047
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.328
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.031
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.062
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.031
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.469
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.14
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.203
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.046
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.125
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.078
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.063
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.047
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.078
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.093
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.422
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.484
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727",
       "status": 200,
-      "seconds": 0.64
+      "seconds": 0.954
     },
     {
       "method": "GET",
@@ -1520,17 +1928,83 @@
       "method": "POST",
       "route": "/api/plans/P20260727/direction-preview",
       "status": 200,
-      "seconds": 0.203
+      "seconds": 0.187
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/order-summary",
       "status": 200,
-      "seconds": 0.047
+      "seconds": 0.032
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.156
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.297
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.422
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.734
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.469
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/edits/17/undo",
+      "status": 200,
+      "seconds": 0.641
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.406
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
+      "status": 200,
+      "seconds": 0.344
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.766
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.5
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/edits/18/undo",
+      "status": 200,
+      "seconds": 0.469
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/simulation",
       "status": 200,
       "seconds": 0.328
     },
@@ -1538,107 +2012,206 @@
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
-      "seconds": 0.516
+      "seconds": 0.297
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.718
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/P20260727/dashboard",
+      "status": 200,
+      "seconds": 0.485
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/P20260727/edits/19/undo",
+      "status": 200,
+      "seconds": 0.562
     },
     {
       "method": "GET",
       "route": "/api/plans/P20260727/simulation",
       "status": 200,
       "seconds": 0.375
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.61
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.313
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/edits/17/undo",
-      "status": 200,
-      "seconds": 0.516
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.328
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.359
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.625
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.391
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/edits/18/undo",
-      "status": 200,
-      "seconds": 0.703
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.36
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.312
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.593
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/dashboard",
-      "status": 200,
-      "seconds": 0.328
-    },
-    {
-      "method": "POST",
-      "route": "/api/plans/P20260727/edits/19/undo",
-      "status": 200,
-      "seconds": 0.547
-    },
-    {
-      "method": "GET",
-      "route": "/api/plans/P20260727/simulation",
-      "status": 200,
-      "seconds": 0.343
     }
   ],
   "excluded_source_tables": [
     "ground_truth_events"
   ],
   "source_hashes": {
-    "scripts\\build-tour-bundle.py": "5b4f95367b13efb9b0d50066a51263ed6cc68d4f344d163eeea9f2de0c3758d9",
-    "backend\\scoop\\tour_bundle.py": "fd7721a0b321cf0ef986a7f2a44a5c0d255b165e23adae75581842b9bb22ac0e",
-    "backend\\scoop\\api\\tour.py": "33b0268273a7cc2ea59290f6a2c1aaddd86609ccdf306f086873a5e3b726231a"
+    "scripts\\build-tour-bundle.py": "f6d07bed64e119105bdcd28a49be5b13fbe132d8b41dd0094a3f69dd944be838",
+    "backend\\scoop\\tour_bundle.py": "527ab8155d3a44a7a93f42f025532bbcfbb8466e093e3f045d3dcd838cf8244c",
+    "backend\\scoop\\api\\tour.py": "33b0268273a7cc2ea59290f6a2c1aaddd86609ccdf306f086873a5e3b726231a",
+    "backend\\scoop\\tour_worlds.py": "dab50fa04ff0a78b9eb7e5c5bd9942e7a13084434982070eaac79d5bf3c0e58d",
+    "backend\\scoop\\play.py": "7d15c78b62706b01b82637edd9b6bd1285e1896474f703bfd6803f90ffd90cfa"
   },
+  "version": 3,
+  "weekly_fits": [
+    {
+      "branch": "original",
+      "week_start": "2026-08-03",
+      "history_through": "2026-08-02",
+      "window_recent": [
+        "2026-07-20",
+        "2026-08-02"
+      ],
+      "elapsed_history_hash": "b727bb9ea7bb977db6e0583d6b07de117de1f41139d69983db513e894688013b"
+    },
+    {
+      "branch": "original",
+      "week_start": "2026-08-10",
+      "history_through": "2026-08-09",
+      "window_recent": [
+        "2026-07-27",
+        "2026-08-09"
+      ],
+      "elapsed_history_hash": "80f2d27d4e127b416ddf456496d1b618a2a77814df0c8aec6c6564e307b4d741"
+    },
+    {
+      "branch": "unchanged",
+      "week_start": "2026-08-03",
+      "history_through": "2026-08-02",
+      "window_recent": [
+        "2026-07-20",
+        "2026-08-02"
+      ],
+      "elapsed_history_hash": "b727bb9ea7bb977db6e0583d6b07de117de1f41139d69983db513e894688013b"
+    },
+    {
+      "branch": "unchanged",
+      "week_start": "2026-08-10",
+      "history_through": "2026-08-09",
+      "window_recent": [
+        "2026-07-27",
+        "2026-08-09"
+      ],
+      "elapsed_history_hash": "80f2d27d4e127b416ddf456496d1b618a2a77814df0c8aec6c6564e307b4d741"
+    },
+    {
+      "branch": "unchanged",
+      "week_start": "2026-08-03",
+      "history_through": "2026-08-02",
+      "window_recent": [
+        "2026-07-20",
+        "2026-08-02"
+      ],
+      "elapsed_history_hash": "b727bb9ea7bb977db6e0583d6b07de117de1f41139d69983db513e894688013b"
+    },
+    {
+      "branch": "unchanged",
+      "week_start": "2026-08-10",
+      "history_through": "2026-08-09",
+      "window_recent": [
+        "2026-07-27",
+        "2026-08-09"
+      ],
+      "elapsed_history_hash": "80f2d27d4e127b416ddf456496d1b618a2a77814df0c8aec6c6564e307b4d741"
+    },
+    {
+      "branch": "summer",
+      "week_start": "2026-07-27",
+      "history_through": "2026-07-26",
+      "window_recent": [
+        "2026-07-13",
+        "2026-07-26"
+      ],
+      "elapsed_history_hash": "4817a2732c8a0f8c6768c899678408d408177cc785c8021826d24aab310268f5"
+    },
+    {
+      "branch": "summer",
+      "week_start": "2026-08-03",
+      "history_through": "2026-08-02",
+      "window_recent": [
+        "2026-07-20",
+        "2026-08-02"
+      ],
+      "elapsed_history_hash": "b727bb9ea7bb977db6e0583d6b07de117de1f41139d69983db513e894688013b"
+    },
+    {
+      "branch": "summer",
+      "week_start": "2026-08-10",
+      "history_through": "2026-08-09",
+      "window_recent": [
+        "2026-07-27",
+        "2026-08-09"
+      ],
+      "elapsed_history_hash": "80f2d27d4e127b416ddf456496d1b618a2a77814df0c8aec6c6564e307b4d741"
+    },
+    {
+      "branch": "summer",
+      "week_start": "2026-08-03",
+      "history_through": "2026-08-02",
+      "window_recent": [
+        "2026-07-20",
+        "2026-08-02"
+      ],
+      "elapsed_history_hash": "b727bb9ea7bb977db6e0583d6b07de117de1f41139d69983db513e894688013b"
+    },
+    {
+      "branch": "summer",
+      "week_start": "2026-08-10",
+      "history_through": "2026-08-09",
+      "window_recent": [
+        "2026-07-27",
+        "2026-08-09"
+      ],
+      "elapsed_history_hash": "80f2d27d4e127b416ddf456496d1b618a2a77814df0c8aec6c6564e307b4d741"
+    },
+    {
+      "branch": "growing",
+      "week_start": "2026-07-27",
+      "history_through": "2026-07-26",
+      "window_recent": [
+        "2026-07-13",
+        "2026-07-26"
+      ],
+      "elapsed_history_hash": "4817a2732c8a0f8c6768c899678408d408177cc785c8021826d24aab310268f5"
+    },
+    {
+      "branch": "growing",
+      "week_start": "2026-08-03",
+      "history_through": "2026-08-02",
+      "window_recent": [
+        "2026-07-20",
+        "2026-08-02"
+      ],
+      "elapsed_history_hash": "f327304c5c374b282facc1f2a76d26cfd2d636a4abc1978b8a1010c4103e83b6"
+    },
+    {
+      "branch": "growing",
+      "week_start": "2026-08-10",
+      "history_through": "2026-08-09",
+      "window_recent": [
+        "2026-07-27",
+        "2026-08-09"
+      ],
+      "elapsed_history_hash": "6d3e6c8c26d18748df712c337e3b5e4f0fe54ad9b0eb3206f69a8692573526fa"
+    },
+    {
+      "branch": "growing",
+      "week_start": "2026-08-03",
+      "history_through": "2026-08-02",
+      "window_recent": [
+        "2026-07-20",
+        "2026-08-02"
+      ],
+      "elapsed_history_hash": "f327304c5c374b282facc1f2a76d26cfd2d636a4abc1978b8a1010c4103e83b6"
+    },
+    {
+      "branch": "growing",
+      "week_start": "2026-08-10",
+      "history_through": "2026-08-09",
+      "window_recent": [
+        "2026-07-27",
+        "2026-08-09"
+      ],
+      "elapsed_history_hash": "6d3e6c8c26d18748df712c337e3b5e4f0fe54ad9b0eb3206f69a8692573526fa"
+    }
+  ],
   "strawberry_card": {
     "id": "C831a53fca012",
     "name": "Value price \u00b7 Strawberry \u00b7 Water-based",
@@ -8719,8 +9292,8 @@
     "default_order_hash": "a8ca053adf930b016e76346af923c992c3585c2df74e83b1f31ab5cfcc65e322",
     "plan_id": "P20260727"
   },
-  "bytes": 31288196,
-  "bundle_hash": "067b7a6bf18af67d1020dd0f1da7a77852f5f8a23c064cea92a688b60daa9232",
+  "bytes": 42016709,
+  "bundle_hash": "f3c58f3a433d04cb4d0ebe145e0e180cd5109fc556b1d78aa6daa1f68921cd48",
   "growing_preset": {
     "cohort": "C831a53fca012",
     "type": "expect",
@@ -8750,6 +9323,37 @@
           "minute": 940,
           "product": "Grapefruit Sorbet Bar"
         }
+      },
+      "future": {
+        "branch": "unchanged",
+        "start": "2026-07-27",
+        "summer_end": "2026-08-10",
+        "growth_end": "2026-08-11",
+        "matched_skus": [
+          "IC006",
+          "IC061",
+          "IC062",
+          "IC063"
+        ],
+        "basis": "same seed93 store-SKU-day realization scaled by planted multiplier / 1.5",
+        "rounding": "nonnegative half-up at store-SKU-day",
+        "changed_rows": 0,
+        "history_hash": "fa4ec9a3c1999f5ba9277715c71e0a9946678b2a3ae3289804680d63faa7196c",
+        "outside_cohort_hash": "ed9bba202edc6493c0a624bcb5babcb9a5fb59716ee3530644a751bbabb541bb",
+        "original_demand_hash": "20d56ff048c9253a8310ae7686669732fcb89015d43b54b86436ceab0b8baf28",
+        "demand_hash": "20d56ff048c9253a8310ae7686669732fcb89015d43b54b86436ceab0b8baf28",
+        "weather_hash": "ac565dd53a10d0adc7e4e8ac76cbf8596ec695aa26cc2daec6239cca665cca2e",
+        "multipliers": {
+          "2026-07-27": "1.5",
+          "2026-08-10": "1.5",
+          "2026-08-11": "1.5"
+        },
+        "persisted_replays_cleared": true,
+        "policy_demand_equal": true,
+        "replay_demand_hash": "c0764d1fd81ab301397311fea18c2fba4d4666bcc810acd8f02dc71e9975d9e1",
+        "baseline_context_blind": true,
+        "baseline_context_control_hash": "413c54ca76365e8b0e7393fbbd7711f6b96d066d3cc764db55b1ef158632c656",
+        "unchanged_physical_equal": true
       }
     },
     "summer": {
@@ -8771,6 +9375,37 @@
           "minute": 940,
           "product": "Grapefruit Sorbet Bar"
         }
+      },
+      "future": {
+        "branch": "summer",
+        "start": "2026-07-27",
+        "summer_end": "2026-08-10",
+        "growth_end": "2026-08-11",
+        "matched_skus": [
+          "IC006",
+          "IC061",
+          "IC062",
+          "IC063"
+        ],
+        "basis": "same seed93 store-SKU-day realization scaled by planted multiplier / 1.5",
+        "rounding": "nonnegative half-up at store-SKU-day",
+        "changed_rows": 1655,
+        "history_hash": "fa4ec9a3c1999f5ba9277715c71e0a9946678b2a3ae3289804680d63faa7196c",
+        "outside_cohort_hash": "ed9bba202edc6493c0a624bcb5babcb9a5fb59716ee3530644a751bbabb541bb",
+        "original_demand_hash": "20d56ff048c9253a8310ae7686669732fcb89015d43b54b86436ceab0b8baf28",
+        "demand_hash": "56ec07645ee994cafcdb8492c2d7a9dc1d0754f3fbf1ff035b35343cf04b227b",
+        "weather_hash": "ac565dd53a10d0adc7e4e8ac76cbf8596ec695aa26cc2daec6239cca665cca2e",
+        "multipliers": {
+          "2026-07-27": "1.5",
+          "2026-08-10": "1.5",
+          "2026-08-11": "1"
+        },
+        "persisted_replays_cleared": true,
+        "policy_demand_equal": true,
+        "replay_demand_hash": "c026614ebc0d018e1a80df6cba9cd7e982d31b47ad2166ec881fd26293ebbcf7",
+        "baseline_context_blind": true,
+        "baseline_context_control_hash": "d44269d61afb76df1997d31e44318af947a20c9456723b1e955edeb2044778c6",
+        "unchanged_physical_equal": null
       }
     },
     "growing": {
@@ -8792,6 +9427,37 @@
           "minute": 940,
           "product": "Grapefruit Sorbet Bar"
         }
+      },
+      "future": {
+        "branch": "growing",
+        "start": "2026-07-27",
+        "summer_end": "2026-08-10",
+        "growth_end": "2026-08-11",
+        "matched_skus": [
+          "IC006",
+          "IC061",
+          "IC062",
+          "IC063"
+        ],
+        "basis": "same seed93 store-SKU-day realization scaled by planted multiplier / 1.5",
+        "rounding": "nonnegative half-up at store-SKU-day",
+        "changed_rows": 2211,
+        "history_hash": "fa4ec9a3c1999f5ba9277715c71e0a9946678b2a3ae3289804680d63faa7196c",
+        "outside_cohort_hash": "ed9bba202edc6493c0a624bcb5babcb9a5fb59716ee3530644a751bbabb541bb",
+        "original_demand_hash": "20d56ff048c9253a8310ae7686669732fcb89015d43b54b86436ceab0b8baf28",
+        "demand_hash": "c37b5e12d9d5cee9e5d351980c1e6e8f01497f21c9cccfe2b21dc664bb588034",
+        "weather_hash": "ac565dd53a10d0adc7e4e8ac76cbf8596ec695aa26cc2daec6239cca665cca2e",
+        "multipliers": {
+          "2026-07-27": "1.5",
+          "2026-08-10": "1.686666666666666666666666667",
+          "2026-08-11": "1.7"
+        },
+        "persisted_replays_cleared": true,
+        "policy_demand_equal": true,
+        "replay_demand_hash": "7d0a38f837ecc5374a8cd80ed9bcd9a468351bdc9153427d864d74906158ee49",
+        "baseline_context_blind": true,
+        "baseline_context_control_hash": "686b414af4490b6ee02cc847c54684a2b0b62a756c708b7cd5ffb6c9cf4bd21d",
+        "unchanged_physical_equal": null
       }
     }
   },
@@ -8799,7 +9465,7 @@
     "chat_messages": "d41d8cd98f00b204e9800998ecf8427e",
     "cusum_series": "d41d8cd98f00b204e9800998ecf8427e",
     "daily_expectations": "d41d8cd98f00b204e9800998ecf8427e",
-    "decisions": "4f6a34190869bf2b5468f64207f0fd09",
+    "decisions": "d41d8cd98f00b204e9800998ecf8427e",
     "direction_items": "d41d8cd98f00b204e9800998ecf8427e",
     "findings": "023fb52513bd28c85e858d91b50ca532",
     "ground_truth_events": "e78554349043c664c2172cbc970f9e13",
@@ -8807,16 +9473,16 @@
     "model_runs": "4354cb556e22e7f69fb38d2ca423e72a",
     "node_inventory": "9efd7bcbf66ed8136bd416195f298a0c",
     "nodes": "387675b6e29289ec3d0f7308ba914a7c",
-    "plans": "fe3f4f7215bca970aed903b1454e660c",
+    "plans": "bf430fb2a62ada8fc9ad9918887c50d7",
     "product_nutrition": "fe30da75aa81900fd9293c7499ad4e9e",
     "product_tags": "1b12d4afd9960f2fcd72e4cab8f52c55",
     "products": "3c7be6a75bf1fc8861add18bd84c7e29",
     "promotions": "8a03359a2a7f21b9e596a7db74a9aeeb",
     "purchase_orders": "1bc1586d5c728d1ca0c57a464a712ef6",
-    "purchase_suggestions": "ef5a651128124c07373e392f376372fb",
+    "purchase_suggestions": "64949507e427a790a24566ba1cd65e37",
     "questions": "d41d8cd98f00b204e9800998ecf8427e",
     "settings": "e5f8b16216e37ebf81eae030f5fdfce8",
-    "simulation_runs": "fca40ed7cf6c94075eea57fa1c75eb01",
+    "simulation_runs": "d41d8cd98f00b204e9800998ecf8427e",
     "store_orders": "8a212ad5ac2bd34d7528849118954f7b",
     "stores": "dbea5b138018d3b6532cb46934b54dc5",
     "suppliers": "d78a74f324fc60ac734729594672e25e",
@@ -8827,20 +9493,5 @@
     "weather_forecasts": "77607116ded4b269bffdb6b95f99faaa"
   },
   "public_unchanged": true,
-  "elapsed_seconds": 204.33916091918945,
-  "repeat_clean_build": {
-    "first_schema": "tour_recording_b517dd112aed44bf",
-    "second_schema": "tour_recording_58f6720b8e9343bc",
-    "physical_signatures_identical": true,
-    "signatures": {
-      "unchanged": "416f2bd2feed98854f25ce28549daec6cf04bceebd72835c9fe4972d558744bb",
-      "summer": "5444b78c3a353bb5196f3cbc3dad78a5e9c42c91742b69800f70bf75a2ad1a97",
-      "growing": "dca9681cf465767debc05e765fc2d85badb699154587243132d068a358362869"
-    }
-  },
-  "focused_tests": {
-    "command": "PYTHONPATH=backend .venv/Scripts/python.exe -m pytest backend/tests/test_tour_bundle.py -q",
-    "passed": 5,
-    "failed": 0
-  }
+  "elapsed_seconds": 388.6658389568329
 }

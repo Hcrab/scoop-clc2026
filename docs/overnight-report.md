@@ -1,54 +1,73 @@
-# Scoop: guided tour v2 — 17 October 2026
+# Scoop: order ledgers, tour futures and walkthrough timing — 17 October 2026
 
 ## One-page summary
 
-**Tour v2 is accepted.** Fourteen numbered coach steps, unnumbered welcome/end, final verbatim copy with bold, four recalculation beats and native 2× / 4× / 8× playback are implemented. All five acceptance checks below pass. Prior report: [tour v1](reports/tour-v1-20261017.md). Requirements: [verbatim v2 handoff](reports/tour-v2-protocol.md).
+**The tour review phase is accepted.** All 75 order lines have an arithmetical ledger; the three tour context choices now have separate strawberry futures; Watch supports multi-selection. Three additional paced runs estimate the actual experience. Prior acceptance is archived in [tour v2](reports/tour-v2-20261017.md); requirements are in [the review protocol](reports/tour-review-protocol.md).
 
 | Acceptance | Status | Evidence |
 |---|---|---|
-| Three complete tours; every step/beat at 1440×900 | ✅ | Summer/why/stock, growing/heat/space, unchanged/Skip/cover; 76 reviewed screenshots including three Explore views |
-| Rendered strings match final copy; bold renders bold | ✅ | Protocol-to-copy unit checks; every rendered title/body, placeholder and strong span checked in three browser runs |
-| Step-7 values match bundle, Orders and Results | ✅ | Real recorded factors/cases/projected peaks; group quantities and all three Results metrics verified per branch |
-| Speeds stay synchronized; default 2× | ✅ | Same day-5 frame at all speeds: identical 49 events, four tiles and widget numbers; 2→4→8 mid-play checks |
-| No Watch/Play document scroll; no target overlap | ✅ | Tour and Explore height checks; 7,076 rendered-frame geometry samples with zero overlaps, plus stable-step checks |
+| Ledger on every line; all 75 reconcile | ✅ | `test_all_75_real_default_api_lines_and_export_are_read_only`; `test_generated_tour_ledgers_reconcile_all_75_lines_in_every_branch`; MOQ/cut/rounding/surplus/edit cases |
+| Trend note only on matching presented cohort; plain UI labels | ✅ | 14 named-cohort notes / 61 without; with/without screenshots; exported UI-copy grep has zero banned matches |
+| Identical history; distinct futures and actual policy replays | ✅ | Private SQL row proofs; original noise/weather/non-cohort hashes; context-free baseline controls; unchanged replay exactly reproduces original |
+| Step-7 muted notice | ✅ | Exact rendered notice in all three full browser flows |
+| Step-11 toggle, minimum one, Add selected, atomic add and reset | ✅ | Every nonempty subset in all branches; browser selects two, deselects to zero, adds both and verifies real cards |
+| Screenshots: both ledger states, two selected, all three Results | ✅ | 80 reviewed 1440×900 screenshots; `reports/tour3/screenshot-review.json` |
+| Three normal paced branch walkthroughs | ✅ | [Timing report](reports/tour-duration-20261017.md); per-step JSON; zero errors/HTTP writes |
 
-| Branch | Cohort factor | Strawberry cases | Projected peak | Units short / product-days / lost margin |
+**Validation:** 53 backend checks, 35 frontend checks, seven browser acceptance checks, three paced walkthroughs, production build and diff check pass. No new Gemini calls/spend. Public database and provider fingerprints match before/after. LOGFLOWS PDF and launcher changes remain local and excluded from this commit.
+
+## Actual branch Results
+
+| Branch | Policy | Units short | Stockout product-days | Lost margin |
 |---|---|---|---|---|
-| Summer | 1.38× → 1.30× | 241 → 209 | 61.3 → 61.4 pallets | 5,012 / 40 / HK$27,444.98 |
-| Growing | 1.38× → 1.39× | 241 → 246 | 61.3 → 61.3 pallets | 4,219 / 34 / HK$23,909.21 |
-| Unchanged | 1.38× → 1.38× | 241 → 241 | 61.3 → 61.3 pallets | 4,297 / 36 / HK$24,271.33 |
+| summer | Scoop | 4,868 | 40 | HK$26,802.02 |
+| summer | Simple rule | 5,919 | 39 | HK$30,206.15 |
+| growing | Scoop | 4,997 | 39 | HK$27,475.13 |
+| growing | Simple rule | 7,311 | 42 | HK$36,394.79 |
+| unchanged | Scoop | 4,297 | 36 | HK$24,271.33 |
+| unchanged | Simple rule | 6,063 | 39 | HK$30,849.11 |
 
-**Validation:** 24 frontend unit checks, 10 backend checks, 7 browser checks; production build and diff check pass. **Zero new Gemini calls or spend.** Every tour sends zero HTTP non-GET requests; all 29 public-table fingerprints and provider usage remain unchanged. Recorded snapshots and five grounded answers are preserved. No algorithms, thresholds, priors, buffers or world data were tuned. UI copy inventory refreshed. LOGFLOWS PDF stays local and excluded from publication.
+Compare policies **within** a branch: each receives identical store demand and the same cold-store capacity. The Simple rule is context-blind and unchanged; its rolling history naturally differs between futures. Summer has 40 versus 39 product-days and correctly displays **3% more** in coral. No outcome was forced or parameter tuned. Unchanged preserves the original 4,297 / 36 / HK$24,271.33 Scoop result and 6,063 / 39 / HK$30,849.11 rule result.
 
-## Acceptance evidence
+## Orders and context semantics
 
-- ✅ **Three full tours and screenshots.** [Browser output](../reports/tour2/browser-tests.txt); [summer](../reports/tour2/tour-summer.json), [growing](../reports/tour2/tour-growing.json), [unchanged](../reports/tour2/tour-unchanged.json). Every numbered step 1–14 is captured, plus welcome/end, expanded evidence, optional answers and replay events. Summer and growing include all four 1.5-second beats and final endpoints. Unchanged includes only beat 1, as explicitly specified. [Screenshot review manifest](../reports/tour2/screenshot-review.json) lists dimensions, hashes and review notes.
-- ✅ **Exact rendered copy and bold.** `frontend/tests/tour-copy.test.cjs` compares the copy table with the supplied protocol. `frontend/e2e/tour.spec.ts` compares actual rendered title/body/counter/choices with filled copy and checks every bold segment is a `strong` element. All titles are single-line 20/600, bodies 15/400, coach width 420 px. Welcome, end, answers, event captions and optional Skip are exercised. [Unit output](../reports/tour2/unit-tests.txt).
-- ✅ **Branch numbers.** [Read-only metadata report](../reports/tour2/data.json), `test_generated_real_bundle`, `test_factor_uses_actual_sku_factors_and_only_matched_expected_demand`, `test_only_new_capacity_cuts_are_counted` and three real-component browser flows. Step 7 shows and animates actual saved figures; Next is absent until the last beat completes. Following Orders confirms the cohort total and projected peak; Results confirms all three saved metrics. No branch adds capacity cuts: `n=0`, `trimmed_products=[]`; the growing sentence about trims is omitted under the authorized exception. [Backend output](../reports/tour2/backend-tests.txt).
-- ✅ **Playback clock.** [Speed browser output/data](../reports/tour2/play-speed.json): day 5, 31 Jul 00:00, is identical at 2×, 4× and 8× (49 events; 100% fill, 0 stockouts, 4 low-cover products, 48.9/62 pallets). Mid-play switches retain the displayed tick: 29 Jul 00:00 at 2× → 2 Aug 00:00 at 4× → 10 Aug 00:00 at 8×, with 28/77/168 elapsed events. Actual UI tiles are checked against replay health at each cursor, and native event rows against the real event sequence. Unit tests also cover every ten-minute tick, midnight and completion. Default 2× and all segments are checked in Explore and tour.
-- ✅ **Scrolling and geometry.** Three tours check stable targets and sample every rendered animation frame; zero overlap in 7,076 samples. Both Watch and Play have document height 900 and scrollY 0 at 1440×900; dashboard and feed scroll internally. Explore Watch/Play are tested separately. The report finding is targeted through its real opaque iframe with source/channel validation; sandbox remains `allow-scripts`. The coach relocates before paint, then fades/slides 7 px over about 200 ms in its adjacent gap, rather than crossing the target.
+The median already includes the applied product factor. Safety is the real target minus that median; independently rounded display values use an explicit whole-unit residual rather than changing the buffer. Net demand, packing ceiling, actual supplier minimum, capacity cut and explicit final replacement quantities reconcile to the actual order. Ordinary lines show the final quantity once; adjusted lines separate the pre-adjustment case count from the final quantity. The ledger occupies the full row below each product so expanding it does not distort the table.
 
-## Data definitions and retained behavior
+The forecast caption deliberately says **Expected sales over the next … days**: the production window extends through the next replenishment cycle, which is not necessarily the first inbound receipt. This corrects the supplied “until next delivery” wording without changing days or forecast. The trend note names only an actual matching presented cohort; small remainder-leaf factors remain in the forecast. Technical keys receive known display labels; free AI prose is not filtered. Grep evidence: `reports/tour3/copy-grep.json`, over all exported source/runtime copy.
 
-The cohort factor is the expected-recent-demand-weighted arithmetic mean of actual per-SKU `f50` values for the four matched strawberry SKUs. Each SKU can retain a different calendar-sensitive factor. Cases sum effective orders. Peak is the **planning projection**, not the physical replay peak; one decimal is retained even when two endpoints round to the same value. New trims count only increases in per-SKU `capacity_cut_cases` over the clean base. [Exact full-precision inputs](../reports/tour2/data.json).
+## Future construction and provenance
 
-The bundle retains its original pristine order hash, all API responses, snapshots and five genuine grounded Gemini 3.8 Flash answers. V2 enrichment only adds recalculation annotations and actual 30 July `WeatherDaily.tmax` **33.6°C**, read-only. The first strawberry receipt is 08:10 on 27 July, 1,160 units from the existing pipeline; it is not attributed to the later 14:00 order. The synthetic world separately plants the strawberry combination and weather intervention; this explains the supplied tutorial narrative without introducing a new causal estimator.
+`tour_worlds.py` changes only matched strawberry SKUs from 27 July in a private schema. It scales the same seed-93 store/SKU/day realization by desired planted multiplier / 1.5, rounding half up. Summer keeps 1.5 through 10 August then returns to 1.0; growing rises from 1.5 to 1.7 on 11 August; unchanged remains exact. History, other SKUs and weather match. Persisted and memory replay caches are cleared. Initial decisions see unchanged history and existing context overrides; later weekly fits use only elapsed branch history. Each branch's actual demand is identical in both policy outputs; independent context-free baseline controls agree.
 
-R0 Results remains intact: Simple rule = 6,063 units short / 39 product-days / HK$30,849.11; unchanged Scoop = 4,297 / 36 / HK$24,271.33. Summer honestly displays **3% more** product-days in coral (40 vs 39). The local LOGFLOWS PDF, its builder and assets are not staged or pushed.
+The same saved `ends_on` and optimistic upper-interval `expect` presets remain: strawberry cases 209 / 246 / 241, full-plan cases 2,381 / 2,418 / 2,413. Case quantities and planning peaks match Step 7, Orders and Results. Planted demand multipliers are synthetic future definitions, distinct from the historically estimated 38% cohort lift. Full proofs and traces: `reports/night4/bundle-build.json` and `reports/tour3/data.json`.
 
-Tours send zero HTTP non-GETs and make no provider calls. The separate Explore speed test uses the native Watch/Play navigation and restores the original flow step; complete public-table and provider fingerprints match before/after. `test_stale_hash_rejected` and the browser stale-source test reject mismatched recordings. Narrow welcome, Skip/Esc, keyboard/back, replay and Explore evidence deep links pass.
+The two genuine Gemini question replies preserve their original full `question_evidence` snapshot and hashes; historical report/findings are checked before reuse. Obsolete context answer recordings are removed. New ledger fields do not get falsely relabelled as the original grounded snapshot. Browser fixtures remain local and send zero non-GET HTTP requests. Public tables and provider usage are unchanged. The stale-source rejection, Escape/Skip, keyboard/back, replay and Explore evidence deep links pass.
 
-## Commands and documentation
+## Browser review and duration
+
+Three complete acceptance flows check every step, bold copy, recalculation beat, selected-widget merge, native 2×/4×/8× changes, event captions, branch figures and Results. There are 7,116 sampled animation frames with zero coach/target overlaps. Watch/Play retain internal panel scroll and 900px document height. Two actual integration issues were corrected: CSS checkmarks no longer alter button accessible names, and all selected cards are added before scrolling to the last added card.
+
+The final ledger simplification was checked by component tests, a focused no-trend browser screenshot and the three paced native-component runs. All other acceptance screenshots retain the same geometry and data. [Screenshot review](../reports/tour3/screenshot-review.json). Paced results:
+
+| Branch | Question | Added widgets | Playback speed | Whole experience | Actual replay |
+|---|---|---|---|---|---|
+| summer | why | stock + space | 2× | 5:21 | 32.0 s |
+| growing | heat | space + cover | 4× | 5:03 | 16.2 s |
+| unchanged | skip | stock | 8× | 4:29 | 8.2 s |
+
+The pacing model is 200 English words/minute plus explicit inspection dwell; it is a reproducible experience estimate rather than human-subject evidence. The Play reading occurs during playback. Loading, welcome/end and actual clicks are included. Raw timestamps and word counts are saved per run.
+
+## Reproduction and publication
 
 ```sh
-PYTHONPATH=backend python -m pytest backend/tests/test_tour_bundle.py -q
-node --test frontend/tests/playback-clock.test.cjs frontend/tests/tour-copy.test.cjs frontend/tests/tour-runtime.test.cjs frontend/tests/results-comparison.test.cjs frontend/tests/results-metrics.test.cjs
+python scripts/rebuild-tour-worlds.py
+PYTHONPATH=backend python -m pytest backend/tests/test_order_ledger.py backend/tests/test_tour_worlds.py backend/tests/test_tour_bundle.py backend/tests/test_play.py -q
+node --test frontend/tests/tour-copy.test.cjs frontend/tests/tour-runtime.test.cjs frontend/tests/order-ledger.test.cjs frontend/tests/data-labels.test.cjs frontend/tests/playback-clock.test.cjs frontend/tests/results-comparison.test.cjs frontend/tests/results-metrics.test.cjs
 pnpm --dir frontend build
-SCOOP_TEST_URL=http://127.0.0.1:8008 pnpm --dir frontend exec playwright test tour.spec.ts play-speed.spec.ts
+SCOOP_TEST_URL=http://127.0.0.1:8008 pnpm --dir frontend exec playwright test tour.spec.ts
+SCOOP_TEST_URL=http://127.0.0.1:8008 pnpm --dir frontend exec playwright test tour-duration.spec.ts
 node scripts/export-ui-copy.cjs --base-url http://127.0.0.1:8008
 git diff --check
 ```
 
-The executed Windows commands use the repository `.venv` and bundled Node/pnpm paths. [Build output](../reports/tour2/build.txt). README, DEMO and TECHNICAL_DESIGN describe the fourteen-step flow, version-2 bundle, read-only enrichment, real factor/peak definitions and shared playback speeds. [UI copy CSV](ui-copy.csv) retains columns `id, screen, component/file, current text`; no unrelated copy changes were applied.
-
-No failed or blocked acceptance items remain. Source, data, screenshots, tests and this report accompany the accepted phase on `claude/scoop-prototype`; publication is verified against remote HEAD after push.
+Logs are in `reports/tour3/`. The backend/API and source were reviewed centrally after all three bounded implementation owners completed. README, DEMO, TECHNICAL_DESIGN and UI copy inventory are updated. The previous launchers and local PDF are preserved outside the accepted changes. Publish only this phase on `claude/scoop-prototype` and verify remote HEAD.

@@ -18,7 +18,8 @@ test('all fourteen title/body entries match the supplied protocol verbatim, incl
     const step=Number(match[1]),block=match[0];
     assert.equal(copy.steps[step].title,string(block,'Title'),`Step ${step} title`);
     const body=string(block,'Body');
-    if(body)assert.equal(copy.steps[step].body,body,`Step ${step} body`);
+    if(body&&step!==11)assert.equal(copy.steps[step].body,body,`Step ${step} body`);
+    if(step===11)assert.equal(copy.steps[step].body,body.replace('Add one more card to follow.','Choose the cards to add.'));
   }
 });
 
@@ -41,4 +42,13 @@ test('branch copy only omits the explicitly optional no-capacity-cut sentence',(
   assert.equal(copy.recalculation.unchanged,string(block,'Body, nothing-to-add branch'));
   for(const event of [copy.events.heat,copy.events.arrival,copy.events.stockout,copy.events.endBody])assert.ok(protocol.includes('`'+event+'`'));
   assert.equal(fillTourCopy(copy.steps[2].body,{effect:38}),'The first finding: value strawberry water ices are selling **38% above forecast**.');
+});
+
+
+test('tour revision adds the exact future notice and multi-select action without changing branch arithmetic copy',()=>{
+  assert.equal(copy.futureNotice,'In this tour, the next two weeks follow the context you chose.');
+  assert.equal(copy.addSelected,'Add selected');
+  assert.ok(!copy.steps[11].body.includes('Add one more card'));
+  assert.match(copy.recalculation.growingWithCut,/\{n\} cases/);
+  assert.ok(!copy.recalculation.growing.includes('trims'));
 });
