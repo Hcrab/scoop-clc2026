@@ -1,0 +1,19 @@
+✔ all contexts and widgets run the native App flow without any network request or bundle mutation (9.3906ms)
+✔ fixture adapter returns stored edit responses and rejects unsupported controls and routes (0.8624ms)
+✔ only genuine stored answers are served and assistant never falls back to HTTP (0.6465ms)
+✔ loading uses two GETs and explicitly rejects a stale default order hash (0.2912ms)
+✔ refresh events fire for context, widget and view changes; ending fully restores live transport (0.4948ms)
+✔ every nonempty widget subset adds real cards atomically and preserves branch dashboard metadata (6.2372ms)
+✔ empty, invalid and premature multi-selection are rejected without refresh or partial additions; replay/context reset clears cards (0.6621ms)
+✔ v2 recordings are explicitly rejected by the v3 loader (0.1991ms)
+✔ actual step 11 JSX previews checked cards, removes unchecked cards, and confirms all on Add selected (119.0752ms)
+✔ actual step 7 JSX renders the exact muted future notice for every context (97.9176ms)
+✔ real stored branch recordings merge every subset with original widget IDs, titles and health (8606.8303ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9387.1112

@@ -3,7 +3,8 @@ import { createPortal } from 'react-dom';
 import { EditReceipt } from './EditReceipt';
 import { date, n } from './api';
 import type { PlayResult } from './Play';
-import { getRecordedQuestion, selectContext, selectWidgets, setTourView } from './tour/runtime';
+import { getRecordedQuestion, previewWidgets, selectContext, selectWidgets, setTourView } from './tour/runtime';
+import { revealTourWidget } from './tourWidgetReveal';
 import type { ContextId, QuestionId, TourBundle, WidgetId } from './tour/types';
 import { fillTourCopy as fill, TOUR_COPY as copy } from './tour/copy';
 import { TourRichText } from './tourRichText';
@@ -24,6 +25,8 @@ export function GuidedTour({bundle,onExit,onReplay}:{bundle:TourBundle;onExit:()
   const [rect,setRect]=useState<Rect|null>(null),[position,setPosition]=useState({left:24,top:24,side:'bottom',arrow:24});
   const [chatMount,setChatMount]=useState<HTMLElement|null>(null),[contextMount,setContextMount]=useState<HTMLElement|null>(null),[figureMount,setFigureMount]=useState<HTMLElement|null>(null),[peakMount,setPeakMount]=useState<HTMLElement|null>(null);
   const coach=useRef<HTMLDivElement>(null),target=useRef<HTMLElement|null>(null),mainAction=useRef<(()=>void)|null>(null),finding=useRef<Rect|null>(null);
+  const pendingWidget=useRef<WidgetId|null>(null),cancelReveal=useRef<(()=>void)|null>(null);
+  useEffect(()=>()=>cancelReveal.current?.(),[]);
   const branch=bundle.branches[context],values=branch.recalculation;
   const card=()=>Array.from(document.querySelectorAll<HTMLElement>('.cohort-card')).find(item=>item.dataset.cohortId===bundle.meta.strawberry_card_id)||null;
   const advance=()=>setStep(value=>Math.min(15,value+1));
@@ -54,7 +57,8 @@ export function GuidedTour({bundle,onExit,onReplay}:{bundle:TourBundle;onExit:()
       setChatMount(document.querySelector<HTMLElement>('.discussion-scroll'));setContextMount(area||null);setFigureMount(strawberry?.querySelector<HTMLElement>('.cohort-numbers')||null);setPeakMount(document.querySelector<HTMLElement>('.cohort-preview-row'));
       document.querySelectorAll<HTMLInputElement>('.app input[type="range"],.app .action-list input').forEach(input=>{input.disabled=true});
       document.querySelectorAll<HTMLElement>('.dashboard-widget[draggable]').forEach(item=>item.draggable=false);
-      if(step===11&&widgetsAdded&&selectedWidgets.length){const cards=Array.from(document.querySelectorAll('.dashboard-widget h3')),added=selectedWidgets.map(id=>cards.find(item=>item.textContent===branch.widgets[id].spec.title));if(added.every(Boolean)){added[added.length-1]?.closest('article')?.scrollIntoView({block:'nearest'});setStep(12)}}
+      if(step===11&&pendingWidget.current){const title=branch.widgets[pendingWidget.current].spec.title,widget=Array.from(document.querySelectorAll('.dashboard-widget h3')).find(item=>item.textContent===title)?.closest('article'),panel=document.querySelector<HTMLElement>('.watch-step>.dashboard');if(widget&&panel){cancelReveal.current?.();cancelReveal.current=revealTourWidget(widget,panel);pendingWidget.current=null}}
+      if(step===11&&widgetsAdded&&selectedWidgets.length){const cards=Array.from(document.querySelectorAll('.dashboard-widget h3')),added=selectedWidgets.map(id=>cards.find(item=>item.textContent===branch.widgets[id].spec.title));if(added.every(Boolean))setStep(12)}
     };
     locate();const timer=setInterval(locate,100);return()=>clearInterval(timer);
   },[step,selectedWidgets,widgetsAdded,clock.complete,context,beat,branch,bundle]);
@@ -85,6 +89,7 @@ export function GuidedTour({bundle,onExit,onReplay}:{bundle:TourBundle;onExit:()
   mainAction.current=step===15?onExit:canNext?advance:null;
   const chooseQuestion=(id:QuestionId|'skip')=>{setQuestion(id);if(id==='skip'){setAnswer('');setTyped('');setAnswered(true)}else{setAnswered(false);setAnswer(getRecordedQuestion(id).reply)}};
   const chooseContext=(id:ContextId)=>{selectContext(id);setContext(id);setSelectedWidgets([]);setWidgetsAdded(false);setStep(7)};
+  const chooseWidget=(id:WidgetId)=>{const removing=selectedWidgets.includes(id),ids=removing?selectedWidgets.filter(item=>item!==id):[...selectedWidgets,id];cancelReveal.current?.();pendingWidget.current=removing?null:id;setSelectedWidgets(ids);previewWidgets(ids)};
   const interpolated=(before:number,after:number,index:number)=>beat<index?before:beat>index?after:before+(after-before)*progress;
   const answerPortal=chatMount&&typed&&step===5?createPortal(<div className="chat-message assistant tour-recorded" aria-live="polite"><span>{copy.recorded}</span><p>{typed}</p></div>,chatMount):null;
   const contextPortal=contextMount&&(step===6||step===7)&&context!=='unchanged'?createPortal(<div className="tour-context-result"><div data-tour-context>{copy.contexts[context]}</div>{step===7&&branch.edit&&<EditReceipt edit={branch.edit} detail={branch.snapshot.detail} path={`/plans/${bundle.plan_id}`} onChanged={()=>{}} disabled/>}</div>,contextMount):null;
@@ -96,7 +101,7 @@ export function GuidedTour({bundle,onExit,onReplay}:{bundle:TourBundle;onExit:()
       <div className="tour-coach-top"><span>{`Step ${step} of 14`}</span><button className="text-button" onClick={onExit}>{copy.skip}</button></div><h2 id="tour-instruction">{data?.title}</h2><p><TourRichText text={body}/></p>{step===7&&<p className="tour-future-notice">{copy.futureNotice}</p>}{eventLine&&<p className="tour-event" aria-live="polite">{eventLine}</p>}
       {step===5&&<div className="tour-choices">{(Object.keys(copy.questions) as (QuestionId|'skip')[]).map(id=><button className="tour-choice" aria-pressed={question===id} disabled={!!question&&!answered} key={id} onClick={()=>chooseQuestion(id)}>{copy.questions[id]}</button>)}</div>}
       {step===6&&<div className="tour-choices">{(Object.keys(copy.contexts) as ContextId[]).map(id=><button className="tour-choice" key={id} onClick={()=>chooseContext(id)}>{copy.contexts[id]}</button>)}</div>}
-      {step===11&&<><div className="tour-choices tour-widget-choices">{(Object.keys(copy.widgets) as WidgetId[]).map(id=><button className="tour-choice" aria-label={copy.widgets[id]} aria-pressed={selectedWidgets.includes(id)} disabled={widgetsAdded} key={id} onClick={()=>setSelectedWidgets(ids=>ids.includes(id)?ids.filter(item=>item!==id):[...ids,id])}>{copy.widgets[id]}</button>)}</div><button className="button primary tour-next" disabled={!selectedWidgets.length||widgetsAdded} onClick={()=>{if(!selectedWidgets.length||widgetsAdded)return;selectWidgets(selectedWidgets);setWidgetsAdded(true)}}>{copy.addSelected}</button></>}
+      {step===11&&<><div className="tour-choices tour-widget-choices">{(Object.keys(copy.widgets) as WidgetId[]).map(id=><button className="tour-choice" aria-label={copy.widgets[id]} aria-pressed={selectedWidgets.includes(id)} disabled={widgetsAdded} key={id} onClick={()=>chooseWidget(id)}>{copy.widgets[id]}</button>)}</div><button className="button primary tour-next" disabled={!selectedWidgets.length||widgetsAdded} onClick={()=>{if(!selectedWidgets.length||widgetsAdded)return;selectWidgets(selectedWidgets);setWidgetsAdded(true)}}>{copy.addSelected}</button></>}
       {canNext&&<button className="button primary tour-next" onClick={advance}>{copy.next}</button>}
     </div></>;
 }

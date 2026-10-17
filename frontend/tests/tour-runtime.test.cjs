@@ -205,7 +205,7 @@ function tourHarness(bundle, initialStep = 11, initialContext = 'unchanged') {
   const file = path.resolve(__dirname, '../src/GuidedTour.tsx'), mod = new Module(file, module);
   mod.filename = file; mod.paths = Module._nodeModulePaths(path.dirname(file));
   const normal = mod.require.bind(mod);
-  mod.require = id => id === 'react' ? hooks : id === './tour/runtime' ? runtime : id === './tour/copy' ? load('tour/copy.ts') : id === './api' ? { n: String, date: String } : id === './EditReceipt' ? { EditReceipt: () => null } : id === './tourRichText' ? { TourRichText: () => null } : normal(id);
+  mod.require = id => id === 'react' ? hooks : id === './tour/runtime' ? runtime : id === './tour/copy' ? load('tour/copy.ts') : id === './tourWidgetReveal' ? load('tourWidgetReveal.ts') : id === './api' ? { n: String, date: String } : id === './EditReceipt' ? { EditReceipt: () => null } : id === './tourRichText' ? { TourRichText: () => null } : normal(id);
   mod._compile(ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX } }).outputText, file);
   function render() {
     cursor = 0; effects.length = 0;
@@ -216,7 +216,7 @@ function tourHarness(bundle, initialStep = 11, initialContext = 'unchanged') {
   return { render };
 }
 
-test('actual step 11 JSX toggles aria-pressed, requires selection, and adds only on Add selected', async () => {
+test('actual step 11 JSX previews checked cards, removes unchecked cards, and confirms all on Add selected', async () => {
   const bundle = fixture(), requests = [];
   global.fetch = async (...args) => { requests.push(args); throw new Error('Unexpected HTTP'); };
   runtime.beginTour(bundle); runtime.selectContext('summer');
@@ -232,10 +232,11 @@ test('actual step 11 JSX toggles aria-pressed, requires selection, and adds only
   find('Strawberry stock').props.onClick(); view = harness.render();
   assert.equal(find('Strawberry stock').props['aria-pressed'], false);
   assert.equal(find('Add selected').props.disabled, true);
+  assert.deepEqual(await api(plan + '/dashboard'), bundle.branches.summer.snapshot.dashboard);
   find('Strawberry stock').props.onClick(); view = harness.render();
   find('Cold-store space').props.onClick(); view = harness.render();
   assert.equal(view.step, 11, 'selection alone stays in step 11');
-  assert.deepEqual(await api(plan + '/dashboard'), bundle.branches.summer.snapshot.dashboard);
+  assert.deepEqual((await api(plan + '/dashboard')).widgets.map(widget => widget.title), ['Existing card', 'stock', 'space']);
   find('Add selected').props.onClick(); view = harness.render();
   const dashboard = await api(plan + '/dashboard');
   assert.deepEqual(dashboard.widgets.map(widget => widget.title), ['Existing card', 'stock', 'space']);

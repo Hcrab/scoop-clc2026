@@ -1,0 +1,6407 @@
+{
+  "frames": [
+    {
+      "at": 7491.5,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7496.70000000298,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7501.300000011921,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7507.100000008941,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7513.300000011921,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7519.300000011921,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7525.4000000059605,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7531.4000000059605,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7537.600000008941,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7543.600000008941,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7549.5,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7555.70000000298,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7562,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7567.9000000059605,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7573.9000000059605,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7580.100000008941,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7586.100000008941,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7592.100000008941,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7598.20000000298,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7604.20000000298,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7610.20000000298,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7616.300000011921,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7622.300000011921,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7628.4000000059605,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7634.4000000059605,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7640.600000008941,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7646.600000008941,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7652.600000008941,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7658.70000000298,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7664.9000000059605,
+      "scroll": 0,
+      "cards": []
+    },
+    {
+      "at": 7981.300000011921,
+      "scroll": 0,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 7985,
+      "scroll": 0,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 7987.800000011921,
+      "scroll": 0,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 7992.100000008941,
+      "scroll": 0,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 7998.800000011921,
+      "scroll": 46,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8004.20000000298,
+      "scroll": 99,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8010.300000011921,
+      "scroll": 151,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8042.600000008941,
+      "scroll": 200,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8046.600000008941,
+      "scroll": 411,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8052.600000008941,
+      "scroll": 447,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8058.800000011921,
+      "scroll": 482,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8064.9000000059605,
+      "scroll": 514,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8070.70000000298,
+      "scroll": 544,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8077,
+      "scroll": 573,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8082.9000000059605,
+      "scroll": 600,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8089,
+      "scroll": 626,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8095,
+      "scroll": 649,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8101.20000000298,
+      "scroll": 671,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8128.300000011921,
+      "scroll": 692,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8139.100000008941,
+      "scroll": 761,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8143.70000000298,
+      "scroll": 787,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8149.600000008941,
+      "scroll": 799,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8155.800000011921,
+      "scroll": 809,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8161.9000000059605,
+      "scroll": 819,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8167.800000011921,
+      "scroll": 828,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8173.70000000298,
+      "scroll": 835,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8179.9000000059605,
+      "scroll": 842,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8186.100000008941,
+      "scroll": 848,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8192,
+      "scroll": 853,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8198.10000000894,
+      "scroll": 857,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8204.10000000894,
+      "scroll": 861,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8210.20000000298,
+      "scroll": 864,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8216.20000000298,
+      "scroll": 867,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8222.20000000298,
+      "scroll": 869,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8228.40000000596,
+      "scroll": 870,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8234.40000000596,
+      "scroll": 872,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8240.40000000596,
+      "scroll": 873,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8246.40000000596,
+      "scroll": 873,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8252.60000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8258.60000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8264.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8270.60000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8277.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(0.965453, 0, 0, 0.965453, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8297.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(0.981488, 0, 0, 0.981488, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8301,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(0.986727, 0, 0, 0.986727, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8307.40000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(0.991817, 0, 0, 0.991817, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8313,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(0.99664, 0, 0, 0.99664, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8319.10000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00132, 0, 0, 1.00132, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8325.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00576, 0, 0, 1.00576, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8331.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00985, 0, 0, 1.00985, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8337.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.01374, 0, 0, 1.01374, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8343.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.0173, 0, 0, 1.0173, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8349.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.02064, 0, 0, 1.02064, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8355.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.02367, 0, 0, 1.02367, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8361.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.02393, 0, 0, 1.02393, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8367.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.02207, 0, 0, 1.02207, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8373.70000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.02039, 0, 0, 1.02039, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8381.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.01882, 0, 0, 1.01882, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8385.90000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.0174, 0, 0, 1.0174, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8391.90000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.01607, 0, 0, 1.01607, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8398.10000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.01485, 0, 0, 1.01485, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8404.10000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.01374, 0, 0, 1.01374, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8410,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.01272, 0, 0, 1.01272, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8416,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.01176, 0, 0, 1.01176, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8422.10000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.01089, 0, 0, 1.01089, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8428.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.01007, 0, 0, 1.01007, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8434.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00931, 0, 0, 1.00931, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8440.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00861, 0, 0, 1.00861, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8446.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00796, 0, 0, 1.00796, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8452.40000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00735, 0, 0, 1.00735, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8458.40000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00678, 0, 0, 1.00678, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8464.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00626, 0, 0, 1.00626, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8470.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00577, 0, 0, 1.00577, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8476.60000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00532, 0, 0, 1.00532, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8482.70000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.0049, 0, 0, 1.0049, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8488.70000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.0045, 0, 0, 1.0045, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8494.90000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00413, 0, 0, 1.00413, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8500.90000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00379, 0, 0, 1.00379, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8507.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00347, 0, 0, 1.00347, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8513.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00317, 0, 0, 1.00317, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8519.10000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.0029, 0, 0, 1.0029, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8525.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00263, 0, 0, 1.00263, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8531.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.0024, 0, 0, 1.0024, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8537.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00217, 0, 0, 1.00217, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8543.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00196, 0, 0, 1.00196, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8549.40000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00176, 0, 0, 1.00176, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8555.40000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00159, 0, 0, 1.00159, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8561.60000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00142, 0, 0, 1.00142, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8567.70000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00127, 0, 0, 1.00127, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8573.800000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00112, 0, 0, 1.00112, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8579.70000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00099, 0, 0, 1.00099, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8585.800000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00087, 0, 0, 1.00087, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8591.800000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00076, 0, 0, 1.00076, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8597.800000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00066, 0, 0, 1.00066, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8604.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00056, 0, 0, 1.00056, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8610,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00048, 0, 0, 1.00048, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8616.10000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.0004, 0, 0, 1.0004, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8622.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00033, 0, 0, 1.00033, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8628.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00027, 0, 0, 1.00027, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8634.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00022, 0, 0, 1.00022, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8640.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00017, 0, 0, 1.00017, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8646.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00013, 0, 0, 1.00013, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8652.40000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.0001, 0, 0, 1.0001, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8658.40000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00007, 0, 0, 1.00007, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8664.40000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00004, 0, 0, 1.00004, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8670.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00003, 0, 0, 1.00003, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8676.60000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1.00001, 0, 0, 1.00001, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8682.60000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8689,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 8694.90000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8701,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8707,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8713,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8719,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8725.10000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8731.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8737.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8743.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8749.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8757.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8761.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8767.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8773.5,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8779.60000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8785.60000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8791.70000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8797.800000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8804.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8809.90000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8816,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8821.90000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8828,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8834.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8840.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8846.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8852.300000011921,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 8858.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9081.90000000596,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9085.10000000894,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9089.20000000298,
+      "scroll": 874,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9098.40000000596,
+      "scroll": 878,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9100.800000011921,
+      "scroll": 901,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9106.90000000596,
+      "scroll": 923,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9113,
+      "scroll": 944,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9119,
+      "scroll": 964,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9125.20000000298,
+      "scroll": 983,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9131,
+      "scroll": 1002,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9137.10000000894,
+      "scroll": 1019,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9143.300000011921,
+      "scroll": 1036,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9149.20000000298,
+      "scroll": 1052,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9155.40000000596,
+      "scroll": 1066,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9161.5,
+      "scroll": 1081,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9167.5,
+      "scroll": 1094,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9173.5,
+      "scroll": 1106,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9179.5,
+      "scroll": 1118,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9185.800000011921,
+      "scroll": 1130,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9191.70000000298,
+      "scroll": 1140,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9197.800000011921,
+      "scroll": 1150,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9203.90000000596,
+      "scroll": 1159,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9209.800000011921,
+      "scroll": 1167,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9216.300000011921,
+      "scroll": 1175,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9222.10000000894,
+      "scroll": 1182,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9228,
+      "scroll": 1189,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9234.10000000894,
+      "scroll": 1195,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9240.40000000596,
+      "scroll": 1201,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9246.300000011921,
+      "scroll": 1206,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9252.20000000298,
+      "scroll": 1211,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9258.300000011921,
+      "scroll": 1215,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9264.5,
+      "scroll": 1219,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9270.40000000596,
+      "scroll": 1222,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9276.5,
+      "scroll": 1226,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9282.5,
+      "scroll": 1228,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9288.70000000298,
+      "scroll": 1231,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9294.800000011921,
+      "scroll": 1233,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9300.70000000298,
+      "scroll": 1234,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9306.90000000596,
+      "scroll": 1236,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9312.800000011921,
+      "scroll": 1237,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9318.800000011921,
+      "scroll": 1238,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9324.90000000596,
+      "scroll": 1239,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9331.10000000894,
+      "scroll": 1240,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9337,
+      "scroll": 1240,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9343.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9349.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9355.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9361.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9367.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9373.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9379.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.965364, 0, 0, 0.965364, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9385.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.970814, 0, 0, 0.970814, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9391.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.976141, 0, 0, 0.976141, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9397.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.981488, 0, 0, 0.981488, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9403.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.986727, 0, 0, 0.986727, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9409.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.991735, 0, 0, 0.991735, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9415.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.996562, 0, 0, 0.996562, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9421.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00125, 0, 0, 1.00125, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9427.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00569, 0, 0, 1.00569, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9433.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00979, 0, 0, 1.00979, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9440,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01368, 0, 0, 1.01368, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9446,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0173, 0, 0, 1.0173, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9452.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.02059, 0, 0, 1.02059, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9458.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.02376, 0, 0, 1.02376, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9464.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.02393, 0, 0, 1.02393, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9470.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0221, 0, 0, 1.0221, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9476.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.02041, 0, 0, 1.02041, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9482.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01884, 0, 0, 1.01884, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9488.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0174, 0, 0, 1.0174, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9494.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01607, 0, 0, 1.01607, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9500.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01487, 0, 0, 1.01487, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9506.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01374, 0, 0, 1.01374, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9512.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01272, 0, 0, 1.01272, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9518.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01176, 0, 0, 1.01176, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9524.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01089, 0, 0, 1.01089, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9530.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01007, 0, 0, 1.01007, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9537,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00932, 0, 0, 1.00932, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9543,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00861, 0, 0, 1.00861, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9549,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00797, 0, 0, 1.00797, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9555.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00736, 0, 0, 1.00736, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9561.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00679, 0, 0, 1.00679, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9567.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00627, 0, 0, 1.00627, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9573.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00578, 0, 0, 1.00578, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9579.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00532, 0, 0, 1.00532, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9585.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0049, 0, 0, 1.0049, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9591.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0045, 0, 0, 1.0045, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9597.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00414, 0, 0, 1.00414, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9603.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00379, 0, 0, 1.00379, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9609.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00347, 0, 0, 1.00347, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9615.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00318, 0, 0, 1.00318, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9621.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0029, 0, 0, 1.0029, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9627.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00264, 0, 0, 1.00264, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9634,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0024, 0, 0, 1.0024, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9639.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00217, 0, 0, 1.00217, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9646,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00196, 0, 0, 1.00196, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9652.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00177, 0, 0, 1.00177, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9658.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00159, 0, 0, 1.00159, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9664.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00142, 0, 0, 1.00142, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9670.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00127, 0, 0, 1.00127, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9676.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00112, 0, 0, 1.00112, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9682.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00099, 0, 0, 1.00099, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9688.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00087, 0, 0, 1.00087, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9694.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00076, 0, 0, 1.00076, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9700.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00066, 0, 0, 1.00066, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9706.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00056, 0, 0, 1.00056, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9712.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00048, 0, 0, 1.00048, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9718.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0004, 0, 0, 1.0004, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9724.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00034, 0, 0, 1.00034, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9730.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00027, 0, 0, 1.00027, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9736.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00022, 0, 0, 1.00022, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9742.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00017, 0, 0, 1.00017, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9749,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00013, 0, 0, 1.00013, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9755.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0001, 0, 0, 1.0001, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9761.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00007, 0, 0, 1.00007, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9767.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00004, 0, 0, 1.00004, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9773.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00003, 0, 0, 1.00003, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9779.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00001, 0, 0, 1.00001, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9785.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9791.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 9797.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9803.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9809.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9815.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9821.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9827.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9833.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9839.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9845.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9852.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9857.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9864.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9870.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9876.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9882.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9889.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9894.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9900.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9906.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9916.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9918.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9924.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 9930.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10160.800000011921,
+      "scroll": 850,
+      "cards": [
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10162.70000000298,
+      "scroll": 850,
+      "cards": [
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10169.90000000596,
+      "scroll": 850,
+      "cards": [
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10175.300000011921,
+      "scroll": 850,
+      "cards": [
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10179.10000000894,
+      "scroll": 850,
+      "cards": [
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10185.300000011921,
+      "scroll": 850,
+      "cards": [
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10191.40000000596,
+      "scroll": 850,
+      "cards": [
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10382.40000000596,
+      "scroll": 850,
+      "cards": []
+    },
+    {
+      "at": 10383.300000011921,
+      "scroll": 850,
+      "cards": []
+    },
+    {
+      "at": 10385.300000011921,
+      "scroll": 850,
+      "cards": []
+    },
+    {
+      "at": 10391.5,
+      "scroll": 850,
+      "cards": []
+    },
+    {
+      "at": 10397.300000011921,
+      "scroll": 850,
+      "cards": []
+    },
+    {
+      "at": 10403.5,
+      "scroll": 850,
+      "cards": []
+    },
+    {
+      "at": 10409.5,
+      "scroll": 850,
+      "cards": []
+    },
+    {
+      "at": 10601.90000000596,
+      "scroll": 850,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10605.300000011921,
+      "scroll": 850,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10611.300000011921,
+      "scroll": 850,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10615.90000000596,
+      "scroll": 851,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10621.800000011921,
+      "scroll": 852,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10946.300000011921,
+      "scroll": 854,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10960.10000000894,
+      "scroll": 854,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10969,
+      "scroll": 806,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10975.70000000298,
+      "scroll": 858,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10976.60000000894,
+      "scroll": 882,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10988.20000000298,
+      "scroll": 906,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10989,
+      "scroll": 928,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 10999,
+      "scroll": 949,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11009.20000000298,
+      "scroll": 969,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11015.10000000894,
+      "scroll": 989,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11021.70000000298,
+      "scroll": 1025,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11029.60000000894,
+      "scroll": 1042,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11039.20000000298,
+      "scroll": 1057,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11046.300000011921,
+      "scroll": 1072,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11050.300000011921,
+      "scroll": 1099,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11051.800000011921,
+      "scroll": 1112,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11057.800000011921,
+      "scroll": 1123,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11063.90000000596,
+      "scroll": 1135,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11069.90000000596,
+      "scroll": 1145,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11076.20000000298,
+      "scroll": 1154,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11081.90000000596,
+      "scroll": 1163,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11088.20000000298,
+      "scroll": 1172,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11094.20000000298,
+      "scroll": 1179,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11100.20000000298,
+      "scroll": 1186,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11106.300000011921,
+      "scroll": 1193,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11112.300000011921,
+      "scroll": 1199,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11118.70000000298,
+      "scroll": 1204,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11124.800000011921,
+      "scroll": 1209,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11130.60000000894,
+      "scroll": 1214,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11136.60000000894,
+      "scroll": 1218,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11142.60000000894,
+      "scroll": 1222,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11148.800000011921,
+      "scroll": 1225,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11154.800000011921,
+      "scroll": 1228,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11160.90000000596,
+      "scroll": 1230,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11167.20000000298,
+      "scroll": 1232,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11172.90000000596,
+      "scroll": 1234,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11179,
+      "scroll": 1236,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11192.10000000894,
+      "scroll": 1237,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11193.90000000596,
+      "scroll": 1238,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11197.20000000298,
+      "scroll": 1239,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11203.300000011921,
+      "scroll": 1240,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11209.20000000298,
+      "scroll": 1240,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11215.5,
+      "scroll": 1240,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11221.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11227.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11233.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11239.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11245.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11251.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.965453, 0, 0, 0.965453, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11257.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.970814, 0, 0, 0.970814, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11264,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.976141, 0, 0, 0.976141, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11270,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.981575, 0, 0, 0.981575, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11275.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.986727, 0, 0, 0.986727, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11281.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.991817, 0, 0, 0.991817, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11288,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(0.996719, 0, 0, 0.996719, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11294,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00132, 0, 0, 1.00132, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11300.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00569, 0, 0, 1.00569, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11306.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00985, 0, 0, 1.00985, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11312.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01368, 0, 0, 1.01368, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11318.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0173, 0, 0, 1.0173, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11324.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.02064, 0, 0, 1.02064, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11330.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.02367, 0, 0, 1.02367, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11336.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.02393, 0, 0, 1.02393, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11342.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0221, 0, 0, 1.0221, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11348.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.02039, 0, 0, 1.02039, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11354.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01884, 0, 0, 1.01884, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11360.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0174, 0, 0, 1.0174, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11366.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01607, 0, 0, 1.01607, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11372.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01487, 0, 0, 1.01487, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11378.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01374, 0, 0, 1.01374, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11385,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01271, 0, 0, 1.01271, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11391.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01176, 0, 0, 1.01176, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11397.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01088, 0, 0, 1.01088, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11403.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.01007, 0, 0, 1.01007, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11409.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00931, 0, 0, 1.00931, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11415.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0086, 0, 0, 1.0086, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11421.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00796, 0, 0, 1.00796, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11427.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00735, 0, 0, 1.00735, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11433.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00679, 0, 0, 1.00679, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11439.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00626, 0, 0, 1.00626, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11445.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00578, 0, 0, 1.00578, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11451.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00532, 0, 0, 1.00532, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11457.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0049, 0, 0, 1.0049, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11463.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0045, 0, 0, 1.0045, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11469.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00413, 0, 0, 1.00413, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11475.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00379, 0, 0, 1.00379, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11481.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00347, 0, 0, 1.00347, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11488.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00317, 0, 0, 1.00317, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11494.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0029, 0, 0, 1.0029, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11500.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00264, 0, 0, 1.00264, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11506.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0024, 0, 0, 1.0024, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11512.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00217, 0, 0, 1.00217, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11518.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00196, 0, 0, 1.00196, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11524.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00177, 0, 0, 1.00177, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11530.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00159, 0, 0, 1.00159, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11536.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00142, 0, 0, 1.00142, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11542.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00127, 0, 0, 1.00127, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11548.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00112, 0, 0, 1.00112, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11554.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00099, 0, 0, 1.00099, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11560.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00087, 0, 0, 1.00087, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11566.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00076, 0, 0, 1.00076, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11572.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00066, 0, 0, 1.00066, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11578.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00056, 0, 0, 1.00056, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11584.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00048, 0, 0, 1.00048, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11591,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0004, 0, 0, 1.0004, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11596.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00033, 0, 0, 1.00033, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11603,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00027, 0, 0, 1.00027, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11609.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00022, 0, 0, 1.00022, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11615.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00017, 0, 0, 1.00017, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11621.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00013, 0, 0, 1.00013, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11627.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.0001, 0, 0, 1.0001, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11633.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00007, 0, 0, 1.00007, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11639.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00004, 0, 0, 1.00004, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11645.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00003, 0, 0, 1.00003, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11651.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1.00001, 0, 0, 1.00001, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11657.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11663.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "animations": 1
+        }
+      ]
+    },
+    {
+      "at": 11669.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11675.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11681.800000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11687.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11693.90000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11700.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11706.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11712,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11718.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11724.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11730.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11736.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11742.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11748.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11754.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11760.70000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11766.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11772.60000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11781.40000000596,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11785.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11791.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11797,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11803.10000000894,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11809.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11815.20000000298,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11821.300000011921,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    },
+    {
+      "at": 11827.5,
+      "scroll": 1241,
+      "cards": [
+        {
+          "title": "Strawberry stock",
+          "transform": "none",
+          "animations": 0
+        },
+        {
+          "title": "Cold-store space",
+          "transform": "none",
+          "animations": 0
+        }
+      ]
+    }
+  ],
+  "writes": [],
+  "errors": [],
+  "confirmed_once": true
+}

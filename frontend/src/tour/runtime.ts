@@ -5,7 +5,7 @@ const steps: FlowStep[] = ['report', 'orders', 'watch', 'play', 'results'];
 const contexts: ContextId[] = ['summer', 'growing', 'unchanged'];
 const widgets: WidgetId[] = ['stock', 'space', 'cover'];
 const clone = <T,>(value: T): T => structuredClone(value);
-type Session = { bundle: TourBundle; branch: ContextId; chosenContext: boolean; widgets: WidgetId[]; stage: Stage; step: FlowStep; maximum: FlowStep };
+type Session = { bundle: TourBundle; branch: ContextId; chosenContext: boolean; widgets: WidgetId[]; preview:WidgetId[]; stage: Stage; step: FlowStep; maximum: FlowStep };
 let session: Session | null = null;
 function current(): Session { if (!session) throw new Error('The tour is not active.'); return session; }
 function refresh() { if (typeof window !== 'undefined') window.dispatchEvent(new Event('scoop:tour-refresh')); }
@@ -36,7 +36,7 @@ export async function loadTourBundle(): Promise<TourBundle> {
   return bundle;
 }
 export function beginTour(bundle: TourBundle): void {
-  session = { bundle: clone(bundle), branch: 'unchanged', chosenContext: false, widgets: [], stage: 'discover', step: 'report', maximum: 'report' };
+  session = { bundle: clone(bundle), branch: 'unchanged', chosenContext: false, widgets: [], preview:[], stage: 'discover', step: 'report', maximum: 'report' };
   refresh();
 }
 export function endTour(): void { session = null; refresh(); }
@@ -47,20 +47,26 @@ export function selectContext(id: ContextId): Branch {
   const s = current();
   if (!contexts.includes(id)) throw new Error('Unknown tour context.');
   if (s.stage !== 'discover' || s.step !== 'report') throw new Error('Choose context in Report.');
-  s.branch = id; s.chosenContext = true; s.widgets = [];
+  s.branch = id; s.chosenContext = true; s.widgets = []; s.preview=[];
   refresh(); return clone(s.bundle.branches[id]);
+}
+export function previewWidgets(ids:WidgetId[]):void {
+  const s=current();
+  if(ids.some(id=>!widgets.includes(id)))throw new Error('Unknown tour widget.');
+  if(s.step!=='watch')throw new Error('Choose a widget in Watch.');
+  s.preview=[...new Set(ids)];refresh();
 }
 export function selectWidgets(ids: WidgetId[]): void {
   const s = current();
   if (!ids.length) throw new Error('Choose at least one tour widget.');
   if (ids.some(id => !widgets.includes(id))) throw new Error('Unknown tour widget.');
   if (s.step !== 'watch') throw new Error('Choose a widget in Watch.');
-  s.widgets = [...new Set([...s.widgets, ...ids])]; refresh();
+  s.widgets = [...new Set([...s.widgets, ...ids])]; s.preview=[]; refresh();
 }
 export function selectWidget(id: WidgetId): void { selectWidgets([id]); }
 function dashboard(s = current()) {
   const result = clone(snapshot(s).dashboard), seen = new Set(result.widgets.map(widget => widget.id));
-  for (const id of s.widgets) {
+  for (const id of [...s.widgets,...s.preview]) {
     const choice = s.bundle.branches[s.branch].widgets[id];
     // Reuse the actual added card; keep health, options and existing cards from this branch.
     for (const widget of choice.dashboard.widgets) if (widget.title === choice.spec.title && !seen.has(widget.id)) {
@@ -74,7 +80,7 @@ export function setTourView(step: FlowStep): void {
   if (!steps.includes(step)) throw new Error('Unknown tour view.');
   const maximum = step === 'play' && s.maximum === 'watch' ? 'play' : s.maximum;
   if (steps.indexOf(step) > steps.indexOf(maximum)) throw new Error('Complete the preceding step first.');
-  s.step = step; s.maximum = maximum; refresh();
+  s.step = step; s.maximum = maximum; if(step!=='watch')s.preview=[]; refresh();
 }
 function recorded(answer: RecordedAnswer | null): RecordedAnswer {
   if (!answer?.reply || answer.grounding?.passed !== true || !answer.snapshot_hash || !answer.provider || !answer.model) throw new Error('This recorded tour answer is unavailable.');

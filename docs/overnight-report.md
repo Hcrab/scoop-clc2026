@@ -71,3 +71,11 @@ git diff --check
 ```
 
 Logs are in `reports/tour3/`. The backend/API and source were reviewed centrally after all three bounded implementation owners completed. README, DEMO, TECHNICAL_DESIGN and UI copy inventory are updated. The previous launchers and local PDF are preserved outside the accepted changes. Publish only this phase on `claude/scoop-prototype` and verify remote HEAD.
+
+
+## Watch widget reveal — follow-up
+
+- ✅ Checking a Step-11 choice immediately previews its real native widget, scrolls the Watch panel to it in 280 ms and plays a 420 ms scale pop. Unticking removes the preview; Add selected confirms without duplicates and continues to Step 12.
+- ✅ Rapid selections target the most recent choice; the coach remains visible and document scroll stays at zero. Reduced-motion preference uses immediate positioning without scale.
+- ✅ 11 focused runtime checks and one native browser check pass. The browser covers individual choices, untick/recheck, rapid two-choice selection, confirmation and zero HTTP writes/errors. It captures 472 frames / 111 distinct scroll positions; both cards scale from about 0.965 to 1.024 before settling.
+- ✅ Parent reviewed [the final Watch screenshot](screenshots/watch-widget-reveal.png); build and diff check pass. Evidence: `reports/widget-reveal/`, `frontend/e2e/widget-reveal.spec.ts`. Existing data, results and other screens are unchanged.
