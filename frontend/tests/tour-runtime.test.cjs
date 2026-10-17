@@ -37,7 +37,7 @@ function fixture() {
     const count = [20, 30, 10][i], snap = snapshot(count);
     return [id, { id, context: id === 'unchanged' ? null : { cohort: 'strawberry', type: 'trend', value: count }, snapshot: snap, edit: id === 'unchanged' ? null : { edit_id: count, affected_orders: [{ sku: 'strawberry', before: 10, after: count }] }, before_cases: 10, after_cases: count, total_cases: count, peak: count / 2, capacity: 120, answer: answer(`Context ${id}`), moments: { heat_date: '2026-07-30', strawberry_arrival: null, stockout: null }, widgets: Object.fromEntries(['stock', 'space', 'cover'].map((widget, index) => [widget, { spec: { title: widget, scope: { kind: 'warehouse' }, metric: ['on_hand', 'pallets', 'days_cover'][index] }, dashboard: { ...snap.dashboard, widgets: [{ id: `${id}-${widget}`, value: count, title: widget }] }, edit: { edit_id: count + index, label: 'Widget added', affected_orders: [] } }])) }];
   }));
-  return { version: 1, default_week: '2026-07-27', default_order_hash: 'source-hash', plan_id: 'tour-plan', meta: {}, common: { bootstrap: { today: '2026-07-27', plans: [snapshot(10).detail.plan] }, settings: { week_start: '2026-07-27' } }, base: snapshot(10), branches, questions: { why: answer('Why recorded'), heat: answer('Heat recorded') } };
+  return { version: 2, default_week: '2026-07-27', default_order_hash: 'source-hash', plan_id: 'tour-plan', meta: {}, common: { bootstrap: { today: '2026-07-27', plans: [snapshot(10).detail.plan] }, settings: { week_start: '2026-07-27' } }, base: snapshot(10), branches, questions: { why: answer('Why recorded'), heat: answer('Heat recorded') } };
 }
 const plan = '/plans/tour-plan';
 

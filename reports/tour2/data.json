@@ -1,0 +1,228 @@
+{
+  "status": "complete",
+  "version": 2,
+  "source": {
+    "default_week": "2026-07-27",
+    "default_order_hash": "a8ca053adf930b016e76346af923c992c3585c2df74e83b1f31ab5cfcc65e322",
+    "plan_id": "P20260727"
+  },
+  "public_before": {
+    "chat_messages": "d41d8cd98f00b204e9800998ecf8427e",
+    "cusum_series": "d41d8cd98f00b204e9800998ecf8427e",
+    "daily_expectations": "d41d8cd98f00b204e9800998ecf8427e",
+    "decisions": "4f6a34190869bf2b5468f64207f0fd09",
+    "direction_items": "d41d8cd98f00b204e9800998ecf8427e",
+    "findings": "023fb52513bd28c85e858d91b50ca532",
+    "ground_truth_events": "e78554349043c664c2172cbc970f9e13",
+    "hypotheses": "15d0974a94f8fc54249c4f04961431bd",
+    "model_runs": "4354cb556e22e7f69fb38d2ca423e72a",
+    "node_inventory": "9efd7bcbf66ed8136bd416195f298a0c",
+    "nodes": "387675b6e29289ec3d0f7308ba914a7c",
+    "plans": "fe3f4f7215bca970aed903b1454e660c",
+    "product_nutrition": "fe30da75aa81900fd9293c7499ad4e9e",
+    "product_tags": "1b12d4afd9960f2fcd72e4cab8f52c55",
+    "products": "3c7be6a75bf1fc8861add18bd84c7e29",
+    "promotions": "8a03359a2a7f21b9e596a7db74a9aeeb",
+    "purchase_orders": "1bc1586d5c728d1ca0c57a464a712ef6",
+    "purchase_suggestions": "ef5a651128124c07373e392f376372fb",
+    "questions": "d41d8cd98f00b204e9800998ecf8427e",
+    "settings": "e5f8b16216e37ebf81eae030f5fdfce8",
+    "simulation_runs": "fca40ed7cf6c94075eea57fa1c75eb01",
+    "store_orders": "8a212ad5ac2bd34d7528849118954f7b",
+    "stores": "dbea5b138018d3b6532cb46934b54dc5",
+    "suppliers": "d78a74f324fc60ac734729594672e25e",
+    "tag_dimensions": "829d7148591d6ac62a23582b8f1c2670",
+    "tags": "b2101a23ad5a3f56011c2edeedb5cd6f",
+    "watch_items": "4e279ae877b671f66a63db38a0fc04e6",
+    "weather_daily": "167d262cb6dd30517065bcc02c6cac28",
+    "weather_forecasts": "77607116ded4b269bffdb6b95f99faaa"
+  },
+  "public_after": {
+    "chat_messages": "d41d8cd98f00b204e9800998ecf8427e",
+    "cusum_series": "d41d8cd98f00b204e9800998ecf8427e",
+    "daily_expectations": "d41d8cd98f00b204e9800998ecf8427e",
+    "decisions": "4f6a34190869bf2b5468f64207f0fd09",
+    "direction_items": "d41d8cd98f00b204e9800998ecf8427e",
+    "findings": "023fb52513bd28c85e858d91b50ca532",
+    "ground_truth_events": "e78554349043c664c2172cbc970f9e13",
+    "hypotheses": "15d0974a94f8fc54249c4f04961431bd",
+    "model_runs": "4354cb556e22e7f69fb38d2ca423e72a",
+    "node_inventory": "9efd7bcbf66ed8136bd416195f298a0c",
+    "nodes": "387675b6e29289ec3d0f7308ba914a7c",
+    "plans": "fe3f4f7215bca970aed903b1454e660c",
+    "product_nutrition": "fe30da75aa81900fd9293c7499ad4e9e",
+    "product_tags": "1b12d4afd9960f2fcd72e4cab8f52c55",
+    "products": "3c7be6a75bf1fc8861add18bd84c7e29",
+    "promotions": "8a03359a2a7f21b9e596a7db74a9aeeb",
+    "purchase_orders": "1bc1586d5c728d1ca0c57a464a712ef6",
+    "purchase_suggestions": "ef5a651128124c07373e392f376372fb",
+    "questions": "d41d8cd98f00b204e9800998ecf8427e",
+    "settings": "e5f8b16216e37ebf81eae030f5fdfce8",
+    "simulation_runs": "fca40ed7cf6c94075eea57fa1c75eb01",
+    "store_orders": "8a212ad5ac2bd34d7528849118954f7b",
+    "stores": "dbea5b138018d3b6532cb46934b54dc5",
+    "suppliers": "d78a74f324fc60ac734729594672e25e",
+    "tag_dimensions": "829d7148591d6ac62a23582b8f1c2670",
+    "tags": "b2101a23ad5a3f56011c2edeedb5cd6f",
+    "watch_items": "4e279ae877b671f66a63db38a0fc04e6",
+    "weather_daily": "167d262cb6dd30517065bcc02c6cac28",
+    "weather_forecasts": "77607116ded4b269bffdb6b95f99faaa"
+  },
+  "public_unchanged": true,
+  "provider_calls": 0,
+  "database_writes": 0,
+  "preserved_payload_before_sha256": "01167f36d4be3f8431cb97a7d76ffee449a9cd213d63d9baca770894956e6747",
+  "preserved_payload_after_sha256": "01167f36d4be3f8431cb97a7d76ffee449a9cd213d63d9baca770894956e6747",
+  "snapshot_hashes": {
+    "base": "970027b3a875c8166f9342dd7a87a43e1a7a44f7fcb9fddcb3b5495cf63212af",
+    "unchanged": "20b18a91bbb37af0ac3761ee864e15ae09d76470af2ac7e8762e877aa6c5e831",
+    "summer": "8f8703d6a15b59e3029172a4f7a43cc669bf14496eedbe5dfcde170f7e34104e",
+    "growing": "2d9d3fb75c93a2fcb04e9d4f69049b2246783bf7efd30ae099e201e47910055f"
+  },
+  "answer_hashes": {
+    "why": "b6490afadd37e5ec6c880cdf9b83eb078d2fc4d3323e6abcea6e8031f1638a13",
+    "heat": "a4a4a692b047188113b86a32a50d22e59add2501ccb3d010a15dd25ce0a04e21",
+    "unchanged": "93c775f8195b919fb1e3bb227f79dcffac0e28c4cf61acfbe08237cf26bf8472",
+    "summer": "7e2aec449527c798377e694057ae0500d7d28aea01d3311c32c80f177e429a03",
+    "growing": "66fe0d895e255bc8896ae03322d55013d1e6e7866cbdc129fb46f3604f918bc6"
+  },
+  "factor_definition": "Arithmetic mean of actual plan.summary.cohort_model.sku_factors[sku].f50, weighted by the sum of expected_recent across units with the strawberry cohort leaf_id and that SKU.",
+  "factor_inputs": {
+    "base": [
+      {
+        "sku": "IC006",
+        "expected_recent": 2028.7796858408637,
+        "f50": 1.381551970913412
+      },
+      {
+        "sku": "IC061",
+        "expected_recent": 1599.2204498921476,
+        "f50": 1.381551970913412
+      },
+      {
+        "sku": "IC062",
+        "expected_recent": 4439.857591891162,
+        "f50": 1.381551970913412
+      },
+      {
+        "sku": "IC063",
+        "expected_recent": 2844.882125267681,
+        "f50": 1.381551970913412
+      }
+    ],
+    "unchanged": [
+      {
+        "sku": "IC006",
+        "expected_recent": 2028.7796858408637,
+        "f50": 1.381551970913412
+      },
+      {
+        "sku": "IC061",
+        "expected_recent": 1599.2204498921476,
+        "f50": 1.381551970913412
+      },
+      {
+        "sku": "IC062",
+        "expected_recent": 4439.857591891162,
+        "f50": 1.381551970913412
+      },
+      {
+        "sku": "IC063",
+        "expected_recent": 2844.882125267681,
+        "f50": 1.381551970913412
+      }
+    ],
+    "summer": [
+      {
+        "sku": "IC006",
+        "expected_recent": 2028.7796858408637,
+        "f50": 1.381551970913412
+      },
+      {
+        "sku": "IC061",
+        "expected_recent": 1599.2204498921476,
+        "f50": 1.1635222732486052
+      },
+      {
+        "sku": "IC062",
+        "expected_recent": 4439.857591891162,
+        "f50": 1.3270445464972103
+      },
+      {
+        "sku": "IC063",
+        "expected_recent": 2844.882125267681,
+        "f50": 1.2725371220810087
+      }
+    ],
+    "growing": [
+      {
+        "sku": "IC006",
+        "expected_recent": 2028.7796858408637,
+        "f50": 1.3929164795623683
+      },
+      {
+        "sku": "IC061",
+        "expected_recent": 1599.2204498921476,
+        "f50": 1.3929164795623683
+      },
+      {
+        "sku": "IC062",
+        "expected_recent": 4439.857591891162,
+        "f50": 1.3929164795623683
+      },
+      {
+        "sku": "IC063",
+        "expected_recent": 2844.882125267681,
+        "f50": 1.392916479562368
+      }
+    ]
+  },
+  "peak_source": "snapshot.order_summary.capacity.projected_peak_pallets (planning projection, not replay physical peak)",
+  "trim_definition": "Sum of positive branch capacity_cut_cases minus clean snapshot capacity_cut_cases, by SKU; demand-driven case changes are not capacity cuts.",
+  "heat": {
+    "source": "WeatherDaily.tmax",
+    "date": "2026-07-30",
+    "tmax": 33.6,
+    "use": "offline replay event metadata only"
+  },
+  "branches": {
+    "unchanged": {
+      "f_before": 1.381551970913412,
+      "f_after": 1.381551970913412,
+      "before": 241,
+      "after": 241,
+      "p_before": 61.304556505468874,
+      "p_after": 61.304556505468874,
+      "n": 0,
+      "trimmed_products": []
+    },
+    "summer": {
+      "f_before": 1.381551970913412,
+      "f_after": 1.2990046766249463,
+      "before": 241,
+      "after": 209,
+      "p_before": 61.304556505468874,
+      "p_after": 61.357214581204545,
+      "n": 0,
+      "trimmed_products": []
+    },
+    "growing": {
+      "f_before": 1.381551970913412,
+      "f_after": 1.3929164795623683,
+      "before": 241,
+      "after": 246,
+      "p_before": 61.304556505468874,
+      "p_after": 61.29728913749731,
+      "n": 0,
+      "trimmed_products": []
+    }
+  },
+  "incomplete": [],
+  "bundle_sha256": "9913ccb545691f9fdbc6a8d177ee566ce1d283ed7704a239e53602d19e747817",
+  "validation": {
+    "command": "PYTHONPATH=backend .venv/Scripts/python.exe -m pytest backend/tests/test_tour_bundle.py -q",
+    "result": "10 passed",
+    "head_bundle_payload_semantically_identical": true,
+    "head_bundle_preserved_payload_sha256": "01167f36d4be3f8431cb97a7d76ffee449a9cd213d63d9baca770894956e6747"
+  }
+}

@@ -1,0 +1,706 @@
+{
+  "screenshots": [
+    {
+      "path": "docs/screenshots/tour2-summer-00-welcome.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "4f018b0d2c224fcb005e12233bb7c5edba2cdf80197ce5161dadb433b1e737ef",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-01.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "aadf13844d203387aac2eca460a87297e4ca97f85058e45628ca3861db60551c",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-02.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "2f732f6a664c5a3879cff83d4292d7a98d80885293193399a2ebf0360b74835e",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-03.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "188b1e41104fa1a8288d1bac650ea8caf6683bad86b2af9dbe8a31dc6fa95353",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-03-drilldown.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "89e54de241ec341e0d66cb92e08d9db68ff54cb9f378e73a71869fb0f8979ebd",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-04.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "ba9d9e2caf651517d67c3039d06c3b42af40d25263fe752aceb41899902aa9ab",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-05.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "780da8f00cc0ecf8917e864f2aa0220ec7b886039affeef2132a82614cb19fef",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-05-answer.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "4c897bb724b7bb97911933a8548017ada60f40494df649d90847d19d9fba29d8",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-06.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "cca09b68b8b4eee67947d5c182c4153d284df50c5cc9d2b6a8808c8bd7d126b5",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-07-beat-1.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "996c21e9e02afdf914f77546c45971a8a5cc5d5e0cb6203badcc6374764fc1ca",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-07-beat-2.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "dd836a419146bbd32d02c67ed074669ffe73205db0c34c591b03ffa163b20b2b",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-07-beat-3.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "0a2a895cca798a619f8e9e15d64f6a92ab3a9dd6d472c4a25cc29fff73ebf8b0",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-07-beat-4.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "e595087652baaf3cca70d2ba38b0db35d66be2ff9e4f0da8ce1ef27abd8a171d",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-07-complete.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "f0576679c3a1dfa1e00ad648530a2bb7dd62d31526488c4e83e9163c08c570c1",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-08.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "2b3656c584f7893f27459e4394f7100cd9b0c5dbe4961e1194a24919e03e6d14",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-09.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "d994706c1bf2232e78a5273a0e0ddae0362881286d11146a91d2bf61c65d9e84",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-10.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "97b125cabde5ba531b546f5d2ae2b00ff8ca7ab793aff01708ec3c3e7f7ca5ea",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-11.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "1b80dd968970dc87cee321b46ece8c2446bb51d010c64d581b368db0af130ed6",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-12.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "5b027a57a9fb0b6147f19acc7e4a3102f01c5cbb394eb3a463f133144b41fe56",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-13.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "f7cab9fdb231a5e4b576dbc3e37a80446f0073028d11ec1e8f20dd22f2c86c27",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-13-event-1.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "3055a41fc8025baeaac1dac83477603e855b45658fb01b2acd4363cd32bf6300",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-13-event-2.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "53cf2daa2ad63134cbfaf8adb9ee915fdf68dc87e4e7da9157209be3d31b06d6",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-13-event-3.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "d4d4674d8480a1d5e5ed1be3454ca9f33cc2fccaff31e770c2f08a4f874265e0",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-13-end.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "c0c85df9c9b77bfa9809e3e643acb70db6461681ef59c320a56e13fd0bf5395f",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-14.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "79d6491cfc5fc869143901d90fc22e32fec436e36c5789ecb8166aab54e73a57",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-summer-15-end.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "569fe3b9bc3207e429c54344c9ca68861b14747889dd3493e7814b508acd91c8",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-00-welcome.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "4f018b0d2c224fcb005e12233bb7c5edba2cdf80197ce5161dadb433b1e737ef",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-01.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "aadf13844d203387aac2eca460a87297e4ca97f85058e45628ca3861db60551c",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-02.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "2f732f6a664c5a3879cff83d4292d7a98d80885293193399a2ebf0360b74835e",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-03.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "188b1e41104fa1a8288d1bac650ea8caf6683bad86b2af9dbe8a31dc6fa95353",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-03-drilldown.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "89e54de241ec341e0d66cb92e08d9db68ff54cb9f378e73a71869fb0f8979ebd",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-04.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "ba9d9e2caf651517d67c3039d06c3b42af40d25263fe752aceb41899902aa9ab",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-05.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "4bdec5d758a07d5b210d16da4d6b01897a9ff0d650ea98f45b5c60d94d8422a2",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-05-answer.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "d70d53fc36077f27ef1dccaf9a040bc4f28a8903c7cc914a14293ed0f280d52f",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-06.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "a2b9dfcf3201ffff6fa892455aae10e40db527c3960436d9a9b8f8a74bda3cf0",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-07-beat-1.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "150691989b8b020b1c5dc652dd423ca1bcb8ec936eef10271dcf8a42cca747f7",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-07-beat-2.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "5b42d9954ebf33a91f91fef9920f499eb45ba7f38dd1bdf5591ead34f54883b4",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-07-beat-3.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "2edc87a0a99aa3ae4f648142b015d7a9e6f48b42bae778b412addbff8ca292d5",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-07-beat-4.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "3417fc07aa237fed445337eb359eeaf0088f2e110315dca2f662e59ab80d3076",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-07-complete.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "edeb04289a957e4652e7e6e6f50d9d003b5fdcd8dd127e2d0eed848d7abd67f7",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-08.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "46e2f99f45caf7f77466846033398ec29647bbaa37e8650ede8c3b1815cf7d63",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-09.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "8150cd1ca18d482af405285b4cc08dc11b48c6003263d1f7d91c7732514decb4",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-10.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "decf9178efa5ef9b59fa21beaeeff862ac986dcf9a8c38ad5b9cc79ce5859b30",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-11.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "1b80dd968970dc87cee321b46ece8c2446bb51d010c64d581b368db0af130ed6",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-12.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "98abb687585cf020595d407b9ac2bf18d56ed7b5d5fdfa56c2c278697bc28046",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-13.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "78f3e59d8e63d376f611414038ed4ecce32bb57e3d590fd38d6216bf45622a67",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-13-event-1.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "565154f17efa66645a5dd9de4914f4bb1f3e8090e3c228cc339d642d95f4073b",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-13-event-2.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "e415eb189b11c1eb81d9c33a959b93e362902769635e18a7ca011da1ed7d950e",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-13-event-3.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "9e3107db6685841254b8680962068ac2b6b142b77145dc6669f9c88f8852aef4",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-13-end.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "0f9f61f0ef3df11b73a335608a26c5e42b298a3bf4435d61fe8f082a8fc18557",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-14.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "9670b7dc57da9954e0c3ac5711c86936b79f8d78dd514b83f332f0281646a359",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-growing-15-end.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "4be709824a5a5673c434e3e2fd1f88db04839f00423ab6a4f8b2784f7fafbc67",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-00-welcome.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "4f018b0d2c224fcb005e12233bb7c5edba2cdf80197ce5161dadb433b1e737ef",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-01.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "aadf13844d203387aac2eca460a87297e4ca97f85058e45628ca3861db60551c",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-02.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "2f732f6a664c5a3879cff83d4292d7a98d80885293193399a2ebf0360b74835e",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-03.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "188b1e41104fa1a8288d1bac650ea8caf6683bad86b2af9dbe8a31dc6fa95353",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-03-drilldown.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "89e54de241ec341e0d66cb92e08d9db68ff54cb9f378e73a71869fb0f8979ebd",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-04.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "ba9d9e2caf651517d67c3039d06c3b42af40d25263fe752aceb41899902aa9ab",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-05.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "4bdec5d758a07d5b210d16da4d6b01897a9ff0d650ea98f45b5c60d94d8422a2",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-06.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "a2b9dfcf3201ffff6fa892455aae10e40db527c3960436d9a9b8f8a74bda3cf0",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-07-beat-1.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "1be78bb6320774bed6bbaa664de663ceb0860b93f6fb2fe6784add5a9452e1df",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-08.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "2455a46d0c75618fca586da5bb63587a3336fde23ac3e9bab573681ec3f0b161",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-09.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "0a54d513581c917146a4d9b0737e1e089806381f1e9b744ec4fc16e5a2b88bad",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-10.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "a4711ce11318dd9b5085a0bc1a93e9cce7d1d7e73573e66edff6f5ce63d102e8",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-11.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "1b80dd968970dc87cee321b46ece8c2446bb51d010c64d581b368db0af130ed6",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-12.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "9f70cde86495cad0dc299c5cb68e812372a3554f986c5ac92db9d45832fe8520",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-13.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "c47491033be26d9d8f1e31b19c9232ee5c17843dd7b71a6fb529f8f8b244e121",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-13-event-1.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "587826257150eb7b6a555bdf42cf179a6540441637cbbee13e4f6ada6149b62a",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-13-event-2.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "a56f1312683d42288f726a92a52fd9c8a89d376d45e6aa5acfeb1a7dcce3699d",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-13-event-3.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "e8f317d155ed4f481dffa2c1617e5dae0382ec1c73440ca1820ae9e4d5ab2eb0",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-13-end.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "c3ee6dfd5e02a175b69bec29ecf7ead6b705b9b742e1b11ca5e7f3752081901f",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-14.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "ffb89f61873c77709cf9158c1e23e32e1504f6ee54c29fa3b8827a08a258c0fc",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-unchanged-15-end.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "1152ecdd63a36f967e64c2dd2457612cf8e570ec53e7d2d349bbf6ef7f54b454",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-explore-mid-switch.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "54c3b1443259342ae7e23424bca3c44050c2e5727b91c5d279dbcf70163bf3a0",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-explore-speed.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "74687d83261421f93267bbb79fc8de01a0de61e261af3d6c2fc4d4655dc1d8ee",
+      "reviewed": true
+    },
+    {
+      "path": "docs/screenshots/tour2-explore-watch.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "1e293706a1c6b950aa8da226b683f31f92c326df171e9e2c3032cf1c137d30b0",
+      "reviewed": true
+    }
+  ],
+  "count": 76,
+  "motion_frames": 7076,
+  "overlap_frames": 0,
+  "review_method": "Parent visual review of all branch contact sheets, with full-size inspection of report, drilldown/recalculation, suggested actions, Orders, added widget, Play, Results and Explore screens.",
+  "corrections": [
+    "Kept main full width; Play coach uses space above the view instead of compressing it.",
+    "Step 4 resets the right panel to the suggested actions and in-stock control.",
+    "Added widget scrolls into view before advancing.",
+    "Watch/Play scroll internally in Explore as well as tour.",
+    "Coach relocates before paint and fades/slides locally, without travelling across its new target."
+  ],
+  "litmus": {
+    "clear_target": "Yes: report finding, evidence, controls and each beat are individually spotlighted.",
+    "readable_copy": "Yes: one-line 20/600 title, 15/400 body, inline strong text; validated in all steps.",
+    "real_data": "Yes: branch quantities and Results match genuine API recordings.",
+    "unclipped_controls": "Yes: coach buttons, native flow actions and speed segments remain visible.",
+    "scrolling": "No document scroll on Watch/Play; dashboard and event feed scroll independently."
+  }
+}

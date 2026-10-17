@@ -94,9 +94,9 @@ The [current measured default replay](reports/tuning/demo-walkthrough.json) give
 
 ## Guided tour
 
-On first visit, choose **Start the tour** or **Explore on my own**. **Take the tour** in the top bar opens it again. The desktop tour guides ten steps through the same Report, Orders, Watch, Play and Results components, with suggested questions and context/widget choices. Skip or Esc returns to Explore at the default Report. Below 1280 px the welcome offers Explore only.
+On first visit, choose **Start the tour** or **Explore on my own**. **Take the tour** in the top bar opens it again. Fourteen desktop coach steps use the same Report, Orders, Watch, Play and Results components, with optional questions and context/widget choices. The welcome and end modals are unnumbered. Skip or Esc returns to Explore at the default Report. Below 1280 px the welcome offers Explore only.
 
-The tour reads the checked-in `frontend/public/tour-bundle.json`. All tour changes stay in browser memory: no HTTP writes, provider calls or changes to Explore's database. Its five assistant answers were recorded from real Gemini calls and are labelled **Recorded example**. The three context choices contain distinct real orders and complete replays. Normal Play speed remains about two seconds per day, with no pause control in the tour.
+The tour reads the checked-in version-2 `frontend/public/tour-bundle.json`. All tour changes stay in browser memory: no HTTP writes, provider calls or changes to Explore's database. Five genuine Gemini answers remain bundled; the two optional question replies are shown with **Recorded example**. The three context choices contain distinct real orders and complete replays. Step 7 shows four 1.5-second beats: context, expected lift, cohort cases and projected peak; Nothing to add shows only the first beat. All Play views default to **2×** (two seconds per day), with **4×** and **8×** changing only the replay clock. The tour has no pause control.
 
 To rebuild after changing the default week, prepare its initial template first, then run these commands from the repository root with the backend environment active:
 
@@ -105,10 +105,10 @@ python scripts/build-tour-bundle.py
 # Requires Gemini credentials and provider allowance for the five recordings.
 python scripts/record-tour-answers.py
 pnpm --dir frontend build
-SCOOP_TEST_URL=http://127.0.0.1:8008 pnpm --dir frontend exec playwright test tour.spec.ts
+SCOOP_TEST_URL=http://127.0.0.1:8008 pnpm --dir frontend exec playwright test tour.spec.ts play-speed.spec.ts
 ```
 
-The builder copies source data into a private PostgreSQL schema, excludes the evaluation-only ground-truth table, and calls the real API there. It retains that schema for the separate answer-recording command. Rebuild both data and answers before publishing a refreshed tour. A read-only `/api/tour/source` fingerprint rejects stale bundles; missing recordings are not replaced with fabricated answers. Build and recording evidence lives in `reports/night4/`.
+The builder copies source data into a private PostgreSQL schema, excludes the evaluation-only ground-truth table, and calls the real API there. It retains that schema for the separate answer-recording command. Rebuild both data and answers before publishing a refreshed tour. A read-only `/api/tour/source` fingerprint rejects stale bundles; missing recordings are not replaced with fabricated answers. For unchanged recordings, `python scripts/enrich-tour-bundle.py` appends version-2 recalculation metadata and actual heat-day temperature using read-only data; it neither generates plans nor calls Gemini. Original build/recording evidence is in `reports/night4/`; v2 acceptance is in `reports/tour2/` and `docs/screenshots/tour2-*.png`.
 
 The current parameters are optimised for the demonstration scenario. Once real operational data is available, they will be re-optimised on that data.
 

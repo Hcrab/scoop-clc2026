@@ -1,5 +1,6 @@
 """Tour source identity and strict fixture verification; no providers are involved."""
 import json
+from math import isfinite
 from datetime import date
 from sqlalchemy.orm import Session
 from . import db
@@ -40,10 +41,19 @@ def source_identity(db_engine=None, schema='public'):
 
 
 def verify_bundle(bundle, source):
-    if bundle.get('version') != 1:
+    if bundle.get('version') != 2:
         raise ValueError('Unsupported tour bundle version')
     for key in ('default_week','default_order_hash','plan_id'):
         if bundle.get(key) != source.get(key): raise ValueError('Stale tour bundle: '+key)
+    temperature = bundle.get('meta', {}).get('heat_temp')
+    if isinstance(temperature, bool) or not isinstance(temperature, (int, float)) or not isfinite(temperature):
+        raise ValueError('Tour bundle requires actual heat temperature')
+    from .tour_recalculation import recalculation
+    for branch in bundle['branches'].values():
+        expected = recalculation(bundle['base'], branch['snapshot'],
+                                 bundle['meta']['strawberry_card_id'], bundle['meta']['strawberry_skus'])
+        if branch.get('recalculation') != expected:
+            raise ValueError('Tour recalculation metadata does not match recorded snapshots')
     for snapshot in [bundle['base'], *(b['snapshot'] for b in bundle['branches'].values())]:
         if snapshot['simulation']['status'] != 'ready' or not snapshot['simulation'].get('result'):
             raise ValueError('Tour replay is not complete')

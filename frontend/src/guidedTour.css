@@ -24,7 +24,7 @@
 .tour-active #root,.tour-active .app{height:100dvh;min-height:0;overflow:hidden}
 .tour-active .app .workspace,.tour-active .app.with-dock .workspace{height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
 .tour-active .app .workspace>.topbar{flex:none}
-.tour-active .app .workspace>main{display:flex;flex:1;min-height:0;flex-direction:column;overflow:hidden;padding-bottom:20px}
+.tour-active .app .workspace>main{display:flex;flex:1;min-height:0;width:100%;flex-direction:column;overflow:hidden;padding-bottom:20px}
 .tour-active .page-heading,.tour-active .plan-toolbar,.tour-active .stage-tabs,.tour-active .week-recap,.tour-active .flow-notice{flex:none}
 .tour-active .page-footer{display:none!important}
 .tour-active .app.report-view .discover-with-cohorts{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,1fr);flex:1;min-height:0;overflow:hidden;align-items:stretch}
@@ -50,3 +50,21 @@
 .tour-active .app *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 @keyframes tour-coach-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.tour-coach{transition:none;animation:none}}
+/* Tour containment reserves a real adjacent lane for the coach. */
+.tour-coach{width:420px;max-height:calc(100dvh - 32px);transition:none}
+.tour-coach h2{white-space:nowrap;font-size:20px!important;font-weight:600!important}
+.tour-coach p{font-size:15px!important;font-weight:400!important}
+.tour-coach p strong{font-weight:600}
+.tour-coach .tour-event{margin-top:14px}
+.tour-choice{height:52px}
+.tour-active .tour-recalculation{display:flex;flex-wrap:wrap;gap:16px;flex-basis:100%;padding-top:10px;font-size:20px}
+.tour-active .tour-recalculation-peak{display:block;font-size:20px;white-space:nowrap}
+.tour-active .cohort-numbers:has(.tour-recalculation){flex-wrap:wrap}
+.tour-active .cohort-preview-row:has(.tour-recalculation-peak){flex-wrap:wrap}
+.tour-active .tour-context-result [data-tour-context]{margin:10px 0;font-weight:600}
+.tour-active[data-tour-step='5'] .discussion{width:430px}
+.tour-active[data-tour-step='5'] .app.with-dock .workspace{margin-right:430px}
+.tour-active[data-tour-step='9'] .action-list,.tour-active[data-tour-step='10'] .action-list,
+.tour-active[data-tour-step='11'] .watch-step,.tour-active[data-tour-step='12'] .watch-step{width:calc(100% - 460px);min-width:0}
+.tour-active .play-speed{display:flex!important}
+.tour-active .play-speed button{display:inline-flex!important}

@@ -1,0 +1,15 @@
+
+Running 7 tests using 1 worker
+
+(node:69928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/7] e2e\play-speed.spec.ts:9:1 › Explore 2×/4×/8× clock, events, tiles and widgets stay synchronized
+[2/7] e2e\tour.spec.ts:15:1 › real-component tour v2: summer / why / stock
+[3/7] e2e\tour.spec.ts:15:1 › real-component tour v2: growing / heat / space
+[4/7] e2e\tour.spec.ts:15:1 › real-component tour v2: unchanged / skip / cover
+[5/7] e2e\tour.spec.ts:116:1 › stale source refuses entry; narrow welcome only offers Explore
+[6/7] e2e\tour.spec.ts:122:1 › Esc and Skip exit cleanly; top bar, back and keyboard actions work
+[7/7] e2e\tour.spec.ts:131:1 › Explore preserves existing evidence deep links
+  7 passed (3.8m)

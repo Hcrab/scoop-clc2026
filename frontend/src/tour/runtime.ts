@@ -32,7 +32,7 @@ async function readJSON<T>(path: string): Promise<T> {
 }
 export async function loadTourBundle(): Promise<TourBundle> {
   const [bundle, source] = await Promise.all([readJSON<TourBundle>('/tour-bundle.json'), readJSON<TourSource>('/api/tour/source')]);
-  if (bundle.version !== 1 || !bundle.default_order_hash || bundle.default_order_hash !== source.default_order_hash || bundle.default_week !== source.default_week || bundle.plan_id !== source.plan_id) throw new Error('The tour bundle is stale. Rebuild it for the current default week.');
+  if (bundle.version !== 2 || !bundle.default_order_hash || bundle.default_order_hash !== source.default_order_hash || bundle.default_week !== source.default_week || bundle.plan_id !== source.plan_id) throw new Error('The tour bundle is stale. Rebuild it for the current default week.');
   return bundle;
 }
 export function beginTour(bundle: TourBundle): void {

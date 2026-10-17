@@ -18,17 +18,19 @@ export type Snapshot = {
   order_summary: OrderSummary; dashboard: DashboardData; simulation: SimulationStatus;
 };
 export type WidgetChoice = { spec: DashboardSpec; dashboard: DashboardData; edit: PlanEdit };
+export type Recalculation = {f_before:number;f_after:number;before:number;after:number;p_before:number;p_after:number;n:number;trimmed_products:{sku:string;name:string;cases_trimmed:number;before_cut:number;after_cut:number}[]};
 export type Branch = {
   id: ContextId; context: ContextRequest | null; snapshot: Snapshot; edit: PlanEdit | null;
   before_cases: number; after_cases: number; total_cases: number; peak: number; capacity: number;
   answer: RecordedAnswer | null;
+  recalculation: Recalculation;
   moments: { heat_date: string; strawberry_arrival: { date: string; time: string; minute: number; units: number } | null; stockout: { date: string; time: string; minute: number; product: string } | null };
   widgets: Record<WidgetId, WidgetChoice>;
 };
 export type TourSource = { default_week: string; default_order_hash: string; plan_id: string };
 export type TourBundle = TourSource & {
-  version: 1;
-  meta: { capacity: number; product_count: number; strawberry_card_id: string; strawberry_skus: string[]; effect: number; l1: number; l2: number; l3: number; heat_date: string };
+  version: 2;
+  meta: { capacity: number; product_count: number; strawberry_card_id: string; strawberry_skus: string[]; effect: number; l1: number; l2: number; l3: number; heat_date: string; heat_temp:number };
   common: { bootstrap: Bootstrap; settings: DemoSettings };
   base: Snapshot; branches: Record<ContextId, Branch>;
   questions: Record<QuestionId, RecordedAnswer | null>;

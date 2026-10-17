@@ -5,6 +5,7 @@ import { beginTour, endTour, loadTourBundle } from './tour/runtime';
 import type { TourBundle } from './tour/types';
 import { fillTourCopy, TOUR_COPY } from './tour/copy';
 import './guidedTour.css';
+import { TourRichText } from './tourRichText';
 
 const visitedKey='scoop:tour-welcome-seen';
 export default function TourHost(){
@@ -18,7 +19,7 @@ export default function TourHost(){
   function explore(){endTour();localStorage.setItem(visitedKey,'1');setDefaultReport(value=>value||mode==='tour');setMode('explore');setEpoch(v=>v+1)}
   function start(){if(!bundle||!wide)return;beginTour(bundle);setDefaultReport(true);localStorage.setItem(visitedKey,'1');setEpoch(v=>v+1);setMode('tour')}
   return <>{mode!=='welcome'&&<App key={`${mode==='tour'?'tour':'explore'}-${epoch}`} initialReport={mode==='tour'||defaultReport} onTakeTour={()=>setMode('welcome')}/>}
-    {mode==='welcome'&&<div className="tour-modal-shade"><section className="tour-modal" role="dialog" aria-modal="true" aria-labelledby="tour-welcome-title"><h1 id="tour-welcome-title">{TOUR_COPY.welcome.title}</h1>{bundle&&<p>{fillTourCopy(TOUR_COPY.welcome.body,{capacity:bundle.meta.capacity})}</p>}{error&&<div className="error-banner" role="alert"><strong>Something needs attention</strong><p>{error}</p></div>}<div className="modal-actions">{wide&&<button className="button primary" disabled={!bundle||!!error} onClick={start}>{TOUR_COPY.welcome.start}</button>}<button className="button ghost" onClick={explore}>{TOUR_COPY.welcome.explore}</button></div></section></div>}
+    {mode==='welcome'&&<div className="tour-modal-shade"><section className="tour-modal" role="dialog" aria-modal="true" aria-labelledby="tour-welcome-title"><h1 id="tour-welcome-title">{TOUR_COPY.welcome.title}</h1>{bundle&&<p><TourRichText text={fillTourCopy(TOUR_COPY.welcome.body,{capacity:bundle.meta.capacity})}/></p>}{error&&<div className="error-banner" role="alert"><strong>Something needs attention</strong><p>{error}</p></div>}<div className="modal-actions">{wide&&<button className="button primary" disabled={!bundle||!!error} onClick={start}>{TOUR_COPY.welcome.start}</button>}<button className="button ghost" onClick={explore}>{TOUR_COPY.welcome.explore}</button></div></section></div>}
     {mode==='tour'&&bundle&&<GuidedTour key={epoch} bundle={bundle} onExit={explore} onReplay={start}/>}
   </>;
 }

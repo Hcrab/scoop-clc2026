@@ -79,6 +79,7 @@ def build(output):
     from scoop.main import app
     from fastapi.testclient import TestClient
     from scoop.tour_bundle import source_identity, verify_bundle
+    from scoop.tour_recalculation import enrich_bundle, heat_temperature
     from scoop.demo_config import DEMO_SCENARIO
     client=TestClient(app) # no startup hook; this process owns only its cloned work
     prefix='/api/plans/P20260727'
@@ -128,7 +129,7 @@ def build(output):
         contexts={'unchanged':None,'summer':{'cohort':cid,'type':'ends_on','value':'2026-08-10'},
                   'growing':{'cohort':cid,'type':'expect','value':{'pct':card['interval_pct'][1]/100,'strength':'high'},
                              'note':'Optimistic user-context preset: existing model 80% interval upper endpoint, high confidence.'}}
-        bundle={'version':1,**source,'meta':meta,'common':common,'base':base,'branches':{},'questions':{'why':None,'heat':None}}
+        bundle={'version':2,**source,'meta':meta,'common':common,'base':base,'branches':{},'questions':{'why':None,'heat':None}}
         for name,context in contexts.items():
             fresh();before_detail=api('GET',prefix)
             edit=api('POST',prefix+'/overrides',context) if context else None
@@ -162,6 +163,7 @@ def build(output):
                 assert api('GET',prefix+'/simulation')['order_hash']==physical_before,'Widget changed physical orders'
             bundle['branches'][name]=branch
             print(name,branch['before_cases'],branch['after_cases'],branch['total_cases'],replay['summary']['scoop'],flush=True)
+        enrich_bundle(bundle, heat_temperature(private, meta['heat_date']))
         verify_bundle(bundle,source)
         output.parent.mkdir(parents=True,exist_ok=True)
         output.write_text(json.dumps(bundle,ensure_ascii=False,separators=(',',':'),allow_nan=False)+'\n',encoding='utf-8')

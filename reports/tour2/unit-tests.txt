@@ -1,0 +1,32 @@
+✔ new replays default to 2× with the required native clock rates (0.9745ms)
+✔ every ten-minute frame has identical dashboard time, events and captions at all speeds (35.2358ms)
+✔ speed switches reanchor without jumping, including midnight and final frame (0.1803ms)
+✔ native control exposes all three speeds and keeps pause, resume and Results flow (2.4218ms)
+✔ warehouse paths use native closing stock totals and share only the last recorded anchor (12.2459ms)
+✔ main Results overlay renders three named colors on one chart and equal values use equal coordinates (24.9303ms)
+✔ Watch and Play never access baseline for any metric (40.1697ms)
+✔ Results policy metrics use the operational chart with history and two policies (17.1486ms)
+✔ Results demand metrics share one since-order source without accessing baseline (36.7298ms)
+✔ Results lowest cover uses actual stock for each policy and rolling per-product demand (0.6061ms)
+✔ comparison charts retain missing history, morning gaps and hollow noon projections for both policies (64.8565ms)
+✔ fill tile keeps only its period line with unchanged numeric value (4.2943ms)
+✔ only Results opts into dashboard comparison and retains the three outcomes and full comparison (40.9536ms)
+✔ stored replay outcomes show both policies and rounded relative leads (19.7004ms)
+✔ equal and worse outcomes use nonnegative more badges and the coral class (2.7578ms)
+✔ zero rule with positive Scoop loss never fabricates a finite percentage (1.4127ms)
+✔ all fourteen title/body entries match the supplied protocol verbatim, including bold (0.7047ms)
+✔ welcome/end and question, context and widget choices preserve final copy (0.1889ms)
+✔ branch copy only omits the explicitly optional no-capacity-cut sentence (0.2395ms)
+✔ all contexts and widgets run the native App flow without any network request or bundle mutation (7.3423ms)
+✔ fixture adapter returns stored edit responses and rejects unsupported controls and routes (0.7715ms)
+✔ only genuine stored answers are served and assistant never falls back to HTTP (0.6049ms)
+✔ loading uses two GETs and explicitly rejects a stale default order hash (0.2751ms)
+✔ refresh events fire for context, widget and view changes; ending fully restores live transport (0.4544ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 890.9418
