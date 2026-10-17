@@ -2,12 +2,14 @@ import { Icon, Empty, Loading, Badge, DataView, Chart, Metric, Modal } from './u
 import { Discovery, Discussion, Recap, displayName } from './PlanSections';
 import { ActionList } from './ActionList';
 import { emptyReplay, PlayWeek, Results, type ReplayState } from './Play';
+import { playbackPosition } from './playbackClock';
 import { Dashboard } from './Dashboard';
 import { EvidenceModal } from './EvidenceModal';
 import { evidenceRoute, evidenceSources, evidenceUrl } from './evidence';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { api, n, pct, date, fullDate, plusDays, monday, weekday } from './api';
 import type { Bootstrap, DemoSettings, Detail, Direction, Finding, Order, Product, Question, Stage, FlowStep, FlowState, SimulationStatus, StoreDetail } from './types';
+import { TOUR_COPY } from './tour/copy';
 
 const steps: FlowStep[] = ['report', 'orders', 'watch', 'play', 'results'];
 const stepNames: Record<FlowStep,string> = {report:'Report',orders:'Orders',watch:'Watch',play:'Play',results:'Results'};
@@ -15,7 +17,7 @@ const stageFor = (step:FlowStep):Stage => step==='report'?'discover':step==='ord
 const flowFor = (detail:Detail):FlowState => detail.flow || {step:detail.plan.stage==='discover'?'report':detail.plan.stage==='direction'?'orders':'watch',max_step:detail.plan.stage==='discover'?'report':detail.plan.stage==='direction'?'orders':'watch',order_hash:null,notice:null};
 const stageNames = { discover: 'Draft', direction: 'In review', execute: 'Approved' };
 const classifications = [{ id: 'persistent', label: 'Persistent shift' }, { id: 'one_off', label: 'One-off event' }, { id: 'data_issue', label: 'Data issue' }, { id: 'weather', label: 'Weather driven' }, { id: 'unsure', label: 'Need more evidence' }, { id: 'mirror', label: 'Share shifted elsewhere' }];
-export default function App() {
+export default function App({onTakeTour,initialReport=false}:{onTakeTour?:()=>void;initialReport?:boolean}) {
   const [boot, setBoot] = useState<Bootstrap | null>(null), [detail, setDetail] = useState<Detail | null>(null);
   const [page, setPage] = useState('plans'), [planId, setPlanId] = useState(''), [step, setStep] = useState<FlowStep>('report');
   const [error, setError] = useState(''), [pending, setPending] = useState(false), [loading, setLoading] = useState(true), [revision, setRevision] = useState(0);
@@ -24,35 +26,42 @@ export default function App() {
   const [settings, setSettings] = useState<DemoSettings | null>(null), [chatSending, setChatSending] = useState(false), [seedPrompt, setSeedPrompt] = useState<{text:string;nonce:number}>();
   const [replay,setReplay]=useState<ReplayState>(()=>emptyReplay());
   const [simulation,setSimulation]=useState<SimulationStatus|null>(null);
-  const [evidenceId,setEvidenceId]=useState(()=>evidenceRoute()?.id||'');
-  const selectedPlan = useRef(evidenceRoute()?.planId||'');
+  const [evidenceId,setEvidenceId]=useState(()=>initialReport?'':evidenceRoute()?.id||'');
+  const selectedPlan = useRef(initialReport?'':evidenceRoute()?.planId||'');
   const openedEvidenceHere=useRef(false);
   const keepContextView = useRef(false);
   const loadedPlan = useRef<{id:string;step:FlowStep}|null>(null);
   const oldHash=useRef<{id:string;hash:string|null}|null>(null);
   const completionSent=useRef('');
+  useEffect(()=>{
+    const refresh=()=>{keepContextView.current=false;setRevision(r=>r+1)};
+    const chat=(event:Event)=>{const value=(event as CustomEvent<boolean|{open:boolean;findingId?:string}>).detail;setSeedPrompt(undefined);setDock(typeof value==='object'?value.open:value!==false);if(typeof value==='object'&&value.findingId)setSelectedFinding(value.findingId)};
+    window.addEventListener('scoop:tour-refresh',refresh);window.addEventListener('scoop:tour-open-chat',chat);
+    return()=>{window.removeEventListener('scoop:tour-refresh',refresh);window.removeEventListener('scoop:tour-open-chat',chat)};
+  },[]);
+  useEffect(()=>{window.dispatchEvent(new CustomEvent('scoop:tour-state',{detail:{step,day:replay.day,minute:replay.minute,speed:replay.speed,result:replay.result,complete:!!replay.result&&replay.day===replay.result.days-1&&replay.minute===1430}}))},[step,replay.day,replay.minute,replay.speed,replay.result]);
   useEffect(()=>{const onPop=()=>{const route=evidenceRoute();setEvidenceId(route?.id||'');if(route){selectedPlan.current=route.planId;setPlanId(route.planId);setPage('plans');setStep('report');keepContextView.current=true}};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);
   function openEvidence(id:string){if(!detail)return;window.history.pushState({evidence:true},'',evidenceUrl(detail.plan.id,id));openedEvidenceHere.current=true;setEvidenceId(id)}
   function closeEvidence(){if(openedEvidenceHere.current&&window.history.state?.evidence){openedEvidenceHere.current=false;window.history.back()}else{window.history.replaceState({},'',`/plans/${encodeURIComponent(planId)}`);setEvidenceId('')}}
 
-  useEffect(() => { let active = true; setLoading(true); Promise.all([api<Bootstrap>('/bootstrap'), api<DemoSettings>('/demo-settings')]).then(([data, simulation]) => { if (!active) return; setBoot(data); setSettings(simulation); setWeek(monday(data.today)); setPlanId(id => selectedPlan.current && data.plans.some(p=>p.id===selectedPlan.current) ? selectedPlan.current : data.plans.some(p => p.id === id) ? id : data.plans.find(p => p.week_start === monday(data.today))?.id || data.plans[0]?.id || ''); setError(''); }).catch(e => active && setError(e.message)).finally(() => active && setLoading(false)); return () => { active = false; }; }, [revision]);
-  useEffect(() => { if (!planId) { setDetail(null); return; } let active = true; setRefreshing(true); api<Detail>(`/plans/${encodeURIComponent(planId)}`).then(data => { if (active) { const flow=flowFor(data); const previous=oldHash.current; if(previous?.id===data.plan.id&&previous.hash!==flow.order_hash){setReplay(emptyReplay(data.plan.id,flow.order_hash));setSimulation(null);completionSent.current=''} else if(previous?.id!==data.plan.id){setReplay(emptyReplay(data.plan.id,flow.order_hash));setSimulation(null);completionSent.current=''} oldHash.current={id:data.plan.id,hash:flow.order_hash}; if(loadedPlan.current?.id!==data.plan.id||loadedPlan.current?.step!==flow.step){if(!keepContextView.current||loadedPlan.current?.id!==data.plan.id)setStep(evidenceRoute()?.planId===data.plan.id?'report':flow.step);setFocusedSku('')} keepContextView.current=false; loadedPlan.current={id:data.plan.id,step:flow.step}; setDetail({ ...data, orders:data.orders.map(o=>({...o,final_cases:o.final_cases??Math.max(0,o.suggested_cases-o.capacity_cut_cases)})) }); setSelectedFinding(id => data.findings.some(f => f.id === id) ? id : data.findings.find(f=>f.kind==='significant')?.id || data.findings[0]?.id || ''); } }).catch(e => active && setError(e.message)).finally(() => active && setRefreshing(false)); return () => { active = false; }; }, [planId, revision]);
+  useEffect(() => { let active = true; setLoading(true); Promise.all([api<Bootstrap>('/bootstrap'), api<DemoSettings>('/demo-settings')]).then(([data, simulation]) => { if (!active) return; setBoot(data); setSettings(simulation); setWeek(monday(data.today)); setPlanId(id => selectedPlan.current && data.plans.some(p=>p.id===selectedPlan.current) ? selectedPlan.current : data.plans.some(p => p.id === id) ? id : data.plans.find(p => p.week_start === (initialReport?'2026-07-27':monday(data.today)))?.id || data.plans[0]?.id || ''); setError(''); }).catch(e => active && setError(e.message)).finally(() => active && setLoading(false)); return () => { active = false; }; }, [revision]);
+  useEffect(() => { if (!planId) { setDetail(null); return; } let active = true; setRefreshing(true); api<Detail>(`/plans/${encodeURIComponent(planId)}`).then(data => { if (active) { const flow=flowFor(data); const previous=oldHash.current; if(previous?.id===data.plan.id&&previous.hash!==flow.order_hash){setReplay(emptyReplay(data.plan.id,flow.order_hash));setSimulation(null);completionSent.current=''} else if(previous?.id!==data.plan.id){setReplay(emptyReplay(data.plan.id,flow.order_hash));setSimulation(null);completionSent.current=''} oldHash.current={id:data.plan.id,hash:flow.order_hash}; if(loadedPlan.current?.id!==data.plan.id||loadedPlan.current?.step!==flow.step){if(!keepContextView.current||loadedPlan.current?.id!==data.plan.id)setStep(initialReport&&loadedPlan.current===null?'report':evidenceRoute()?.planId===data.plan.id?'report':flow.step);setFocusedSku('')} keepContextView.current=false; loadedPlan.current={id:data.plan.id,step:flow.step}; setDetail({ ...data, orders:data.orders.map(o=>({...o,final_cases:o.final_cases??Math.max(0,o.suggested_cases-o.capacity_cut_cases)})) }); setSelectedFinding(id => data.findings.some(f => f.id === id) ? id : data.findings.find(f=>f.kind==='significant')?.id || data.findings[0]?.id || ''); } }).catch(e => active && setError(e.message)).finally(() => active && setRefreshing(false)); return () => { active = false; }; }, [planId, revision]);
   useEffect(() => { if (!notice) return; const t = setTimeout(() => setNotice(''), 5000); return () => clearTimeout(t); }, [notice]);
   const orderHash=detail?.flow?.order_hash||null;
   useEffect(()=>{if(!detail||!orderHash)return;let active=true;let timer:ReturnType<typeof setTimeout>;const simulationPath=`/plans/${encodeURIComponent(detail.plan.id)}/simulation`;async function poll(){try{const data=await api<SimulationStatus>(simulationPath);if(!active)return;if(data.order_hash!==orderHash){setSimulation(null);setReplay(emptyReplay(detail!.plan.id,orderHash));return}setSimulation(data);if(data.status==='ready'&&data.result)setReplay(current=>{const previous=current.planId===detail!.plan.id&&current.orderHash===orderHash?current:emptyReplay(detail!.plan.id,orderHash);const restored=flowFor(detail!).max_step==='results'&&previous.day<0;return {...previous,result:data.result!,day:restored?data.result!.days-1:previous.day,minute:restored?1430:previous.minute,unlocked:flowFor(detail!).max_step==='results'||previous.unlocked}});if(data.status==='queued'||data.status==='running')timer=setTimeout(poll,1500)}catch(e){if(active)setSimulation({status:'failed',order_hash:orderHash,queued_at:null,started_at:null,completed_at:null,elapsed_seconds:null,error:(e as Error).message})}}void poll();return()=>{active=false;clearTimeout(timer)}},[detail?.plan.id,orderHash,revision]);
   useEffect(()=>{
     if(step!=='play'||!replay.running||!replay.result||replay.day<0)return;
-    // Anchor to elapsed time so chart rendering cannot accumulate clock drift.
-    const start=replay.day*144+replay.minute/10, last=replay.result.days*144-1, began=performance.now();
+    // Speed changes and resume reanchor at the currently displayed ten-minute tick.
+    const anchor={day:replay.day,minute:replay.minute}, days=replay.result.days, speed=replay.speed, began=performance.now();
     let frame:number;
     const tick=(now:number)=>{
-      const target=Math.min(last,start+Math.floor((now-began)*144/2000));
-      setReplay(current=>!current.running||current.day*144+current.minute/10===target?current:{...current,day:Math.floor(target/144),minute:(target%144)*10,running:target<last});
-      if(target<last)frame=requestAnimationFrame(tick);
+      const target=playbackPosition(anchor,now-began,days,speed);
+      setReplay(current=>!current.running||current.speed!==speed||current.day===target.day&&current.minute===target.minute&&!target.complete?current:{...current,day:target.day,minute:target.minute,running:!target.complete});
+      if(!target.complete)frame=requestAnimationFrame(tick);
     };
     frame=requestAnimationFrame(tick);
     return()=>cancelAnimationFrame(frame);
-  },[step,replay.running,replay.result]);
+  },[step,replay.running,replay.result,replay.speed]);
   useEffect(()=>{if(step!=='play'||!replay.result||replay.day!==replay.result.days-1||replay.minute!==1430||replay.unlocked||!detail?.flow?.order_hash)return;const key=`${detail.plan.id}:${detail.flow.order_hash}`;if(completionSent.current===key)return;completionSent.current=key;api<FlowState>(`/plans/${encodeURIComponent(detail.plan.id)}/play-complete`,'POST',{}).then(flow=>{setDetail(current=>current&&current.plan.id===detail.plan.id?{...current,flow}:current);setReplay(current=>({...current,unlocked:true,running:false}))}).catch(e=>{completionSent.current='';setError((e as Error).message)})},[step,replay.day,replay.minute,replay.result,replay.unlocked,detail?.plan.id,detail?.flow?.order_hash]);
   async function mutate(path: string, method: string, body: unknown, message = 'Saved') {
     if(page==='plans'&&step==='play'){setError('Return to Orders to change this plan.');return false}
@@ -86,13 +95,13 @@ export default function App() {
   }
   const currentPlan = boot?.plans.find(p => p.week_start === monday(boot.today));
   const currentIndex = detail ? steps.indexOf(flowFor(detail).max_step) : 0;
-  return <div className={`app ${page === 'plans' && dock && detail ? 'with-dock' : ''} ${page === 'plans' && step === 'report' && detail?.plan.id===planId ? 'report-view' : ''}`}>
+  return <div className={`app ${page === 'plans' && dock && detail ? 'with-dock' : ''} ${page === 'plans' && step === 'report' && detail?.plan.id===planId ? 'report-view' : ''} ${page==='plans'&&(step==='watch'||step==='play')?'monitor-view':''}`}>
     <aside className="sidebar"><a className="wordmark" href="#" onClick={e => { e.preventDefault(); if(!busy)setPage('plans'); }}><span className="logo"><Icon name="cone" size={27}/></span>scoop<span className="wordmark-dot">.</span></a><div className="workspace-label">Planning</div>
       <nav aria-label="Main navigation">{['plans', 'stores', 'catalog', 'evaluation', 'settings'].map(v => <button key={v} className={`nav-item ${page === v ? 'active' : ''}`} disabled={busy} onClick={() => {if(v!==page)setReplay(current=>({...current,running:false}));setPage(v)}}><Icon name={v}/>{v[0].toUpperCase() + v.slice(1)}{v === 'plans' && boot && <span className="nav-count">{boot.plans.length}</span>}</button>)}</nav>
       <div className="sidebar-note"><span className="status-dot"/> Cold store<p>{boot?.node.name || 'Warehouse planning'}</p></div>
       <div className="sidebar-footer"><div className="avatar">SC</div><div><strong>Corporate Link Challenge</strong><span>Scoop planning team</span></div></div>
     </aside>
-    <div className="workspace"><header className="topbar"><div><span className="breadcrumb">Workspace</span><span className="breadcrumb-slash">/</span><strong>{page[0].toUpperCase() + page.slice(1)}</strong></div><div className="top-actions">{settings && <span className="simulation-label">Demo warehouse · {date(settings.today)}</span>}{page === 'plans' && detail && <button className="button icon-button assistant-entrance" disabled={chatSending} aria-label={dock ? 'Hide discussion' : `Show discussion${detail.discussion?.open_count ? `, ${detail.discussion.open_count} open topics` : ''}`} title="Plan discussion" onClick={() => {setSeedPrompt(undefined);setDock(d => !d)}}><Icon name="spark"/>{detail.discussion?.open_count>0&&<span className="assistant-count">{detail.discussion.open_count}</span>}</button>}</div></header>
+    <div className="workspace"><header className="topbar"><div><span className="breadcrumb">Workspace</span><span className="breadcrumb-slash">/</span><strong>{page[0].toUpperCase() + page.slice(1)}</strong></div><div className="top-actions"><button className="text-button take-tour" onClick={onTakeTour}>{TOUR_COPY.takeTour}</button>{settings && <span className="simulation-label">Demo warehouse · {date(settings.today)}</span>}{page === 'plans' && detail && <button className="button icon-button assistant-entrance" disabled={chatSending} aria-label={dock ? 'Hide discussion' : `Show discussion${detail.discussion?.open_count ? `, ${detail.discussion.open_count} open topics` : ''}`} title="Plan discussion" onClick={() => {setSeedPrompt(undefined);setDock(d => !d)}}><Icon name="spark"/>{detail.discussion?.open_count>0&&<span className="assistant-count">{detail.discussion.open_count}</span>}</button>}</div></header>
       {error && <div className="error-banner" role="alert"><div><strong>Something needs attention</strong><p>{error}</p></div><button className="button ghost" onClick={() => { setError(''); setRevision(r => r + 1); }}>Retry</button><button aria-label="Dismiss error" className="icon-button" onClick={() => setError('')}><Icon name="close"/></button></div>}
       {notice && <div className="toast" role="status"><Icon name="check" size={16}/>{notice}</div>}
       {loading && !boot ? <Loading/> : !boot ? <Empty title="Connect to your planning service">The workspace will appear when the backend is available. Use Retry to reconnect.</Empty> : <main>

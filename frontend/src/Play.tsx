@@ -4,14 +4,15 @@ import { Dashboard, type DashboardPlay } from './Dashboard';
 import type { Detail, Product } from './types';
 import { ProductIcon } from './ProductIcon';
 import { resultsMetrics } from './resultsMetrics';
+import { DEFAULT_PLAYBACK_SPEED, PLAYBACK_SPEEDS, type PlaybackSpeed } from './playbackClock';
 
 type Policy = 'scoop'|'baseline';
 type Summary = {fill_rate:number;lost_units:number;lost_margin:number;avg_pallets:number;peak_pallets:number;days_over_capacity:number;stockout_sku_days:number;ending_on_hand:number;ordered_cases:number};
 type OrderEventLine = {sku:string;name:string;cases:number;order_date:string;expected_arrival:string;card_ids:string[]};
 type PlayEvent = {id:string;date:string;minute:number;time:string;at:string;kind:string;tone:'good'|'bad'|'warn'|'neutral';text:string;sku?:string;order_date?:string;cases?:number;card_ids?:string[];lines?:OrderEventLine[];automatic?:boolean};
 export type PlayResult = DashboardPlay & {start:string;end:string;days:number;events:PlayEvent[];summary:Record<Policy,Summary>;notes:Record<string,string|null>;affected_skus:string[]};
-export type ReplayState = {planId:string;orderHash:string|null;result:PlayResult|null;day:number;minute:number;running:boolean;unlocked:boolean};
-export const emptyReplay=(planId='',orderHash:string|null=null):ReplayState=>({planId,orderHash,result:null,day:-1,minute:0,running:false,unlocked:false});
+export type ReplayState = {planId:string;orderHash:string|null;result:PlayResult|null;day:number;minute:number;speed:PlaybackSpeed;running:boolean;unlocked:boolean};
+export const emptyReplay=(planId='',orderHash:string|null=null):ReplayState=>({planId,orderHash,result:null,day:-1,minute:0,speed:DEFAULT_PLAYBACK_SPEED,running:false,unlocked:false});
 const POLICY_LABEL:Record<Policy,string>={scoop:'Scoop plan',baseline:'Simple rule'};
 export function formatPlayClock(today:string,minute:number){
   const weekday=new Date(`${today.slice(0,10)}T00:00:00Z`).toLocaleDateString('en-GB',{weekday:'short',timeZone:'UTC'});
@@ -47,7 +48,7 @@ export function Results({result,detail,products,path,revision=0}:{result:PlayRes
 }
 
 export function PlayWeek({detail,products,path,replay,setReplay,revision=0,onSeeResults}:{detail:Detail;products:Product[];path:string;replay:ReplayState;setReplay:Dispatch<SetStateAction<ReplayState>>;revision?:number;onSeeResults:()=>void}){
-  const {result,day,minute,running,unlocked}=replay;
+  const {result,day,minute,speed,running,unlocked}=replay;
   const ready=!!result;
   useEffect(()=>{if(ready)setReplay(current=>current.day<0?{...current,day:0,minute:0,running:true}:current.day===current.result!.days-1&&current.minute===1430?current:{...current,running:true})},[ready,setReplay]);
   const complete=ready&&day===result.days-1&&minute===1430;
@@ -64,7 +65,7 @@ export function PlayWeek({detail,products,path,replay,setReplay,revision=0,onSee
     </details>:<p>{event.sku&&!event.text.toLowerCase().includes((names.get(event.sku)||'').toLowerCase())?<><strong>{names.get(event.sku)||event.sku}</strong> · </>:null}{event.text}</p>}</div>
   </div>),[events,names]);
   const update=(patch:Partial<ReplayState>)=>setReplay(current=>({...current,...patch}));
-  return <section className="play"><div className="play-bar"><div className="play-clock" data-day={today||''} data-minute={today?minute:''}><strong>{today?formatPlayClock(today,minute):`Week of ${fullDate(detail.plan.week_start)}`}</strong><span>{today?`Day ${day+1} since the order`:'Preparing…'}</span></div>{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,minute:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
+  return <section className="play"><div className="play-bar"><div className="play-clock" data-day={today||''} data-minute={today?minute:''}><strong>{today?formatPlayClock(today,minute):`Week of ${fullDate(detail.plan.week_start)}`}</strong><span>{today?`Day ${day+1} since the order`:'Preparing…'}</span></div><div className="segmented play-speed" role="group" aria-label="Playback speed">{PLAYBACK_SPEEDS.map(value=><button key={value} type="button" className={speed===value?'active':''} aria-pressed={speed===value} onClick={()=>update({speed:value})}>{value}×</button>)}</div>{ready&&(running?<button className="button ghost" onClick={()=>update({running:false})}>Pause</button>:!complete?<button className="button ghost" onClick={()=>update({running:true})}>Resume</button>:<><button className="button ghost" onClick={()=>update({day:0,minute:0,running:true})}>Replay</button><button className="button primary" disabled={!unlocked} onClick={onSeeResults}>See results</button></>)}</div>
     <div className="play-body"><div><Dashboard detail={detail} products={products} path={path} result={result} day={day} minute={minute} readonly revision={revision}/></div><aside className="play-events" aria-live="polite"><h3>What happened</h3>{events.length?feed:<p className="muted">{result?'Nothing notable yet.':'Preparing the week…'}</p>}</aside></div>
   </section>;
 }

@@ -37,6 +37,7 @@ function isolatedDocument(presentation: ReviewPresentation, detail: Detail, chan
 
 export function GeneratedReport({presentation,detail,pending,onDiscuss,onSelectFinding,onDiscussEvidence,onOpenEvidence}:{presentation:ReviewPresentation;detail:Detail;pending:boolean;onDiscuss:(id:string)=>void;onSelectFinding?:(id:string)=>void;onDiscussEvidence?:(id:string)=>void;onOpenEvidence:(id:string)=>void}) {
   const frame = useRef<HTMLIFrameElement>(null);
+  const tourRect=useRef<{left:number;top:number;width:number;height:number}|null>(null);
   const [height, setHeight] = useState(480);
   const channel = useMemo(() => [...crypto.getRandomValues(new Uint8Array(24))].map(byte=>byte.toString(16).padStart(2,'0')).join(''), [presentation.title,presentation.html,presentation.css]);
   const document = useMemo(() => isolatedDocument(presentation, detail, channel), [presentation.title,presentation.html,presentation.css,detail,channel]);
@@ -44,9 +45,19 @@ export function GeneratedReport({presentation,detail,pending,onDiscuss,onSelectF
   const sources=evidenceSources(detail);
   useEffect(() => {setHeight(480)},[channel]);
   useEffect(() => {
+    const publishTourRect=()=>{
+      const saved=tourRect.current,element=frame.current;if(!saved||!element||window.document.body.dataset.tourStep!=='2')return;
+      const pane=element.closest<HTMLElement>('.report-column');
+      let outer=element.getBoundingClientRect();
+      if(pane){const bounds=pane.getBoundingClientRect(),top=outer.top+saved.top;if(top<bounds.top||top+Math.min(saved.height,bounds.height)>bounds.bottom)pane.scrollTop+=top-bounds.top-12;outer=element.getBoundingClientRect()}
+      const bounds=pane?.getBoundingClientRect();const left=Math.max(12,outer.left+saved.left,bounds?.left??0),top=Math.max(12,outer.top+saved.top,bounds?.top??0),right=Math.min(innerWidth-12,outer.left+saved.left+saved.width,bounds?.right??innerWidth),bottom=Math.min(innerHeight-12,outer.top+saved.top+saved.height,bounds?.bottom??innerHeight);
+      window.dispatchEvent(new CustomEvent('scoop:tour-report-rect',{detail:{left,top,right,bottom,width:Math.max(0,right-left),height:Math.max(0,bottom-top)}}));
+    };
+    const locate=()=>{frame.current?.contentWindow?.postMessage({channel,type:'tour-locate-finding'},'*');publishTourRect()};
     function receive(event:MessageEvent) {
       if (event.source!==frame.current?.contentWindow || !event.data || typeof event.data!=='object' || event.data.channel!==channel) return;
       const data=event.data;
+      if(data.type==='tour-finding-rect'&&data.rect&&['left','top','width','height'].every(key=>typeof data.rect[key]==='number'&&Number.isFinite(data.rect[key]))&&data.rect.width>0&&data.rect.height>0){tourRect.current=data.rect;publishTourRect()}
       if (data.type==='resize' && typeof data.height==='number' && Number.isFinite(data.height) && data.height>0 && data.height<=30000) setHeight(Math.ceil(data.height));
       if (data.type==='discuss' && typeof data.id==='string') {
         const selected=detail.findings.find(f=>f.id===data.id);
@@ -59,7 +70,7 @@ export function GeneratedReport({presentation,detail,pending,onDiscuss,onSelectF
         window.dispatchEvent(new CustomEvent('scoop:focus-cohort',{detail:{id:data.id}}));
       }
     }
-    window.addEventListener('message',receive);return()=>window.removeEventListener('message',receive);
+    window.addEventListener('message',receive);window.addEventListener('scoop:tour-report-locate',locate);window.addEventListener('resize',locate);window.addEventListener('scroll',publishTourRect,true);return()=>{window.removeEventListener('message',receive);window.removeEventListener('scoop:tour-report-locate',locate);window.removeEventListener('resize',locate);window.removeEventListener('scroll',publishTourRect,true)};
   }, [channel, detail.findings, detail.cohort_cards, queries, pending, onDiscuss, onSelectFinding, onDiscussEvidence, onOpenEvidence]);
   return <article className="generated-report"><header className="generated-report-heading"><p>{detail.metadata?.facts_through?`Facts through ${fullDate(detail.metadata.facts_through)}`:fullDate(detail.plan.week_start)}</p><h2>{presentation.title}</h2></header>
     <iframe ref={frame} title={presentation.title || 'Weekly report'} className="generated-report-frame" sandbox="allow-scripts" referrerPolicy="no-referrer" srcDoc={document} style={{height}}/>

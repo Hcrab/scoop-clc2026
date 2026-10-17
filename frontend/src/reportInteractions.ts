@@ -35,6 +35,10 @@ export function reportInteractionScript(detail: Detail, channel: string, charts:
     .replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
   return String.raw`(()=>{
 const data=${payload},send=value=>parent.postMessage({channel:data.channel,...value},'*');
+const tourFinding=()=>{const card=Array.from(document.querySelectorAll('[data-report-card]')).find(el=>{const title=el.querySelector('h2,h3,h4')?.textContent||'';return /strawberry/i.test(title)&&/water/i.test(title)});if(card)return card;const finding=data.findings.find(f=>f.tag_id==='flavour:strawberry');if(!finding)return null;const trigger=Array.from(document.querySelectorAll('[data-trend-id],[data-evidence-id]')).find(el=>el.dataset.trendId===finding.id||el.dataset.evidenceId===finding.id);return trigger?.closest('[data-report-card],article,.card')||trigger};
+const sendTourRect=()=>{const target=tourFinding();if(!target)return;const r=target.getBoundingClientRect();send({type:'tour-finding-rect',rect:{left:r.left,top:r.top,width:r.width,height:r.height}})};
+window.addEventListener('message',event=>{if(event.source!==parent||event.data?.channel!==data.channel||event.data?.type!=='tour-locate-finding')return;sendTourRect()});
+new ResizeObserver(sendTourRect).observe(document.body);
 document.querySelectorAll('.product-icon img').forEach(img=>{const failed=()=>{img.hidden=true;img.style.display='none'};img.addEventListener('error',failed);if(img.complete&&img.naturalWidth===0)failed()});
 let scheduled=false,lastHeight=0,serial=0;
 const schedule=()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;const height=Math.ceil(document.body.getBoundingClientRect().height);if(height!==lastHeight){lastHeight=height;send({type:'resize',height})}})};
