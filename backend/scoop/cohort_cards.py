@@ -2,6 +2,7 @@
 from math import sqrt
 import numpy as np
 from scipy.stats import norm
+from .ai.narrator import cohort_display
 
 
 def magnitude_word(effect_pct):
@@ -10,19 +11,8 @@ def magnitude_word(effect_pct):
 
 
 def cohort_name(leaf, groups):
-    """Name the included scope; exclusions only qualify a positive parent."""
-    priority = {'price_hkd':0, 'price_100ml':0, 'flavour':1, 'dairy':2, 'format':2}
-    included = [step for step in leaf['tag_path'] if step['included']]
-    product = [step for step in included if not step['id'].startswith('district:')]
-    product.sort(key=lambda step:(priority.get(getattr(groups.get(step['id']), 'dimension', ''),3),step['id']))
-    name = ' · '.join(getattr(groups.get(step['id']), 'name', step['id']).replace('Choc Coated','Chocolate-coated') for step in product)
-    if any(not step['included'] for step in leaf['tag_path']):
-        name = 'Other '+(name[0].lower()+name[1:] if name else 'products')
-    if not name:
-        name = ' · '.join(leaf['districts']) if included else 'Other products'
-    elif any(step['id'].startswith('district:') for step in included):
-        name += ' · '+', '.join(leaf['districts'])
-    return name
+    """Canonical readable name shared by native cards and report context."""
+    return cohort_display(leaf['tag_path'], groups, leaf['districts'])
 
 
 def build_observations(result, cards, groups):
@@ -32,7 +22,8 @@ def build_observations(result, cards, groups):
     for leaf in result.get('leaves', []):
         mean = leaf.get('posterior_mean',0.)
         low, high = leaf.get('interval_80',[mean,mean])
-        observations.append({'id':leaf['id'], 'name':cohort_name(leaf,groups),
+        title = cohort_name(leaf, groups)
+        observations.append({'id':leaf['id'], 'name':title, 'display_name':title,
                              'tag_path':leaf['tag_path'], 'districts':leaf['districts'],
                              'skus':leaf['skus'], 'effect_pct':float(np.expm1(mean)*100),
                              'interval_pct':[float(np.expm1(low)*100),float(np.expm1(high)*100)],
@@ -103,7 +94,7 @@ def build_cards(result, orders, baseline, products, groups, names):
         override_ids = [o['id'] for o in result.get('applied_overrides',[]) if any(u['sku'] in skus for u in o.get('matched_units',[])) or o.get('sku') in skus]
         case_change = round(delta_cases)
         effect_pct = float(np.expm1(leaf['posterior_mean'])*100)
-        cards.append({'id':leaf['id'],'name':title or ', '.join(leaf['districts']),
+        cards.append({'id':leaf['id'],'name':title,'display_name':title,
                       'tag_path':leaf['tag_path'],'districts':leaf['districts'],'skus':skus,
                       'effect_pct':effect_pct,
                       'action':'increase' if case_change > 0 else 'reduce' if case_change < 0 else 'hold',

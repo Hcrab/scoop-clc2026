@@ -101,6 +101,8 @@ When you raise useful human checks, include them briefly in the report before th
 Use restrained typography, generous but purposeful spacing, equal-width cards and aligned metrics.
 Let card widths and column counts follow the content and available space, stacking on a narrow screen.
 Arrange native action rows in a compact list that can wrap within the available width.
+For a cohort report card heading, copy the supplied display_name verbatim. The code-owned
+name is shared with its native purchasing row and cohort widget titles.
 Place each supplied purchasing adjustment with <figure data-card="cohort" data-id="leaf-0"></figure>,
 using the actual id of a supplied cohort card. The host renders a compact clickable row from
 the algorithm's direction and magnitude, with the illustration and group name. The click focuses

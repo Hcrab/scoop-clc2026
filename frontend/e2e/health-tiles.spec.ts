@@ -1,0 +1,86 @@
+import {test,expect} from '@playwright/test';
+import {mkdir,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+
+test('fixed health tiles and our-plan widgets remain truthful through midnight and noon',async({page,request})=>{
+  test.setTimeout(360_000);page.setDefaultTimeout(45_000);
+  const endpoint='/api/plans/P20260727',out=path.resolve('..','reports','screenshots');
+  const evidence:any={mocked_responses:false,errors:[],screenshots:[]};
+  page.on('pageerror',e=>evidence.errors.push(e.message));
+  const read=async(suffix='')=>{const r=await request.get(endpoint+suffix,{timeout:120_000});expect(r.ok(),await r.text()).toBeTruthy();return r.json()};
+  const settings=await(await request.get('/api/demo-settings')).json();
+  const reset=async()=>{const r=await request.post('/api/demo-settings/reset',{data:{scenario_id:settings.scenario_id,week_start:'2026-07-27'},timeout:120_000});expect(r.ok(),await r.text()).toBeTruthy()};
+  const shot=async(name:string,locator?:ReturnType<typeof page.locator>)=>{
+    await expect(page.locator('.inline-refresh')).toHaveCount(0);
+    await mkdir(out,{recursive:true});const file=`d1-${name}.png`;
+    if(locator)await locator.screenshot({path:path.join(out,file),animations:'disabled'});
+    else await page.screenshot({path:path.join(out,file),fullPage:true,animations:'disabled'});
+    evidence.screenshots.push(`reports/screenshots/${file}`);
+  };
+  await reset();const initial=await read(),dashboard=await read('/dashboard');
+  const quantities=(detail:any)=>detail.orders.map((o:any)=>[o.sku,o.final_cases??Math.max(0,o.suggested_cases-o.capacity_cut_cases)]).sort();
+  const initialWidgets=dashboard.widgets.map((w:any)=>({id:w.id,title:w.title,metric:w.metric,scope:w.scope}));
+  expect(initialWidgets.length).toBeGreaterThanOrEqual(3);expect(initialWidgets.length).toBeLessThanOrEqual(5);
+  try{
+    await page.goto('/');
+    await page.getByRole('button',{name:'Review orders',exact:true}).click();
+    await page.getByRole('button',{name:'Approve orders',exact:true}).click();
+    await expect(page.locator('.dashboard-kpi')).toHaveCount(4);
+    await expect(page.locator('.dashboard-widget')).toHaveCount(initialWidgets.length);
+    const low=dashboard.health.products.filter((p:any)=>p.days_cover!==null&&p.days_cover<p.lead_time_days).sort((a:any,b:any)=>a.days_cover-b.days_cover||a.sku.localeCompare(b.sku));
+    await page.getByRole('button',{name:new RegExp(`Low cover: ${low.length} products`)}).click();
+    const list=page.getByRole('dialog',{name:`Low cover · ${low.length} products`});
+    await expect(list.locator('li')).toHaveCount(low.length);
+    if(low.length)await expect(list.locator('li').first()).toContainText(low[0].name);
+    await list.getByRole('button',{name:'Close dialog'}).click();
+    expect(await page.locator('.dashboard').innerText()).not.toMatch(/Moving-average rule|This plan|Pending dispatch|Simple rule/);
+    await shot('watch');
+    evidence.watch={tiles:await page.locator('.dashboard-kpis').innerText(),low_cover:low.map((p:any)=>p.sku),default_widgets:initialWidgets};
+    await expect.poll(async()=>(await read('/simulation')).status,{timeout:240_000,intervals:[2000]}).toBe('ready');
+    const result=(await read('/simulation')).result;evidence.summary=result.summary;
+    expect(result.events.some((e:any)=>e.policy==='baseline')).toBeFalsy();
+    expect(result.events.some((e:any)=>/under the rule|than the rule|the rule has|versus the rule/i.test(e.text))).toBeFalsy();
+    const orders=result.events.filter((e:any)=>e.kind==='order');
+    expect(new Set(orders.map((e:any)=>e.at)).size).toBe(orders.length);
+    expect(orders.every((e:any)=>e.lines.length===e.order_count&&e.lines.reduce((n:number,l:any)=>n+l.cases,0)===e.cases)).toBeTruthy();
+    // Install the clock before entering Play; the established replay rate is 2 seconds per day.
+    const now=new Date();await page.clock.install({time:now});await page.clock.pauseAt(new Date(now.getTime()+1000));
+    const clock=page.locator('.play-clock');
+    await page.getByRole('button',{name:'Next: Play',exact:true}).click();
+    await expect(clock).toHaveAttribute('data-minute','0');
+    await expect(page.getByRole('button',{name:'Pause',exact:true})).toBeVisible();
+    await page.clock.runFor(1);
+    await page.clock.runFor(4085);await page.getByRole('button',{name:'Pause',exact:true}).click();
+    await expect(clock).toHaveAttribute('data-minute','50');
+    await expect(page.locator('.play .dashboard-kpi')).toHaveCount(4);
+    await expect(page.locator('.play circle[data-partial="true"]')).toHaveCount(0);
+    const keys=await page.locator('.play .dashboard-value strong').allTextContents();
+    expect(keys.every(text=>/\d/.test(text))).toBeTruthy();
+    const strokes=await page.locator('.play svg [stroke]').evaluateAll(nodes=>nodes.map(el=>el.getAttribute('stroke')));
+    expect(strokes).not.toContain('#b77d36');
+    expect(await page.locator('.play').innerText()).not.toMatch(/Moving-average rule|This plan|Pending dispatch|Simple rule/);
+    evidence.midnight={clock:await clock.innerText(),keys,tiles:await page.locator('.dashboard-kpis').innerText(),partial_points:0};
+    await shot('midnight');
+    const group=page.locator('.play-order-details').first();await group.locator('summary').click();await expect(group.locator('li').first()).toBeVisible();
+    evidence.grouped_order=await group.innerText();await group.locator('summary').click();
+    await page.getByRole('button',{name:'Resume',exact:true}).click();await page.clock.runFor(1000);await page.getByRole('button',{name:'Pause',exact:true}).click();
+    const minute=Number(await clock.getAttribute('data-minute'));expect(minute).toBeGreaterThanOrEqual(720);
+    expect(await page.locator('.play circle[data-partial="true"]').count()).toBeGreaterThan(0);
+    await shot('noon');evidence.noon={clock:await clock.innerText(),partial_points:await page.locator('.play circle[data-partial="true"]').count()};
+    await page.getByRole('button',{name:'Resume',exact:true}).click();await page.clock.runFor(result.days*2000+200);
+    await expect(page.getByRole('button',{name:'See results',exact:true})).toBeEnabled();
+    const state=page.locator('.play .dashboard-widget').filter({has:page.locator('[data-series="stockout"] circle')}).first();
+    await expect(state).toBeVisible();await shot('stock-state',state);
+    evidence.stock_state={title:await state.locator('h3').innerText(),coral_dots:await state.locator('[data-series="stockout"] circle').count()};
+    await page.getByRole('button',{name:'See results',exact:true}).click();
+    await expect(page.locator('.play-outcomes strong')).toHaveCount(3);
+    await expect(page.locator('.results-rule')).toHaveText('Simple rule · 28-day average + 25%');
+    expect(quantities(await read())).toEqual(quantities(initial));expect(evidence.errors).toEqual([]);
+  }finally{
+    await reset();const restored=await read('/dashboard');
+    expect(restored.widgets.map((w:any)=>({id:w.id,title:w.title,metric:w.metric,scope:w.scope}))).toEqual(initialWidgets);
+    expect(quantities(await read())).toEqual(quantities(initial));
+    evidence.reset_restores_default_widgets=true;
+    await writeFile(path.resolve('..','reports','d1-browser.json'),JSON.stringify(evidence,null,2)+'\n');
+  }
+});

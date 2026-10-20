@@ -88,7 +88,8 @@ def run(only=None,replace=False):
                           'saved_report':detail}
             if edit:evidence['context_result']=edit
             request=label+'\nAnswer in English, in at most three short sentences. Explain from this saved plan and its evidence; do not change any orders, context, or widgets.'
-            request+=' Focus on the highlighted value-price strawberry water-ice cohort, including what the weather-adjusted expectation does and does not explain.'
+            focus=next(c for c in detail['cohort_cards'] if c['id']==bundle['meta']['strawberry_card_id'])
+            request+=' Focus on the highlighted cohort '+focus['display_name']+', including what the weather-adjusted expectation does and does not explain.'
             if branch:
                 request+=' This context option has already been applied to this snapshot (or left unchanged for Nothing to add); explain the saved result, without applying it again.'
                 request+=f" For the context confirmation, use the actual saved strawberry order total: {branch['before_cases']} cases before the choice and {branch['after_cases']} cases after it. The report's original +134-case uplift is an earlier state; it is not this context edit's change."
@@ -122,7 +123,7 @@ def run(only=None,replace=False):
                 request+=' Regenerate in no more than THREE SHORT SENTENCES. Use only the supplied evidence values.'
                 if errors:request+=' Correct these quantitative mismatches: '+json.dumps(errors)
             save()
-        report['status']='complete' if all(bundle['questions'].values()) and all(b['answer'] for b in bundle['branches'].values()) else 'partial'
+        report['status']='complete' if all(bundle['questions'].values()) and all(b.get('answer') for b in bundle['branches'].values()) else 'partial'
         report['bundle_sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
     finally:save()
 

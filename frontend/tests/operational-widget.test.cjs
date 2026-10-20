@@ -85,7 +85,7 @@ test('unknown product demand keeps stock keys in units instead of showing partia
 });
 
 test('sentence titles retain acronyms and order subtitle uses the actual order date',()=>{
-  assert.equal(sentenceTitle('Value Strawberry Water Ices · Stock'),'Value strawberry water ices · stock');
+  assert.equal(sentenceTitle('Low-Price Strawberry Water Ices · Stock'),'Low-price strawberry water ices · stock');
   assert.equal(sentenceTitle('UK SKU · Fill Rate'),'UK SKU · fill rate');
   assert.equal(sentenceTitle('Regional Vanilla Availability'),'Regional vanilla availability');
   assert.equal(sentenceTitle('Chocolate-Coated · Requests'),'Chocolate-coated · requests');

@@ -1,11 +1,11 @@
-// Final user copy: docs/reports/tour-v2-protocol.md.
+// User-facing copy for the guided tour; docs/tour-copy.md is the reference.
 export const TOUR_COPY = {
   takeTour:'Take the tour',skip:'Skip tour',next:'Next',recorded:'Recorded example',addSelected:'Add selected',
   futureNotice:'In this tour, the next two weeks follow the context you chose.',
   welcome:{title:'Monday, 27 July',body:"You plan stock for the **Tsing Yi cold store**: 75 products, **{capacity} pallets** of space, and this week's orders are due by 2 pm. This tour walks you through **one weekly cycle** in Scoop.",start:'Start the tour',explore:'Explore on my own'},
   steps:{
     1:{title:'Read the weekly report',body:"The left side is the **weekly report**. Every Monday, Scoop's AI writes it from recent store orders: **what changed**, and the evidence behind it. You can open any chart or source to check the numbers."},
-    2:{title:'Look at the first finding',body:'The first finding: value strawberry water ices are selling **{effect}% above forecast**.'},
+    2:{title:'Look at the first finding',body:'The first finding: low-price strawberry water ices are selling **{effect}% above forecast**.'},
     3:{title:'See where the trend comes from',body:'This view shows how the trend was found by **combining several separate tags**. **Weather effects are removed before we measure trends**: a **LightGBM demand forecast** accounts for the weather, and **hierarchical Bayesian trend detection** looks at what is left. So this is a **change in taste**, not the heat, and you can see it more clearly than in a spreadsheet.'},
     4:{title:'Check the suggested actions',body:"The right side lists **suggested actions**. Each card shows what to order more or less of, **how many cases**, and the effect on the cold store. The **in-stock target** at the top sets how much safety stock all orders carry; Scoop sets it automatically from margin and storage cost."},
     5:{title:'Ask the assistant (optional)',body:'If something is unclear, you can **ask the assistant**. It answers from the **same data** as the report.'},
@@ -28,7 +28,7 @@ export const TOUR_COPY = {
     unchanged:'No context added, so Scoop keeps the estimate based on the data: **{before} cases**.',
   },
   events:{heat:'{date}: heat begins ({temp}°C).',arrival:'{time} {date}: {units} strawberry ices arrive.',stockout:'{time} {date}: {product} runs out.',endBody:'The two weeks are over. Click **See results**.'},
-  widgets:{stock:'Strawberry stock',space:'Cold-store space',cover:'Products closest to running out'},
+  widgets:{stock:'Low-price strawberry water ices · stock',space:'Cold-store space',cover:'Products closest to running out'},
   end:{title:'End of the tour',body:"That's one weekly cycle: **read the report**, **add what you know**, **approve the orders** and **follow the results**. You can now explore on your own.",explore:'Explore on my own',replay:'Replay the tour'},
 } as const;
 

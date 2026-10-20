@@ -45,7 +45,10 @@ Use exact scopes from dashboard_options and canonical metrics. The four fixed he
 show fill rate, stockouts, low cover and cold-store occupancy; detailed widgets should add evidence.
 Prefer on_hand for a cohort stock chart, pallets for cold-store use and lowest_cover for a minimum
 cover curve. Each widget shows one metric, grey before the order and green since the order.
-Use short sentence-case titles, such as "Value strawberry water ices · stock".
+Use short sentence-case titles, such as "{cohort display name} · stock".
+Copy each supplied cohort display_name verbatim as its cohort report card heading and the
+cohort portion of its widget title; add the suffix for the selected metric. Names come from
+the supplied cards and all_observations, including cohorts without a purchasing card.
 The planner can later add, edit or remove these detailed widgets.
 Demand widgets plot store requests alone; name them for requests rather than an expectation comparison.
 The pallets metric is current cold-store occupancy over time, not a standalone peak measurement.

@@ -81,10 +81,10 @@ def test_signed_unicode_minus_price_order_edit_and_undo(api, monkeypatch):
     with scope() as session:
         session.get(PurchaseSuggestion, ('TESTAPI', 'IC001')).suggested_cases = 10
     monkeypatch.setattr(exploration_tools, '_groups', lambda _: {
-        'band:price_hkd:0': Group('band:price_hkd:0', 'Value price', 'price_hkd', ('IC001',)),
+        'band:price_hkd:0': Group('band:price_hkd:0', 'Low price', 'price_hkd', ('IC001',)),
         'band:price_100ml:0': Group('band:price_100ml:0', 'Lower price / 100 ml',
                                     'price_100ml', ('IC001',))})
-    saved = _chat(client, 'All value-price lines −10%')
+    saved = _chat(client, 'All low-price lines −10%')
     action = saved['actions'][0]
     assert action['type'] == 'edit' and action['change'] == {'type': 'percent', 'value': -10.0}
     assert action['filter']['group'] == 'band:price_hkd:0'
@@ -102,7 +102,7 @@ def test_signed_unicode_minus_price_order_edit_and_undo(api, monkeypatch):
 def test_order_percent_does_not_match_numeric_band_ids_without_a_named_scope(api,monkeypatch):
     client,scope,_,_=api
     monkeypatch.setattr(exploration_tools,'_groups',lambda _: {
-        'band:price_hkd:0':Group('band:price_hkd:0','Value price','price_hkd',('IC001',)),
+        'band:price_hkd:0':Group('band:price_hkd:0','Low price','price_hkd',('IC001',)),
         'band:price_100ml:1':Group('band:price_100ml:1','Mid price / 100 ml','price_100ml',('IC001',))})
     with scope() as session:before=order_snapshot(session,session.get(Plan,'TESTAPI'))
     result=_chat(client,'All lines −10%')

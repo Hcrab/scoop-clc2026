@@ -4,6 +4,6 @@
     "dairy": ["Water-based", "Mixed", "Creamy"],
     "sweetness": ["Less sweet", "Medium sweet", "Very sweet"],
     "sugar_100ml": ["Lower sugar", "Mid sugar", "Higher sugar"],
-    "price_hkd": ["Value price", "Mid price", "Premium price"]
+    "price_hkd": ["Low price", "Mid price", "High price"]
   }
 }

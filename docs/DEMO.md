@@ -1,0 +1,47 @@
+# Demonstration guide
+
+This walkthrough uses the designed synthetic seed-93 world: 75 products, 20 stores, four districts, one distribution centre, eight suppliers and a 62-pallet cold store. The source has 1,233,000 store-SKU-day rows. The public plan opens on **27 July 2026** (`P20260727`). First-plan preparation may take several minutes. The app does not place real supplier orders.
+
+## 1. Report
+
+Read the weekly report and open the first change card, **Strawberry → Low price → Water-based**. Its four products are IC006, IC061, IC062 and IC063. The estimated change is **+38.1552%**, with an 80% interval of **+35.1210% to +41.2575%**. Expand the card's right-side tree or its evidence modal: the path shows **+11.2%, +23.6% and +39.2%** at successive levels, while each same-parent remainder shows **−0.8%, −0.4% and +0.2%**. Select a row to change the daily curve. Charts come from saved data.
+
+The synthetic strawberry requests rise to +50% over 6–20 July. A smaller Mango × Kowloon rise and a coating decline are also planted. The heat episode spans **30 July–2 August**, starting three days after the order and ending inside the seven-day skill window of the forecast issued **26 July**. Its temperatures are 33.6, 33.4, 33.8 and 33.6°C; source history before 30 July is unchanged. Mango × Kowloon does not receive its own card: the remaining non-strawberry/non-coated branch's best Low sugar split has `p = 0.371859`, so the tree stops there. This is a detector limit, not evidence that the planted rise did not happen.
+
+With Gemini configured, the saved weekly report can include the assistant's investigation and an authored explanation. With an empty key, the native card list and scripted local commands remain available. The assistant's topics are optional. Each change card puts one estimated-demand effect up front; raw 14-day and fill context is quieter. The left action rows focus their matching cards without showing quantities. Try a card context change and its Undo if useful. In the right column's **This week's direction**, move the in-stock target toward **Save space** or **Avoid stockouts**. Check the live, read-only preview of cases and whole-warehouse peak; **Apply** commits the choice and **Reset to auto** restores automatic targets. An amber inherited-excess line appears if existing arrivals warrant it. The control changes the calculation without guaranteeing a measured fulfilment rate. On desktop, the two columns scroll separately; on a narrow screen they stack. Choose **Review orders**.
+
+## 2. Orders
+
+Inspect grouped cases, supplier order and arrival dates, protection days, forecast range, available and incoming stock, case size, minimum order and any capacity cut. The default has 2,413 initial cases and a 61.3-pallet projected peak within 62 usable positions. Open a product's order evidence. You can edit a case quantity and Undo it. **Export orders** downloads the CSV from this step. Approve when the displayed quantities are ready; approval queues one persisted replay keyed by the effective order inputs. A later committed case edit prepares a new result.
+
+## 3. Watch
+
+Start with warehouse health for the **14 days before the order**. Open **Low cover** to see products whose recent demand may exhaust stock before their next arrival. Add a widget for a measure and product scope, optionally with an alert threshold. It plots one measure in grey before the order and green since it, with an “Order placed” marker and no demand overlay, safe-zone band or extra risk dots. Titles use sentence case; colour on the key number carries good or bad state. Inspect its source, move or edit it, then reload to see the server-saved layout. These same widgets continue into Play. Widget edits change the view without rerunning the approved-order simulation. Choose **Next: Play**.
+
+## 4. Play
+
+Play starts automatically once the prepared result is ready. The clock advances in ten-minute steps at fixed 2×, about two seconds per simulated day. The clock shows a timestamp such as **Wed 29 Jul · 00:50** and **Day 3 since the order**. Warehouse health now covers flows **since 27 July**; low cover follows the remaining stock and next known arrival. Requests and losses accumulate during the current day. Completed daily points connect at the 23:50 close; from noon the unfinished day appears separately as a hollow **Projected full day** point. Watch stock, deliveries, shortages and the chosen widgets update every ten simulated minutes. In **What happened**, expand an order to see its product lines; there is no separate Decision entry. Use **Pause** and **Resume**, then **Replay** if you want another pass. At the final frame, choose **See results** to advance.
+
+## 5. Results
+
+Read the three whole-warehouse outcomes against the unchanged 28-day average +25% rule under the same 62-pallet capacity. The measured default replay has **4,297 versus 6,063 short units**, **36 versus 39 stockout product-days**, and **HK$24,271.33 versus HK$30,849.11 lost margin**. Each card shows the Simple rule value, the Scoop value and its rounded relative difference: **29% fewer**, **8% fewer** and **21% less**. Average closing inventory is **38.620401 versus 37.755089 pallets**; both policies peak at **57.986597 pallets**, with zero over-capacity days. Each final widget keeps its single metric with grey history, green Scoop and orange Simple rule lines. The footer identifies the shared cold store, demand and rule.
+
+The first strawberry card and issued heat explain how demand information enters the plan. Initial cases fit without cuts; automatic dated allocation cuts 552, 1,069 and 561 cases on 5–7 August as future arrivals crowd the store. Avoid attributing the whole measured gain to any one component. The selected cycle cost is 1% of unit cost; the service ceiling remains 98%.
+
+The order target uses a one-sided upper correction at its actual 98% service target. The same 478 historical calibration windows cover the upper target **96.86% before → 98.33% after** (463 → 470), while central intervals remain unchanged. This is fitted historical coverage. At the original 96.8% reference, calibration coverage is still 96.44% → 97.07%; the separate past-only rolling evaluation remains 96.44% → 96.44%. Present the comparison as one illustrative synthetic outcome.
+
+## Quiet week and reset
+
+In sidebar **Settings**, choose **22 June 2026**. It has no cohort cards, though early CUSUM warnings may appear. Return to 27 July for the designed example. Reset restores that prepared week's persisted initial report, orders and default widgets, clearing edits, context, chat, replay and progression. A same-world reset reuses small saved plan records without rebuilding source data or model fits or calling Gemini; measured API resets took 174, 85 and 94 ms, with a usable report in 1.404 s. A first unprepared week still needs preparation. Reloading alone preserves progress. `python -m scoop.synth.load` intentionally replaces demo tables in the configured database.
+
+This is one illustrative synthetic world, not a multi-seed evaluation.
+
+## Guided desktop tour
+
+Choose **Start the tour** on first visit, or **Take the tour** in the top bar. Fourteen coach steps spotlight the real report, strawberry finding, drilldown, suggested actions, optional questions, context, orders, Watch, Play and Results. Welcome and end are unnumbered. Summer ending 10 Aug gives **209 strawberry / 2,381 total cases**; unchanged gives **241 / 2,413**; the optimistic growing choice gives **246 / 2,418**. The growing preset uses the saved model interval's upper endpoint with high confidence, as a user expectation rather than an extra detector setting.
+
+Step 7 holds each recalculation beat for about 1.5 seconds: context label → expected-lift factor → strawberry cases → right-column projected peak. Summer shows **1.38× → 1.30×**, **241 → 209 cases**, **61.3 → 61.4 pallets**; growing shows **1.38× → 1.39×**, **241 → 246 cases**, **61.3 → 61.3 pallets**. Neither branch adds a capacity cut, so the optional trimming sentence is absent. Nothing to add keeps 241 cases and shows one beat.
+
+Click the actual **Review orders**, **Approve orders**, **Next: Play** and **See results** buttons when spotlighted. Expand **How we got … cases** to inspect the order ledger. In Watch, ticking a choice reveals its real widget, scrolls it into view and gives it a brief scale pop. Unticking removes the preview; **Add selected** confirms the chosen cards and continues. Summer demand returns to its normal level after 10 August; growing reaches a planted +70% on 11 August; Nothing to add keeps the original world. Both policies face the same demand within each branch. Current Results and measured walkthrough times are in `docs/overnight-report.md`.
+
+The first strawberry receipt belongs to the existing pipeline, rather than the newly placed order. Two genuine Gemini question replies appear as **Recorded example**; no provider is called during the tour. Skip/Esc exits; the end offers replay. Enter/Space activates Next; Left goes back at steps 2–6 and 14. Both Explore and tour default to **2×**, with **4×** and **8×**. Below 1280 px, choose Explore. Rebuild with `python scripts/rebuild-tour-worlds.py`, then build the frontend; historical recordings are preserved automatically.

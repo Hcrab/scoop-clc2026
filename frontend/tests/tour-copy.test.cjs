@@ -8,10 +8,10 @@ const file=path.resolve(__dirname,'../src/tour/copy.ts');
 const mod=new Module(file,module);
 mod._compile(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,file);
 const {TOUR_COPY:copy,fillTourCopy}=mod.exports;
-const protocol=fs.readFileSync(path.resolve(__dirname,'../../docs/reports/tour-v2-protocol.md'),'utf8');
+const protocol=fs.readFileSync(path.resolve(__dirname,'../../docs/tour-copy.md'),'utf8');
 const string=(block,label)=>block.match(new RegExp('^- '+label+': `([^`]+)`','m'))?.[1];
 
-test('all fourteen title/body entries match the supplied protocol verbatim, including bold',()=>{
+test('all fourteen title/body entries match the tour copy, including bold',()=>{
   const blocks=[...protocol.matchAll(/\*\*Step (\d+) of 14[\s\S]*?(?=\n\*\*(?:Step \d+ of 14|End \(modal\)))/g)];
   assert.equal(blocks.length,14);
   for(const match of blocks){
@@ -41,7 +41,7 @@ test('branch copy only omits the explicitly optional no-capacity-cut sentence',(
   assert.equal(copy.recalculation.growing,copy.recalculation.growingWithCut.replace(cut,''));
   assert.equal(copy.recalculation.unchanged,string(block,'Body, nothing-to-add branch'));
   for(const event of [copy.events.heat,copy.events.arrival,copy.events.stockout,copy.events.endBody])assert.ok(protocol.includes('`'+event+'`'));
-  assert.equal(fillTourCopy(copy.steps[2].body,{effect:38}),'The first finding: value strawberry water ices are selling **38% above forecast**.');
+  assert.equal(fillTourCopy(copy.steps[2].body,{effect:38}),'The first finding: low-price strawberry water ices are selling **38% above forecast**.');
 });
 
 

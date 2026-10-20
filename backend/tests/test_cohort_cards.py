@@ -72,7 +72,7 @@ def test_positive_parent_exclusions_name_other_without_inventing_format():
     leaf={'tag_path':[{'id':'water','included':False},{'id':'calorie','included':True},
                       {'id':'choc','included':False},{'id':'district:Kowloon','included':True}],
           'districts':['Kowloon']}
-    assert cohort_name(leaf,groups)=='Other mid calorie · Kowloon'
+    assert cohort_name(leaf,groups)=='Other mid calorie products · Kowloon'
 
 
 def test_all_negative_leaf_is_observed_but_has_no_adjustment_card():

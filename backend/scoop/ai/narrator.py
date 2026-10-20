@@ -42,6 +42,53 @@ def group_display(group_id: str, name: str) -> str:
     return DISPLAY.get(dim, "{}").format(pretty)
 
 
+def cohort_display(tag_path, groups, districts) -> str:
+    """Compose a cohort label from its actual dimensions, independent of findings.
+
+    Flavours are ordinary catalog data. Base and format nouns are generic English
+    presentation mappings, never a lookup of a particular product or demo cohort.
+    """
+    priority = {'price_hkd': 0, 'price_100ml': 0, 'flavour': 1,
+                'family': 2, 'feature': 3, 'health': 4, 'dairy': 5, 'format': 6}
+    parts = []
+    for step in tag_path:
+        identifier = step['id']
+        if not step['included'] or identifier.startswith('district:'):
+            continue
+        group = groups.get(identifier)
+        dimension = getattr(group, 'dimension', identifier.split(':')[1] if identifier.startswith('band:') else identifier.split(':')[0])
+        name = getattr(group, 'name', identifier.rsplit(':', 1)[-1].replace('_', ' ').title())
+        parts.append((dimension, group_display(identifier, name)))
+    parts.sort(key=lambda part: (priority.get(part[0], 4), part[1]))
+    has_format = any(dimension == 'format' for dimension, _ in parts)
+    # A format is the most specific noun; a dairy band supplies the noun otherwise.
+    base_nouns = {'Water-based': 'water ices', 'Mixed': 'mixed-dairy ice creams',
+                  'Creamy': 'creamy ice creams'}
+    format_nouns = {'Sandwichs': 'sandwiches', 'Mochis': 'mochi'}
+    adjectives, nouns = [], []
+    for dimension, label in parts:
+        if dimension == 'format':
+            nouns.append(format_nouns.get(label, label.lower()))
+        elif dimension == 'dairy' and not has_format and label in base_nouns:
+            nouns.append(base_nouns[label])
+        elif dimension == 'flavour':
+            adjectives.append(label.removesuffix(' flavour').lower())
+        elif dimension in ('price_hkd', 'price_100ml'):
+            adjectives.append(label.lower().replace(' price', '-price'))
+        else:
+            adjectives.append(label.lower())
+    name = ' '.join(adjectives + (nouns or ['products']))
+    if any(not step['included'] for step in tag_path):
+        name = 'Other ' + name
+    elif not tag_path:
+        name = 'All products'
+    else:
+        name = name[:1].upper() + name[1:]
+    if any(step['id'].startswith('district:') for step in tag_path):
+        name += ' · ' + ', '.join(districts)
+    return name
+
+
 def explain_finding(f: dict) -> str:
     name = f["display"]
     where = ", ".join(f["districts"])

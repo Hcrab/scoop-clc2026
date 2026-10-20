@@ -203,7 +203,7 @@ def build(output, previous=None):
                     'peak':snap['order_summary']['capacity']['projected_peak_pallets'],'capacity':meta['capacity'],
                     'moments':{'heat_date':meta['heat_date'],'strawberry_arrival':moment(arrivals[0] if arrivals else None,True),
                                'stockout':moment(stockouts[0] if stockouts else None)},'widgets':{}}
-            for choice,title,scope,metric in [('stock','Strawberry stock',{'kind':'cohort','key':cid},'on_hand'),
+            for choice,title,scope,metric in [('stock',card['display_name']+' · stock',{'kind':'cohort','key':cid},'on_hand'),
                     ('space','Cold-store space',{'kind':'warehouse','key':''},'pallets'),
                     ('cover','Products closest to running out',{'kind':'warehouse','key':''},'lowest_cover')]:
                 existing={w['title'] for w in snap['dashboard']['widgets']}
