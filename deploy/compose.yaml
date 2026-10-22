@@ -1,0 +1,59 @@
+name: scoop
+services:
+  db:
+    image: postgres:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: scoop
+      POSTGRES_DB: scoop
+      POSTGRES_PASSWORD: ${SCOOP_DB_PASSWORD:?Set SCOOP_DB_PASSWORD}
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks: [private]
+    mem_limit: 384m
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U scoop -d scoop']
+      interval: 5s
+      timeout: 3s
+      retries: 30
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: scoop-prototype:local
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://scoop:${SCOOP_DB_PASSWORD}@db:5432/scoop
+      SCOOP_LLM_PROVIDER: ${SCOOP_LLM_PROVIDER:-gemini}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      SCOOP_GEMINI_MODEL: gemini-3.8-flash
+      SCOOP_LLM_DAILY_MAX_CALLS: 50
+      SCOOP_LLM_MAX_CALLS: ${SCOOP_LLM_MAX_CALLS:-120}
+      SCOOP_LLM_BUDGET_USD: ${SCOOP_LLM_BUDGET_USD:-3}
+      SCOOP_LLM_TIMEOUT_SECONDS: 75
+    volumes:
+      - cache:/app/data/cache
+      - reports:/app/reports
+    networks:
+      private:
+      gateway:
+        aliases: [scoop-prototype]
+    mem_limit: 1536m
+    depends_on:
+      db: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8008/health')"]
+      interval: 15s
+      timeout: 5s
+      start_period: 30s
+      retries: 10
+networks:
+  private:
+    internal: true
+  gateway:
+    external: true
+    name: nodelab_outbound
+volumes:
+  database:
+  cache:
+  reports:

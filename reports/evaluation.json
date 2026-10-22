@@ -1,0 +1,3624 @@
+{
+  "generated_seconds": 112.0,
+  "seed": 42,
+  "model_lifecycle": "monthly shared frozen versions with previous-month out-of-sample error calibration",
+  "forecast": {
+    "store_sku_day": {
+      "scoop_lightgbm": 0.4948008787232945,
+      "same_weekday_last_week": 0.707198116918629,
+      "moving_average_28d": 0.5249711822211095,
+      "interval_coverage_p10_p90": 0.8004918032786885,
+      "pinball_p10": 0.36647685561426147,
+      "pinball_p90": 0.5543024350332381,
+      "samples": 73200
+    },
+    "dc_protection_period": {
+      "scoop_lightgbm": 0.10851267858833605,
+      "moving_average_28d": 0.10041526232073812,
+      "ratio_p10": 0.9481796477389,
+      "ratio_p90": 1.1210497235352186,
+      "samples": 780,
+      "heldout_interval_coverage": 0.6448717948717949,
+      "heldout_issue_dates": [
+        "2026-04-01",
+        "2026-04-08",
+        "2026-05-01",
+        "2026-05-08",
+        "2026-05-15",
+        "2026-06-01",
+        "2026-06-08",
+        "2026-07-01",
+        "2026-07-08",
+        "2026-07-15",
+        "2026-08-01",
+        "2026-08-08",
+        "2026-08-15"
+      ],
+      "heldout_end": "2026-08-31",
+      "pinball_p10": 31.143927109365976,
+      "pinball_p50": 69.40624923611249,
+      "pinball_p90": 44.443963549859546
+    },
+    "rolling_origin": [
+      {
+        "version": "M202604-v1-s42",
+        "logic_version": "monthly-issued-v1",
+        "effective_start": "2026-04-01",
+        "effective_end": "2026-04-30",
+        "training_start": "2024-06-01",
+        "trained_through": "2026-03-31",
+        "calibration_start": "2026-03-01",
+        "calibration_end": "2026-03-31",
+        "calibration_source_version": "M202603-v1-s42",
+        "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+        "weather_cutoff": "previous_day_issued_forecast",
+        "seed": 42,
+        "protection_calibration_issues": [
+          "2026-03-01",
+          "2026-03-08",
+          "2026-03-15"
+        ],
+        "protection_calibration_samples": 180,
+        "protection_calibration_outcome_end": "2026-03-31",
+        "store_sku_day": {
+          "scoop_lightgbm": 0.5006164256869677,
+          "same_weekday_last_week": 0.71094981767668,
+          "moving_average_28d": 0.536178155929849,
+          "interval_coverage_p10_p90": 0.7953888888888889,
+          "pinball_p10": 0.3481221140879268,
+          "pinball_p90": 0.5290177522013955,
+          "samples": 36000
+        },
+        "protection_wape": 0.040368469446511616,
+        "protection_interval_coverage": 0.85,
+        "protection_pinball_p10": 8.692290295084604,
+        "protection_pinball_p50": 19.685438589320494,
+        "protection_pinball_p90": 8.983824185081433,
+        "protection_test_issues": [
+          "2026-04-01",
+          "2026-04-08"
+        ],
+        "protection_test_samples": 120
+      },
+      {
+        "version": "M202605-v1-s42",
+        "logic_version": "monthly-issued-v1",
+        "effective_start": "2026-05-01",
+        "effective_end": "2026-05-31",
+        "training_start": "2024-06-01",
+        "trained_through": "2026-04-30",
+        "calibration_start": "2026-04-01",
+        "calibration_end": "2026-04-30",
+        "calibration_source_version": "M202604-v1-s42",
+        "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+        "weather_cutoff": "previous_day_issued_forecast",
+        "seed": 42,
+        "protection_calibration_issues": [
+          "2026-04-01",
+          "2026-04-08"
+        ],
+        "protection_calibration_samples": 120,
+        "protection_calibration_outcome_end": "2026-04-24",
+        "store_sku_day": {
+          "scoop_lightgbm": 0.48983778730818367,
+          "same_weekday_last_week": 0.7039963486342944,
+          "moving_average_28d": 0.5154069511435075,
+          "interval_coverage_p10_p90": 0.8054301075268817,
+          "pinball_p10": 0.3842395087042627,
+          "pinball_p90": 0.5787714829350212,
+          "samples": 37200
+        },
+        "protection_wape": 0.05693234973725895,
+        "protection_interval_coverage": 0.5777777777777777,
+        "protection_pinball_p10": 13.763070157739554,
+        "protection_pinball_p50": 33.29014106285009,
+        "protection_pinball_p90": 19.445975655270363,
+        "protection_test_issues": [
+          "2026-05-01",
+          "2026-05-08",
+          "2026-05-15"
+        ],
+        "protection_test_samples": 180
+      },
+      {
+        "version": "M202606-v1-s42",
+        "logic_version": "monthly-issued-v1",
+        "effective_start": "2026-06-01",
+        "effective_end": "2026-06-30",
+        "training_start": "2024-06-01",
+        "trained_through": "2026-05-31",
+        "calibration_start": "2026-05-01",
+        "calibration_end": "2026-05-31",
+        "calibration_source_version": "M202605-v1-s42",
+        "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+        "weather_cutoff": "previous_day_issued_forecast",
+        "seed": 42,
+        "protection_calibration_issues": [
+          "2026-05-01",
+          "2026-05-08",
+          "2026-05-15"
+        ],
+        "protection_calibration_samples": 180,
+        "protection_calibration_outcome_end": "2026-05-31",
+        "store_sku_day": {
+          "scoop_lightgbm": 0.46756383642529387,
+          "same_weekday_last_week": 0.6422832027357313,
+          "moving_average_28d": 0.48696815006960703,
+          "interval_coverage_p10_p90": 0.8023611111111111,
+          "pinball_p10": 0.43498946699237423,
+          "pinball_p90": 0.654973750458393,
+          "samples": 36000
+        },
+        "protection_wape": 0.050175330897999394,
+        "protection_interval_coverage": 0.875,
+        "protection_pinball_p10": 12.511660927965496,
+        "protection_pinball_p50": 25.96014598813338,
+        "protection_pinball_p90": 11.212780914461558,
+        "protection_test_issues": [
+          "2026-06-01",
+          "2026-06-08"
+        ],
+        "protection_test_samples": 120
+      },
+      {
+        "version": "M202607-v1-s42",
+        "logic_version": "monthly-issued-v1",
+        "effective_start": "2026-07-01",
+        "effective_end": "2026-07-31",
+        "training_start": "2024-06-01",
+        "trained_through": "2026-06-30",
+        "calibration_start": "2026-06-01",
+        "calibration_end": "2026-06-30",
+        "calibration_source_version": "M202606-v1-s42",
+        "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+        "weather_cutoff": "previous_day_issued_forecast",
+        "seed": 42,
+        "protection_calibration_issues": [
+          "2026-06-01",
+          "2026-06-08"
+        ],
+        "protection_calibration_samples": 120,
+        "protection_calibration_outcome_end": "2026-06-24",
+        "store_sku_day": {
+          "scoop_lightgbm": 0.4586809243535562,
+          "same_weekday_last_week": 0.6790460440274391,
+          "moving_average_28d": 0.49949042873897537,
+          "interval_coverage_p10_p90": 0.7905107526881721,
+          "pinball_p10": 0.5166541012831096,
+          "pinball_p90": 0.8158538401868708,
+          "samples": 37200
+        },
+        "protection_wape": 0.14036175479213045,
+        "protection_interval_coverage": 0.40555555555555556,
+        "protection_pinball_p10": 49.88527387376089,
+        "protection_pinball_p50": 106.90675380890144,
+        "protection_pinball_p90": 92.2682284291741,
+        "protection_test_issues": [
+          "2026-07-01",
+          "2026-07-08",
+          "2026-07-15"
+        ],
+        "protection_test_samples": 180
+      },
+      {
+        "version": "M202608-v1-s42",
+        "logic_version": "monthly-issued-v1",
+        "effective_start": "2026-08-01",
+        "effective_end": "2026-08-31",
+        "training_start": "2024-06-01",
+        "trained_through": "2026-07-31",
+        "calibration_start": "2026-07-01",
+        "calibration_end": "2026-07-31",
+        "calibration_source_version": "M202607-v1-s42",
+        "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+        "weather_cutoff": "previous_day_issued_forecast",
+        "seed": 42,
+        "protection_calibration_issues": [
+          "2026-07-01",
+          "2026-07-08",
+          "2026-07-15"
+        ],
+        "protection_calibration_samples": 180,
+        "protection_calibration_outcome_end": "2026-07-31",
+        "store_sku_day": {
+          "scoop_lightgbm": 0.4633325404607936,
+          "same_weekday_last_week": 0.6467000580659445,
+          "moving_average_28d": 0.4818491705760225,
+          "interval_coverage_p10_p90": 0.7878763440860215,
+          "pinball_p10": 0.52381666738165,
+          "pinball_p90": 0.8361282137026249,
+          "samples": 37200
+        },
+        "protection_wape": 0.1708001482836895,
+        "protection_interval_coverage": 0.6611111111111111,
+        "protection_pinball_p10": 57.172705960385386,
+        "protection_pinball_p50": 130.1331287664333,
+        "protection_pinball_p90": 67.41190123191824,
+        "protection_test_issues": [
+          "2026-08-01",
+          "2026-08-08",
+          "2026-08-15"
+        ],
+        "protection_test_samples": 180
+      }
+    ]
+  },
+  "detection": {
+    "threshold_h": 3.29,
+    "k": 0.25,
+    "arl0_days": 90,
+    "weekly_threshold_z": 0.477,
+    "monthly_thresholds": {
+      "M202606-v1-s42": {
+        "h": 3.29,
+        "weekly_z": 0.4774420856002257,
+        "calibration_start": "2026-05-01",
+        "calibration_end": "2026-05-31"
+      },
+      "M202607-v1-s42": {
+        "h": 3.55,
+        "weekly_z": 0.5365291253280059,
+        "calibration_start": "2026-06-01",
+        "calibration_end": "2026-06-30"
+      },
+      "M202608-v1-s42": {
+        "h": 4.19,
+        "weekly_z": 0.6843256745553655,
+        "calibration_start": "2026-07-01",
+        "calibration_end": "2026-07-31"
+      }
+    },
+    "events": [
+      {
+        "event": "EV01",
+        "target_type": "strong",
+        "group": "family:fruit",
+        "district": "Kowloon",
+        "onset": "2026-06-22",
+        "cusum_alarm": "2026-06-22",
+        "cusum_delay_days": 0,
+        "weekly_alarm": "2026-06-28",
+        "weekly_delay_days": 6,
+        "bh_gated_alarm": "2026-07-17",
+        "bh_gated_delay_days": 25,
+        "late_over_14_days": true
+      },
+      {
+        "event": "EV01",
+        "target_type": "strong",
+        "group": "family:fruit",
+        "district": "HK Island",
+        "onset": "2026-07-06",
+        "cusum_alarm": "2026-07-09",
+        "cusum_delay_days": 3,
+        "weekly_alarm": "2026-07-12",
+        "weekly_delay_days": 6,
+        "bh_gated_alarm": "2026-07-17",
+        "bh_gated_delay_days": 11,
+        "late_over_14_days": false
+      },
+      {
+        "event": "EV01",
+        "target_type": "strong",
+        "group": "family:fruit",
+        "district": "NT East",
+        "onset": "2026-07-20",
+        "cusum_alarm": "2026-08-12",
+        "cusum_delay_days": 23,
+        "weekly_alarm": "2026-07-26",
+        "weekly_delay_days": 6,
+        "bh_gated_alarm": null,
+        "bh_gated_delay_days": null,
+        "late_over_14_days": false
+      },
+      {
+        "event": "EV02",
+        "target_type": "strong",
+        "group": "feature:choc_coated",
+        "district": "Kowloon",
+        "onset": "2026-06-08",
+        "cusum_alarm": "2026-06-22",
+        "cusum_delay_days": 14,
+        "weekly_alarm": "2026-06-21",
+        "weekly_delay_days": 13,
+        "bh_gated_alarm": "2026-06-29",
+        "bh_gated_delay_days": 21,
+        "late_over_14_days": true
+      },
+      {
+        "event": "EV02",
+        "target_type": "strong",
+        "group": "feature:choc_coated",
+        "district": "HK Island",
+        "onset": "2026-06-08",
+        "cusum_alarm": "2026-06-27",
+        "cusum_delay_days": 19,
+        "weekly_alarm": "2026-06-28",
+        "weekly_delay_days": 20,
+        "bh_gated_alarm": "2026-07-17",
+        "bh_gated_delay_days": 39,
+        "late_over_14_days": true
+      },
+      {
+        "event": "EV02",
+        "target_type": "strong",
+        "group": "feature:choc_coated",
+        "district": "NT East",
+        "onset": "2026-06-08",
+        "cusum_alarm": "2026-06-25",
+        "cusum_delay_days": 17,
+        "weekly_alarm": "2026-06-28",
+        "weekly_delay_days": 20,
+        "bh_gated_alarm": "2026-06-29",
+        "bh_gated_delay_days": 21,
+        "late_over_14_days": true
+      },
+      {
+        "event": "EV02",
+        "target_type": "strong",
+        "group": "feature:choc_coated",
+        "district": "NT West",
+        "onset": "2026-06-08",
+        "cusum_alarm": "2026-06-09",
+        "cusum_delay_days": 1,
+        "weekly_alarm": "2026-06-21",
+        "weekly_delay_days": 13,
+        "bh_gated_alarm": "2026-07-17",
+        "bh_gated_delay_days": 39,
+        "late_over_14_days": true
+      },
+      {
+        "event": "EV03",
+        "target_type": "weak",
+        "group": "health:low_sugar",
+        "district": "Kowloon",
+        "onset": "2026-06-01",
+        "cusum_alarm": "2026-06-30",
+        "cusum_delay_days": 29,
+        "weekly_alarm": "2026-06-14",
+        "weekly_delay_days": 13,
+        "bh_gated_alarm": "2026-07-25",
+        "bh_gated_delay_days": 54,
+        "late_over_14_days": true
+      },
+      {
+        "event": "EV03",
+        "target_type": "weak",
+        "group": "health:low_sugar",
+        "district": "HK Island",
+        "onset": "2026-06-01",
+        "cusum_alarm": "2026-06-17",
+        "cusum_delay_days": 16,
+        "weekly_alarm": "2026-06-21",
+        "weekly_delay_days": 20,
+        "bh_gated_alarm": "2026-07-26",
+        "bh_gated_delay_days": 55,
+        "late_over_14_days": true
+      },
+      {
+        "event": "EV03",
+        "target_type": "weak",
+        "group": "health:low_sugar",
+        "district": "NT East",
+        "onset": "2026-06-01",
+        "cusum_alarm": "2026-06-17",
+        "cusum_delay_days": 16,
+        "weekly_alarm": "2026-06-30",
+        "weekly_delay_days": 29,
+        "bh_gated_alarm": "2026-07-31",
+        "bh_gated_delay_days": 60,
+        "late_over_14_days": true
+      },
+      {
+        "event": "EV03",
+        "target_type": "weak",
+        "group": "health:low_sugar",
+        "district": "NT West",
+        "onset": "2026-06-01",
+        "cusum_alarm": "2026-07-14",
+        "cusum_delay_days": 43,
+        "weekly_alarm": "2026-06-30",
+        "weekly_delay_days": 29,
+        "bh_gated_alarm": "2026-07-23",
+        "bh_gated_delay_days": 52,
+        "late_over_14_days": true
+      }
+    ],
+    "target_denominator": 11,
+    "strong_target_denominator": 7,
+    "weak_target_denominator": 4,
+    "raw_missed": 0,
+    "gated_missed": 1,
+    "late_gated_detections": 9,
+    "strong_gated_missed": 1,
+    "weak_gated_missed": 0,
+    "paired_detected_targets": 11,
+    "mean_delay_cusum": 16.454545454545453,
+    "mean_delay_weekly": 15.909090909090908,
+    "mean_delay_bh_gated": 37.7,
+    "null_world": {
+      "charts": 248,
+      "days": 92,
+      "cusum_false_alarm_episodes": 547,
+      "bh_gated_false_alarm_episodes": 0,
+      "cusum_false_alarms_per_chart_per_90_days": 2.158,
+      "weekly_false_alarm_weeks": 574,
+      "monthly_models_trained_on_null_demand": true
+    },
+    "weak_signal_low_sugar": {
+      "pooled_alarm": "2026-06-02",
+      "first_district_alarm": "2026-06-17",
+      "status": "exploratory_not_FDR"
+    }
+  },
+  "investigator": {
+    "findings": [
+      {
+        "week": "2026-06-29",
+        "finding": "Water-based",
+        "districts": [
+          "Kowloon"
+        ],
+        "label": "persistent",
+        "event": "EV01",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-06-29",
+        "finding": "Creamy",
+        "districts": [
+          "NT East"
+        ],
+        "label": "one_off",
+        "event": null,
+        "expected": "noise",
+        "correct": null
+      },
+      {
+        "week": "2026-06-29",
+        "finding": "Chocolate family",
+        "districts": [
+          "Kowloon"
+        ],
+        "label": "one_off",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": false
+      },
+      {
+        "week": "2026-06-29",
+        "finding": "Crunchy",
+        "districts": [
+          "Kowloon"
+        ],
+        "label": "one_off",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": false
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Chocolate-coated",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Water-based",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East"
+        ],
+        "label": "persistent",
+        "event": "EV01",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Higher sugar",
+        "districts": [
+          "Kowloon",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Chocolate family",
+        "districts": [
+          "HK Island",
+          "NT East",
+          "NT West"
+        ],
+        "label": "one_off",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": false
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Cones",
+        "districts": [
+          "HK Island",
+          "NT West"
+        ],
+        "label": "one_off",
+        "event": "EV04",
+        "expected": "one_off",
+        "correct": true
+      },
+      {
+        "week": "2026-07-20",
+        "finding": "Classic family",
+        "districts": [
+          "Kowloon"
+        ],
+        "label": "one_off",
+        "event": null,
+        "expected": "noise",
+        "correct": null
+      },
+      {
+        "week": "2026-07-27",
+        "finding": "Chocolate-coated",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-27",
+        "finding": "Water-based",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV01",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-27",
+        "finding": "Crunchy",
+        "districts": [
+          "HK Island",
+          "NT East",
+          "NT West"
+        ],
+        "label": "persistent",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": true
+      },
+      {
+        "week": "2026-07-27",
+        "finding": "Classic family",
+        "districts": [
+          "Kowloon"
+        ],
+        "label": "mirror",
+        "event": null,
+        "expected": "noise",
+        "correct": null
+      },
+      {
+        "week": "2026-07-27",
+        "finding": "Mixed",
+        "districts": [
+          "HK Island",
+          "Kowloon"
+        ],
+        "label": "mirror",
+        "event": null,
+        "expected": "noise",
+        "correct": null
+      },
+      {
+        "week": "2026-07-27",
+        "finding": "Mid price",
+        "districts": [
+          "HK Island",
+          "Kowloon"
+        ],
+        "label": "mirror",
+        "event": "EV02",
+        "expected": "persistent",
+        "correct": false
+      }
+    ],
+    "total_exposed_nonmirror_findings": 13,
+    "total_exposed_significant_findings": 16,
+    "matched": 12,
+    "correct": 8,
+    "accuracy": 0.6666666666666666,
+    "unmatched_findings": 4,
+    "planner_actionable": 7,
+    "neutral_fraction": 0.5625,
+    "true_trend_matched_findings": 11,
+    "true_trend_labeled_persistent": 7,
+    "temporary_matched_findings": 1,
+    "temporary_neutralized": 1,
+    "weak_review_followup": {
+      "horizon_days": 14,
+      "exposed_weak_candidates": [
+        {
+          "week": "2026-06-08",
+          "group": "family:coffee_nut",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-06-08",
+          "group": "band:price_hkd:1",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-06-08",
+          "group": "band:price_hkd:0",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-06-08",
+          "group": "format:cone",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-06-15",
+          "group": "format:cone",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-06-15",
+          "group": "feature:crunchy",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-06-15",
+          "group": "family:asian",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-06-22",
+          "group": "feature:choc_coated",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-06-22",
+          "group": "band:dairy:2",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-06-22",
+          "group": "flavour:mango",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-06-22",
+          "group": "flavour:chocolate",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-06-29",
+          "group": "feature:choc_coated",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-06-29",
+          "group": "family:fruit",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-06-29",
+          "group": "flavour:chocolate",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-06-29",
+          "group": "flavour:mango",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-06",
+          "group": "format:cone",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-06",
+          "group": "feature:crunchy",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-07-06",
+          "group": "format:cup",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-06",
+          "group": "format:stick",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-07-13",
+          "group": "format:cone",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-13",
+          "group": "feature:choc_coated",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-13",
+          "group": "family:chocolate",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-13",
+          "group": "flavour:chocolate",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-20",
+          "group": "format:stick",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-20",
+          "group": "health:low_sugar",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-27",
+          "group": "family:coffee_nut",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-27",
+          "group": "flavour:mango",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": true
+        },
+        {
+          "week": "2026-07-27",
+          "group": "family:asian",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-08-10",
+          "group": "family:fruit",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-08-10",
+          "group": "band:price_hkd:2",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-08-10",
+          "group": "family:classic",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-08-10",
+          "group": "family:asian",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-08-17",
+          "group": "family:fruit",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-08-17",
+          "group": "band:dairy:0",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-08-17",
+          "group": "health:low_sugar",
+          "direction": "up",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-08-17",
+          "group": "band:dairy:1",
+          "direction": "down",
+          "followup_complete": true,
+          "later_bh_confirmed": false
+        },
+        {
+          "week": "2026-08-24",
+          "group": "family:fruit",
+          "direction": "up",
+          "followup_complete": false,
+          "later_bh_confirmed": null
+        },
+        {
+          "week": "2026-08-24",
+          "group": "health:low_sugar",
+          "direction": "up",
+          "followup_complete": false,
+          "later_bh_confirmed": null
+        },
+        {
+          "week": "2026-08-24",
+          "group": "band:dairy:0",
+          "direction": "up",
+          "followup_complete": false,
+          "later_bh_confirmed": null
+        },
+        {
+          "week": "2026-08-24",
+          "group": "family:asian",
+          "direction": "down",
+          "followup_complete": false,
+          "later_bh_confirmed": null
+        },
+        {
+          "week": "2026-08-31",
+          "group": "family:fruit",
+          "direction": "up",
+          "followup_complete": false,
+          "later_bh_confirmed": null
+        },
+        {
+          "week": "2026-08-31",
+          "group": "health:low_sugar",
+          "direction": "up",
+          "followup_complete": false,
+          "later_bh_confirmed": null
+        },
+        {
+          "week": "2026-08-31",
+          "group": "band:dairy:0",
+          "direction": "up",
+          "followup_complete": false,
+          "later_bh_confirmed": null
+        },
+        {
+          "week": "2026-08-31",
+          "group": "family:asian",
+          "direction": "down",
+          "followup_complete": false,
+          "later_bh_confirmed": null
+        }
+      ],
+      "later_bh_confirmed": 18,
+      "denominator": 36,
+      "censored_candidates": 8,
+      "random_comparison_later_bh_confirmed": 21,
+      "random_comparison_denominator": 120,
+      "scope_note": "Only complete 14-day followups enter the denominators. Weak followups use their reviewed districts; random candidates use all districts and are a rough exploratory comparator, not a significance test"
+    }
+  },
+  "replay": [
+    {
+      "policy": "fixed_reorder_point",
+      "label": "fixed reorder point x1.25",
+      "buffer": 1.25,
+      "service_level": null,
+      "fill_rate": 0.7906,
+      "lost_units": 139708,
+      "lost_margin_hkd": 926623.0,
+      "avg_pallets": 16.0,
+      "max_pallets": 36.3,
+      "peak_pallets_before_shipping": 40.1,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 797,
+      "fixed_baseline_reference": {
+        "start": "2026-05-04",
+        "end": "2026-05-31",
+        "reorder_point": "frozen_mean*(lead+review)*buffer",
+        "order_quantity": "frozen_mean*review, case-rounded and MOQ"
+      }
+    },
+    {
+      "policy": "history",
+      "label": "history x1.00",
+      "buffer": 1.0,
+      "service_level": null,
+      "fill_rate": 0.9204,
+      "lost_units": 53105,
+      "lost_margin_hkd": 358905.0,
+      "avg_pallets": 19.5,
+      "max_pallets": 32.6,
+      "peak_pallets_before_shipping": 38.2,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798,
+      "fixed_baseline_reference": null
+    },
+    {
+      "policy": "history",
+      "label": "history x1.15",
+      "buffer": 1.15,
+      "service_level": null,
+      "fill_rate": 0.973,
+      "lost_units": 18010,
+      "lost_margin_hkd": 119269.0,
+      "avg_pallets": 26.3,
+      "max_pallets": 43.5,
+      "peak_pallets_before_shipping": 49.3,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798,
+      "fixed_baseline_reference": null
+    },
+    {
+      "policy": "history",
+      "label": "history x1.25",
+      "buffer": 1.25,
+      "service_level": null,
+      "fill_rate": 0.9872,
+      "lost_units": 8519,
+      "lost_margin_hkd": 55400.0,
+      "avg_pallets": 32.0,
+      "max_pallets": 51.0,
+      "peak_pallets_before_shipping": 57.4,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798,
+      "fixed_baseline_reference": null
+    },
+    {
+      "policy": "history",
+      "label": "history x1.40",
+      "buffer": 1.4,
+      "service_level": null,
+      "fill_rate": 0.9973,
+      "lost_units": 1788,
+      "lost_margin_hkd": 11529.0,
+      "avg_pallets": 41.2,
+      "max_pallets": 63.1,
+      "peak_pallets_before_shipping": 69.4,
+      "days_over_capacity_before_shipping": 13,
+      "days_over_capacity": 2,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798,
+      "fixed_baseline_reference": null
+    },
+    {
+      "policy": "scoop_forecast",
+      "label": "scoop_forecast @ CR",
+      "buffer": null,
+      "service_level": null,
+      "fill_rate": 0.9673,
+      "lost_units": 21837,
+      "lost_margin_hkd": 133698.0,
+      "avg_pallets": 24.8,
+      "max_pallets": 42.6,
+      "peak_pallets_before_shipping": 48.6,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798,
+      "fixed_baseline_reference": null
+    },
+    {
+      "policy": "scoop_forecast",
+      "label": "scoop_forecast @ 92%",
+      "buffer": null,
+      "service_level": 0.92,
+      "fill_rate": 0.9782,
+      "lost_units": 14513,
+      "lost_margin_hkd": 87956.0,
+      "avg_pallets": 27.8,
+      "max_pallets": 48.8,
+      "peak_pallets_before_shipping": 54.9,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798,
+      "fixed_baseline_reference": null
+    },
+    {
+      "policy": "scoop_full",
+      "label": "scoop_full @ CR",
+      "buffer": null,
+      "service_level": null,
+      "fill_rate": 0.9707,
+      "lost_units": 19520,
+      "lost_margin_hkd": 121782.0,
+      "avg_pallets": 24.5,
+      "max_pallets": 42.3,
+      "peak_pallets_before_shipping": 48.5,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798,
+      "fixed_baseline_reference": null
+    },
+    {
+      "policy": "scoop_full",
+      "label": "scoop_full @ 85%",
+      "buffer": null,
+      "service_level": 0.85,
+      "fill_rate": 0.9778,
+      "lost_units": 14840,
+      "lost_margin_hkd": 92657.0,
+      "avg_pallets": 26.3,
+      "max_pallets": 46.4,
+      "peak_pallets_before_shipping": 52.6,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798,
+      "fixed_baseline_reference": null
+    },
+    {
+      "policy": "scoop_full",
+      "label": "scoop_full @ 92%",
+      "buffer": null,
+      "service_level": 0.92,
+      "fill_rate": 0.982,
+      "lost_units": 12004,
+      "lost_margin_hkd": 74645.0,
+      "avg_pallets": 27.5,
+      "max_pallets": 48.6,
+      "peak_pallets_before_shipping": 54.9,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798,
+      "fixed_baseline_reference": null
+    },
+    {
+      "policy": "scoop_full",
+      "label": "scoop_full @ 96%",
+      "buffer": null,
+      "service_level": 0.96,
+      "fill_rate": 0.9858,
+      "lost_units": 9449,
+      "lost_margin_hkd": 58812.0,
+      "avg_pallets": 29.0,
+      "max_pallets": 52.0,
+      "peak_pallets_before_shipping": 58.2,
+      "days_over_capacity_before_shipping": 0,
+      "days_over_capacity": 0,
+      "capacity_pallets": 62.0,
+      "purchase_orders": 798,
+      "fixed_baseline_reference": null
+    }
+  ],
+  "monthly_models": [
+    {
+      "version": "M202606-v1-s42",
+      "logic_version": "monthly-issued-v1",
+      "effective_start": "2026-06-01",
+      "effective_end": "2026-06-30",
+      "training_start": "2024-06-01",
+      "trained_through": "2026-05-31",
+      "calibration_start": "2026-05-01",
+      "calibration_end": "2026-05-31",
+      "calibration_source_version": "M202605-v1-s42",
+      "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+      "weather_cutoff": "previous_day_issued_forecast",
+      "seed": 42,
+      "protection_calibration_issues": [
+        "2026-05-01",
+        "2026-05-08",
+        "2026-05-15"
+      ],
+      "protection_calibration_samples": 180,
+      "protection_calibration_outcome_end": "2026-05-31"
+    },
+    {
+      "version": "M202607-v1-s42",
+      "logic_version": "monthly-issued-v1",
+      "effective_start": "2026-07-01",
+      "effective_end": "2026-07-31",
+      "training_start": "2024-06-01",
+      "trained_through": "2026-06-30",
+      "calibration_start": "2026-06-01",
+      "calibration_end": "2026-06-30",
+      "calibration_source_version": "M202606-v1-s42",
+      "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+      "weather_cutoff": "previous_day_issued_forecast",
+      "seed": 42,
+      "protection_calibration_issues": [
+        "2026-06-01",
+        "2026-06-08"
+      ],
+      "protection_calibration_samples": 120,
+      "protection_calibration_outcome_end": "2026-06-24"
+    },
+    {
+      "version": "M202608-v1-s42",
+      "logic_version": "monthly-issued-v1",
+      "effective_start": "2026-08-01",
+      "effective_end": "2026-08-31",
+      "training_start": "2024-06-01",
+      "trained_through": "2026-07-31",
+      "calibration_start": "2026-07-01",
+      "calibration_end": "2026-07-31",
+      "calibration_source_version": "M202607-v1-s42",
+      "calibration_method": "preceding_month_forward_errors_transferred_to_new_version",
+      "weather_cutoff": "previous_day_issued_forecast",
+      "seed": 42,
+      "protection_calibration_issues": [
+        "2026-07-01",
+        "2026-07-08",
+        "2026-07-15"
+      ],
+      "protection_calibration_samples": 180,
+      "protection_calibration_outcome_end": "2026-07-31"
+    }
+  ],
+  "weak_reviews": {
+    "2026-06-01": [],
+    "2026-06-08": [
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 5.41,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-07"
+      },
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 5.41,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-07"
+      },
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 3.79,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-07"
+      },
+      {
+        "group": "family:coffee_nut",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 4.66,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-07"
+      },
+      {
+        "group": "family:coffee_nut",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 4.66,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-07"
+      },
+      {
+        "group": "family:coffee_nut",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 8.14,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-07"
+      },
+      {
+        "group": "band:price_hkd:0",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 5.62,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-07"
+      },
+      {
+        "group": "band:price_hkd:0",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 5.62,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-07"
+      },
+      {
+        "group": "band:price_hkd:0",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 3.38,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-07"
+      },
+      {
+        "group": "band:price_hkd:1",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 6.16,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-07"
+      }
+    ],
+    "2026-06-15": [
+      {
+        "group": "feature:crunchy",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 3.86,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 14,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-14"
+      },
+      {
+        "group": "feature:crunchy",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 0.44,
+        "threshold": 3.29,
+        "confirmed": false,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-08",
+        "window_end": "2026-06-14"
+      },
+      {
+        "group": "feature:crunchy",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 7.28,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT East"
+        ],
+        "observations": 14,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-14"
+      },
+      {
+        "group": "family:asian",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 5.03,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 14,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-14"
+      },
+      {
+        "group": "family:asian",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 4.88,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-08",
+        "window_end": "2026-06-14"
+      },
+      {
+        "group": "family:asian",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 4.33,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 14,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-14"
+      },
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 3.54,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 14,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-14"
+      },
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 0.85,
+        "threshold": 3.29,
+        "confirmed": false,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-08",
+        "window_end": "2026-06-14"
+      },
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 7.46,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT East"
+        ],
+        "observations": 14,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-14"
+      },
+      {
+        "group": "flavour:mango",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 2.08,
+        "threshold": 3.29,
+        "confirmed": false,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 14,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-14"
+      }
+    ],
+    "2026-06-22": [
+      {
+        "group": "band:dairy:2",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 8.78,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 21,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-21"
+      },
+      {
+        "group": "band:dairy:2",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 7.65,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-15",
+        "window_end": "2026-06-21"
+      },
+      {
+        "group": "band:dairy:2",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 8.02,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT East"
+        ],
+        "observations": 21,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-21"
+      },
+      {
+        "group": "flavour:mango",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 7.13,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 21,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-21"
+      },
+      {
+        "group": "flavour:mango",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 5.88,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-15",
+        "window_end": "2026-06-21"
+      },
+      {
+        "group": "flavour:mango",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 7.12,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 21,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-21"
+      },
+      {
+        "group": "feature:choc_coated",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 7.76,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 21,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-21"
+      },
+      {
+        "group": "feature:choc_coated",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 6.39,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-15",
+        "window_end": "2026-06-21"
+      },
+      {
+        "group": "feature:choc_coated",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 9.77,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT West"
+        ],
+        "observations": 21,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-21"
+      },
+      {
+        "group": "flavour:chocolate",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 4.38,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 21,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-21"
+      }
+    ],
+    "2026-06-29": [
+      {
+        "group": "feature:choc_coated",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 19.88,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 28,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-28"
+      },
+      {
+        "group": "feature:choc_coated",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 12.12,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-22",
+        "window_end": "2026-06-28"
+      },
+      {
+        "group": "feature:choc_coated",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 12.27,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 28,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-28"
+      },
+      {
+        "group": "flavour:chocolate",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 15.29,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 28,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-28"
+      },
+      {
+        "group": "flavour:chocolate",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 10.91,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-22",
+        "window_end": "2026-06-28"
+      },
+      {
+        "group": "flavour:chocolate",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 12.65,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 28,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-28"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 16.69,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 28,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-28"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 9.38,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-06-22",
+        "window_end": "2026-06-28"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 12.18,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 28,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-28"
+      },
+      {
+        "group": "flavour:mango",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 7.5,
+        "threshold": 3.29,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 28,
+        "status": "exploratory",
+        "window_start": "2026-06-01",
+        "window_end": "2026-06-28"
+      }
+    ],
+    "2026-07-06": [
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 37.24,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 5,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-05"
+      },
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 37.24,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 5,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-05"
+      },
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 23.21,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT West"
+        ],
+        "observations": 5,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-05"
+      },
+      {
+        "group": "feature:crunchy",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 19.86,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 5,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-05"
+      },
+      {
+        "group": "feature:crunchy",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 19.86,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 5,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-05"
+      },
+      {
+        "group": "feature:crunchy",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 13.88,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT West"
+        ],
+        "observations": 5,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-05"
+      },
+      {
+        "group": "format:cup",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 9.53,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 5,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-05"
+      },
+      {
+        "group": "format:cup",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 9.53,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 5,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-05"
+      },
+      {
+        "group": "format:cup",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 6.7,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT West"
+        ],
+        "observations": 5,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-05"
+      },
+      {
+        "group": "format:stick",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 7.67,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 5,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-05"
+      }
+    ],
+    "2026-07-13": [
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 40.47,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 12,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-12"
+      },
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 3.23,
+        "threshold": 3.55,
+        "confirmed": false,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-07-06",
+        "window_end": "2026-07-12"
+      },
+      {
+        "group": "format:cone",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 28.33,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT West"
+        ],
+        "observations": 12,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-12"
+      },
+      {
+        "group": "feature:choc_coated",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 16.02,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 12,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-12"
+      },
+      {
+        "group": "feature:choc_coated",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 16.02,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-07-06",
+        "window_end": "2026-07-12"
+      },
+      {
+        "group": "feature:choc_coated",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 11.39,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 12,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-12"
+      },
+      {
+        "group": "family:chocolate",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 13.65,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 12,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-12"
+      },
+      {
+        "group": "family:chocolate",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 11.26,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-07-06",
+        "window_end": "2026-07-12"
+      },
+      {
+        "group": "family:chocolate",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 10.29,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT West"
+        ],
+        "observations": 12,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-12"
+      },
+      {
+        "group": "flavour:chocolate",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 12.82,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 12,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-12"
+      }
+    ],
+    "2026-07-20": [
+      {
+        "group": "format:stick",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 13.91,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 19,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-19"
+      },
+      {
+        "group": "format:stick",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 11.31,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-07-13",
+        "window_end": "2026-07-19"
+      },
+      {
+        "group": "format:stick",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 10.89,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 19,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-19"
+      },
+      {
+        "group": "band:sugar_100ml:2",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 33.93,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 19,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-19"
+      },
+      {
+        "group": "band:sugar_100ml:2",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 25.15,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-07-13",
+        "window_end": "2026-07-19"
+      },
+      {
+        "group": "band:sugar_100ml:2",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 26.99,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 19,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-19"
+      },
+      {
+        "group": "band:sweetness:2",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 33.93,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 19,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-19"
+      },
+      {
+        "group": "band:sweetness:2",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 25.15,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-07-13",
+        "window_end": "2026-07-19"
+      },
+      {
+        "group": "band:sweetness:2",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 26.99,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 19,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-19"
+      },
+      {
+        "group": "health:low_sugar",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 11.92,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 19,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-19"
+      }
+    ],
+    "2026-07-27": [
+      {
+        "group": "flavour:mango",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 14.57,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 26,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-26"
+      },
+      {
+        "group": "flavour:mango",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 7.84,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-07-20",
+        "window_end": "2026-07-26"
+      },
+      {
+        "group": "flavour:mango",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 13.84,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 26,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-26"
+      },
+      {
+        "group": "format:stick",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 17.34,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 26,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-26"
+      },
+      {
+        "group": "format:stick",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 4.34,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-07-20",
+        "window_end": "2026-07-26"
+      },
+      {
+        "group": "format:stick",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 12.33,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 26,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-26"
+      },
+      {
+        "group": "family:asian",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 1.54,
+        "threshold": 3.55,
+        "confirmed": false,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 26,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-26"
+      },
+      {
+        "group": "family:asian",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 1.54,
+        "threshold": 3.55,
+        "confirmed": false,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-07-20",
+        "window_end": "2026-07-26"
+      },
+      {
+        "group": "family:asian",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 7.57,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 26,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-26"
+      },
+      {
+        "group": "family:coffee_nut",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 26.15,
+        "threshold": 3.55,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 26,
+        "status": "exploratory",
+        "window_start": "2026-07-01",
+        "window_end": "2026-07-26"
+      }
+    ],
+    "2026-08-03": [
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 3.43,
+        "threshold": 4.19,
+        "confirmed": false,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 2,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-02"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 3.43,
+        "threshold": 4.19,
+        "confirmed": false,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 2,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-02"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 3.69,
+        "threshold": 4.19,
+        "confirmed": false,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT West"
+        ],
+        "observations": 2,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-02"
+      },
+      {
+        "group": "band:sugar_100ml:1",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 3.77,
+        "threshold": 4.19,
+        "confirmed": false,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 2,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-02"
+      },
+      {
+        "group": "band:sugar_100ml:1",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 3.77,
+        "threshold": 4.19,
+        "confirmed": false,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 2,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-02"
+      },
+      {
+        "group": "band:sugar_100ml:1",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 3.55,
+        "threshold": 4.19,
+        "confirmed": false,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 2,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-02"
+      },
+      {
+        "group": "band:sweetness:1",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 3.77,
+        "threshold": 4.19,
+        "confirmed": false,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 2,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-02"
+      },
+      {
+        "group": "band:sweetness:1",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 3.77,
+        "threshold": 4.19,
+        "confirmed": false,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 2,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-02"
+      },
+      {
+        "group": "band:sweetness:1",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 3.55,
+        "threshold": 4.19,
+        "confirmed": false,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 2,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-02"
+      },
+      {
+        "group": "flavour:mango",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 2.35,
+        "threshold": 4.19,
+        "confirmed": false,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 2,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-02"
+      }
+    ],
+    "2026-08-10": [
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 11.24,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 9,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-09"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 7.53,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-03",
+        "window_end": "2026-08-09"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 7.39,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT West"
+        ],
+        "observations": 9,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-09"
+      },
+      {
+        "group": "band:price_hkd:2",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 9.11,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 9,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-09"
+      },
+      {
+        "group": "band:price_hkd:2",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 6.87,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-03",
+        "window_end": "2026-08-09"
+      },
+      {
+        "group": "band:price_hkd:2",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 7.75,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 9,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-09"
+      },
+      {
+        "group": "family:classic",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 7.39,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 9,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-09"
+      },
+      {
+        "group": "family:classic",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 4.6,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-03",
+        "window_end": "2026-08-09"
+      },
+      {
+        "group": "family:classic",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 5.28,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT East"
+        ],
+        "observations": 9,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-09"
+      },
+      {
+        "group": "family:asian",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 7.13,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 9,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-09"
+      }
+    ],
+    "2026-08-17": [
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 22.34,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 16,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-16"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 11.16,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-10",
+        "window_end": "2026-08-16"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 10.18,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 16,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-16"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 18.93,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 16,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-16"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 10.25,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-10",
+        "window_end": "2026-08-16"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 9.31,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 16,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-16"
+      },
+      {
+        "group": "band:dairy:1",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 15.68,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 16,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-16"
+      },
+      {
+        "group": "band:dairy:1",
+        "direction": "down",
+        "method": "recent_week",
+        "pooled_statistic": 9.86,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-10",
+        "window_end": "2026-08-16"
+      },
+      {
+        "group": "band:dairy:1",
+        "direction": "down",
+        "method": "district_split",
+        "pooled_statistic": 11.22,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 16,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-16"
+      },
+      {
+        "group": "health:low_sugar",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 16.63,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 16,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-16"
+      }
+    ],
+    "2026-08-24": [
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 34.14,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 23,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-23"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 11.79,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-17",
+        "window_end": "2026-08-23"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 17.73,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT East"
+        ],
+        "observations": 23,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-23"
+      },
+      {
+        "group": "health:low_sugar",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 31.54,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 23,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-23"
+      },
+      {
+        "group": "health:low_sugar",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 14.91,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-17",
+        "window_end": "2026-08-23"
+      },
+      {
+        "group": "health:low_sugar",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 28.5,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 23,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-23"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 27.74,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 23,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-23"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 8.8,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-17",
+        "window_end": "2026-08-23"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 14.54,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "HK Island"
+        ],
+        "observations": 23,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-23"
+      },
+      {
+        "group": "family:asian",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 21.94,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 23,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-23"
+      }
+    ],
+    "2026-08-31": [
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 44.52,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 30,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-30"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 10.38,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-24",
+        "window_end": "2026-08-30"
+      },
+      {
+        "group": "family:fruit",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 24.5,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT East"
+        ],
+        "observations": 30,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-30"
+      },
+      {
+        "group": "health:low_sugar",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 41.81,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 30,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-30"
+      },
+      {
+        "group": "health:low_sugar",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 10.27,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-24",
+        "window_end": "2026-08-30"
+      },
+      {
+        "group": "health:low_sugar",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 36.32,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "Kowloon"
+        ],
+        "observations": 30,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-30"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "network_pool",
+        "pooled_statistic": 36.81,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 30,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-30"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "recent_week",
+        "pooled_statistic": 9.07,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Rechecked the last seven days for an early change",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 7,
+        "status": "exploratory",
+        "window_start": "2026-08-24",
+        "window_end": "2026-08-30"
+      },
+      {
+        "group": "band:dairy:0",
+        "direction": "up",
+        "method": "district_split",
+        "pooled_statistic": 20.27,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Checked districts separately for changes hidden by pooling",
+        "districts": [
+          "NT East"
+        ],
+        "observations": 30,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-30"
+      },
+      {
+        "group": "family:asian",
+        "direction": "down",
+        "method": "network_pool",
+        "pooled_statistic": 30.42,
+        "threshold": 4.19,
+        "confirmed": true,
+        "reason": "Pooled districts to inspect a change spread across the network",
+        "districts": [
+          "HK Island",
+          "Kowloon",
+          "NT East",
+          "NT West"
+        ],
+        "observations": 30,
+        "status": "exploratory",
+        "window_start": "2026-08-01",
+        "window_end": "2026-08-30"
+      }
+    ]
+  }
+}

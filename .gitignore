@@ -10,5 +10,7 @@ data/cache/
 *.log
 
 # Local outputs
-reports/
+reports/*
+!reports/evaluation.json
 test-results/
+backups/

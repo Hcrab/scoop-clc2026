@@ -22,6 +22,7 @@ class Settings:
     gemini_model: str = os.getenv("SCOOP_GEMINI_MODEL", "gemini-3.8-flash")
     llm_budget_usd: float = float(os.getenv("SCOOP_LLM_BUDGET_USD", "3"))
     llm_max_calls: int = int(os.getenv("SCOOP_LLM_MAX_CALLS", "120"))
+    llm_daily_max_calls: int = int(os.getenv("SCOOP_LLM_DAILY_MAX_CALLS", "50"))
     llm_timeout_seconds: float = float(os.getenv("SCOOP_LLM_TIMEOUT_SECONDS", "75"))
     reports_dir: Path = ROOT / "reports"
     seed: int = int(os.getenv("SCOOP_SEED", str(DEMO_SEED)))

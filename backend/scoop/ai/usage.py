@@ -1,6 +1,6 @@
 """Small durable call ledger: bounded demo usage, no credentials or prompt text."""
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 import sqlite3
 import uuid
@@ -22,6 +22,15 @@ class UsageLimit(Exception):
     pass
 
 
+def daily_window(now=None):
+    """One shared allowance per Hong Kong day, stored as UTC boundaries."""
+    hk = timezone(timedelta(hours=8))
+    local = (now or datetime.now(timezone.utc)).astimezone(hk)
+    start = local.replace(hour=0, minute=0, second=0, microsecond=0)
+    return (start.astimezone(timezone.utc).isoformat(),
+            (start + timedelta(days=1)).astimezone(timezone.utc).isoformat())
+
+
 @contextmanager
 def ledger(path=None):
     path=Path(path or LEDGER)
@@ -29,6 +38,7 @@ def ledger(path=None):
     db=sqlite3.connect(path,timeout=10)
     try:
         db.execute('CREATE TABLE IF NOT EXISTS calls (id TEXT PRIMARY KEY, created_at TEXT, model TEXT, request_hash TEXT, status TEXT, input_tokens INTEGER, output_tokens INTEGER, reserved_usd REAL, estimated_usd REAL)')
+        db.execute('CREATE INDEX IF NOT EXISTS calls_created_at ON calls(created_at)')
         db.commit()
         yield db
         db.commit()
@@ -44,11 +54,16 @@ def reserve(model, request_hash, max_input_tokens, max_output_tokens, *, path=No
     amount=(max_input_tokens*input_rate+max_output_tokens*output_rate)/1_000_000
     with ledger(path) as db:
         db.execute('BEGIN IMMEDIATE')
+        now = datetime.now(timezone.utc)
+        start, end = daily_window(now)
+        today = db.execute('SELECT COUNT(*) FROM calls WHERE created_at>=? AND created_at<?', (start, end)).fetchone()[0]
+        if today >= settings.llm_daily_max_calls:
+            raise UsageLimit('The daily assistant limit is reached. It resets at midnight Hong Kong time.')
         total,count=db.execute('SELECT COALESCE(SUM(COALESCE(estimated_usd,reserved_usd)),0), COUNT(*) FROM calls').fetchone()
         if count>=settings.llm_max_calls or total+amount>settings.llm_budget_usd:
             raise UsageLimit('The configured demo assistant allowance is used up.')
         rid=uuid.uuid4().hex
-        db.execute('INSERT INTO calls VALUES (?,?,?,?,?,?,?,?,?)',(rid,datetime.now(timezone.utc).isoformat(),model,request_hash,'reserved',None,None,amount,None))
+        db.execute('INSERT INTO calls VALUES (?,?,?,?,?,?,?,?,?)',(rid,now.isoformat(),model,request_hash,'reserved',None,None,amount,None))
     return rid
 
 
@@ -65,6 +80,9 @@ def finish(rid, usage, status='ok', *, path=None):
 
 
 def summary(*, path=None):
+    start, end = daily_window()
     with ledger(path) as db:
         count,spent,inputs,outputs=db.execute('SELECT COUNT(*),COALESCE(SUM(COALESCE(estimated_usd,reserved_usd)),0),COALESCE(SUM(input_tokens),0),COALESCE(SUM(output_tokens),0) FROM calls').fetchone()
-    return {'calls':count,'estimated_usd':round(spent,6),'input_tokens':inputs,'output_tokens':outputs,'limit_usd':settings.llm_budget_usd,'call_limit':settings.llm_max_calls}
+        today = db.execute('SELECT COUNT(*) FROM calls WHERE created_at>=? AND created_at<?', (start, end)).fetchone()[0]
+    return {'calls':count,'estimated_usd':round(spent,6),'input_tokens':inputs,'output_tokens':outputs,'limit_usd':settings.llm_budget_usd,'call_limit':settings.llm_max_calls,
+            'daily_calls':today,'daily_call_limit':settings.llm_daily_max_calls,'daily_remaining':max(0, settings.llm_daily_max_calls-today),'daily_resets_at':end}

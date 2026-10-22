@@ -42,6 +42,10 @@ On Windows without Docker, `scripts/setup-local.ps1 -LoadData` sets up a local P
 
 The app works without an API key: the report is a list of the computed findings and a scripted assistant handles basic commands. For the live assistant, set `SCOOP_LLM_PROVIDER=gemini` in `.env` and `GEMINI_API_KEY` in the server environment, then restart. The key stays on the server. See [docs/ASSISTANT.md](docs/ASSISTANT.md).
 
+### Deployment
+
+scoopplanner.com runs from `deploy/`: a Docker image of the app, a dedicated PostgreSQL database and persistent caches, with the live assistant capped at 50 calls per day. See [deploy/README.md](deploy/README.md).
+
 ## Tests
 
 ```sh
