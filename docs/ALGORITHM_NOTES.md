@@ -1,55 +1,41 @@
-# Scoop algorithms: monthly lifecycle and evidence
+# How the planning engine works
 
-All data is synthetic seed 42. Forecasting, monitoring, investigation and planning never query `ground_truth_events`; only offline evaluation reads the answer key. The numerical investigator uses deterministic scoped checks. The application can separately use a real assistant for interpreting those tool results, with provider behavior documented elsewhere.
+Each week the engine runs four steps: forecast normal demand, look for early signals, find which products are really changing, and calculate the order. The planner's context can adjust the result before the order is final. The algorithms never read the planted answers in the synthetic data.
 
-## One shared monthly version
+## 1. Forecast (LightGBM)
 
-On a month boundary, the same global LightGBM forecasting pipeline trains through the preceding month-end. Its weights then stay frozen for the whole month. Procurement and CUSUM expectations select that exact version by the plan date. June, July and August select `M202606-v1-s42`, `M202607-v1-s42` and `M202608-v1-s42`, trained through May 31, June 30 and July 31. Historical version selection never points to the latest model. Versions, parameter/feature definitions, cutoffs, and protection-calibration metadata are saved under `data/cache/seed42-monthly-issued-v1`; `ModelRun` records provide the same trace. Evaluation also persists per-version metrics there. Missing monthly artifacts train lazily; the evaluator builds the whole historical sequence.
+LightGBM predicts daily requests per store and product from the calendar, recent demand, promotions and the weather forecast issued the day before, so no future weather is used. Interactions such as temperature × format let it learn that water ices react to heat more than creamy tubs. Models are retrained monthly and frozen within the month.
 
-Each new version clears both CUSUM accumulators. New plan findings and summaries record source version, training and calibration dates, and the evidence cutoff. Existing approved plans, direction decisions and purchase suggestions are never rebuilt. A saved plan without monthly metadata belongs to the earlier fixed-baseline prototype: `historical_chart` retrieves its original cached curve instead of silently placing a retrained curve beside an old approved alarm. If that artifact is absent, it returns unavailable evidence honestly.
+For ordering, the forecast is summed over each product's protection period: lead time plus the time to the next order. Split-conformal calibration on recent errors sets the upper range, so a 98% target covers about 98% of past periods.
 
-Temporary human factors carry `origin_model_version` and `evidence_through` when passed across weeks. A factor retires when the new version has trained through its supporting evidence; a same-version factor remains active. Future evidence is rejected for historical calculations. This is a version-transition policy, not proof that the statistical model has perfectly learned every preference shift. A continuing residual can lead to a new supported direction. Fresh factors use only the new month's residual window; previous-version residuals cannot inflate the new factor. Unknown-provenance legacy dictionaries remain compatible, so integrations must attach provenance before carrying a factor into a later month.
+## 2. Early warnings (CUSUM)
 
-## Past-only, out-of-sample calibration
+For each attribute, such as a flavour or a format, a CUSUM monitor adds up the daily gaps between actual and forecast demand and warns when the total crosses a bootstrap threshold. Benjamini–Hochberg control keeps false alarms low across many attributes.
 
-A full-data live model cannot estimate its own out-of-sample errors from a month it just trained on. Instead, June uncertainty and residual reference statistics use May's operational forecasts made by the May version (trained through April 30). July uses June forward forecasts from the June version; August uses July forward forecasts from the July version. All calibration outcomes precede the new version's effective date. This temporal cross-fit uses the same algorithm and immutable historical versions, not a second separately updated live forecaster.
+## 3. Trend finder (tree + empirical Bayes)
 
-Protection calibration issues are weekly dates in the preceding month for which the complete maximum L+R window ends before the cutoff. Max L+R is 16 days. Calibration is explicitly transferred from the previous version to the current one. It does not provide exchangeability or formal conformal coverage. A recent shift, weather regime change or retraining difference can make these errors unrepresentative; recent shifts can also widen/shift the CUSUM reference. The report preserves the resulting undercoverage and delayed detections rather than tuning thresholds against planted outcomes.
+Real changes usually sit in a combination of attributes. For each product and district, Scoop compares actual against forecast demand over the last 14 days and the 56 days before. Because the forecast already includes the weather, weather drops out of this measure.
 
-For every training row and daily rolling-origin prediction, weather comes from the previous day's issued forecast. A protection or arrival forecast uses only the issue known at the original plan cutoff, including when the supplier order day is later. Beyond the issued horizon, seasonal sine/cosine temperature regression and mean rainfall use observations only through the issue date. Observed weather after the cutoff is never a forecast feature. Known synthetic promotion/holiday calendars are assumed announced in advance. Requested units, including unfilled requests, are the demand target; shipped sales are not substituted for uncensored demand.
+A conditional inference tree groups products by attributes and district, and a block permutation test keeps only splits unlikely by chance. Two-level empirical Bayes then gives each product a stable demand factor, pulling noisy estimates toward their group.
 
-## Means, quantiles and rolling origins
+The planner can add what the data cannot know: mark a trend as a one-off, give it an end date, cap it, or set their own expected change. Each choice is applied to the trend group as a prior.
 
-The Poisson model produces an expected mean, not a median. Daily p10/p90 come from separate quantile models. Expected units sum coherently from stores to SKU and warehouse. Daily quantiles are not summed. Protection p10/p50/p90 multiply the aggregated expected mean by empirically calibrated actual/mean ratio quantiles.
+## 4. Order (order-up-to + newsvendor)
 
-Evaluation rolls through April, May, June, July and August monthly versions. Each daily fold follows its training cutoff and has WAPE, p10/p90 coverage and pinball losses. Protection forecasts originate on weekly issue dates in each live month with complete outcomes available by month-end; each uses the uncertainty calibrated strictly before that month. Per-version issue lists, cutoff dates and sample counts appear in JSON and monthly tables. WAPE is total absolute error divided by total requested units; pinball is the mean asymmetric quantile loss in units. Protection windows overlap within a fold, and pooled SKU errors are heterogeneous; samples are not statistically independent. Calendar-wait+L+R suggestions can exceed calibrated L+R windows, an extrapolation disclosed in the report.
+Scoop orders up to a target stock level, minus stock on hand and on the way, in whole cases and supplier minimums. The service level comes from the newsvendor ratio of margin against margin plus holding cost, bounded between 50% and 98%. If the cold store would overflow on any delivery day, cases are cut first where they earn the least margin per pallet. Every line keeps its calculation.
 
-## Detection and bounded investigation
+## Limits
 
-CUSUM acts on requested-demand attribute shares minus the shared monthly expected shares, standardized with the prior month's forward residuals. The reference value is k=0.25. A seven-day block bootstrap targets nominal ARL=90 days. Approximate stationary bootstrap p-values feed BH across both directions of the complete chart family. Dependence, finite calibration, model transfer, partial weeks and repeated daily testing preclude an exact FDR or ARL guarantee.
+- The trend finder only sees changes that attributes or districts can describe, with at least three products per group.
+- Monthly retraining may delay a trend that starts mid-month.
+- The demo settings were tuned for the synthetic world and will be re-tuned on real data.
 
-Reports distinguish raw threshold episodes, actual BH-gated exposures, missed targets and detections more than 14 days late. The target denominator is seven strong trend/district pairs plus four low-sugar weak targets, not just pairs where both detectors succeeded. The reported raw CUSUM/weekly mean-delay comparison states its paired-detection denominator. The weekly baseline is a raw weekly-mean threshold comparator with approximate rate calibration; short weeks at model boundaries are explicitly clipped to the month-end. Its result is not presented as a BH-equivalent discovery.
+## Code
 
-The null world removes preference ramps, exceptional promotion response and bulk anomalies while preserving weather and normal advertised promotion response. July/August null versions train on null demand too; scoring null demand with a factual model that had absorbed planted preferences would be an invalid false-alarm comparison. Null calibration and monitoring follow the same monthly lifecycle. These are empirical results from one world, not a mathematical guarantee.
-
-Investigation tests concentration with the actual leading store-day/SKU, promotions only on their affected SKU/date pairs, record heat, own-unit changes, store spread and recent persistence. It adds same-family peer shipping shortfalls and launch metadata where available. Coincident peer shortfalls are evidence for a substitution hypothesis, not causal proof. Requested demand already includes unfilled requests, so removing warehouse-stockout days from the demand detector would bias it. Missing expected demand returns unsure instead of being replaced with zero. Confidence values are heuristic weights, not probabilities. The synthetic world does not plant a dedicated substitution event; that mechanism must not be claimed to have an independently measured event-level success rate.
-
-Each weekly weak review performs at most ten documented checks, including network pooling, a recent-week window and district splitting. Records include method, reason, dates, scope, observations and result, including unsuccessful checks. Pooling/extra windows are exploratory and uncalibrated; they never create significance or automatically change purchasing. Evaluation reports exposed weak candidates' subsequent BH confirmation within 14 days and a fixed-seed random candidate comparator; their scopes differ, so this is exploratory evidence, not a formal test of assistant superiority.
-
-Offline cause matching requires compatible observation/evidence dates, districts, direction and SKU scope. A temporary event's original dates must intersect the finding's run, although observation can lag its end by up to 14 days. Single-SKU bulk matching uses the measured leading SKU/store-day evidence, not the highest overlap of an unrelated broad group. Mirrors, unmatched findings, neutral classifications, temporary-event neutralization and true-trend retention denominators are all reported. Matched-label accuracy does not replace detector recall.
-
-## Purchasing and fair replay
-
-Inventory position is previous-day closing on-hand plus historical open POs; confirmed synthetic Scoop orders do not reenter the historical snapshot. Coverage begins on the plan day and includes waiting to the next supplier weekday, lead time and review days. Case rounding respects MOQ, but an infeasible order may be zeroed. Capacity is measured in fractional pallet equivalents, not physical pallet/bin packing. Economic marginal value per pallet guides capacity cuts; differing footprints and MOQs make this a heuristic, not a guaranteed optimum.
-
-The arrival projection uses expected PO dates and issued forecast demand to deplete inherited stock. New proposed cases remain conservatively reserved after arrival. Each day's limit separately permits only unavoidable inherited excess; excess on one day cannot create free capacity on another. Forecast occupancy is uncertain, and actual morning peaks are reported. The 35 C what-if changes temperature only during the requested dates and preserves rain/cutoffs; analysis never purchases inventory.
-
-Replay policies receive identical requested demand, starting inventory, inherited open POs with a fixed common arrival schedule, and supplier mean lead times for new orders. Ordering sees start-of-day stock and demand through yesterday; today's shipping follows. Received arrivals are removed from the pending pipeline before projecting capacity, so supply is not counted twice. Live planning uses expected future receipt dates; offline inherited timing is a common frozen assumption. Closing average/peak pallets and pre-shipping peak/day counts are separate.
-
-The fixed reorder-point baseline freezes May 4-31 average requested units before the June replay. Its reorder point is that mean times (L+R) times 1.25; its fixed order quantity is that mean times R, case-rounded with MOQ, checked only on supplier weekdays. It never adapts to later demand. The separate history xB comparator is a trailing-28-day moving-average order-up-to policy, accurately named. Historical comparators are unconstrained; capacity/fill tradeoffs remain visible. Scoop full uses weekly persistent draft directions in an explicitly auto-accepted evaluation simulation; it retires them on the monthly refresh. Live purchasing still requires planner decisions.
-
-Margin, fill-rate and sales goals select SKU-specific economic critical ratios, 97% and 98% protection quantiles respectively unless service level explicitly overrides them. A planning quantile is not a guarantee of achieved fill rate. Direction factors can target a SKU or a tag within districts. Confirmation reevaluates current quantities on the same dated projection. Watch IDs and clustering ties are deterministic.
-
-## Scope and remaining limitations
-
-This is a finite April-August historical demonstration with real monthly version selection, not a production data-ingestion scheduler. No expiry, stochastic new-order supplier delays, shelf inventory, transfer network, salvage optimization or production feeds are modeled. Features intentionally omit recent-sales lags; monthly retraining may absorb only part of a newly emerging shift. Prior-version error transfer, pooled ratios and overlapping protection windows can yield poor aggregate coverage. CUSUM resets can delay gradual changes. Extra weak checks and investigator weights are not calibrated significance. Dated occupancy remains an uncertain forecast with conservative reservation. Existing approved legacy snapshots stay distinct from the new monthly benchmark. Tests establish cutoff, state and interface correctness.
+| Step | Where in `backend/scoop/` |
+| --- | --- |
+| Forecast | `algorithms/forecast.py`, `algorithms/protection_calibration.py` |
+| Early warnings | `algorithms/cusum.py` |
+| Trend finder and context | `algorithms/cohort_model.py`, `algorithms/cohort_overrides.py` |
+| Order | `algorithms/replenish.py`, `order_ledger.py` |
+| Evaluation | `evaluate.py` (`python -m scoop.evaluate`) |
