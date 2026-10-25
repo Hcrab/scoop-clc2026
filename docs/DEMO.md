@@ -4,9 +4,9 @@ The demo runs at [scoopplanner.com](https://scoopplanner.com). It opens on Monda
 
 ## Start
 
-On first visit, choose **Start the tour** for a guided walk through every step, or **Explore on my own** to use the app freely. **Take the tour** in the top bar opens the tour again.
+Click **Take the tour** at the top right for a guided walk through every step. To use the app freely instead, just start from the Report.
 
-<img src="images/tour.png" alt="A tour step explaining how the order changes after the planner adds context" width="420">
+![Take the tour, at the top right of the app](images/tour-button.png)
 
 ## 1. Report
 
